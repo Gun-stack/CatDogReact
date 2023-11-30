@@ -1,0 +1,200 @@
+/** 회원가입/ 로그인/ 비밀번호찾기/ 아이디 찾기 창 css */
+
+input::placeholder{
+    font-family: 'Pretendard-Regular';
+    font-size: 1rem;
+    font-weight: 600;
+    color: #979797;
+    vertical-align: bottom;
+}
+
+.radio-text{
+    font-family: 'Pretendard-Regular';
+    font-size: 1rem;
+    font-weight: 600;
+    color: #979797;
+}
+
+.filebox{
+    margin-top: 2rem;
+    width: inherit;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.filebox>label{
+    padding: .5rem;
+    font-size: 1rem;
+    color: #ffffff;
+    background-color: var(--btn-submit);
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.filebox>label:hover{
+    background-color: var(--btn-nomal);
+    transition:  background-color .3s ease-in-out;
+}
+
+.input-box-style{
+    border: none;
+}
+
+input[type=file]{
+    display: none;
+}
+
+[type=text],[type=password]{
+    background: none;
+}
+
+[type=text]:focus{
+    border-bottom: 1px solid var(--btn-submit);
+    transition: border-bottom .3s ease-in-out;
+}
+[type=password]:focus{
+    border-bottom: 1px solid var(--btn-submit);
+    transition: border-bottom .3s ease-in-out;
+}
+
+[type=button]{
+    border: none;
+    outline: none;
+}
+
+[type="radio"], span {
+    vertical-align: middle;
+}
+
+
+[type="radio"] {
+    appearance: none;
+    border: max(2px, 0.1em) solid gray;
+    border-radius: 50%;
+    width: 1.25em;
+    height: 1.25em;
+    transition: border 0.2s ease-in-out;
+}
+
+[type="radio"]:checked {
+    border: 0.4em solid tomato;
+}
+
+[type="radio"]:focus-visible {
+    outline-offset: max(2px, 0.1em);
+    outline: max(2px, 0.1em) dotted tomato;
+}
+
+[type="radio"]:hover {
+    box-shadow: 0 0 0 max(4px, 0.2em) lightgray;
+    cursor: pointer;
+}
+[type="date"]{
+    border: none;
+    width: 100%;
+    text-align: center;
+}
+
+input[type='date']::before {
+    content: attr(placeholder);
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: 'Pretendard-Regular';
+    width: 100%;
+    height: 100%;
+}
+
+input[type='date']::webkit-calendar{
+    background-color: aquamarine;
+}
+
+.form-container{
+    margin-bottom: 2rem;
+}
+
+.input-container{
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.radio-container{
+    width: 70%;
+    display: grid;
+    grid-template-columns: 2fr 2fr;
+    margin: 1rem;
+}
+.radio-box{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.input-text{
+    width: 25rem;
+    border: none;
+    outline: none;
+    border-bottom:1px solid rgb(180, 180, 180);
+    font-size: 1.2rem;
+    margin: 1rem;
+}
+
+.login-tools{
+    width: 25rem;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+}
+
+.duplication-check{
+    position: relative;
+}
+
+.duplication-btn{
+    position: absolute;
+    top: -5px;
+    right: 30px;
+    bottom: 5px;
+}
+
+.logintool-text{
+    font-weight: 600;
+}
+
+.form-section{
+    height: 100%;
+    width: inherit;
+}
+
+.form-css{
+    width: inherit;
+}
+
+.input-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-container{
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.boader-none{
+    border: none;
+    outline: none;
+}
+
+.style-area{
+    border: none;
+    outline: none;
+    width: 15rem;
+    font-family: 'Pretendard-Regular';
+    background-color: #e2e2e2;
+}
+
+.form-text{
+    font-weight: 600;
+}

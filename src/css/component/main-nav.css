@@ -1,0 +1,16 @@
+.main-nav-list{
+    display: flex;
+    margin-top: 1.5rem;
+}
+.main-nav-list-text>a{
+    color: var(--btn-nomal);
+}
+
+.main-nav-list-text>a{
+    margin: 0 1rem;
+    padding: .1rem .2rem;
+}
+
+.main-nav-list-text>a:hover{
+    color: var(--btn-submit);
+}

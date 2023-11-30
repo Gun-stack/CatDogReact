@@ -1,0 +1,19 @@
+.cd-footer{
+    width: 100%;
+    height: 85px;
+
+    margin-top: auto;
+    padding: 1rem 0;
+
+    background-color: rgb(240, 240, 240);
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    
+}
+
+.footer-address>p, .footer-name-container>p{
+    font-size: .8rem;
+    color: rgb(145, 145, 145);
+}

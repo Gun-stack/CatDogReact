@@ -1,0 +1,53 @@
+
+/** 화면  1024px 이하일때 */
+@media (max-width: 1024px) {
+    .cd-container{
+    width: 100%;
+    }
+
+    .main-logo>img{
+        width: 70vw;
+    }
+
+    .main-btn{
+        width: 80vw;
+    }
+    .main-sm-btn{
+        width: 40vw;
+    }
+    .input-text{
+        width: 70vw;
+    }
+    .cd-main{
+        width: 100vw;
+    }
+}
+
+
+/** 화면  450px 이하일때 */
+@media (max-width: 450px) {
+    .login-tools{
+        flex-direction: column;
+        align-items: center;
+    }
+    .login-tools>div{
+        width: 70vw;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        margin-top: 1rem;
+    }
+    .modal-body{
+        width: 70vw;
+        position: absolute;
+        bottom: 10%;
+    }
+    .main-nav-list{
+        width: 100%;
+        justify-content: center;
+    }
+    .main-nav-list-text>a{
+        margin: 0 0.3rem;
+    } 
+
+}

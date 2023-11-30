@@ -1,0 +1,79 @@
+
+/** 메인과 로그인에 사용한 버튼*/
+.main-btn{
+    width: 15rem;
+    height: 3.5rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: var(--btn-nomal);
+    border-radius: 10px;
+}
+
+.main-btn:hover{
+    transition: background-color .3s ease-in-out;
+    background-color: var(--btn-hover);
+    cursor: pointer;
+}
+
+.main-sm-btn{
+    width: 10rem;
+    height: 2rem;
+}
+
+/** 버튼 안 텍스트 */
+.btn-text{
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: white;
+}
+
+
+/** 카카오로그인 버튼 */
+.kakao-login-btn{
+    margin: 1rem 0;
+    background-color:  #F7E600;
+}
+.kakao-login-btn{
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--text-color);
+}
+.kakao-login-btn>i{
+    margin: 0 .5rem;
+}
+
+.button-container{
+    margin-top: auto;
+}
+
+/** 작은버튼 */
+.small-btn{
+    width: 6.25rem;
+    height: 2.5rem;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-family: 'Pretendard-Regular';
+    color: white;
+    border-radius: 10px;
+
+    background-color: var(--btn-submit);
+    cursor: pointer;
+}
+.small-btn:hover{
+    transition: background-color .3s ease-in-out;
+    background-color: var(--btn-nomal);
+}
+
+.btn-gray{
+    background-color: var( --btn-disable);
+}
+.modal-btns>button{
+    margin: 1rem;
+}
+

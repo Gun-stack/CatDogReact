@@ -1,0 +1,78 @@
+/* 처음 들어왔을때 메인화면 css */
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff'); 
+    font-weight: 400; 
+    font-style: normal;
+}
+
+@font-face { 
+    font-family: 'Binggrae'; 
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Binggrae.woff') format('woff'); 
+    font-weight: normal; 
+    font-style: normal; 
+}
+
+.main-background{
+    background-image: url('../../img/background/main_bg.png');
+    background-size: cover;
+    background-position: 50%;
+
+    animation: bg-move 30s infinite;
+}
+
+@keyframes bg-move {
+    0%{
+        background-position: 50%;
+    }
+    50%{
+        background-position: 0;
+    }
+    100%{
+        background-position: 50%;
+    }
+}
+.main-logo{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    margin-top: 2rem;
+    margin-bottom: .5rem;
+}
+.main-logo-text{
+    font-family: 'Binggrae';
+    font-size: 1.3rem;
+    font-weight: bolder;
+
+    color: var(--btn-submit);
+}
+
+.main-logo>img{
+    width: 20rem;
+}
+
+.main-login-join{
+    margin-top: 8rem;
+}
+
+.join-container, .login-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    margin-top: 2rem;
+}
+
+.main-info-text{
+    margin: .5rem 0;
+    padding: .5rem;
+    font-size: 1.2rem;
+    border-radius: 10px;
+    font-weight: bold;
+    background-color: rgba(255, 255, 255, 0.473);
+}
+
+.main-login-join-stylelist{
+    margin: 5rem 0 3rem 0;
+}

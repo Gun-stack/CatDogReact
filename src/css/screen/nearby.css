@@ -1,0 +1,52 @@
+.po-re{
+    position: relative;
+}
+.map-section{
+    position: absolute;
+    top: 0;
+    width: inherit;
+}
+.map-api{
+    width: 100%;
+    height: 20rem;
+    background-color: blue;
+}
+
+.nearby-container{
+    z-index: 5; 
+    margin-top: 15rem;
+}
+
+.nearby-shop-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.nearby-shop-address-container{
+    display: flex;
+}
+
+.shop-name{
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.shop-adderss{
+    margin-top: 1rem;
+}
+
+.nearby-shop-img{
+    width: 100px;
+    height: 100px;
+    background-color: gainsboro;
+    border-radius: 8px;
+}
+
+.shop-text-container{
+    margin-left: 1rem;
+}
+
+.shop-adderss-text{
+    font-size: .875rem;
+}

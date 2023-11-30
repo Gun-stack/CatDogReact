@@ -1,0 +1,23 @@
+.section-header{
+    width: 100%;
+    background-color:  var(--btn-nomal);
+}
+
+.section-header-container{
+    height: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.section-header-text{
+    font-family: 'Binggrae';
+    font-size: 1.5rem;
+    font-weight: bolder;
+    color:  #FFFFFF;
+
+    text-shadow: -3px -3px 3px var(--btn-submit), 
+    3px -3px 3px var(--btn-submit), 
+    -3px 3px 3px var(--btn-submit), 
+    3px 3px 3px var(--btn-submit);
+}

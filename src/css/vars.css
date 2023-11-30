@@ -1,0 +1,46 @@
+:root{
+    --text-color : #303438;
+
+    --btn-nomal: #FFC000;
+    --btn-hover: #FCE798;
+    --btn-submit: #F9950F;
+
+    --btn-disable: #D5D6D7;
+}
+
+.tx-black{
+    color: var(--text-color);
+}
+.tx-gray{
+    color: #D5D6D7;
+}
+.tx-white{
+    color: white;
+}
+.tx-lightorg{
+    color: #FCE798;
+}
+
+.magin-t-1{
+    margin-top: 1rem;
+}
+
+.bg-orange{
+    background-color: #F9950F;
+}
+
+.divide-line{
+    border: 0px;
+    width: 100%;
+    border-top:  1px dashed var(--btn-nomal);
+}
+
+.gray-line{
+    border: 0px;
+    width: 70%;
+    border-top:  1px solid rgb(180, 180, 180);
+}
+
+.f-w-600{
+    font-weight: 600;
+}

@@ -1,0 +1,46 @@
+.schedule-time-table{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    gap: 1rem;
+}
+
+.schedule-header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: rgba(255, 190, 12, 0.15);
+    padding: 1rem 0;
+    border-radius: 8px;
+
+    font-weight: 600;
+}
+
+.schedule-body{
+    background-color: rgb(250, 250, 250);
+    height: 5rem;
+    border-radius: 8px;
+    padding: 1rem;
+}
+.resv-pet-name{
+    font-weight: 600;
+}
+
+.resv-time{
+    background-color: var(--btn-nomal);
+    padding: .3rem;
+    margin-bottom: .5rem;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #ffff;
+}
+
+.reg-pet-img{
+    width: 30%;
+}
+
+.padding-1{
+    padding: 0 1rem;
+}

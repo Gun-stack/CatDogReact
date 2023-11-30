@@ -1,0 +1,26 @@
+.cl-gallery-section{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    margin: 1rem 0;
+}
+.cl-gallery-img{
+    width: 28rem;
+    height: 28rem;
+}
+.cl-gallery-component{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    margin: 1rem 0;
+}
+.cl-gallery-img-conatiner{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

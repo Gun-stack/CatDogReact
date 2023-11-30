@@ -1,0 +1,63 @@
+.mypage-title-section{
+    margin-top: 2rem;
+}
+
+.mypage-title-text{
+    font-size: 1.3rem;
+    font-weight: bolder;
+}
+
+.mypage-arrow{
+    margin-right: 1rem;
+    color: rgb(209, 209, 209);
+}
+
+.bg-dogs{
+    background-image: url('../../img/background/bg_mypage.png');
+    background-position: 50% 85%;
+}
+.magin-l-05{
+    margin-left: .5rem;
+}
+
+.style-btn{
+    margin-left: .5rem;
+    padding: .5rem;
+    border-radius: 10px;
+}
+
+.style-btn:hover{
+    background-color: rgb(255, 115, 0);
+    cursor: pointer;
+    transition: background-color .3s ease-in-out;
+}
+
+.re-shop-info{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.re-btns{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.re-text{
+    color: rgb(179, 179, 179);
+}
+.re-shop-name{
+    font-weight: 600;
+}
+.re-date{
+    margin: 1rem 0; 
+    font-weight: 600;
+    font-size: 1.25rem;
+}
+
+.is-visit{
+    margin: 0 1rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--btn-submit);
+}

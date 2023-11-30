@@ -1,0 +1,77 @@
+.photo-back{
+    height: 300px;
+    background-image: url(../../img/background/client-main-img.jpg);
+
+    position: relative;
+    animation: bg-move 30s infinite;
+}
+
+.client-main-logo{
+    padding: 1.5rem;
+}
+
+.client-main-logo>img{
+    width: 10rem;
+}
+
+.photo-back-content{
+    position: absolute;
+
+    left: 0;
+}
+
+.photo-back-text{
+    font-family: 'Binggrae'; 
+    font-size: 1.2rem;
+    font-weight: 600;
+
+    padding: 2rem 2rem 0 2rem;
+    color: var(--text-color);
+
+    text-shadow: -2px -2px 2px rgb(255, 255, 255), 
+    2px -2px 2px rgb(255, 255, 255), 
+    -2px 2px 2px rgb(255, 255, 255), 
+    2px 2px 2px rgb(255, 255, 255); 
+}
+.client-main-section{
+    margin-bottom: 2rem;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, .1);
+}
+
+.client-main-btn-section{
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.main-btn-component{
+    width: 85%;
+    margin: .5rem;
+    padding: .5rem 1rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--btn-submit);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, .2);
+}
+
+.main-btn-component:hover{
+    background-color: rgb(252, 143, 41);
+}
+.main-btn-component>i{
+    font-size: 2.5rem;
+    color: var(--btn-hover);
+}
+
+.main-btn-text-title{
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: white;
+}
+
+.main-btn-text>p{
+    color: var(--btn-hover);
+}
