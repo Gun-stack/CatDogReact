@@ -18,7 +18,9 @@
     "react-scripts": "5.0.1",
     "redux": "^4.0.5",
     "sweetalert2": "^11.10.1",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "@reduxjs/toolkit": "^1.9.7",
+    "redux-persist": "6.0.0"
   },
   "scripts": {
     "start": "react-scripts start",

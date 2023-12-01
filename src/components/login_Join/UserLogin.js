@@ -2,30 +2,39 @@ import { Link, Route,Routes } from "react-router-dom";
 import Footer from "../screens/Footer";
 import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import SocialKakao from './SocialKakao';
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+
 
 function UserLogin() {
-    const [id, setId] = useState(""); // Add missing assignment for setId
-
-
-
-    const [password, setPassword] = useState('');
+    const [user, setUser] = useState ({id:"", password:""});
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [isautoLogin, setIsAutoLogin] = useState(false);
 
-    const onChangeId = (e) => {
-        setId(e.target.value);
-        console.log('id  : ' + id);
+    const changeUser = (e) => {
+        setUser({...user, [e.target.name]:e.target.value});
     }
 
-    const onChangePassword = (e) => {
-        setPassword(e.target.value);
-        console.log('password  : ' + password);
-    }
-
+    const login = (e) => {
+        
+        e.preventDefault();
+        axios.post("http://localhost:8090/userlogin", user)
+            .then(res=> {
+                console.log("token : " + res.headers.token);
+                dispatch({type:"token", payload:res.headers.authorization});
+                navigate("/main");
+            })
+            .catch(err=> {
+                console.log(err);
+            })
+        
+    } 
     const handleAutoLogin = (e) => {
         const toggle = document.querySelector('.fa-check-circle');
-
         if (toggle.classList.contains('active')) {
             setIsAutoLogin(true);
             toggle.classList.remove('active');
@@ -38,6 +47,10 @@ function UserLogin() {
             console.log('자동로그인 설정' + isautoLogin);
         }
     }
+
+            
+
+    
 
     return (
         <>
@@ -58,9 +71,10 @@ function UserLogin() {
                                          * password : 보호자 패스워드
                                          */}
                                         {/** 보호자 ID */}
-                                        <input type="text" id="id" name="id" placeholder="댕냥꽁냥 아이디" className="input-text" onChange={onChangeId} />
+                                        <input type="text" id="id" name="id" placeholder="댕냥꽁냥 아이디" className="input-text" value={user.username} onInput={changeUser}/>
                                         {/** 보호자 비밀번호 */}
-                                        <input type="password" id="password" name="password" placeholder="비밀번호" className="input-text" onChange={onChangePassword} />
+                                        <input type="password" id="password" name="password" placeholder="비밀번호" className="input-text" value={user.password} onInput={changeUser} />
+
                                         {/** 자동로그인, 회원가입 , 계정찾기, 비밀번호 찾기 */}
                                         <div className="login-tools">
                                             <span onClick={handleAutoLogin}><i className="fas fa-check-circle active"></i> 자동 로그인</span>
@@ -73,7 +87,7 @@ function UserLogin() {
                                     </div>
                                     <div className="button-container">
                                         {/** Submit BTN */}
-                                        <button type="submit" className="main-btn btn-text magin-t-1"><a href="cl-main.html" className="btn-text" >로그인</a></button>
+                                        <button type="submit" className="main-btn btn-text magin-t-1"><div className="btn-text" onClick={login} >로그인</div></button>
                                         {/** 카카오 로그인 */}
                                         
                                             <div className="main-btn kakao-login-btn"><i className= "fas fa-comment" ></i><Link to="kakaologin">카카오톡 로그인</Link></div>

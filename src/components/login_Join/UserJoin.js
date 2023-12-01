@@ -2,6 +2,9 @@ import { Link } from "react-router-dom";
 import Footer from "../screens/Footer";
 import Swal from "sweetalert2";
 import { useEffect,useState   } from "react";
+import axios from "axios";
+
+
 
 function UserJoin() {
     const[id,setId] = useState('');
@@ -20,7 +23,7 @@ function UserJoin() {
         const joinInfo = {
             id : id,
             password : password,
-            username : username,
+            name : username,
             nickname : nickname,
             tel : tel,
             email : email,
@@ -29,34 +32,36 @@ function UserJoin() {
     
 
 
-        // axios.post('http://localhost:8090/user/join',joinInfo)
-        // .then((res)=>{
-        //     console.log(res);
-        //     console.log(res.data);
-        //     if(res.data === 1){
-        //         Swal.fire({
-        //             icon: 'success',
-        //             title: '회원가입 성공',
-        //             text: '로그인 페이지로 이동합니다.',
-        //             confirmButtonColor: '#F9950F',
-        //             confirmButtonText: '확인',
-        //         });
-        //         history.push('/login');
-        //     }else{
-        //         Swal.fire({
-        //             icon: 'error',
-        //             title: '회원가입 실패',
-        //             text: '다시 시도해주세요.',
-        //             confirmButtonColor: '#F9950F',
-        //             confirmButtonText: '확인',
-        //         });
-        //     }
-        // })
+        axios.post('http://localhost:8090/userjoin',joinInfo)
+        .then((res)=>{
+            console.log(res);
+            console.log(res.data);
+            if(res.data === "joinsuccess"){
+                Swal.fire({
+                    icon: 'success',
+                    title: '회원가입 성공',
+                    text: '로그인 페이지로 이동합니다.',
+                    confirmButtonColor: '#F9950F',
+                    confirmButtonText: '확인',
+                });
+                // window.location.href("/userlogin");
+                window.location.replace("userlogin");
+            }else{
+                Swal.fire({
+                    icon: 'error',
+                    title: '회원가입 실패',
+                    text: '다시 시도해주세요.',
+                    confirmButtonColor: '#F9950F',
+                    confirmButtonText: '확인',
+                });
+            }
+        })
     }
 
 
     //아이디 중복체크 여부 
     const checkId = (e) => {
+        
         e.preventDefault();
         if(id === ''){
             Swal.fire({
@@ -65,14 +70,42 @@ function UserJoin() {
                 confirmButtonColor: '#F9950F',
                 confirmButtonText: '확인',
             });
-        }else{
-            Swal.fire({
-                title: '사용 가능한 아이디 입니다.',
-                icon: 'success',
-                confirmButtonColor: '#F9950F',
-                confirmButtonText: '확인',
-            });
-            setIdCheck(true);
+        }else{  
+            //아이디 정규식
+            const idRegExp = /^[a-zA-Z0-9]{4,12}$/;
+            if(!idRegExp.test(id)){
+                Swal.fire({
+                    title: '아이디는 영문 대소문자와 숫자 4~12자리로 입력해주세요',
+                    icon: 'warning',
+                    confirmButtonColor: '#F9950F',
+                    confirmButtonText: '확인',
+                });
+                return false;
+            }
+            // db 조회
+            axios.get(`http://localhost:8090/checkuserid?id=${id}`)
+            .then(res=>{
+                console.log("res.data : " + res.data);
+                if(res.data === "success"){
+                    Swal.fire({
+                        title: '사용 가능한 아이디 입니다.',
+                        icon: 'success',
+                        confirmButtonColor: '#F9950F',
+                        confirmButtonText: '확인',
+                    });
+                    setIdCheck(true);
+                }else{
+                    Swal.fire({
+                        title: '중복된 아이디 입니다',
+                        icon: 'warning',
+                        confirmButtonColor: '#F9950F',
+                        confirmButtonText: '확인',
+                    });
+                }
+            })
+            .catch(err=>{
+                
+            })   
         }
     }
     //닉네임 중복체크 여부
@@ -86,15 +119,45 @@ function UserJoin() {
                 confirmButtonText: '확인',
             });
         }else{
-            Swal.fire({
-                title: '사용 가능한 닉네임 입니다.',
-                icon: 'success',
-                confirmButtonColor: '#F9950F',
-                confirmButtonText: '확인'
-            });
-            setNicknameCheck(true);
+
+            //닉네임 정규식
+            const nicknameRegExp = /^[가-힣a-zA-Z0-9]{2,10}$/;
+            if(!nicknameRegExp.test(nickname)){
+                Swal.fire({
+                    title: '닉네임은 한글,영문 대소문자와 숫자 2~10자리로 입력해주세요',
+                    icon: 'warning',
+                    confirmButtonColor: '#F9950F',
+                    confirmButtonText: '확인',
+                });
+                return false;
+            }
+
+            axios.get(`http://localhost:8090/checkusernickname?nickname=${nickname}`)
+            .then(res=>{
+                if(res.data === "success"){
+                    Swal.fire({
+                        title: '사용 가능한 닉네임 입니다.',
+                        icon: 'success',
+                        confirmButtonColor: '#F9950F',
+                        confirmButtonText: '확인'
+                    });
+                    setNicknameCheck(true);
+                }else{
+                    Swal.fire({
+                        title: '중복된 닉네임 입니다',
+                        icon: 'warning',
+                        confirmButtonColor: '#F9950F',
+                        confirmButtonText: '확인',
+                    });
+                }
+            })
+            .catch(err=>{
+                
+            })
+            
         }
     }
+    
     //입력잘되나
     const onChange = (e) => {
         const {value,name} = e.target;
@@ -116,6 +179,10 @@ function UserJoin() {
         }else if(name === 'tel'){
             setTel(value);
             console.log('tel  : ' + tel);
+        }
+        else if(name === 'email'){
+            setEmail(value);
+            console.log('email  : ' + email);
         }
     }
 
@@ -206,7 +273,7 @@ function UserJoin() {
                                         <input type="text" id="tel" name="tel" placeholder="전화 번호"
                                             className="input-text"  onChange={onChange}/>
                                         {/* 이메일 */}
-                                        <input type='email' id='email' name='email' placeholder='이메일'
+                                        <input type='text' id='email' name='email' placeholder='이메일'
                                             className='input-text' onChange={onChange} />
 
                                         {/** 로그인 비번/아이디찾기 */}

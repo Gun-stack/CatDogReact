@@ -19,9 +19,19 @@ import GalleryList from './components/gallery/GalleryList';
 import UserModi_loginMidal from './components/user_main_components/User_Modi/UserModi_loginMidal';
 import ShopMain from './components/shop/ShopMain';
 
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistStore } from 'redux-persist';
+import store from './persist-store';
+
+export const persistor = persistStore(store);
+
 function App() {
   return (
   <>
+
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
 
     <Routes>
       {/** Index (리액트 서버 틀자마자 바로 나오는것)*/}
@@ -57,6 +67,10 @@ function App() {
       
       
       </Routes>
+
+      </PersistGate>
+    </Provider>
+    
 
 
   </>
