@@ -2,8 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
-function ShopMainStyle(shopInfo) {
-    const galleryList = [
+function ShopMainStyle(props) {
+    const shopInfo = props.shopInfo;    
+    const galleryList = [   
         {galNum: 1,galLike: 10,galComment: 20, desNum: 1,desName: '행복행',desImg: '/img/gallrey-img/1.jpg'},
         {galNum: 2,galLike: 10,galComment: 20, desNum: 1,desName: '복행복',desImg: '/img/gallrey-img/2.jpg'},
         {galNum: 3,galLike: 10,galComment: 20, desNum: 1,desName: '행복행',desImg: '/img/gallrey-img/3.jpg'},
@@ -17,7 +18,7 @@ function ShopMainStyle(shopInfo) {
         {galNum: 11,galLike: 10,galComment: 20, desNum: 1,desName: '행복행',desImg: '/img/gallrey-img/3.jpg'},
         {galNum: 12,galLike: 10,galComment: 20, desNum: 1,desName: '복행복',desImg: '/img/gallrey-img/4.jpg'},
         {galNum: 13,galLike: 10,galComment: 20, desNum: 1,desName: '행복행',desImg: '/img/gallrey-img/5.jpg'},
-    ]
+    ];
 
     
 
@@ -27,8 +28,8 @@ function ShopMainStyle(shopInfo) {
              <section className="st-gallery-section">
                 <div className="st-gallery-grid">   
                      {galleryList.map((gallery, index) => (
-                        <div className="st-gallery-img">
-                            <Link to={"/galleryview/"+gallery.galNum}><img src={gallery.desImg} alt="" className="hover-img" /></Link>
+                        <div className="st-gallery-img" key={index} >
+                            <Link to={"/gallery/des/"+gallery.galNum}><img src={gallery.desImg} alt="" className="hover-img" /></Link>
                             <div className="img-comment-hover">
                                 <span className="img-hover-icon"><i className="fas fa-heart" ></i>{gallery.galLike}</span>
                                 <span className="img-hover-icon"><i className="fas fa-comment"></i>{gallery.galComment}</span>

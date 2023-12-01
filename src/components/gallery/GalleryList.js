@@ -6,6 +6,9 @@ import { useState,useEffect } from 'react';
 import { Link, Route,Routes } from 'react-router-dom';
 import DesGal from './DesGal';
 import UserGal from './UserGal';
+import DesGalleryView from './DesGalleryView';
+import UserGalleryView from './UserGalleryView';
+
 
 
 function GalleryList() {
@@ -31,106 +34,17 @@ return (
                 <main className="cd-main">
                     <nav className="main-nav">
                         <ul className="main-nav-list">
-                            <li className="main-nav-list-text"><Link to="">스타일리스트 갤러리</Link></li>
+                            <li className="main-nav-list-text"><Link to="des">스타일리스트 갤러리</Link></li>
                             <li className="main-nav-list-text"><Link to="user">회원 갤러리</Link></li>
                         </ul>
                     </nav>
                     <Routes >
-                        <Route path="/" element={<DesGal/>} />
-                        <Route path="user" element={<UserGal/>} />
+                    <Route path="/des" element={<DesGal />} />
+                    <Route path="/" element={<DesGal />} />
+                    <Route path="/user" element={<UserGal />} />
+                    <Route path='user/:usernum' element={<UserGalleryView/>}/>
+                    <Route path='des/:desgalnum' element={<DesGalleryView/>}/>
                     </Routes>
-
-
-
-                    <section className="st-gallery-section">
-                        <div className="st-gallery-grid">
-                            {/* 이미지 게시판 요소 */}
-                            <div className="st-gallery-img">
-                                <Link to={"/galleryview/"+gallery.galNum}><img src="/img/gallrey-img/textimg.png" alt="" className="hover-img" /></Link>
-                                <div className="img-comment-hover">
-                                    <span className="img-hover-icon"><i className="fas fa-heart" ></i>{gallery.galLike}</span>
-                                    <span className="img-hover-icon"><i className="fas fa-comment"></i>{gallery.galComment}</span>
-                                </div>
-                            </div>
-                            
-                            {/* 이미지 게시판 요소 끝 */}
-                            {/* 이미지 게시판 요소 */}
-                            <div className="st-gallery-img">
-                                <a href="cl-galleryview.html"><img src="/img/gallrey-img/textimg.png" alt="" className="hover-img" /></a>
-                                <div className="img-comment-hover">
-                                    <span className="img-hover-icon"><i className="fas fa-heart"></i>하트</span>
-                                    <span className="img-hover-icon"><i className="fas fa-comment"></i>하트</span>
-                                </div>
-                            </div>
-                            {/* 이미지 게시판 요소 끝 */}
-                            {/* 이미지 게시판 요소 */}
-                            <div className="st-gallery-img">
-                                <a href="cl-galleryview.html"><img src="/img/gallrey-img/textimg.png" alt="" className="hover-img" /></a>
-                                <div className="img-comment-hover">
-                                    <span className="img-hover-icon"><i className="fas fa-heart"></i>하트</span>
-                                    <span className="img-hover-icon"><i className="fas fa-comment"></i>하트</span>
-                                </div>
-                            </div>
-                            {/* 이미지 게시판 요소 끝 */}
-                            {/* 이미지 게시판 요소 */}
-                            <div className="st-gallery-img">
-                                <a href="cl-galleryview.html"><img src="/img/gallrey-img/textimg.png" alt="" className="hover-img" /></a>
-                                <div className="img-comment-hover">
-                                    <span className="img-hover-icon"><i className="fas fa-heart"></i>하트</span>
-                                    <span className="img-hover-icon"><i className="fas fa-comment"></i>하트</span>
-                                </div>
-                            </div>
-                            {/* 이미지 게시판 요소 끝 */}
-                            {/* 이미지 게시판 요소 */}
-                            <div className="st-gallery-img">
-                                <a href="cl-galleryview.html"><img src="/img/gallrey-img/textimg.png" alt="" className="hover-img" /></a>
-                                <div className="img-comment-hover">
-                                    <span className="img-hover-icon"><i className="fas fa-heart"></i>하트</span>
-                                    <span className="img-hover-icon"><i className="fas fa-comment"></i>하트</span>
-                                </div>
-                            </div>
-                            {/* 이미지 게시판 요소 끝 */}
-                            {/* 이미지 게시판 요소 */}
-                            <div className="st-gallery-img">
-                                <a href="cl-galleryview.html"><img src="/img/gallrey-img/textimg.png" alt="" className="hover-img" /></a>
-                                <div className="img-comment-hover">
-                                    <span className="img-hover-icon"><i className="fas fa-heart"></i>하트</span>
-                                    <span className="img-hover-icon"><i className="fas fa-comment"></i>하트</span>
-                                </div>
-                            </div>
-                            {/* 이미지 게시판 요소 끝 */}
-                            {/* 이미지 게시판 요소 */}
-                            <div className="st-gallery-img">
-                                <a href="cl-galleryview.html"><img src="/img/gallrey-img/textimg.png" alt="" className="hover-img" /></a>
-                                <div className="img-comment-hover">
-                                    <span className="img-hover-icon"><i className="fas fa-heart"></i>하트</span>
-                                    <span className="img-hover-icon"><i className="fas fa-comment"></i>하트</span>
-                                </div>
-                            </div>
-                            {/* 이미지 게시판 요소 끝 */}
-                            {/* 이미지 게시판 요소 */}
-                            <div className="st-gallery-img">
-                                <a href="cl-galleryview.html"><img src="/img/gallrey-img/textimg.png" alt="" className="hover-img" /></a>
-                                <div className="img-comment-hover">
-                                    <span className="img-hover-icon"><i className="fas fa-heart"></i>하트</span>
-                                    <span className="img-hover-icon"><i className="fas fa-comment"></i>하트</span>
-                                </div>
-                            </div>
-                            {/* 이미지 게시판 요소 끝 */}
-                            {/* 이미지 게시판 요소 */}
-                            <div className="st-gallery-img">
-                                <a href="cl-galleryview.html"><img src="/img/gallrey-img/textimg.png" alt="" className="hover-img" /></a>
-                                <div className="img-comment-hover">
-                                    <span className="img-hover-icon"><i className="fas fa-heart"></i>하트</span>
-                                    <span className="img-hover-icon"><i className="fas fa-comment"></i>하트</span>
-                                </div>
-                            </div>
-                            {/* 이미지 게시판 요소 끝 */}
-                        </div>
-                        <div className="main-btn main-sm-btn"><span className="btn-text">더보기</span></div>
-                    </section>
-
-
 
                 </main>
             <Footer/>

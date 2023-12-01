@@ -13,7 +13,8 @@ import Around from './components/Around/Around';
 import UserMy from './components/user_main_components/User_My/UserMy';
 import FindId from './components/login_Join/FindId';
 import FindPassword from './components/login_Join/FindPassword';
-import GalleryView from './components/gallery/GalleryView';
+import UserGalleryView from './components/gallery/UserGalleryView';
+import DesGalleryView from './components/gallery/DesGalleryView';
 import GalleryList from './components/gallery/GalleryList';
 import UserModi_loginMidal from './components/user_main_components/User_Modi/UserModi_loginMidal';
 import ShopMain from './components/shop/ShopMain';
@@ -46,12 +47,12 @@ function App() {
       <Route path='/deslogin' element={<DesLogin/>}/>
       <Route path='/desjoin' element={<DesJoin/>}/>
       
+      {/* //갤러리 관련 라우터 */}
       
-      <Route path='/galleryview' element={<GalleryView/>}/>
       <Route path='/gallery/*' element={<GalleryList/>}/>
       {/* //예약관련 라우터 */} 
       
-      <Route path='/shop/*' element={<ShopMain/>}/>
+      <Route path='/shop/:shopnum/*' element={<ShopMain/>}/>
       
       
       

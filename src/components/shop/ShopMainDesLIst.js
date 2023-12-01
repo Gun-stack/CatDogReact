@@ -3,7 +3,8 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 
-function ShopMainDesLIst(shopInfo) {
+function ShopMainDesLIst(props) {
+ const shopInfo = props.shopInfo;
 
     const desList  = [{
         num: '1',
@@ -40,7 +41,7 @@ function ShopMainDesLIst(shopInfo) {
 
             {desList.map((des) => (
 
-            <div className="stylelist-content">
+            <div className="stylelist-content"key={des.num} >
                 <div className="st-profile-container">
                     <div className="st-profile-img">
                         <img src={des.img}alt="프로필 이미지" className="st-profile-img" />
@@ -57,7 +58,7 @@ function ShopMainDesLIst(shopInfo) {
                     <a href="#"><button className="st-button">편집<i className="fas fa-pen btn-icon"></i></button></a>
 
                     
-                    <Link to="/shop/reservation"desNum={des.num} ><button className="st-button">예약하기<i className="far fa-calendar-alt btn-icon"></i></button></Link>
+                    <Link to={`/shop/${shopInfo.num}/reservation/${des.num}`} ><button className="st-button">예약하기<i className="far fa-calendar-alt btn-icon"></i></button></Link>
                 </div>
             </div>
             ))}

@@ -34,7 +34,7 @@ function ShopMainHome({shopInfo}) {
 
                         <div className="main-icon">
                             <i className="far fa-calendar-alt main-icon-style color-nomal"></i>
-                            <div><a href="shoppagestylelist.html">예약하기</a></div>
+                            <div><Link to="designer">예약하기</Link></div>
                         </div>
                     </div>
                     <hr className="divide-line" />

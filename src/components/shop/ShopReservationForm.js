@@ -1,30 +1,45 @@
-import React, { useEffect } from 'react';
+import React, { useEffect,useState } from 'react';
+import {useLocation} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-function ShopReservationForm({selectDate,time}) {
-const selectDay= new Date(selectDate).getDay();
-useEffect(() => {
-    console.log(selectDay);
-    console.log(selectDate);
-    console.log(time);
-}, [])
+
+function ShopReservationForm(props) {
+    const shopInfo = props.shopInfo;
+    const  desInfo = props.desInfo;
+    
+
+
+    const location= useLocation();
+    const time = location.state?.data1;
+    const selectDate = location.state?.data2;
+    
+    const selectDays = new Date(selectDate).getDay();
+    const day = ['일', '월', '화', '수', '목', '금', '토'];
+    const selectDay = day[selectDays];
+
+    const goBack = () => {
+        window.history.back();
+    }
+
 
 
 const user={
     userId: '1',
     nickName: '행복행',
-    pet: '',
-    petType: ''
+    pet: '행복이',
+    petType: '강아지',
+    image:"/img/gallrey-img/2.jpg"
 }
 
     return (
         <div>
             <div>
                 <hr className="divide-line" />
-                <span className="form-text">{selectDate} {selectDay}</span>
+                <span className="form-text" >{selectDate} {selectDay}</span>
                 <hr className="divide-line" />
                 <div className="reser-time-container magin-t-1">
                     <div className="reser-time">
-                        <span className="reser-time-text">{time}</span>
+                        <span className="reser-time-text"onClick={goBack}>{time}</span>
                     </div>
                 </div>
                 <hr className="divide-line" />
@@ -44,7 +59,7 @@ const user={
                 <div className="stylelist-content">
                     <div className="st-profile-container">
                         <div className="st-profile-img">
-                            <img src="./img/gallrey-img/textimg.png" alt="등록한 반려동물 사진" className="st-profile-img" />
+                            <img src={user.image} alt="등록한 반려동물 사진" className="st-profile-img" />
                         </div>
                         <div className="st-profile-context">
                             <div className="st-profile-name">
@@ -60,7 +75,10 @@ const user={
             </div>
 
                     <div class="shop-btns">
-                        <a href="shoppagestylelist.html"><button class="shop-btn small-btn btn-gray btn-text">취소</button></a>
+                        <Link to ={`/shop/${shopInfo.num}/designer`}>   
+                        <button class="shop-btn small-btn btn-gray btn-text">
+                            취소
+                            </button></Link>
                         <button class="shop-btn small-btn btn-text">예약하기</button>
                     </div>
 

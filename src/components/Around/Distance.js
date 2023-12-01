@@ -46,7 +46,7 @@ function Distance() {
                             <img className="nearby-shop-img" name="image" src={shoplist.image}></img>
                         </div>
                         <div className="shop-text-container">
-                        <Link to={"/shop/"+shoplist.num}><h3 className="shop-name" name = "shopname">{shoplist.shopname} </h3></Link>
+                        <Link to={`/shop/${shoplist.num}`}><h3 className="shop-name" name="shopname">{shoplist.shopname}</h3></Link>
                             <h3 claaName="shop-dist">{shoplist.dist}</h3>
                                 <div className="shop-adderss"  >
                                 <p className="shop-adderss-text" name="address" >
@@ -55,7 +55,7 @@ function Distance() {
                             </div>
                         </div>
                     </div>
-                    <Link to={"/shop/"+shoplist.num}>샵 바로가기</Link>
+                    <Link to={`/shop/${shoplist.num}`}>샵 바로가기</Link>
                 </div>
             </li>
             ))}

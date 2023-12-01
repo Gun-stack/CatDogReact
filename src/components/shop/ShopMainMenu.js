@@ -3,7 +3,7 @@ import React from 'react';
 function ShopMainMenu() {
     return (
         <div>
-            <div class="shop-form-container">
+            <div className="shop-form-container">
                 <table style={{ borderCollapse: 'collapse', width: '100%', height: '300px', border: '1px solid black' }}>
                     <tbody>
                         <tr>

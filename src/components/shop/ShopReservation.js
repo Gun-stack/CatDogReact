@@ -7,7 +7,7 @@ import ShopReservationForm from './ShopReservationForm';
 
 
 function ShopReservation(props) {
-
+    const shopInfo = props.shopInfo;
 
 
     const desInfo ={
@@ -24,7 +24,6 @@ function ShopReservation(props) {
 
     return (
         <div>
-            <hr className="divide-line" />
             <div className="shop-title-text sm-text ma-top2rem">예약</div>
             {/* 스타일리스트 프로필 */}
             <div className="stylelist-content magin-t-1">
@@ -49,8 +48,8 @@ function ShopReservation(props) {
             </div>
             
             <Routes>
-                <Route path='/1' element={<ShopResrevationDate desInfo={desInfo} />}  /> 
-                <Route path='/' element={<ShopReservationForm/>} />
+                <Route path='/' element={<ShopResrevationDate desInfo={desInfo} shopInfo={shopInfo} />}  /> 
+                <Route path='form' element={<ShopReservationForm desInfo={desInfo} shopInfo={shopInfo} />} />
             </Routes>
 
 

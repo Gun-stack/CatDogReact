@@ -6,13 +6,14 @@ import { useEffect,useState   } from "react";
 function UserJoin() {
     const[id,setId] = useState('');
     const[password,setPassword] = useState('');
-    const[passwordCheck,setPasswordCheck] = useState('');
     const[username,setUserName] = useState('');
     const[nickname,setNickname] = useState('');
     const[tel,setTel] = useState('');
+    const[email,setEmail] = useState('');
+    
+    const[passwordCheck,setPasswordCheck] = useState('');
     const[idcheck,setIdCheck] = useState(false);
     const[nicknamecheck,setNicknameCheck] = useState(false);
-    
 
     const submit = (e) => {
         e.preventDefault();
@@ -22,6 +23,7 @@ function UserJoin() {
             username : username,
             nickname : nickname,
             tel : tel,
+            email : email,
         }
         console.log(joinInfo);
     
@@ -203,6 +205,9 @@ function UserJoin() {
                                         {/** 전화번호 */}
                                         <input type="text" id="tel" name="tel" placeholder="전화 번호"
                                             className="input-text"  onChange={onChange}/>
+                                        {/* 이메일 */}
+                                        <input type='email' id='email' name='email' placeholder='이메일'
+                                            className='input-text' onChange={onChange} />
 
                                         {/** 로그인 비번/아이디찾기 */}
                                         <div className="login-tools">
