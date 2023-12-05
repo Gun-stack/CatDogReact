@@ -1,13 +1,14 @@
 import React from 'react';
 import Header from '../screens/Header';
 import Footer from '../screens/Footer';
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
 // import axios from 'axios';
-import { Link, Route,Routes } from 'react-router-dom';
+import { Link, Route, Routes } from 'react-router-dom';
 import DesGal from './DesGal';
 import UserGal from './UserGal';
 import DesGalleryView from './DesGalleryView';
 import UserGalleryView from './UserGalleryView';
+import Error404 from '../error/Error404';
 
 
 
@@ -21,11 +22,11 @@ function GalleryList() {
         galComment: '3',
         galDate: ''
     });
-    
-return (
+
+    return (
         <div className="web-container">
             <div className="cd-container bg-white">
-                <Header/>
+                <Header />
                 <section className="section-header">
                     <div className="section-header-container">
                         <span className="section-header-text">갤러리</span>
@@ -39,15 +40,16 @@ return (
                         </ul>
                     </nav>
                     <Routes >
-                    <Route path="/des" element={<DesGal />} />
-                    <Route path="/" element={<DesGal />} />
-                    <Route path="/user" element={<UserGal />} />
-                    <Route path='user/:usernum' element={<UserGalleryView/>}/>
-                    <Route path='des/:desgalnum' element={<DesGalleryView/>}/>
+                        <Route path="/" element={<DesGal />} />
+                        <Route path="/des" element={<DesGal />} />
+                        <Route path="/user" element={<UserGal />} />
+                        <Route path='user/:usernum' element={<UserGalleryView />} />
+                        <Route path='des/:desgalnum' element={<DesGalleryView />} />
+                        <Route path='/*' element={<Error404 />} />
                     </Routes>
 
                 </main>
-            <Footer/>
+                <Footer />
             </div>
         </div>
     );
