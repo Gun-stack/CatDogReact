@@ -22,9 +22,9 @@ function UserLogin() {
     const login = (e) => {
         
         e.preventDefault();
-        axios.post("http://localhost:8090/userlogin", user)
+        axios.post("http://localhost:8090/login", user)
             .then(res=> {
-                console.log("token : " + res.headers.token);
+                console.log("token : " + res.headers);
                 dispatch({type:"token", payload:res.headers.authorization});
                 navigate("/main");
             })
@@ -63,7 +63,6 @@ function UserLogin() {
                             <span className="main-logo-text">보호자 로그인</span>
                         </section>
                         <section className="form-section">
-                            <form action="#" method="post" className="form-css">
                                 <div className="form-container">
                                     <div className="input-container">
                                         {/** 보호자 로그인 
@@ -100,7 +99,6 @@ function UserLogin() {
 
                                     </div>
                                 </div>
-                            </form>
                         </section>
                     </main>
                     <Footer />
