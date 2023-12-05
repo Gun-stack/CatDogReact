@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import ShopResrevationDate from './ShopResrevationDate';
 import ShopReservationForm from './ShopReservationForm';
+import Error404 from '../error/Error404';
 
 
 
@@ -50,6 +51,7 @@ function ShopReservation(props) {
             <Routes>
                 <Route path='/' element={<ShopResrevationDate desInfo={desInfo} shopInfo={shopInfo} />}  /> 
                 <Route path='form' element={<ShopReservationForm desInfo={desInfo} shopInfo={shopInfo} />} />
+                <Route path='/*' element={<Error404/>}/>
             </Routes>
 
 

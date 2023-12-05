@@ -74,12 +74,12 @@ const user={
                 }
             </div>
 
-                    <div class="shop-btns">
+                    <div className="shop-btns">
                         <Link to ={`/shop/${shopInfo.num}/designer`}>   
-                        <button class="shop-btn small-btn btn-gray btn-text">
+                        <button className="shop-btn small-btn btn-gray btn-text">
                             취소
                             </button></Link>
-                        <button class="shop-btn small-btn btn-text">예약하기</button>
+                        <button className="shop-btn small-btn btn-text">예약하기</button>
                     </div>
 
         </div>

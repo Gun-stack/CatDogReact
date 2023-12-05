@@ -1,0 +1,46 @@
+.err-section{
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.errpage-img-container{
+    margin-top: 5rem;
+}
+
+
+.errpage-img{
+    width: 250px;
+    height: 250px;
+}
+
+.err-title{
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: var( --btn-submit);
+}
+
+.err-text{
+    text-align: center;
+}
+
+.home-icon{
+    font-size: 1.5rem;
+    color: var( --btn-submit);
+    margin-right: .5rem;
+}
+
+.goback-div{
+    display: flex;
+    align-items: center;
+}
+
+.goback-div:hover{
+    cursor: pointer;
+    color: var(--btn-submit);
+    transition: color .3s ease-in-out;
+}

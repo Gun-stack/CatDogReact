@@ -11,7 +11,7 @@
 .st-gallery-grid{
     display: grid;
     grid-template-columns: repeat(3,1fr);
-    grid-template-rows: repeat(auto,1fr);
+    grid-auto-rows: 200px;
     gap: .5rem;
     margin-bottom: 1rem;
 }
@@ -30,8 +30,6 @@
 	-webkit-transition: .2s ease-in-out;
 	transition: .2s ease-in-out;
 }
-
-
 
 .img-comment-hover{
     position: absolute;
