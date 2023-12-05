@@ -40,7 +40,7 @@ function App() {
       {/** User관련 라우터 */}
       <Route path='/main' element={<Main/>}/>
       <Route path='/userjoin' element={<UserJoin/>}/>
-      <Route path='/userlogin' element={<UserLogin/>}/>
+      <Route path='/userlogin/*' element={<UserLogin/>}/>
       <Route path='/findid' element={<FindId/>}/>
       <Route path='/findpassword' element={<FindPassword/>}/>
       
