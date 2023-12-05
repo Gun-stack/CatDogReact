@@ -23,15 +23,21 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
 import store from './persist-store';
+import Error500 from './components/error/Error500';
+import Error404 from './components/error/Error404';
+import { useState } from 'react';
+import Loding from './components/tools/Loding';
 
 export const persistor = persistStore(store);
 
 function App() {
+  const [loding, setLoding] = useState(false); 
+
   return (
   <>
-
+  {loding  ? <Loding/> : 
     <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
+      <PersistGate loading={<Loding/>} persistor={persistor}>
 
     <Routes>
       {/** Index (리액트 서버 틀자마자 바로 나오는것)*/}
@@ -44,8 +50,6 @@ function App() {
       <Route path='/findid' element={<FindId/>}/>
       <Route path='/findpassword' element={<FindPassword/>}/>
       
-
-
       {/* usermy /petreg, /usermodi, /reservation */}
       <Route path='/usermy/*' element={<UserMy/>}/>
       <Route path='/modallogin' element={<UserModi_loginMidal/>}/>
@@ -64,14 +68,14 @@ function App() {
       
       <Route path='/shop/:shopnum/*' element={<ShopMain/>}/>
       
-      
-      
+      <Route path='/*' element={<Error404/>}/>
+
       </Routes>
 
       </PersistGate>
     </Provider>
     
-
+  }
 
   </>
   );

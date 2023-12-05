@@ -1,0 +1,62 @@
+.loding-container{
+    width: inherit;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.5);
+    position: absolute;
+    top: 0;
+}
+
+.loding-img{
+    width: 20rem;
+}
+
+.loding-logo{
+    width: 10rem;
+}
+@font-face {
+    font-family: 'LOTTERIACHAB';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/LOTTERIACHAB.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.loding-text{
+    font-size: 2rem;
+    color: var(--btn-submit);
+    animation: lodingText 2s ease-in-out infinite;
+
+    font-family: 'LOTTERIACHAB';
+}
+
+@keyframes lodingText {
+    0%{
+        font-weight: normal;
+        font-size: 3rem;
+        color: var(--btn-hover);
+    }
+    50%{
+        font-weight: bold;
+    }
+    100%{
+        font-weight: normal;
+    }    
+}
+
+.loding-1{
+    animation-delay: 0;
+}
+.loding-2{
+    animation-delay: .5s;
+}
+.loding-3{
+    animation-delay: 1s;
+}
+.loding-4{
+    animation-delay: 1.5s;
+}
+.loding-5{
+    animation-delay: 2s;
+}
+.loding-6{
+    animation-delay: 2.5s;
+}

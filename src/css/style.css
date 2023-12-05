@@ -10,6 +10,8 @@
 @import url('component/nav.css');
 @import url('component/section-header.css');
 @import url('component/main-nav.css');
+@import url('component/error.css');
+@import url('component/loding.css');
 
 
 /** Screen */

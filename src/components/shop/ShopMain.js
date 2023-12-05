@@ -11,6 +11,7 @@
     import ShopMainStyle from './ShopMainStyle';
     import ShopMainReview from './ShopMainReview';
     import ShopReservation from './ShopReservation';
+import Error404 from '../error/Error404';
 
 
     function ShopMain() {
@@ -58,6 +59,7 @@
                             <Route path="style" element={<ShopMainStyle shopInfo={shopInfo}/>}/>
                             <Route path="review" element={<ShopMainReview shopInfo={shopInfo}/>}/>
                             <Route path="reservation/:desnum/*" element={<ShopReservation shopInfo={shopInfo}/>}/>
+                            <Route path='/*' element={<Error404/>}/>
                         </Routes>    
                         
 
