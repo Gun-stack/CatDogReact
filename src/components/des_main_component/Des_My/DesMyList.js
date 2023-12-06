@@ -20,7 +20,7 @@ function DesMyList() {
                     <li className="nav-li">
                         <div>
                             <i className="fas fa-caret-square-right mypage-arrow"></i>
-                            <Link to="shopregform">스타일리스트 정보 등록 / 수정하기</Link>
+                            <Link to="desinfo">스타일리스트 정보 등록 / 수정하기</Link>
                         </div>
                         <i className="fas fa-cut"></i>
                     </li>

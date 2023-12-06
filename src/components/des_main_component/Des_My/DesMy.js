@@ -4,6 +4,7 @@ import DesMyList from "./DesMyList";
 import Error404 from "../../error/Error404";
 import ShopReg from "./ShopReg";
 import ShopRegForm from "./ShopRegForm";
+import DesInfo from "./DesInfo";
 
 function  DesMy() {
     return ( 
@@ -24,6 +25,8 @@ function  DesMy() {
 
                         <Route exact path='/shopreg' element={<ShopReg />} />
                         <Route exact path='/shopregform' element={<ShopRegForm />} />
+                        <Route exact path='/desinfo' element={<DesInfo />} />
+
                         {/* <Route exact path='/petreg' element={<PetReg />} />
                         <Route exact path='/petregform' element={<PetRegForm />} />
 

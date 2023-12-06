@@ -29,8 +29,6 @@ function UserJoin() {
             email : email,
         }
         console.log(joinInfo);
-    
-
 
         axios.post('http://localhost:8090/userjoin',joinInfo)
         .then((res)=>{
