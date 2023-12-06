@@ -1,9 +1,5 @@
-.shop-main-img-section,.shop-main-section{
+.shop-main-section{
     margin-top: 2rem;
-}
-
-.shop-main-img-section{
-    width: 75%;
 }
 
 .dis-center{
@@ -30,6 +26,12 @@
     align-items: center;
     color: rgb(163, 163, 163);
 }
+
+.shop-title-img{
+    width: 35rem;
+    height: 15rem;
+}
+
 .sm-input-img{
     height: 5rem;
 }
