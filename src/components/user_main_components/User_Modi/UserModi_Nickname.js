@@ -10,20 +10,15 @@ import Swal from 'sweetalert2';
 function UserModi_Nickname() {
 
     const [userNickname, setUserNickname] = useState('보호자 닉네임');
-    const navigate = useNavigate();
-    const goBack = () => {
+
+    let navigate = useNavigate();
+    function goBack(){
         navigate(-1);
     }
-
-
-
 
     const onChange = (e) => {
         setUserNickname(e.target.value);
     }
-
-
-
 
     const checkNickname = () => {
         if (userNickname === '') {
@@ -97,13 +92,11 @@ function UserModi_Nickname() {
             })
     }
 
-
-
     return (
         <div>
-            <section className="form-section">
+            <section className="form-section magin-t-5">
                 {/* <form action="" method="post" className="form-css"> */}
-                <div className="form-container">
+                <form className="form-container">
                     {/* 인풋 모여있는 컨테이너 */}
                     <div className="input-container magin-t-1">
 
@@ -118,11 +111,11 @@ function UserModi_Nickname() {
                     </div>
 
                     {/* submit 버튼 */}
-                    <div className="button-container">
+                    <div>
                         <button className="main-btn btn-text magin-t-1" onClick={goBack} style={{ backgroundColor: 'rgb(219, 219, 219)' }}>취소</button>
-                        <button id="submit-btn" type="submit" className="main-btn btn-text magin-t-1" onClick={onSubmit}>회원 정보 수정 하기</button>
+                        <button id="submit-btn" type="submit" className="main-btn btn-text magin-t-1" onClick={onSubmit}>닉네임 수정하기</button>
                     </div>
-                </div>
+                </form>
             </section>
         </div>
     );

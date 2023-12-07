@@ -6,7 +6,7 @@ import { Link, Route, Routes } from 'react-router-dom';
 
 
 function GalleryView() {
-
+const [imageSrc, setImageSrc] = useState('/img/gallrey-img/1.jpg');
     // const [galleryList, setGalleryList] = useState([]);
     // const [galCommentList, setGalComment] = useState([]);
 
@@ -74,7 +74,7 @@ useEffect(() => {
                             </div>
 
                             <div className="view-img-container">
-                                <img src="/img/gallrey-img/textimg.png" alt="스타일리스트 사진" className="view-img" />
+                                <img src="/img/gallrey-img/textimg.png" alt="스타일리스트 사진" className="view-img"  onClick={() => window.open(imageSrc)}/>
                             </div>
                             <div className="view-img-icons magin-l-1">
                                 <span><i className="fa-regular fa-heart"></i>{gallery.galLike}</span>

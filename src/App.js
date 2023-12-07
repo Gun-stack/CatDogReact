@@ -27,6 +27,7 @@ import Error500 from './components/error/Error500';
 import Error404 from './components/error/Error404';
 import { useState } from 'react';
 import Loding from './components/tools/Loding';
+import DesMy from './components/des_main_component/Des_My/DesMy';
 
 export const persistor = persistStore(store);
 
@@ -60,11 +61,14 @@ function App() {
       <Route path='/deslogin' element={<DesLogin/>}/>
       <Route path='/deslogin' element={<DesLogin/>}/>
       <Route path='/desjoin' element={<DesJoin/>}/>
+
+      {/* desmy */}
+      <Route path='/desmy/*' element={<DesMy/>}/>
       
-      {/* //갤러리 관련 라우터 */}
+      {/* 갤러리 관련 라우터 */}
       
       <Route path='/gallery/*' element={<GalleryList/>}/>
-      {/* //예약관련 라우터 */} 
+      {/* 예약관련 라우터 */} 
       
       <Route path='/shop/:shopnum/*' element={<ShopMain/>}/>
       
