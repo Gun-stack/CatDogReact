@@ -13,8 +13,7 @@
 
     background-image: url(/src/img/logo/test-footer.png);
     background-repeat: repeat-x;
-    background-position: bottom;
-    
+    background-position: bottom;    
 }
 
 .footer-address>p, .footer-name-container>p{

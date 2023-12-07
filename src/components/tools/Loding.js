@@ -2,7 +2,7 @@ function Loding() {
     return (
         <div className="web-container">
 
-            <div className="cd-container">
+            <div className="cd-container bg-dogs">
 
                 <div className="loding-container  dis-center">
                     <img src="/img/logo/logo_color.png" alt="댕냥꽁냥 로고" className="loding-logo" />

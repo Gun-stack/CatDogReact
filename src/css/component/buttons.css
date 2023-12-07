@@ -73,6 +73,11 @@
 .btn-gray{
     background-color: var( --btn-disable);
 }
+
+.btn-red{
+    background-color: rgb(158, 0, 0);
+}
+
 .modal-btns>button{
     margin: 1rem;
 }
