@@ -12,21 +12,35 @@ import UserModi_Tel from '../User_Modi/UserModi_Tel';
 import UserModi_Password from '../User_Modi/UserModi_Password';
 import PetRegForm from './PetRegForm';
 import Error404 from "../../error/Error404";
+import { useSelector,useDispatch } from 'react-redux';
+import axios from 'axios';
+import { setUserStore } from '../../../actions';
 
 
 
 
 function UserMy() {
-    const [showSection, setShowSection] = useState(true);
-    const [userNickname, setUserNickname] = useState('보호자 닉네임');
-
-
-
+    const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
+    const user = useSelector((state) => state.user)
+    const token = useSelector((state) => state.token)
+    const dispatch = useDispatch();
+    
     useEffect(() => {
-        const userNickname = localStorage.getItem('userNickname');
-        setShowSection(true);
-        setUserNickname(userNickname);
-    }, []);
+        console.log(token);
+        if (!isLoggedIn) {
+            alert('로그인이 필요한 서비스입니다.');
+            window.location.href = '/catdog/userlogin';
+        }
+        axios.get(`http://localhost:8090/userinfo?id=${user.id}`)
+        .then((res)=>{  
+            // console.log(res.data);
+            dispatch(setUserStore(res.data));
+            }
+        )
+        .catch((err)=>{console.log(err);})
+
+    }, []  );
+
 
 
 
@@ -57,7 +71,7 @@ function UserMy() {
 
 
                         <Route exact path='/reservation' element={<Reservation />} />
-                        <Route exact path='/check' element={<ReservationCheck />} />
+                        <Route exact path='/check/:num' element={<ReservationCheck />} />
                         <Route path='/*' element={<Error404/>}/>
 
                     </Routes>

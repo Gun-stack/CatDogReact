@@ -2,38 +2,29 @@ import React, { useEffect } from 'react';
 import { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 
 function Reservation() {
+const dispatch = useDispatch();
+const user = useSelector((state) => state.user);
 
-const[res, setRes] = useState({
-    resNum: '1',
-    userId:'user1',
-    desId: 'des1',
-    petName: '석탄' ,
-    shopId : 'shop1',
-    resDate: '2023-12-01',
-    resTime: '12:00',
-    resState: false ,
-    refImg: '',
-    refText: '샤기컷으로 해주세요',
-    notice: '배가고파요',
-    isReview: false,
-});
+const reservationList = useSelector((state) => state.resv);
 
 
 
-// useEffect(() => {
-//     axios.get('http://localhost:8080/catdog/reservation/user/catdog')
-//     .then((res) => {
-//         console.log(res);
-//         setRes(res.data);
-//     })
-//     .catch((err) => {
-//         console.log(err);
-//     })
-
-// }
-// , []);
+useEffect(() => {
+    axios.get(`http://localhost:8090/resinfo?userId=${user.id}`)
+    .then((res) => {
+        if(res.data !== undefined){  
+            dispatch({type:'SET_RESERVATION', payload:res.data} );
+            console.log(res.data);
+        }
+    })
+    .catch((err) => {
+        console.log(err);
+    })
+}
+, [user.id]);
 
 
 
@@ -53,27 +44,29 @@ return (
                             </li>
                         </ul>
 
-                        {/* 예약한 내역이 없다면 */}
+                        {reservationList.length === 0 ? (
                         <form action="" className="shop-form-container">
                             <div className="input-img-click sm-input-img">
                                 <p>예약한 내역이 없습니다</p>
                             </div>
                         </form>
-
-                        {/* 예약한 내역이 있다면 */}
-                        <div className="reservation-container">
+                        ):(
+                        reservationList.map((res, index) => (
+                        <div key={index} className="reservation-container">
                                 <hr className="divide-line"/>
                                 <div className="re-shop-info">
                                     <span className="re-text">샵 이름 :</span> 
-                                    <span className="re-shop-name">{res.shopId}</span> 
+                                    <span className="re-shop-name">{res.shopName}</span> 
                                     <span className="re-pet-name">{res.petName}</span>
                         </div>
-                                <div className="re-date">{res.resDate} {res.resTime}</div>
-                                <div className="re-btns"><span className="is-visit">{res.resState? '방문 완료': '방문 예정'}  </span>
-                                <button className="small-btn" ><Link to="/usermy/check" className="btn-text" >예약확인</Link></button></div>
+                                <div className="re-date">{res.date} {(res.time).slice(0,-3)}</div>
+                                <div className="re-btns"><span className="is-visit">{res.status==="true" ? '방문 완료': '방문 예정'}  </span>
+                                <button className="small-btn"><Link to={`/usermy/check/${res.num}`} className="btn-text" >예약확인</Link></button></div>
                                 <hr className="divide-line"/>
-
                         </div>
+                        ))
+
+                        )}
                     </section>
                 </main>
 

@@ -4,8 +4,10 @@ import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
 import SocialKakao from './SocialKakao';
 import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch ,useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { setToken,setUserStore,loginStore,setAutoLogin } from "../../actions"; // 액션 생성자 가져오기
+
 
 
 
@@ -13,43 +15,38 @@ function UserLogin() {
     const [user, setUser] = useState ({id:"", password:""});
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [isautoLogin, setIsAutoLogin] = useState(false);
+    const isAutoLogin = useSelector((state) => state.isAutoLogin);
 
     const changeUser = (e) => {
         setUser({...user, [e.target.name]:e.target.value});
     }
 
-    const login = (e) => {
-        
-        e.preventDefault();
-        axios.post("http://localhost:8090/login", user)
-            .then(res=> {
-                console.log("token : " + res.headers);
-                dispatch({type:"token", payload:res.headers.authorization});
-                navigate("/main");
-            })
-            .catch(err=> {
-                console.log(err);
-            })
-        
-    } 
-    const handleAutoLogin = (e) => {
-        const toggle = document.querySelector('.fa-check-circle');
-        if (toggle.classList.contains('active')) {
-            setIsAutoLogin(true);
-            toggle.classList.remove('active');
-            toggle.style.color = '#ccc';
-            console.log('자동로그인 해제' + isautoLogin);
-        } else {
-            setIsAutoLogin(false);
-            toggle.classList.add('active');
-            toggle.style.color = 'black';
-            console.log('자동로그인 설정' + isautoLogin);
+    const login = async () => {
+        try {
+        const res = await axios.post('http://localhost:8090/login', user);
+        const token = res.headers.authorization;
+        console.log(token);
+        dispatch(setToken(token));
+        dispatch(setUserStore(user));
+        dispatch(loginStore());
+        navigate('/main');
+        } catch (error) {
+            console.error(error);
         }
-    }
+      };
 
-            
+      const handleAutoLogin = () => {
+        dispatch(setAutoLogin(!isAutoLogin));
+        console.log(isAutoLogin);
+      };
 
+   useEffect(() => {
+  // 컴포넌트가 마운트될 때 로컬 스토리지에서 자동 로그인 상태를 확인하여 Redux에 업데이트
+            const storedIsAutoLogin = localStorage.getItem("isAutoLogin");
+            if (storedIsAutoLogin === "true") {
+                dispatch(setAutoLogin(true));
+            }
+            }, [dispatch]);
     
 
     return (
@@ -76,7 +73,9 @@ function UserLogin() {
 
                                         {/** 자동로그인, 회원가입 , 계정찾기, 비밀번호 찾기 */}
                                         <div className="login-tools">
-                                            <span onClick={handleAutoLogin}><i className="fas fa-check-circle active"></i> 자동 로그인</span>
+                                            <span onClick={handleAutoLogin}>
+                                                <i className={`fas fa-check-circle ${isAutoLogin?'active':' '} `}>
+                                                    </i> 자동 로그인</span>
                                             <div>
                                                 <span className="logintool-text"><Link to="/userjoin">회원가입</Link></span>
                                                 <span className="logintool-text"><Link to="/findid">계정찾기</Link></span>
@@ -84,19 +83,20 @@ function UserLogin() {
                                             </div>
                                         </div>
                                     </div>
+
+
+                                    
                                     <div className="button-container">
                                         {/** Submit BTN */}
                                         <button type="submit" className="main-btn btn-text magin-t-1"><div className="btn-text" onClick={login} >로그인</div></button>
                                         {/** 카카오 로그인 */}
                                         
-                                            <div className="main-btn kakao-login-btn"><i className= "fas fa-comment" ></i><Link to="kakaologin">카카오톡 로그인</Link></div>
-                                            <SocialKakao/>
+                                        <div className="main-btn kakao-login-btn"><i className= "fas fa-comment" >
+                                                </i>
+                                                <a href="http://localhost:8090/oauth2/authorization/kakao">카카오 로그인</a>                
+                                                </div>
 
-
-                                        <Routes>
-                                        <Route exactpath='/kakaologin/*' element={<SocialKakao/>}/>
-                                        </Routes>
-
+                                       
                                     </div>
                                 </div>
                         </section>

@@ -1,12 +1,22 @@
 import { useEffect,useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 
 function PetReg() {
 
+    //store에 있는 user.id로 서버에 요청해서 반려동물 정보 가져오기
+    const user = useSelector(state => state.user);
+    const petList = useSelector(state => state.pet);
+
+    useEffect(() => {
+        console.log(user);
+        console.log(petList);
+    }   , []);
 
     return ( 
     <>
+
     <main className="cd-main dis-center">
         <section className="shop-main-section bg-white">
             <ul className="nav-ul">
@@ -17,41 +27,43 @@ function PetReg() {
                     <i className="fas fa-store"></i>
                 </li>
             </ul> 
-            <form action="" className="shop-form-container">
-                
+
+       
+            <div className="shop-form-container">
                 <div className="input-img-click sm-input-img">
                     <p> 등록한 반려동물이 없습니다 <br/>
                         <Link to="/usermy/petregform">반려동물 등록하기 <i className="fas fa-plus-circle"></i></Link></p>
                 </div>
-            </form>
-
-            <div class="stylelist-content">
+            </div>
+            
+            {petList.map((pet, idx) =>
+                <div className="stylelist-content" key={idx}>
                         <div className="st-profile-container">
-
                             <div className="st-profile-img">
-                                <img src="/img/gallrey-img/textimg.png" alt="등록한 반려동물 사진" className="st-profile-img" />
+                                <img src={`http://localhost:8090/petimg/${pet.num}`} loading='lazy' alt="등록한 반려동물 사진" className="st-profile-img" />
                             </div>
-
                             <div className="st-profile-context">
                                 <div className="st-profile-name">
-                                    반려동물
+                                    {pet.name}
                                 </div>
                                 <div className="st-profile-shop">
-                                    반려동물 종류
+                                    {pet.breed}
                                 </div>
                             </div>
-
+        
                         </div>
 
                         <div className="st-button-container">
                             <a href="cl-petmodify.html"><button className="st-button">편집<i className="fas fa-pen btn-icon"></i></button></a>
                         </div>
-                    </div>
+            </div>
+            )}
+
+            
+        
                 </section>
-
-
                 </main>
-            </> 
+                </> 
             );
         }
 

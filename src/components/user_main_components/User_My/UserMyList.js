@@ -1,17 +1,17 @@
 import { useEffect,useState } from 'react';
+import { useSelector,useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 function UserMylist() {
     
     const [showSection, setShowSection] = useState(true);
-    const [userNickname, setUserNickname] = useState('보호자 닉네임');
+    const user = useSelector((state) => state.user);
 
 
 
 useEffect(() => {
-    const userNickname = localStorage.getItem('userNickname');
+    
     setShowSection(true);
-    setUserNickname(userNickname);
 }, []);
 
     return ( 
@@ -19,7 +19,7 @@ useEffect(() => {
             <main className="cd-main dis-center">
             <section className="mypage-title-section">
                         <div className="mypage-title-container">
-                            <div className="mypage-title-text">안녕하세요! <span className="color-nomal">{userNickname}</span>님!</div>
+                            <div className="mypage-title-text">안녕하세요! <span className="color-nomal"> {user.nickname} </span>님!</div>
                         </div>
                     </section>
                         <section className={`shop-main-section ${showSection ? "" : "hidden"} bg-white`} >

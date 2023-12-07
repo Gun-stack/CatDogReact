@@ -26,7 +26,7 @@ function Error404() {
                             주소를 확인해주세요.
                             <br />
                             <br />
-                            <div className="goback-div" onClick={goBack}><i class="fas fa-paw home-icon"></i><span className="f-w-600 goback-div">이전 페이지로 돌아가기</span></div>
+                            <div className="goback-div" onClick={goBack}><i className="fas fa-paw home-icon"></i><span className="f-w-600 goback-div">이전 페이지로 돌아가기</span></div>
                             <hr className="divide-line" />
 
                         </div>

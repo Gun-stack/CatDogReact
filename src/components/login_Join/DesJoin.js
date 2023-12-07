@@ -2,6 +2,7 @@ import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import Footer from "../screens/Footer";
 import { useState } from "react";
+import axios from "axios";
 
 function DesJoin() {
     const[id,setId] = useState('');
@@ -22,29 +23,30 @@ function DesJoin() {
             nickname : nickname,
         }
         console.log(joinInfo);
-        // axios.post('http://localhost:8090/des/join',joinInfo)
-        // .then((res)=>{
-        //     console.log(res);
-        //     console.log(res.data);
-        //     if(res.data === 1){
-        //         Swal.fire({
-        //             icon: 'success',
-        //             title: '회원가입 성공',
-        //             text: '로그인 페이지로 이동합니다.',
-        //             confirmButtonColor: '#F9950F',
-        //             confirmButtonText: '확인',
-        //         });
-        //         history.push('/login');
-        //     }else{
-        //         Swal.fire({
-        //             icon: 'error',
-        //             title: '회원가입 실패',
-        //             text: '다시 시도해주세요.',
-        //             confirmButtonColor: '#F9950F',
-        //             confirmButtonText: '확인',
-        //         });
-        //     }
-        // })
+       
+        axios.post('http://localhost:8090/userjoin',joinInfo)
+        .then((res)=>{
+            console.log(res);
+            console.log(res.data);
+            if(res.data === 1){
+                Swal.fire({
+                    icon: 'success',
+                    title: '회원가입 성공',
+                    text: '로그인 페이지로 이동합니다.',
+                    confirmButtonColor: '#F9950F',
+                    confirmButtonText: '확인',
+                });
+                // history.push('/login');
+            }else{
+                Swal.fire({
+                    icon: 'error',
+                    title: '회원가입 실패',
+                    text: '다시 시도해주세요.',
+                    confirmButtonColor: '#F9950F',
+                    confirmButtonText: '확인',
+                });
+            }
+        })
     }
 
 

@@ -27,6 +27,7 @@ import Error500 from './components/error/Error500';
 import Error404 from './components/error/Error404';
 import { useState } from 'react';
 import Loding from './components/tools/Loding';
+import Oauth from './components/Oauth';
 
 export const persistor = persistStore(store);
 
@@ -47,6 +48,7 @@ function App() {
       <Route path='/main' element={<Main/>}/>
       <Route path='/userjoin' element={<UserJoin/>}/>
       <Route path='/userlogin/*' element={<UserLogin/>}/>
+      <Route path="/oauth/redirect/:token" element={<Oauth/>} />
       <Route path='/findid' element={<FindId/>}/>
       <Route path='/findpassword' element={<FindPassword/>}/>
       
