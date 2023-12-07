@@ -36,7 +36,6 @@ function Error500() {
                     </section>
 
                 </main>
-                <Footer />
             </div>
         </div>
 

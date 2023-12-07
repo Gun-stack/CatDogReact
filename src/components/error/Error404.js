@@ -34,7 +34,6 @@ function Error404() {
                     </section>
 
                 </main>
-                <Footer />
             </div>
         </div>
     );

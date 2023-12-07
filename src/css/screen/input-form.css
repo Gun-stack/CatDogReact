@@ -20,10 +20,12 @@ input::placeholder{
     width: inherit;
     display: flex;
     justify-content: space-evenly;
+    align-items: flex-end;
 }
 
 .filebox>label{
     padding: .5rem;
+    height: 1rem;
     font-size: 1rem;
     color: #ffffff;
     background-color: var(--btn-submit);
@@ -45,6 +47,9 @@ input[type=file]{
 }
 
 [type=text],[type=password]{
+    font-family: 'Pretendard-Regular';
+    font-size: 1rem;
+    color: var(--text-color);
     background: none;
 }
 
@@ -89,10 +94,16 @@ input[type=file]{
     box-shadow: 0 0 0 max(4px, 0.2em) lightgray;
     cursor: pointer;
 }
+
 [type="date"]{
     border: none;
     width: 100%;
     text-align: center;
+}
+
+[type="number"]{
+    border: none;
+    background-color: #ffffff00;
 }
 
 input[type='date']::before {
@@ -103,9 +114,36 @@ input[type='date']::before {
     width: 100%;
     height: 100%;
 }
+.input-img{
+    width: 100px;
+    height: 100px;
+}
 
-input[type='date']::webkit-calendar{
-    background-color: aquamarine;
+.address-container{
+    width: 25rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.address-btn-container{
+    display: flex;
+    align-items: flex-end;
+}
+.address-btn{
+    padding: 0.5rem;
+    width: 9rem;
+    height: 2rem;
+    font-size: 1rem;
+    color: #ffffff;
+    background-color: var(--btn-submit);
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.address-input{
+    width: 25rem;
+    border-bottom: 1px solid gray;
+    padding: 1rem;
 }
 
 .form-container{
@@ -116,6 +154,7 @@ input[type='date']::webkit-calendar{
     width: 100%;
     display: flex;
     align-items: center;
+    flex-direction: column;
 }
 
 .radio-container{
@@ -169,12 +208,6 @@ input[type='date']::webkit-calendar{
     width: inherit;
 }
 
-.input-container{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
 .form-container{
     min-height: 80vh;
     display: flex;
@@ -197,4 +230,24 @@ input[type='date']::webkit-calendar{
 
 .form-text{
     font-weight: 600;
+}
+
+
+.react-modal-css{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.withdraw-img{
+    width: 100px;
+}
+
+.withdraw-text{
+    font-family: 'Pretendard-Regular';
+    font-weight: 600;
+    margin: 1rem;
+    color: var(--text-color);
+    text-align: center;
 }
