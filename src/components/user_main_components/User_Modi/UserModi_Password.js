@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Loding from '../../tools/Loding';
+import {useSelector} from 'react-redux';
 
 
 function UserModi_Password() {
@@ -10,6 +11,7 @@ function UserModi_Password() {
     const [passwordCheck, setPasswordCheck] = useState('');
     const [passMessage, setPassMessage] = useState('비밀번호를 입력하세요');
     const [loading, setLoading] = useState(false);
+    const user = useSelector((state) => state.user);
 
     let navigate = useNavigate();
     function goBack(e) {
@@ -35,6 +37,8 @@ function UserModi_Password() {
         setPasswordCheck(e.target.value);
     }
     const onSubmit = async (e) => {
+
+        console.log("UserNum : " + user.num );
         e.preventDefault();
         setLoading(true);
         if (password !== passwordCheck) {
@@ -43,8 +47,8 @@ function UserModi_Password() {
             setPassMessage('비밀번호가 일치합니다.');
         }
         try {
-            const res = await axios.post('http://localhost:8080/user/endpoint', { password });
-            if (res.data === true) {
+            const res = await axios.post('http://localhost:8090/modipassword', { num: user.num, password : password });
+            if (res.data === "success") {
                 Swal.fire({
                     icon: 'success',
                     html: "<p style='text-align:center;'>비밀번호가 변경되었습니다<p>",
