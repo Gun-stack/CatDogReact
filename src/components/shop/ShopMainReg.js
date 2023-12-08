@@ -1,4 +1,7 @@
 import React from 'react';
+import Header from '../../screens/Header';
+import Footer from '../../screens/Footer';
+
 
 function ShopMainReg() {
     return (

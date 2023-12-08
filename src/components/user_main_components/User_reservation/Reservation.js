@@ -37,9 +37,12 @@ return (
                     <section className="shop-main-section bg-white">
                         <ul className="nav-ul">
                             <li className="nav-li">
+                                <Link to="/usermy/reservation">
                                 <div>
                                     <i className="fas fa-caret-square-right mypage-arrow"></i>예약 확인 하기
                                 </div>
+                                </Link>
+
                                 <i className="fas fa-store"></i>
                             </li>
                         </ul>
@@ -54,8 +57,9 @@ return (
                         reservationList.map((res, index) => (
                         <div key={index} className="reservation-container">
                                 <hr className="divide-line"/>
+                                {index+1}
                                 <div className="re-shop-info">
-                                    <span className="re-text">샵 이름 :</span> 
+                                    <span className="re-text"> 샵 이름 :</span> 
                                     <span className="re-shop-name">{res.shopName}</span> 
                                     <span className="re-pet-name">{res.petName}</span>
                         </div>

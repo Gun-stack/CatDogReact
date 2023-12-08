@@ -29,6 +29,7 @@ import { useState } from 'react';
 import Loding from './components/tools/Loding';
 import Oauth from './components/Oauth';
 import DesMy from './components/des_main_component/Des_My/DesMy';
+import ShopReg from './components/des_main_component/Des_My/ShopReg';
 
 export const persistor = persistStore(store);
 
@@ -73,6 +74,7 @@ function App() {
       {/* 예약관련 라우터 */} 
       
       <Route path='/shop/:shopnum/*' element={<ShopMain/>}/>
+      <Route path='/shopreg/:desnum' element={<ShopReg/>}/>
       
       <Route path='/*' element={<Error404/>}/>
 

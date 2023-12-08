@@ -32,7 +32,7 @@ function PetReg() {
             <ul className="nav-ul">
                 <li className="nav-li">
                     <div>
-                        <i className="fas fa-caret-square-right mypage-arrow"></i>예약 확인 하기
+                        <i className="fas fa-caret-square-right mypage-arrow"></i>반려동물 등록/수정 하기
                     </div>
                     <i className="fas fa-store"></i>
                 </li>
@@ -57,10 +57,13 @@ function PetReg() {
                             </div>
                             <div className="st-profile-context">
                                 <div className="st-profile-name">
-                                    {pet.name}
+                                    {pet.name}   / {pet.age} 살 
                                 </div>
                                 <div className="st-profile-shop">
                                     {pet.breed}
+                                </div>
+                                <div className="st-profile-shop" >
+                                    {pet.petNote}
                                 </div>
                             </div>
         

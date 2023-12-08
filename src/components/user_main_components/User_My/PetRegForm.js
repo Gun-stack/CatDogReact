@@ -7,10 +7,12 @@ import axios from 'axios';
 import { Link, json } from 'react-router-dom';
 import { contextType } from 'react-modal';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
 
 
 
 function PetRegForm() {
+    const navigate = useNavigate();
     const imgBoxRef = useRef();
     const user = useSelector((state) => state.user);
     const [files, setFiles] = useState([]);
@@ -70,7 +72,7 @@ function PetRegForm() {
                 formData.append("file", file);
                 console.log(file);
             }
-            
+            console.log("user.num: "+user.num);
             formData.append("name", pet.name);
             formData.append("dogOrCat", pet.dogOrCat);
             formData.append("age", pet.age);
@@ -78,7 +80,7 @@ function PetRegForm() {
             formData.append("breed", pet.breed);
             formData.append("gender", pet.gender);
             formData.append("neuter", pet.neuter);
-            formData.append("userNum", user.num);
+            formData.append("userNum",user.num);
             console.log(formData);
             axios.post('http://localhost:8090/petreg', formData)
             .then((res)=>{
@@ -87,7 +89,7 @@ function PetRegForm() {
             })
             if (result.isConfirmed) {
                 Swal.fire('등록완료!', '', 'success')
-                window.location.href = '/catdog/usermy';
+                navigate('/usermy');
             } else if (result.isDenied) {
                 Swal.fire('취소하였습니다.', '', 'info')
             }
