@@ -2,6 +2,8 @@ import {useEffect} from 'react';
 import { useParams, useNavigate } from 'react-router';
 import {useDispatch, useSelector} from 'react-redux';
 import axios from 'axios';
+import { loginStore } from '../actions';
+
 
 
 const Oauth = () => {
@@ -21,11 +23,13 @@ const Oauth = () => {
     useEffect(()=> {
         console.log("token:"+token);
         dispatch({type:"token", payload:token})
-
         axios.get(`http://localhost:8090/user`, axiosConfig)
         .then((res)=>{
             console.log(res);
             console.log(res.data);
+            dispatch({type:"user", payload:res.data})
+          
+            dispatch(loginStore())
         })
         navigate("/main");
     }, [])
