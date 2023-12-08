@@ -15,6 +15,7 @@ import Error404 from "../../error/Error404";
 import { useSelector,useDispatch } from 'react-redux';
 import axios from 'axios';
 import { setUserStore } from '../../../actions';
+import PetModi from './PetModi';
 
 
 
@@ -62,6 +63,7 @@ function UserMy() {
 
                         <Route exact path='/petreg' element={<PetReg />} />
                         <Route exact path='/petregform' element={<PetRegForm />} />
+                        <Route exact path='/petmodi/:num' element={<PetModi/>}/>
 
 
                         <Route path='usermodi' element={<UserModi />} />

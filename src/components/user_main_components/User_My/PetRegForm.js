@@ -6,14 +6,15 @@ import Swal from 'sweetalert2';
 import axios from 'axios';
 import { Link, json } from 'react-router-dom';
 import { contextType } from 'react-modal';
+import { useSelector } from 'react-redux';
 
 
 
 function PetRegForm() {
     const imgBoxRef = useRef();
+    const user = useSelector((state) => state.user);
     const [files, setFiles] = useState([]);
     const[pet, setPet] = useState({
-        
         name: '',
         dogOrCat: '',
         age: '',
@@ -32,7 +33,7 @@ function PetRegForm() {
 
     const fileChange = (e) => {
         if(e.target.files.length>0) {
-            setFiles([...files,e.target.files[0]]);
+            setFiles([e.target.files[0]]);
             console.log(files);
         }
         
@@ -65,7 +66,6 @@ function PetRegForm() {
         //반려동물을 등록하시겠습니까?
         Swal.fire({icon: 'question',title: '반려동물을 등록하시겠습니까?',showCancelButton: true,confirmButtonText: '등록',cancelButtonText: '취소',}).then((result) => {
             const formData = new FormData();
-    
             for(let file of files) {
                 formData.append("file", file);
                 console.log(file);
@@ -78,6 +78,7 @@ function PetRegForm() {
             formData.append("breed", pet.breed);
             formData.append("gender", pet.gender);
             formData.append("neuter", pet.neuter);
+            formData.append("userNum", user.num);
             console.log(formData);
             axios.post('http://localhost:8090/petreg', formData)
             .then((res)=>{

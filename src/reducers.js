@@ -29,6 +29,7 @@ const initialState = { isLoggedIn: false,   };
         localStorage.removeItem('token');
         localStorage.removeItem('user');
         localStorage.removeItem('resv');
+        localStorage.removeItem('pet');
 
         return {
           ...state,
