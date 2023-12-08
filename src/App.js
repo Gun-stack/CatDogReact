@@ -27,11 +27,8 @@ import Error500 from './components/error/Error500';
 import Error404 from './components/error/Error404';
 import { useState } from 'react';
 import Loding from './components/tools/Loding';
-<<<<<<< HEAD
 import Oauth from './components/Oauth';
-=======
 import DesMy from './components/des_main_component/Des_My/DesMy';
->>>>>>> b8d49acd13570d2820c15c322eee325072d06163
 
 export const persistor = persistStore(store);
 
