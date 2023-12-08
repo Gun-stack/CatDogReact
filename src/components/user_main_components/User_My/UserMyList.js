@@ -10,7 +10,7 @@ function UserMylist() {
 
 
 useEffect(() => {
-    
+    console.log(user);
     setShowSection(true);
 }, []);
 

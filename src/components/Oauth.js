@@ -27,8 +27,7 @@ const Oauth = () => {
         .then((res)=>{
             console.log(res);
             console.log(res.data);
-            dispatch({type:"user", payload:res.data})
-          
+            dispatch({type:"SET_USER", payload:res.data})
             dispatch(loginStore())
         })
         navigate("/main");

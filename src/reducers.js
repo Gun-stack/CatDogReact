@@ -30,6 +30,8 @@ const initialState = { isLoggedIn: false,   };
         localStorage.removeItem('user');
         localStorage.removeItem('resv');
         localStorage.removeItem('pet');
+        localStorage.clear();
+        sessionStorage.clear();
 
         return {
           ...state,
