@@ -40,6 +40,11 @@
     height: 100px;
 }
 
+.input-img-size{
+    width: 250px;
+    height: 250px;
+}
+
 .review-icon{
     color: var(--btn-submit);
     margin-right: .5rem;
