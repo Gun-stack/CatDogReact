@@ -14,33 +14,28 @@ import PetRegForm from './PetRegForm';
 import Error404 from "../../error/Error404";
 import { useSelector,useDispatch } from 'react-redux';
 import axios from 'axios';
+
 import { setUserStore } from '../../../actions';
 import UserReviewForm from "../User_reservation/UserReviewForm";
+import PetModi from './PetModi';
+import { useNavigate } from "react-router";
+
 
 
 
 
 function UserMy() {
     const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
-    const user = useSelector((state) => state.user)
-    const token = useSelector((state) => state.token)
-    const dispatch = useDispatch();
+    const navigate = useNavigate();
     
     useEffect(() => {
-        console.log(token);
+
         if (!isLoggedIn) {
             alert('로그인이 필요한 서비스입니다.');
-            window.location.href = '/catdog/userlogin';
+            navigate('/main');  
         }
-        axios.get(`http://localhost:8090/userinfo?id=${user.id}`)
-        .then((res)=>{  
-            // console.log(res.data);
-            dispatch(setUserStore(res.data));
-            }
-        )
-        .catch((err)=>{console.log(err);})
-
-    }, []  );
+       
+    }, [ ]  );
 
 
 
@@ -58,11 +53,12 @@ function UserMy() {
                     </section>
 
                     <Routes>
-                        <Route path='/' element={<UserMylist />} />
+                        <Route path='/' element={<UserMylist/>} />
 
 
                         <Route exact path='/petreg' element={<PetReg />} />
                         <Route exact path='/petregform' element={<PetRegForm />} />
+                        <Route exact path='/petmodi/:num' element={<PetModi/>}/>
 
 
                         <Route path='usermodi' element={<UserModi />} />

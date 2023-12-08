@@ -1,6 +1,8 @@
 import { useEffect,useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+
 
 
 function PetReg() {
@@ -8,11 +10,19 @@ function PetReg() {
     //store에 있는 user.id로 서버에 요청해서 반려동물 정보 가져오기
     const user = useSelector(state => state.user);
     const petList = useSelector(state => state.pet);
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        console.log(user);
-        console.log(petList);
-    }   , []);
+        axios.get(`http://localhost:8090/petinfo?userId=${user.id}`)
+        .then((res) => {
+                dispatch({type:'SET_PET', payload:res.data} );
+            }
+        )
+        .catch((err) => {
+            console.log(err);
+        })
+    }
+    , [user.id]);
 
     return ( 
     <>
@@ -31,8 +41,11 @@ function PetReg() {
        
             <div className="shop-form-container">
                 <div className="input-img-click sm-input-img">
+                    {petList.length < 1 ?
                     <p> 등록한 반려동물이 없습니다 <br/>
-                        <Link to="/usermy/petregform">반려동물 등록하기 <i className="fas fa-plus-circle"></i></Link></p>
+                    <Link to="/usermy/petregform">반려동물 등록하기 <i className="fas fa-plus-circle"></i></Link></p>
+                    : <p> <Link to="/usermy/petregform">반려동물 추가 등록하기 <i className="fas fa-plus-circle"></i></Link></p>
+                }
                 </div>
             </div>
             
@@ -40,7 +53,7 @@ function PetReg() {
                 <div className="stylelist-content" key={idx}>
                         <div className="st-profile-container">
                             <div className="st-profile-img">
-                                <img src={`http://localhost:8090/petimg/${pet.num}`} loading='lazy' alt="등록한 반려동물 사진" className="st-profile-img" />
+                                <img src={`http://localhost:8090/petimg/${pet.num}`}  alt="등록한 반려동물 사진" className="st-profile-img" />
                             </div>
                             <div className="st-profile-context">
                                 <div className="st-profile-name">
@@ -54,7 +67,8 @@ function PetReg() {
                         </div>
 
                         <div className="st-button-container">
-                            <a href="cl-petmodify.html"><button className="st-button">편집<i className="fas fa-pen btn-icon"></i></button></a>
+                            <Link to ={`/usermy/petmodi/${pet.num}`}>
+                            <button className="st-button">편집<i className="fas fa-pen btn-icon"></i></button></Link>
                         </div>
             </div>
             )}

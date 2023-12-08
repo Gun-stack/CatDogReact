@@ -26,8 +26,8 @@ function UserModi_Nickname() {
 
     const checkNickname = async (e) => {
         e.preventDefault();
-        if (userNickname.trim() === '') {
-            Swal.fire({
+        if (userNickname === null && userNickname.trim() === '' ) {
+            Swal.fire({     
                 title: '닉네임을 입력해주세요',
                 icon: 'warning',
                 confirmButtonColor: '#F9950F',
@@ -83,7 +83,7 @@ function UserModi_Nickname() {
         setLoading(true); // 로딩 시작
 
         try {
-            const res = await axios.post('http://localhost:8080/user/updatenickname', { userNickname });
+            const res = await axios.post('http://localhost:8080/user/updatenickname', {  userNickname });
             console.log(res);
             if (res.data === true) {
                 Swal.fire({
