@@ -232,7 +232,6 @@ input[type='date']::before {
     font-weight: 600;
 }
 
-
 .react-modal-css{
     display: flex;
     flex-direction: column;

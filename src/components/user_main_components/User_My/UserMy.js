@@ -15,6 +15,7 @@ import Error404 from "../../error/Error404";
 import { useSelector,useDispatch } from 'react-redux';
 import axios from 'axios';
 import { setUserStore } from '../../../actions';
+import UserReviewForm from "../User_reservation/UserReviewForm";
 
 
 
@@ -72,6 +73,8 @@ function UserMy() {
 
                         <Route exact path='/reservation' element={<Reservation />} />
                         <Route exact path='/check/:num' element={<ReservationCheck />} />
+                        <Route path='/review' element={<UserReviewForm />} />
+
                         <Route path='/*' element={<Error404/>}/>
 
                     </Routes>

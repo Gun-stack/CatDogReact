@@ -27,7 +27,7 @@ function DesMyList() {
                     <li className="nav-li">
                         <div>
                             <i className="fas fa-caret-square-right mypage-arrow"></i>
-                            <Link to="st-reschadule.html">예약 확인하기</Link>
+                            <Link to="desresvlist">예약 확인하기</Link>
                         </div>
                         <i className="fas fa-clipboard-list"></i>
                     </li>

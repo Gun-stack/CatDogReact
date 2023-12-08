@@ -21,7 +21,7 @@ function DesReg() {
                         <form action="" className="shop-form-container">
                             <div className="input-img-click sm-input-img">
                                 <p>
-                                    <a href="st-deregform.html">디자이너 등록하기<i className="fas fa-plus-circle"></i></a>
+                                    <Link to="/desmy/desreg">디자이너 등록하기<i className="fas fa-plus-circle"></i></Link>
                                 </p>
                             </div>
                         </form>
@@ -50,8 +50,7 @@ function DesReg() {
 
                             <div className="st-button-container">
                                 <button className="st-button"><Link to="/desmy/home">갤러리<i className="fa-solid fa-image btn-icon"></i></Link></button>
-                                <button className="st-button"><Link to="st-deregmodify.html">수정하기<i
-                                    className="far fa-calendar-alt btn-icon"></i></Link></button>
+                                <button className="st-button"><Link to="/desmy/desmodi">수정하기<i className="far fa-calendar-alt btn-icon"></i></Link></button>
                             </div>
 
                         </div>

@@ -21,6 +21,10 @@
     color: #FCE798;
 }
 
+.f-size-14px{
+    font-size: .875rem;
+}
+
 .cancle-btn {
     background-color: white;
 }
