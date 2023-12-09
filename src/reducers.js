@@ -1,7 +1,7 @@
 // reducers.js
 
 import { combineReducers } from 'redux';
-import Swal from 'sweetalert2';
+
 
 const initialTokenState = localStorage.getItem('token') || '';
 

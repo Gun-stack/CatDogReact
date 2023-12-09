@@ -137,7 +137,7 @@ function PetRegForm() {
                         <label htmlFor="dogOrCat" className="radio-text">반려동물 종류</label>
                         <div className="radio-box">
                             <span> <input type="radio" id="dogOrCat" name="dogOrCat" value={true} 
-                                     onChange={change} />댕댕이</span>
+                                    onChange={change} />댕댕이</span>
                             <span> <input type="radio" id="dogOrCat" name="dogOrCat" value={false}  onChange={change}/>냥냥이</span>
                         </div>
                     </div>

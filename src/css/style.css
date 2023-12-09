@@ -12,7 +12,7 @@
 @import url('component/main-nav.css');
 @import url('component/error.css');
 @import url('component/loding.css');
-
+@import url('component/review.css');
 
 /** Screen */
 @import url('screen/main.css');

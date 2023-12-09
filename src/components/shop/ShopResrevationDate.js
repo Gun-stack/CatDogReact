@@ -89,9 +89,6 @@ function ShopResrevationDate(props) {
                             </div>
                         </Link>
                     )}
-
-
-
                     <hr className="divide-line" key={`hr-${time}`} />
                 </div>
             ))}
