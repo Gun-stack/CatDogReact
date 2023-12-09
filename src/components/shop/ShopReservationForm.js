@@ -1,13 +1,19 @@
+import axios from 'axios';
 import React, { useEffect,useState } from 'react';
+import { useSelector,useDispatch } from 'react-redux';
 import {useLocation} from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 
 function ShopReservationForm(props) {
-    const shopInfo = props.shopInfo;
-    const  desInfo = props.desInfo;
-    
 
+    const dispatch = useDispatch();
+    const shopInfo = props.shopInfo;
+    const desInfo = props.desInfo;
+    const user = useSelector((state) => state.user);
+    const pets = useSelector((state) => state.pet);
+
+                
 
     const location= useLocation();
     const time = location.state?.data1;
@@ -20,16 +26,30 @@ function ShopReservationForm(props) {
     const goBack = () => {
         window.history.back();
     }
+    useEffect(() => {
+        console.log(time);
+        console.log(selectDate);
+        console.log(selectDay);
+        axios.get(`http://localhost:8090/petinfo?userId=${user.id}`)
+        .then((res) => {
+            console.log(res);
+            dispatch({type:'SET_PET',payload:res.data});
+
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+    
+    }
+    ,[]);
 
 
 
-const user={
-    userId: '1',
-    nickName: '행복행',
-    pet: '행복이',
-    petType: '강아지',
-    image:"/img/gallrey-img/2.jpg"
-}
+
+
+
+
+
 
     return (
         <div>
@@ -56,21 +76,25 @@ const user={
                     <p>반려동물을 추가하세요!</p>
                 </div>
                 :
+
+                pets.map((pet) => (
                 <div className="stylelist-content">
-                    <div className="st-profile-container">
+                    <div className="st-profile-container" onClick={} >
                         <div className="st-profile-img">
-                            <img src={user.image} alt="등록한 반려동물 사진" className="st-profile-img" />
+                            <img src={`http://localhost:8090/petimg/${pet.num}`} alt="등록한 반려동물 사진" className="st-profile-img" />
                         </div>
                         <div className="st-profile-context">
                             <div className="st-profile-name">
-                                {user.pet}
+                                {pet.name}
                             </div>
                             <div className="st-profile-shop">
-                                {user.petType}
+                                {pet.dogOrCat==='dog' ? '강아지' : '고양이'}
                             </div>
                         </div>
                     </div>
                 </div>
+                ))
+                
                 }
             </div>
 

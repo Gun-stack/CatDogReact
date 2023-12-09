@@ -18,6 +18,29 @@ function UserJoin() {
     const[idcheck,setIdCheck] = useState(false);
     const[nicknamecheck,setNicknameCheck] = useState(false);
 
+
+    //
+        const [phoneNumber, setPhoneNumber] = useState('');
+      
+        const formatPhoneNumber = (input) => {
+          // 숫자만 추출
+          const cleaned = ('' + input).replace(/\D/g, '');
+      
+          // 3자리-5자리-4자리 형식으로 포맷팅
+          const formatted = cleaned.replace(/^(\d{3})(\d{0,4})(\d{0,4})/, (match, p1, p2, p3) => {
+            let result = p1;
+            if (p2) result += `-${p2}`;
+            if (p3) result += `-${p3}`;
+            return result;
+          });   
+          setPhoneNumber(formatted.substring(0, 14));
+        };
+
+        const telChange = (e) => {
+            setTel(e.target.value.replace(/\D/g, ''));
+            formatPhoneNumber(e.target.value);
+          };
+
     const submit = (e) => {
         e.preventDefault();
         const joinInfo = {
@@ -220,7 +243,7 @@ function UserJoin() {
                 <div className="cd-container bg-white bg-dogs">
                     <main className="cd-main">
 
-                        <section className="main-logo">
+                        <section className="main-logo"> 
                             <img src="/img/logo/logo_color.png" alt="댕냥꽁냥 로고" />
                             <span className="main-logo-text">보호자 회원가입</span>
                         </section>
@@ -271,7 +294,7 @@ function UserJoin() {
                                         
                                         {/** 전화번호 */}
                                         <input type="text" id="tel" name="tel" placeholder="전화 번호"
-                                            className="input-text"  onChange={onChange}/>
+                                            className="input-text" value= {phoneNumber}   onChange={telChange} maxLength={13}/>
                                         {/* 이메일 */}
                                         <input type='text' id='email' name='email' placeholder='이메일'
                                             className='input-text' onChange={onChange} />

@@ -149,6 +149,8 @@ function Around() {
 
                                 {/* 거리순 */}
                                 <li className="main-nav-list-text"><Link to="distance">가까운순</Link></li>
+                                 {/* 샵등록 */}
+                                <li className="main-nav-list-text"><Link to="/shopreg/1">샵등록</Link></li>
                             </ul>
                         </nav>
                         {/* 다중 라우터  기본 popular*/}

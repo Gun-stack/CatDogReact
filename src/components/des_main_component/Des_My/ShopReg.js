@@ -21,7 +21,7 @@ function ShopReg() {
                         <form action="" className="shop-form-container">
                             <div className="input-img-click sm-input-img">
                                 <p>
-                                    <Link to="/desmy/shopregform">샵 등록하기 <i className="fas fa-plus-circle"></i></Link>
+                                    <Link to="/desmy/shopregform">샵 등록하기<i className="fas fa-plus-circle"></i></Link>
                                 </p>
                             </div>
                         </form>

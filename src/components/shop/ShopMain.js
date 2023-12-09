@@ -12,12 +12,12 @@ import ShopMainStyle from './ShopMainStyle';
 import ShopMainReview from './ShopMainReview';
 import ShopReservation from './ShopReservation';
 import Error404 from '../error/Error404';
+import { useSelector } from 'react-redux';
 
 
 function ShopMain() {
     const { num } = useParams();
     const [shopInfo, setShopInfo] = useState({
-
         num: num,
         image: '/img/gallrey-img/3.jpg',
         shopname: '코스타리카 망하샵',
@@ -27,6 +27,15 @@ function ShopMain() {
         notice: '월요일은 자체 휴강입니다',
         tel: '01022222232',
     });
+
+    const shoplist = useSelector((state) => state.shop);
+    const shop = shoplist.find(shop => shop.num === num);
+    useEffect(() => {
+        if (shop) {
+            setShopInfo(shop);
+        }
+        console.log(shop);
+    }, [shoplist]);
 
     return (
         <div className="web-container">
@@ -38,7 +47,7 @@ function ShopMain() {
                         {/* <div className="input-img-click">
                                 이미지를 등록하세요
                             </div> */}
-                        <img src={shopInfo.image} className='shop-title-img' />
+                        <img src={shopInfo.image} alt='' className='shop-title-img'/>
 
                     </section>
 

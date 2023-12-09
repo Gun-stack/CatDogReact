@@ -3,10 +3,14 @@ import React from "react";
 import { useState } from "react";
 import ReactModal from 'react-modal';
 import UserModi_MemberWithDraw from "./UserModi_MemberWithDraw";
+import { useSelector } from 'react-redux';
 
 
 
 function UserModi() {
+    const user =useSelector((state)=>state.user);
+    
+
     const [ismodal, setismodal] = useState(false);
 
     const customModalStyles = ReactModal.Styles = {
@@ -47,7 +51,33 @@ function UserModi() {
 
             <section className="form-section">
                 <div className="form-container">
-                    <div>유저정보</div>
+                    <div>유저정보   
+                        
+                        {user.provider==="Kakao"?
+                        <div>
+                        계정유형 : 카카오 <br/>
+                        email : {user.email} <br/>
+                        nickname : {user.nickname} <br/>
+                        id : {user.id} <br/>
+                        </div>
+                        :
+                        <div>
+                        id: {user.id} <br/>
+                        name: {user.name} <br/>
+                        email: {user.email} <br/>
+                        tel: {user.tel} <br/>
+                        nickname: {user.nickname} <br/>
+                        </div>
+                        }
+
+
+                    
+
+
+
+
+
+                    </div>
                     <hr className="divide-line"></hr>
                     <div className="input-container magin-t-1">
                         <div className="button-container">

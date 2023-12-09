@@ -1,6 +1,7 @@
 import { DateCalendar, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import React from 'react';
+import { render } from '@testing-library/react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
@@ -9,7 +10,7 @@ function ShopResrevationDate(props) {
     const shopInfo = props.shopInfo;
     const desInfo = props.desInfo;
     const [selectDate, setSelectDate] = useState(new Date().toLocaleDateString('ko-KR').slice(0,11));
-
+    
 
     const onChangeDate = (newValue) => {
         //toISOString: UTF 시간 기준이라 우리나라 시간으로 만들려면 9시간 빼야합니다
@@ -35,7 +36,7 @@ function ShopResrevationDate(props) {
 
     const resList = [{
         desNum: '1',
-        date: '2023-12-07',
+        date: '2023-12-08',
         time: '10:00'
     },
     {
@@ -49,14 +50,15 @@ function ShopResrevationDate(props) {
         time: '16:00'
     },
     ]
-
-    // 예약된 시간인지 확인
-    const isReserved = (date, time) => {
-        const reserved = resList.find(res => res.date === date && res.time === time);
-        return reserved;
-    };
-    // 
-    const availableTimes = ['10:00', '12:00', '14:00', '16:00'];
+    
+    
+        // 예약된 시간인지 확인
+        const isReserved = (date, time) => {
+            const reserved = resList.find(res => res.date === date && res.time === time);
+            return reserved;
+        };
+        // 
+        const availableTimes = ['10:00', '12:00', '14:00', '16:00'];
 
     return (
         <div>
