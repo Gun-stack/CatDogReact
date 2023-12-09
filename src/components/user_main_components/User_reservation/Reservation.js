@@ -31,22 +31,38 @@ function Reservation() {
 
 
 
-    return (
-        <main className="cd-main dis-center">
-            <section className="shop-main-section bg-white">
-                <ul className="nav-ul">
-                    <li className="nav-li">
-                        <div>
-                            <i className="fas fa-caret-square-right mypage-arrow"></i>예약 확인 하기
-                        </div>
-                        <i className="fas fa-store"></i>
-                    </li>
-                </ul>
 
-                {reservationList.length === 0 ? (
-                    <form action="" className="shop-form-container">
-                        <div className="input-img-click sm-input-img">
-                            <p>예약한 내역이 없습니다</p>
+return (
+                <main className="cd-main dis-center">
+                    <section className="shop-main-section bg-white">
+                        <ul className="nav-ul">
+                            <li className="nav-li">
+                                <Link to="/usermy/reservation">
+                                <div>
+                                    <i className="fas fa-caret-square-right mypage-arrow"></i>예약 확인 하기
+                                </div>
+                                </Link>
+
+                                <i className="fas fa-store"></i>
+                            </li>
+                        </ul>
+
+                        {reservationList.length === 0 ? (
+                        <form action="" className="shop-form-container">
+                            <div className="input-img-click sm-input-img">
+                                <p>예약한 내역이 없습니다</p>
+                            </div>
+                        </form>
+                        ):(
+                        reservationList.map((res, index) => (
+                        <div key={index} className="reservation-container">
+                                <hr className="divide-line"/>
+                                {index+1}
+                                <div className="re-shop-info">
+                                    <span className="re-text"> 샵 이름 :</span> 
+                                    <span className="re-shop-name">{res.shopName}</span> 
+                                    <span className="re-pet-name">{res.petName}</span>
+
                         </div>
                     </form>
                 ) : (

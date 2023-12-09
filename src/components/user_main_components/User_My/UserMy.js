@@ -48,7 +48,7 @@ function UserMy() {
                 <main className="cd-main dis-center">
                     <section className="section-header">
                         <div className="section-header-container">
-                            <span className="section-header-text">마이 페이지</span>
+                           <Link to ="/usermy" > <span className="section-header-text">마이 페이지</span></Link>
                         </div>
                     </section>
 

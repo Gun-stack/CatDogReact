@@ -5,6 +5,9 @@ import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Loding from '../../tools/Loding';
 
+import {useSelector} from 'react-redux';
+
+
 
 
 
@@ -12,21 +15,26 @@ function UserModi_Nickname() {
 
     const [userNickname, setUserNickname] = useState('보호자 닉네임');
     const [loading, setLoading] = useState(false);
+    const user = useSelector((state) => state.user);
+
 
     //뒤로가기
     let navigate = useNavigate();
+
     function goBack(e) {
         e.preventDefault();
         navigate(-1);
     }
 
-    const onChange = (e) => {
+    const onChangeNick = (e) => {
         setUserNickname(e.target.value);
+        console.log(userNickname);
     }
 
     const checkNickname = async (e) => {
         e.preventDefault();
-        if (userNickname === null && userNickname.trim() === '' ) {
+
+        if (userNickname === '' && userNickname.trim() === '' ) {
             Swal.fire({     
                 title: '닉네임을 입력해주세요',
                 icon: 'warning',
@@ -45,7 +53,7 @@ function UserModi_Nickname() {
                 });
                 return false;
             }
-            setLoading(true);
+
             try {
                 const res = await axios.get(`http://localhost:8090/checkusernickname?nickname=${userNickname}`)
                 if (res.data === "success") {
@@ -79,13 +87,16 @@ function UserModi_Nickname() {
     };
 
     const onSubmit = async (e) => {
+        
         e.preventDefault();
         setLoading(true); // 로딩 시작
 
         try {
-            const res = await axios.post('http://localhost:8080/user/updatenickname', {  userNickname });
+
+            const res = await axios.post('http://localhost:8090/modinickname', {num : user.num, nickname : userNickname});
+
             console.log(res);
-            if (res.data === true) {
+            if (res.data === "success") {
                 Swal.fire({
                     icon: 'success',
                     html: "<p style='text-align:center;'>닉네임이 변경되었습니다<p>",
@@ -128,7 +139,7 @@ function UserModi_Nickname() {
                             {/* 중복확인 버튼 있음 */}
                             <div className="duplication-check">
                                 {/* BEGIN: ed8c6549bwf9 */}
-                                <input type="text" id="nickname" name="nickname" placeholder="닉네임" className="input-text" onChange={onChange} />
+                                <input type="text" id="nickname" name="nickname" placeholder="닉네임" className="input-text" onChange={onChangeNick} />
                                 {/* END: ed8c6549bwf9 */}
 
                                 <button className="duplication-btn small-btn" onClick={checkNickname}>중복확인</button>

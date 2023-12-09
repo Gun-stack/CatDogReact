@@ -25,9 +25,12 @@ function UserLogin() {
         try {
         const res = await axios.post('http://localhost:8090/login', user);
         const token = res.headers.authorization;
+        console.log( "res : "+ JSON.stringify(res.data));
+        const user1 = res.data;
         console.log(token);
+        const user1 = res.data;
         dispatch(setToken(token));
-        dispatch(setUserStore(user));
+        dispatch(setUserStore(user1));
         dispatch(loginStore());
         navigate('/main');
         } catch (error) {

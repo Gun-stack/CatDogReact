@@ -7,6 +7,7 @@ import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { useSelector ,useDispatch } from 'react-redux';
+import { PetStore } from '../../../actions';
 function ReservationCheck() {
     const params = useParams();
     const [inputValue, setInputValue] = useState('')
@@ -14,13 +15,13 @@ function ReservationCheck() {
     const [styleT, setStyleT] = useState('');
     const dispatch = useDispatch();
     const user = useSelector((state) => state.user);
-    const pets = useSelector((state) => state.pet);
-    const reservation = useSelector((state) => state.resv);
+    const petList = useSelector((state) => state.pet);
+    const resvList = useSelector((state) => state.resv);
     
     //선택한 예약넘버와 같은 예약을 찾아온다
-    const resv = reservation.find((res) => res.num == params.num);
+    const resv = resvList.find((resv) => resv.num == params.num);
     //가져온 펫리스트중에 예약넘버의 펫이름과 같은 펫정보를 찾아온다
-    const pet = pets.find((pet) => pet.name === resv.petName);
+    const pet1 = petList.find((pet) => pet.name === resv.petName);
 
 
     async function updateStyleT() {
@@ -49,16 +50,18 @@ function ReservationCheck() {
 
 //  유저의 펫 정보 리스트를 가져옴 
     useEffect(() => {
+        console.log(user.id);
         axios.get(`http://localhost:8090/petinfo?userId=${user.id}`)
         .then((res) => {
-                dispatch({type:'SET_PET', payload:res.data} );
+            console.log(res.data);
+                dispatch(PetStore(res.data));
             }
         )
         .catch((err) => {
             console.log(err);
-        })
+        })  
     }
-    , [user.id]);
+    , []);
 
 
 
@@ -68,9 +71,12 @@ function ReservationCheck() {
         <section className="shop-main-section bg-white">
             <ul className="nav-ul">
                 <li className="nav-li">
+                <Link to="/usermy/reservation">
                     <div>
                         <i className="fas fa-caret-square-right mypage-arrow"></i>예약 확인 하기
                     </div>
+                </Link>
+
                     <i className="fas fa-store"></i>
                 </li>
             </ul>
@@ -81,10 +87,13 @@ function ReservationCheck() {
                 예약번호 : {resv.num}
                 <div className="magin-t-1"><span className="re-text">샵 이름 :</span><span className="magin-l-05">{resv.shopName}</span></div>
                 <div className="magin-t-1"><span className="re-text">반려동물 이름 :</span><span className="magin-l-05">{resv.petName}</span></div>
-                <div className="magin-t-1"><span className="re-text">품종 :</span><span className="magin-l-05">{pet.breed}</span></div>
-                <div className="magin-t-1"><span className="re-text">성별 :</span><span className="magin-l-05">{pet.gender=='1' ? '수컷' : '암컷 '}</span></div>
-                <div className="magin-t-1"><span className="re-text">중성화 여부 :</span><span className="magin-l-05">{pet.neuter=='1' ? '완료' : '미완료'}</span></div>
-                <div className="magin-t-1"><span className="re-text">특이사항 :</span><span className="magin-l-05">{pet.petNote}</span></div>
+
+                <div className="magin-t-1"><span className="re-text">품종 :</span><span className="magin-l-05">{pet1.breed}</span></div>
+                <div className="magin-t-1"><span className="re-text">나이 :</span><span className="magin-l-05">{pet1.age}</span></div>
+
+                <div className="magin-t-1"><span className="re-text">성별 :</span><span className="magin-l-05">{pet1.gender=='1' ? '수컷' : '암컷 '}</span></div>
+                <div className="magin-t-1"><span className="re-text">중성화 여부 :</span><span className="magin-l-05">{pet1.neuter=='1' ? '완료' : '미완료'}</span></div>
+                <div className="magin-t-1"><span className="re-text">특이사항 :</span><span className="magin-l-05">{pet1.petNote}</span></div>
                 
                 <div className="magin-t-1"><span className="re-text">스타일 :</span><span className="magin-l-05">{inputValue}{resv.refText} </span>
 
