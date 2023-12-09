@@ -28,6 +28,7 @@ function UserLogin() {
         console.log( "res : "+ JSON.stringify(res.data));
         const user1 = res.data;
         console.log(token);
+        const user1 = res.data;
         dispatch(setToken(token));
         dispatch(setUserStore(user1));
         dispatch(loginStore());

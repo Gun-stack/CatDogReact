@@ -4,12 +4,14 @@ import { useState } from 'react';
 import Loding from '../../tools/Loding';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import {useSelector} from 'react-redux';
 
 
 function UserModi_Tel() {
 
     const [userTel, setUserTel] = useState('010-0000-0000');
     const [loading, setLoading] = useState(false);
+    const user = useSelector((state) => state.user);
 
     let navigate = useNavigate();
     function goBack(e) {
@@ -23,12 +25,14 @@ function UserModi_Tel() {
     }
 
     const onSubmit = async (e) => {
+
+
         e.preventDefault();
         setLoading(true); // 로딩 시작
         try {
-            const res = await axios.post('http://localhost:8080/user/moditel', { userTel });
+            const res = await axios.post('http://localhost:8090/moditel', { num: user.num, userTel : userTel });
             console.log(res);
-            if (res.data === true) {
+            if (res.data === "success") {
                 Swal.fire({
                     icon: 'success',
                     html: "<p style='text-align:center;'>전화번호가 변경되었습니다<p>",
