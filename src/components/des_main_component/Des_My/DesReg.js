@@ -59,7 +59,6 @@ function DesReg() {
 
                 </main>
 
-                <Footer />
             </div>
         </div>
     </>);
