@@ -3,7 +3,7 @@ import Header from '../screens/Header';
 import Footer from '../screens/Footer';
 import { useState, useEffect } from 'react';
 // import axios from 'axios';
-import { Link, Route, Routes } from 'react-router-dom';
+import { Link, Route, Routes, useLocation } from 'react-router-dom';
 import DesGal from './DesGal';
 import UserGal from './UserGal';
 import DesGalleryView from './DesGalleryView';
@@ -13,6 +13,12 @@ import Error404 from '../error/Error404';
 
 
 function GalleryList() {
+    const location = useLocation();
+
+    const isActive = (path) => {
+        return location.pathname === path;
+    };
+
     const [galleryList, setGalleryList] = useState([]);
     const [gallery, setGallery] = useState({
         galNum: '1',
@@ -35,8 +41,8 @@ function GalleryList() {
                 <main className="cd-main">
                     <nav className="main-nav">
                         <ul className="main-nav-list">
-                            <li className="main-nav-list-text"><Link to="des">스타일리스트 갤러리</Link></li>
-                            <li className="main-nav-list-text"><Link to="user">회원 갤러리</Link></li>
+                            <li className={`main-nav-list-text ${isActive('des') ? 'active' : ''}`}><Link to="des">스타일리스트 갤러리</Link></li>
+                            <li className={`main-nav-list-text ${isActive('user') ? 'active' : ''}`}><Link to="user">회원 갤러리</Link></li>
                         </ul>
                     </nav>
                     <Routes >

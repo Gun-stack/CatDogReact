@@ -22,7 +22,7 @@ function UserModi() {
         overlay: {
             backgroundColor: " rgba(0, 0, 0, 0.4)",
             width: "100%",
-            height: "100vh",
+            height: "100%",
             zIndex: "100",
             position: "fixed",
             top: "0",

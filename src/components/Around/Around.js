@@ -1,4 +1,4 @@
-import { Link, Route, Routes } from "react-router-dom";
+import { Link, Route, Routes, useLocation } from "react-router-dom";
 import Footer from "../screens/Footer";
 import Header from "../screens/Header";
 
@@ -14,6 +14,14 @@ import Error404 from "../error/Error404";
 
 
 function Around() {
+    const location = useLocation();
+
+    const isActive = (path) => {
+        return location.pathname === path;
+    };
+
+
+
     const markerImageSrc = '/img/logo/map_shop_icon.png';
     const markerUserImageSrc = '/img/logo/map_user_icon.png';
 
@@ -145,12 +153,12 @@ function Around() {
                             <ul className="main-nav-list">
 
                                 {/* 인기순 */}
-                                <li className="main-nav-list-text"><Link to="">인기순</Link></li>
-
+                                <li className={`main-nav-list-text ${isActive('/') ? 'active' : ''}`}><Link to="">인기순</Link></li>
                                 {/* 거리순 */}
-                                <li className="main-nav-list-text"><Link to="distance">가까운순</Link></li>
+                                <li className={`main-nav-list-text ${isActive('distance') ? 'active' : ''}`}><Link to="distance">가까운순</Link></li>
                                  {/* 샵등록 */}
-                                <li className="main-nav-list-text"><Link to="/shopreg/1">샵등록</Link></li>
+                                <li className={`main-nav-list-text ${isActive('/shopreg/1') ? 'active' : ''}`}><Link to="/shopreg/1">샵등록</Link></li>
+
                             </ul>
                         </nav>
                         {/* 다중 라우터  기본 popular*/}
