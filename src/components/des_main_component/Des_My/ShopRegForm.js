@@ -1,20 +1,25 @@
-import { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
+import { Helmet } from 'react-helmet';
 import Footer from "../../screens/Footer";
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import Swal from "sweetalert2";
 import axios from "axios";
+import useKakaoLoader from "../../Around/useKakaoLoader";
 
 function ShopRegForm() {
     const imgBoxRef = useRef();
     const [files, setFiles] = useState([]);
     const [address, setAddress] = useState();
+    const [latitude, setLatitude] = useState();
+    const [longitude, setLongitude] = useState();
+    const [geocoder, setGeocoder] = useState(null);
+    useKakaoLoader();
 
     // DB에 들어가는 데이터
     const [shop, setShop] = useState({
         name: '',
         address_road: '',
-        address_detail: '',
-        prof_img: '',
+        address_detail: ''
     });
 
     const change = (e) => {
@@ -25,7 +30,7 @@ function ShopRegForm() {
 
     const fileChange = (e) => {
         if (e.target.files.length > 0) {
-            setFiles([...files, e.target.files[0]]);
+            setFiles([e.target.files[0]]);
             console.log(files);
         }
 
@@ -35,6 +40,8 @@ function ShopRegForm() {
 
     const onSubmit = (e) => {
         e.preventDefault();
+        console.log(" latitude: " + latitude);
+        console.log(" longitude: " + longitude);
 
         if (!shop.name) {
             Swal.fire({ icon: 'error', title: 'Oops...', text: '샵 이름을 입력해주세요!' });
@@ -45,28 +52,35 @@ function ShopRegForm() {
             return;
         }
 
-        // 반려동물을 등록하시겠습니까?
+        // 샵을 등록하시겠습니까?
         Swal.fire({
             icon: 'question',
-            title: '반려동물을 등록하시겠습니까?',
+            title: '샵을 등록하시겠습니까?',
             showCancelButton: true,
             confirmButtonText: '등록',
             cancelButtonText: '취소',
         }).then((result) => {
+            const formData = new FormData();
+            for (let file of files) {
+                formData.append("file", file);
+            }
+
+            console.log("address_detail : " + shop.address_detail);
+
+
+            formData.append("name", shop.name);
+            formData.append("address_road", shop.address_road);
+            formData.append("address_detail", shop.address_detail);
+            formData.append("latitude", latitude);
+            formData.append("longitude", longitude);
+
+
+            axios.post('http://localhost:8090/shopreg', formData)
+                .then((res) => {
+                    console.log(res);
+                    console.log(res.data);
+                });
             if (result.isConfirmed) {
-                const formData = new FormData();
-                for (let file of files) {
-                    formData.append("file", file);
-                }
-                formData.append("name", shop.name);
-                formData.append("address_road", shop.address_road);
-
-                axios.post('http://localhost:8090/petreg', formData)
-                    .then((res) => {
-                        console.log(res);
-                        console.log(res.data);
-                    });
-
                 Swal.fire('등록완료!', '', 'success');
                 window.location.href = '/catdog/usermy';
             } else if (result.isDenied) {
@@ -91,8 +105,64 @@ function ShopRegForm() {
             fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
         }
         setAddress(fullAddress);
-        console.log(fullAddress);
+        console.log("FullAddress1 : " + fullAddress);
+
+        setShop({ ...shop, address_road: fullAddress });
+
+        
+        if (geocoder) {
+            geocoder.addressSearch(fullAddress, (result, status) => {
+                if (status === window.kakao.maps.services.Status.OK) {
+                    console.log("If In !!!")
+                    const newLatitude = result[0].y;
+                    const newLongitude = result[0].x;
+
+                    setLatitude(newLatitude);
+                    setLongitude(newLongitude);
+                } else {
+                    console.error('Geocoding error');
+                }
+            });
+        } else {
+            console.error('Geocoder not initialized');
+        }
+
     };
+
+    useEffect(() => {
+        console.log("UseEffect!!");
+        // Geocoder 초기화 유무
+        let isGeocoderInitialized = false;
+
+
+        // 초기화가 한번에 되지 않아서 이런식으로 더러워 졌습니다..
+        const initializeGeocoder = () => {  // Geocoder 초기화 하는 함수 이게 생성되어야 주소값으로 위도 경도 구해올 수 있다
+            if (window.kakao && window.kakao.maps) {
+                console.log("Gecoder 초기화 전 !!");
+                const newGeocoder = new window.kakao.maps.services.Geocoder();
+                console.log('newGeocoder:', newGeocoder);
+                console.log("Gecoder 초기화 후 !!");
+                setGeocoder(newGeocoder);
+                isGeocoderInitialized = true;
+            }
+        };
+
+        const attemptInitialization = () => {
+            initializeGeocoder();  // initializeGeocoder 함수 호출
+        };
+
+        const intervalId = setInterval(() => {
+            if (isGeocoderInitialized) { // isGeocoderInitialized 가 true일 경우
+                clearInterval(intervalId); // 
+            } else {  // // isGeocoderInitialized 가 false일 경우
+                attemptInitialization();  // attemptInitialization 함수 호출
+            }
+        }, 100); // Adjust the interval time as needed
+
+        // 
+        return () => clearInterval(intervalId);
+
+    }, []);
 
     const handleClick = () => {
         open({ onComplete: handleComplete });
@@ -128,10 +198,12 @@ function ShopRegForm() {
 
                                         <input type="text" value={address} onChange={(e) => setAddress(e.target.value)} className="input-box-style address-input" required />
                                         <div className="address-btn-container">
-                                            <input type="text" placeholder="상세주소를 적어주세요" className="input-box-style address-input" onChange={change} />
+                                            <input type="text" name="address_detail" placeholder="상세주소를 적어주세요" className="input-box-style address-input" onChange={change} />
                                             <button className="address-btn" type='button' onClick={handleClick}>
                                                 주소 검색
                                             </button>
+                                            <input type="hidden" id="latitude" name="lat" placeholder="위도"></input>
+                                            <input type="hidden" id="longitude" name="lon" placeholder="경도"></input>
                                         </div>
                                     </div>
 

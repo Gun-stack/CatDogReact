@@ -50,8 +50,7 @@ function UserJoin() {
             nickname : nickname,
             tel : tel,
             email : email,
-            roles : 'ROLE_USER',
-            state : 'ok'
+            roles : 'ROLE_USER'
         }
         console.log(joinInfo);
 
