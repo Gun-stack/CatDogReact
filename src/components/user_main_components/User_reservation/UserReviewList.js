@@ -69,7 +69,7 @@ function UserReviewList() {
                     <span className="is-visit">
                         {resv.status ==="완료" && resv.isReview === 0 ?
                         (<Link to={`/usermy/reviewregform/${resv.num}`}>리뷰쓰기</Link>)
-                        : (<Link to={`/usermy/reviewregform/${resv.num}`}>리뷰보기</Link>) }
+                        : (<Link to={`/usermy/reviewdetail/${resv.num}`}>리뷰보기</Link>) }
                     </span>
                     <button className="small-btn">
                         <Link to={`/usermy/check/${resv.num}`} className="btn-text">

@@ -7,21 +7,24 @@ import axios from 'axios';
 
 
 function PetModi() {
+        //가져온 펫넘버
         const params = useParams();
+        // 펫정보 추가
         const petList = useSelector((state) => state.pet);
         const pet = petList.find((pet) => pet.num == params.num);
+
         const imgBoxRef = useRef();
         const user = useSelector((state) => state.user);
     const [files, setFiles] = useState([]);
     const [newPet, setNewPet] = useState({
         num: '',
         name: '',
-        dogOrCat: '',
+        dogOrCat: pet.dogOrCat,
         age: '',
         weight: '',
         breed: '',
-        gender: '',
-        neuter: '',
+        gender: pet.gender,
+        neuter: pet.neuter,
     });
 
     const change = (e) => {
@@ -53,7 +56,7 @@ function PetModi() {
             weight: pet.weight,
             breed: pet.breed,
             neuter: pet.neuter,
-            gender :pet.gender
+            gender :pet.gender,
         });
 
     }, []);
@@ -180,8 +183,8 @@ function PetModi() {
                                 <div className="radio-container">
                                     <label htmlFor="dogOrCat" className="radio-text">반려동물 종류</label>
                                         <div className="radio-box">
-                                            <span> <input type="radio" id="dogOrCat" name="dogOrCat" value={true}  onChange={change}   />댕댕이</span>
-                                            <span> <input type="radio" id="dogOrCat" name="dogOrCat" value={false} onChange={change}  />냥냥이</span>
+                                            <span> <input type="radio" id="dogOrCat" name="dogOrCat" value={true}  onChange={change} defaultChecked={newPet.dogOrCat === true}  />댕댕이</span>
+                                            <span> <input type="radio" id="dogOrCat" name="dogOrCat" value={false} onChange={change} defaultChecked={newPet.dogOrCat === false} />냥냥이</span>
                                         </div>  
                                 </div>
                                 <hr className="gray-line" />
@@ -202,8 +205,8 @@ function PetModi() {
                                     <label htmlFor="gender" className="radio-text">성별</label>
 
                                     <div className="radio-box">
-                                        <span> <input type="radio" id="gender" name="gender" value={true}  onChange={change}/>남아</span>
-                                        <span> <input type="radio" id="gender" name="gender" value={false} onChange={change} />여아</span>
+                                        <span> <input type="radio" id="gender" name="gender" value={true}  onChange={change} defaultChecked={newPet.gender ===true} />남아</span>
+                                        <span> <input type="radio" id="gender" name="gender" value={false} onChange={change} defaultChecked={newPet.gender ===false} />여아</span>
                                     </div>   
 
                                 </div>
@@ -213,8 +216,8 @@ function PetModi() {
                                 <div className="radio-container">
                                     <label htmlFor="neuter" className="radio-text">중성화 여부</label>
                                         <div className="radio-box">
-                                            <span> <input type="radio" id="neuter" name="neuter" value={true}  onChange={change} />예</span>
-                                            <span> <input type="radio" id="neuter" name="neuter" value={false} onChange={change} />아니요</span>
+                                            <span> <input type="radio" id="neuter" name="neuter" value={true}  onChange={change}  defaultChecked={newPet.neuter === true} />예</span>
+                                            <span> <input type="radio" id="neuter" name="neuter" value={false} onChange={change} defaultChecked={newPet.neuter === false} />아니요</span>
                                         </div>
                                 </div>
                                 <hr className="gray-line" />

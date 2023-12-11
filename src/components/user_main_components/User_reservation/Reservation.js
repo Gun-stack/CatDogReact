@@ -13,12 +13,10 @@ function Reservation() {
 
 
     useEffect(() => {
-        console.log(reservationList)    
         axios.get(`http://localhost:8090/resinfobyuserid?userId=${user.id}`)
             .then((res) => {
                 if (res.data !== undefined) {
                     dispatch({ type: 'SET_RESERVATION', payload: res.data });
-                    console.log(res.data);
                 }
             })
             .catch((err) => {

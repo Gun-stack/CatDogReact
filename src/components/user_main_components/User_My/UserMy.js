@@ -18,7 +18,11 @@ import UserReviewForm from "../User_reservation/UserReviewForm";
 import PetModi from './PetModi';
 import { useNavigate } from "react-router";
 import DesReg from "../../des_main_component/Des_My/DesReg";
+//리뷰관련
+
 import UserReviewList from '../User_reservation/UserReviewList';
+import UserReviewDetail from '../User_reservation/UserReviewDetail';
+import UserReviewModi from '../User_reservation/UserReviewModi';
 
 
 function UserMy() {
@@ -62,6 +66,9 @@ function UserMy() {
                         <Route exact path='/check/:num' element={<ReservationCheck />} />
                         <Route path='/reviewregform/:resnum' element={<UserReviewForm />} />
                         <Route path='/reservationdone/:desnum' element={<UserReviewList/>}/>
+                        <Route path='/reviewdetail/:resnum' element={<UserReviewDetail/>}/>
+                        <Route path='/reviewmodi/:reviewnum' element={<UserReviewModi/>}/>
+
 
                         <Route exact path='/desreg' element={<DesReg />} />
 

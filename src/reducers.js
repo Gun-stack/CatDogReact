@@ -131,6 +131,16 @@ const resvListReducer = (state = initialResvListState, action) => {
   }
 }
 
+const initialReviewState = JSON.parse(localStorage.getItem('review')) || [];
+const reviewReducer = (state = initialReviewState, action) => {
+  switch (action.type) {
+    case 'SET_REVIEW':
+      return action.payload;
+    default:
+      return state;
+  }
+}
+
 
 
 
@@ -145,6 +155,7 @@ const rootReducer = combineReducers({
     shop: shopReducer,
     des: designerReducer,
     resvList : resvListReducer,
+    review : reviewReducer,
 
 });
 

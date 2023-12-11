@@ -21,6 +21,7 @@ function ShopReservation(props) {
         axios.get(`http://localhost:8090/desinfobynum?desNum=${des.desnum}`)
         .then((res) => {
             dispatch({type:'SET_DES', payload:res.data})
+            console.log(desInfo)
             }
         )
         .catch((err) => {
@@ -42,7 +43,7 @@ function ShopReservation(props) {
                 <div className="st-profile-container">
 
                     <div className="st-profile-img-container">
-                        <img src={desInfo.img} alt="프로필 이미지" className="st-profile-img" />
+                        <img src={`http://localhost:8090/desimg/${desInfo.profImg}`} alt="프로필 이미지" className="st-profile-img" />
                     </div>
 
                     <div className="st-profile-context">

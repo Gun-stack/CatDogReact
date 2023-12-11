@@ -7,11 +7,15 @@ import { useSelector,useDispatch } from "react-redux";
 
 
 
-function UserReviewForm() {
-    const dispatch = useDispatch();
+function UserReviewModi() {
+    const dispatch = useDispatch(); 
     const params = useParams();
+    const oldReview = useSelector((state) => state.review) ;
+
+    //순서중요
     const resvList = useSelector((state) => state.resv);
-    const resvInfo = resvList.find((resv) => resv.num == params.resnum);
+    const resvInfo = resvList.find((resv) => resv.num == oldReview.resNum);
+
     const desInfo = useSelector((state) => state.des);
     const user = useSelector((state) => state.user);
 
@@ -22,53 +26,52 @@ function UserReviewForm() {
     const day = koreaTime.getDate().toString().padStart(2, '0');
     const sqlDate = `${koreaTime.getFullYear()}-${month}-${day}`;
 
-
-
-
-
-
-
     const navigate = useNavigate();
     function goBack(e) {
         e.preventDefault();
         navigate(-1);
     }
-
-    const [rating, setRating] = useState(0);
-    const [image, setImage] = useState(null);
+    const [rating, setRating] = useState(oldReview.star);
+    const [image, setImage] = useState(`http://localhost:8090/reviewimg/${oldReview.afterImg}`);
     const imgBoxRef = useRef();
     const [loading, setLoading] = useState(false);
 
-    
+    const changeReview = (e) => {
+        setReview({
+            ...review,
+            [e.target.name]: e.target.value,
+        });
+        console.log(review);
+    };
 
     const [review, setReview] = useState({
-        after_img: '',
+        after_img: oldReview.afterImg,
         content: '',
         star: '',
-        desId: resvInfo.desId,
-        userId: user.id,
-        date : sqlDate  ,
-        resNum: resvInfo.num
+        desId: oldReview.desId,
+        userId: oldReview.userId,
+        date : sqlDate,
+        resNum: oldReview.resNum
     });
 
     const handleImageChange = (e) => {
         if (e.target.files[0]) {
-            setImage(e.target.files[0]);
+            setImage(URL.createObjectURL(e.target.files[0]));
         }
     };
 
     useEffect(() => {
-        console.log(review);
-        axios.get(`http://localhost:8090/desinfobyid?desId=${resvInfo.desId}`)
-            .then((res) => {
-                dispatch({ type: 'SET_DES', payload: res.data });
-                console.log(res.data);
-            })
-            .catch((err) => {
-                console.log(err);
-            })
+        setReview({
+        num : oldReview.num,
+        after_img: oldReview.afterImg,
+        content: oldReview.content,
+        star: oldReview.star,
+        desId: oldReview.desId,
+        userId: oldReview.userId,
+        date : sqlDate,
+        resNum: oldReview.resNum
+        });
     },[]);
-    
 
 
 
@@ -77,19 +80,21 @@ function UserReviewForm() {
         setLoading(true);
         setLoading(true);
         const formData = new FormData();
+        formData.append('afterImg', oldReview.afterImg); // 기존 이미지 추가(수정시에는 기존 이미지를 그대로 사용')
+        formData.append('num', oldReview.num); // 리뷰번호 추가
         formData.append('file', image); // 이미지 파일을 formData에 추가
-        formData.append('content', review); // 리뷰 내용 추가
+        formData.append('content',review); // 리뷰 내용 추가
         formData.append('star', rating); // 별점 추가
         formData.append('desId', desInfo.id); // 미용사 아이디 추가
         formData.append('userId', user.id); // 유저 아이디 추가
         formData.append('date', sqlDate); // 날짜 추가
         formData.append('resNum', resvInfo.num); // 예약번호 추가
         try{
-            const res = await axios.post('http://localhost:8090/reviewreg',formData)
+            const res = await axios.post('http://localhost:8090/reviewmodi',formData)
             if (res.data === true) {
                 Swal.fire({
                     icon: 'success',
-                    html: "<p style='text-align:center;'>리뷰가 등록 되었습니다.<p>",
+                    html: "<p style='text-align:center;'>리뷰가 수정 되었습니다.<p>",
                     confirmButtonColor: '#F9950F',
                     confirmButtonText: '확인',
                 });
@@ -97,7 +102,7 @@ function UserReviewForm() {
             }else{
                 Swal.fire({
                     icon: 'error',
-                    html: "<p style='text-align:center;'>리뷰 등록에 실패하였습니다.<p>",
+                    html: "<p style='text-align:center;'>리뷰 수정에 실패하였습니다.<p>",
                     confirmButtonColor: '#F9950F',
                     confirmButtonText: '확인',
                 });
@@ -120,7 +125,7 @@ function UserReviewForm() {
         {loading ? <Loding /> :
             <main className="cd-main dis-center">
                 <section className="review-write-form">
-                    <div className="review-write-title"><i className="fas fa-paw review-icon"></i>만족도 평가 및 리뷰</div>
+                    <div className="review-write-title"><i className="fas fa-paw review-icon"></i>만족도 평가 및 리뷰 수정하기 </div>
                     <hr className="divide-line" />
                     <div className="review-name-container">
                         <div className="review-write-username"><i className="fas fa-dog review-icon"></i>보호자 닉네임 : {user.nickname}</div>
@@ -139,11 +144,12 @@ function UserReviewForm() {
                             />
                         ))}
                     </div>
+                   
                     <div className="review-filebox">
-                        <img src={image ? URL.createObjectURL(image) : "/img/logo/pet_defult_img.png"} accept="image/*" alt='펫 기본이미지'
+                        <img src={image ? image : "/img/logo/pet_defult_img.png"} accept="image/*" alt='펫 기본이미지'
                             className="input-box-style input-img-size" placeholder='사진을 올려주세요'  ref={imgBoxRef}/>
 
-                        <label htmlFor="petImgFile">반려동물 사진 올리기</label>
+                        <label htmlFor="petImgFile">반려동물 사진 수정하기</label>
                         <input type="file" id="petImgFile" name='file' accept="image/*" onChange={handleImageChange} />
                     </div>
 
@@ -151,13 +157,14 @@ function UserReviewForm() {
                         <textarea
                             placeholder="리뷰를 작성해주세요"
                             className="text-area-size"
-                            onChange={(e) => setReview(e.target.value)} />
+                            name="content"
+                            onChange={changeReview} />
                     </div>
                     
 
                     <div className="review-btns">
                         <button className="main-btn btn-text review-btn btn-gray" onClick={goBack}>취소</button>
-                        <button className="main-btn btn-text review-btn" onClick={handleSubmit}>리뷰올리기</button>
+                        <button className="main-btn btn-text review-btn" onClick={handleSubmit}>리뷰수정</button>
                     </div>
 
                 </section>
@@ -167,4 +174,4 @@ function UserReviewForm() {
     </>);
 }
 
-export default UserReviewForm;
+export default UserReviewModi;

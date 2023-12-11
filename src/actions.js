@@ -46,3 +46,8 @@ export const setToken = (token) => ({
     type: 'SET_DES',
     payload: designer,
   });
+
+  export const setReview = (review) => ({
+    type: 'SET_REVIEW',
+    payload: review,
+  });

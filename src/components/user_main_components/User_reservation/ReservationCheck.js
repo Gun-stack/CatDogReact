@@ -15,12 +15,13 @@ function ReservationCheck() {
     const user = useSelector((state) => state.user);
     const petList = useSelector((state) => state.pet);
     const resvList = useSelector((state) => state.resv);
+
     
     //선택한 예약넘버와 같은 예약을 찾아온다
-    const resv = resvList.find((resv) => resv.num === params.num);
+    const resv = resvList.find((resv) => resv.num == params.num);
     //가져온 펫리스트중에 예약넘버의 펫이름과 같은 펫정보를 찾아온다
-    const pet1 = petList.find((pet) => pet.name === resv.petName);
-
+    
+    const pet1 = petList.find((pet) => pet.name == resv.petName);
 
     async function updateStyleT() {
         setModal(true);
@@ -48,7 +49,6 @@ function ReservationCheck() {
 
 //  유저의 펫 정보 리스트를 가져옴 
     useEffect(() => {
-        console.log(user.id);
         axios.get(`http://localhost:8090/petinfo?userId=${user.id}`)
         .then((res) => {
             console.log(res.data);
