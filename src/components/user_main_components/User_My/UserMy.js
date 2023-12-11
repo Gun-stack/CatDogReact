@@ -18,7 +18,7 @@ import UserReviewForm from "../User_reservation/UserReviewForm";
 import PetModi from './PetModi';
 import { useNavigate } from "react-router";
 import DesReg from "../../des_main_component/Des_My/DesReg";
-
+import UserReviewList from '../User_reservation/UserReviewList';
 
 
 function UserMy() {
@@ -60,7 +60,8 @@ function UserMy() {
 
                         <Route exact path='/reservation' element={<Reservation />} />
                         <Route exact path='/check/:num' element={<ReservationCheck />} />
-                        <Route path='/review/:resnum' element={<UserReviewForm />} />
+                        <Route path='/reviewregform/:resnum' element={<UserReviewForm />} />
+                        <Route path='/reservationdone/:desnum' element={<UserReviewList/>}/>
 
                         <Route exact path='/desreg' element={<DesReg />} />
 

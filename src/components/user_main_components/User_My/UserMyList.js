@@ -38,6 +38,12 @@ useEffect(() => {
                                 </li>
                                 <li className="nav-li">
                                     <div>
+                                        <i className="fas fa-caret-square-right mypage-arrow"></i><Link to={`reservationdone/${user.num}`}>이전 이용내역 보기</Link>
+                                    </div>
+                                    <i className="fas fa-store"></i>
+                                </li>
+                                <li className="nav-li">
+                                    <div>
                                         <i className="fas fa-caret-square-right mypage-arrow"></i><Link to= "petreg">반려동물 등록/수정하기</Link>
                                     </div>
                                     <i className="fas fa-store"></i>
