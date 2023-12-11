@@ -57,7 +57,8 @@ function DesGal() {
     return (
         <section className="st-gallery-section">
         <div className="st-gallery-grid">
-
+            
+            <Link to='galleryregform'> <button>글쓰기</button></Link>
             {galleryList.map((gallery, index) => (
                 <div className="st-gallery-img" key={index} >
                     <Link to={"/gallery/des/"+gallery.galNum}><img src={gallery.galImg} alt="" className="hover-img" /></Link>
