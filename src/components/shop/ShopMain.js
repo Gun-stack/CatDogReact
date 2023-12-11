@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { useState } from 'react';
 import Swal from 'sweetalert2';
 import axios from 'axios';
-import { Link, Route, Routes, useParams } from 'react-router-dom';
+import { Link, Route, Routes, useLocation, useParams } from 'react-router-dom';
 import Header from '../screens/Header';
 import Footer from '../screens/Footer';
 import ShopMainHome from './ShopMainHome';
@@ -16,6 +16,11 @@ import { useSelector } from 'react-redux';
 
 
 function ShopMain() {
+    const location = useLocation();
+
+    const isActive = (path) => {
+        return location.pathname === path;
+    };
     const  num  = useParams();
     const [shopInfo, setShopInfo] = useState({
         num: num.shopnum,
@@ -59,11 +64,11 @@ function ShopMain() {
                         <div className="shop-title-text">{shopInfo.shopname}</div>
                         <nav className="main-nav">
                             <ul className="main-nav-list">
-                                <li className="main-nav-list-text"><Link to="" >홈</Link></li>
-                                <li className="main-nav-list-text"><Link to={`/shop/${shopInfo.num}/menu`}>메뉴</Link></li>
-                                <li className="main-nav-list-text"><Link to={`/shop/${shopInfo.num}/designer`}>예약하기</Link></li>
-                                <li className="main-nav-list-text"><Link to={`/shop/${shopInfo.num}/style`}>스타일</Link></li>
-                                <li className="main-nav-list-text"><Link to={`/shop/${shopInfo.num}/review`}>리뷰</Link></li>
+                                <li className={`main-nav-list-text ${isActive('/') ? 'active' : ''}`}><Link to="" >홈</Link></li>
+                                <li className={`main-nav-list-text ${isActive `/shop/${shopInfo.num}/menu` ? 'active' : ''}`}><Link to={`/shop/${shopInfo.num}/menu`}>메뉴</Link></li>
+                                <li className={`main-nav-list-text ${isActive`/shop/${shopInfo.num}/designer` ? 'active' : ''}`}><Link to={`/shop/${shopInfo.num}/designer`}>예약하기</Link></li>
+                                <li className={`main-nav-list-text ${isActive`/shop/${shopInfo.num}/style` ? 'active' : ''}`}><Link to={`/shop/${shopInfo.num}/style`}>스타일</Link></li>
+                                <li className={`main-nav-list-text ${isActive`/shop/${shopInfo.num}/review` ? 'active' : ''}`}><Link to={`/shop/${shopInfo.num}/review`}>리뷰</Link></li>
                             </ul>
                         </nav>
                         <hr className="divide-line" />

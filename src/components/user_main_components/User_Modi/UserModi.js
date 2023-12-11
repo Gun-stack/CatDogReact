@@ -8,8 +8,13 @@ import { useSelector } from 'react-redux';
 
 
 function UserModi() {
-    const user =useSelector((state)=>state.user);
-    
+    const user = useSelector((state) => state.user);
+
+    const [isFlipped, setIsFlipped] = useState(false);
+
+    const handleFlip = () => {
+        setIsFlipped(!isFlipped);
+    };
 
     const [ismodal, setismodal] = useState(false);
 
@@ -17,7 +22,7 @@ function UserModi() {
         overlay: {
             backgroundColor: " rgba(0, 0, 0, 0.4)",
             width: "100%",
-            height: "100vh",
+            height: "100%",
             zIndex: "100",
             position: "fixed",
             top: "0",
@@ -36,7 +41,6 @@ function UserModi() {
         },
     };
 
-
     return (
         <>
             <ReactModal
@@ -50,67 +54,84 @@ function UserModi() {
             </ReactModal>
 
             <section className="form-section">
-                <div className="form-container">
-                    <div>유저정보   
-                        
-                        {user.provider==="Kakao"?
-                        <div>
-                        계정유형 : 카카오 <br/>
-                        email : {user.email} <br/>
-                        nickname : {user.nickname} <br/>
-                        id : {user.id} <br/>
+
+                <div className="usermy-id-card" onClick={handleFlip}>
+                    <div className={`id-cards ${isFlipped ? 'flipped' : ''}`}>
+
+                        <div className="id-card-front">
+                            <span className="id-card-title">유저정보</span>
+                            {/* 카카오 가입 유저면 카카오가 보임 */}
+                            <div className="id-front-display">
+                                {user.provider === "Kakao" ?
+                                    <div className="id-card-content">
+                                        <p className="id-text">
+                                            <span className="tx-orange f-w-600">댕냥꽁냥 아이디</span>  : <span className="f-w-600">{user.id}</span> <br />
+                                            <span className="tx-orange f-w-600">댕냥꽁냥 닉네임</span> : <span className="f-w-600">{user.nickname}</span> <br />
+                                            <span className="tx-orange f-w-600">소셜 로그인</span>  : <span className="f-w-600">카카오</span> <br />
+                                            <span className="tx-orange f-w-600">이 메일</span> : <span className="f-w-600">{user.email}</span> <br />
+                                        </p>
+                                        <img src="/img/logo/pet_defult_img.png" alt="기본이미지" className="id-card-img" />
+                                    </div>
+                                    :
+                                    <div className="id-card-content">
+                                        <p className="id-text">
+                                            <span className="tx-orange f-w-600">댕냥꽁냥 아이디</span>  : <span className="f-w-600">{user.id}</span> <br />
+                                            <span className="tx-orange f-w-600">댕냥꽁냥 닉네임</span> : <span className="f-w-600">{user.nickname}</span> <br />
+                                            <span className="tx-orange f-w-600">이 름</span>  : <span className="f-w-600">{user.name}</span> <br />
+                                            <span className="tx-orange f-w-600">이 메일</span>  : <span className="f-w-600">{user.email}</span> <br />
+                                            <span className="tx-orange f-w-600">전 화 번 호</span>  : <span className="f-w-600">{user.tel}</span> <br />
+                                        </p>
+                                        <img src="/img/logo/pet_defult_img.png" alt="기본이미지" className="id-card-img" />
+                                    </div>
+                                }
+                            </div>
                         </div>
-                        :
-                        <div>
-                        id: {user.id} <br/>
-                        name: {user.name} <br/>
-                        email: {user.email} <br/>
-                        tel: {user.tel} <br/>
-                        nickname: {user.nickname} <br/>
+
+                        <div className="id-card-back">
+                            <img src="/img/logo/logo_color.png" alt="로고 이미지" className="id-logo" />
+                            <span className="id-card-title tx-white">유저 정보 카드</span>
                         </div>
-                        }
-
-
-                    
-
-
-
-
 
                     </div>
-                    <hr className="divide-line"></hr>
+                </div>
+
+                <div className="user-modi-container">
                     <div className="input-container magin-t-1">
                         <div className="button-container">
 
-                            <button className="main-btn magin-t-1">
-                                <Link to="/usermy/modinick" className="btn-text">
-                                    닉네임 변경
-                                </Link>
+                            <Link to="/usermy/modinick">
+                                <button className="main-btn magin-t-1 btn-text wi-30 btn-display">
+                                    <span className="btn-inner-text">닉네임 변경</span>
+                                    <i class="fas fa-id-card tx-white"></i>
+                                </button>
+                            </Link>
+
+                            <Link to="/usermy/moditel">
+                                <button className="main-btn magin-t-1 btn-text wi-30 btn-display">
+                                    <span className="btn-inner-text">전화번호 변경</span>
+                                    <i class="fas fa-mobile-alt tx-white"></i>
+                                </button>
+                            </Link>
+
+                            <Link to="/usermy/modipassword">
+                                <button className="main-btn magin-t-1 btn-text wi-30 btn-display">
+                                    <span className="btn-inner-text">비밀번호 변경</span>
+                                    <i class="fas fa-unlock-alt tx-white"></i>
+                                </button>
+                            </Link>
+
+                            <button className="main-btn magin-t-1 btn-red btn-text wi-30 btn-display" onClick={() => setismodal(true)}>
+                                <span className="btn-inner-text">회원탈퇴</span>
+                                <i class="fas fa-sign-out-alt tx-white"></i>
                             </button>
 
-                            <button className="main-btn magin-t-1">
-                                <Link to="/usermy/moditel" className="btn-text">
-                                    전화번호 변경
-                                </Link>
-                            </button>
+                            <Link to="/usermy">
+                                <button className="main-btn btn-text magin-t-1 btn-gray wi-30">
+                                    취소
+                                </button>
+                            </Link>
 
-                            <button className="main-btn magin-t-1">
-                                <Link to="/usermy/modipassword" className="btn-text">
-                                    비밀번호 변경
-                                </Link>
-                            </button>
-
-                            <button className="main-btn magin-t-1 btn-red btn-text" onClick={() => setismodal(true)}>
-                                    회원탈퇴
-                            </button>
                         </div>
-
-                        <Link to="/usermy" className="btn-text">
-                            <button className="main-btn btn-text magin-t-1 btn-gray">
-                                취소
-                            </button>
-                        </Link>
-
                     </div>
                 </div>
             </section>

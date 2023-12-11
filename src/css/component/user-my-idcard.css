@@ -1,0 +1,104 @@
+.usermy-id-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 2rem;
+}
+
+.id-cards {
+    padding: 2rem 1rem;
+    width: 90%;
+    height: 10rem;
+    position: relative;
+    transition: .4s;
+    transform-style: preserve-3d;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.id-logo{
+    width: 300px;
+}
+
+.id-card-front,
+.id-card-back {
+    position: absolute;
+    top: 0;
+
+    padding: 2rem 1rem;
+    width: 90%;
+    height: 10rem;
+
+    border-radius: 10px;
+    backface-visibility: hidden;
+    box-shadow: 0 4px 30px rgba(0, 0, 0,0.05);
+
+    cursor: pointer;
+}
+
+.id-card-back {
+    background: rgb(249,149,15);
+    background: linear-gradient(218deg, rgba(249,149,15,1) 23%, rgba(252,231,152,1) 48%, rgba(255,192,0,1) 69%);
+    transform: rotateX(180deg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.id-card-front{
+    background-image: url('../../img/background/bg_idcard.png');
+    background-size: 95%;
+    background-position: center;
+}
+
+.id-front-display{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.usermy-id-card .id-cards.flipped {
+    transform: rotateX(180deg);
+}
+
+.id-card-title {
+    font-family: 'Binggrae';
+    font-weight: 600;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.id-text{
+    line-height: 1.5rem;
+}
+
+.wi-30{
+    width: 30rem;
+}
+
+.id-card-img{
+    width: 150px;
+}
+.id-card-content{
+    display: flex;
+    justify-content: space-between;
+}
+.user-modi-container{
+    display: flex;
+    flex-direction: column;
+}
+
+.btn-display{
+    display: flex;
+    justify-content: space-center;
+}
+
+.btn-inner-text{
+    width: 10rem;
+    color: #ffffff;
+}
