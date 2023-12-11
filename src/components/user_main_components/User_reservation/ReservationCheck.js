@@ -1,7 +1,5 @@
 
 import React, { useState } from 'react';
-import Header from '../../screens/Header';
-import Footer from '../../screens/Footer';
 import { useEffect } from 'react';
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
@@ -19,7 +17,7 @@ function ReservationCheck() {
     const resvList = useSelector((state) => state.resv);
     
     //선택한 예약넘버와 같은 예약을 찾아온다
-    const resv = resvList.find((resv) => resv.num == params.num);
+    const resv = resvList.find((resv) => resv.num === params.num);
     //가져온 펫리스트중에 예약넘버의 펫이름과 같은 펫정보를 찾아온다
     const pet1 = petList.find((pet) => pet.name === resv.petName);
 

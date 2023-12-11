@@ -31,12 +31,11 @@ function DesReg() {
                             <div className="form-container">
                                 <div className="input-container">
 
-                                    {/* <!-- 샵 이름 --> */}
-                                    <input type="text" id="shopName" name="shopName" placeholder="디자이너 이름"
-                                        className="input-text" />
+                                    {/* <!-- 디자이너 닉네임 : des_nickname --> */}
+                                    <input type="text" id="shopName" name="shopName" placeholder="디자이너 이름" className="input-text" />
 
-                                    <input type="text" id="shopNumber" name="shopNumber" placeholder="디자이너 직책"
-                                        className="input-text" />
+                                    {/* <!-- 디자이너 직책 : position --> */}
+                                    <input type="text" id="shopNumber" name="shopNumber" placeholder="디자이너 직책" className="input-text" />
 
                                     {/* <!-- 프로필 사진 사진 올리기 --> */}
                                     <div className="filebox">

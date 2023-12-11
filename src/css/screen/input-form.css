@@ -17,9 +17,7 @@ input::placeholder{
 
 .filebox{
     margin-top: 2rem;
-    width: inherit;
     display: flex;
-    justify-content: space-evenly;
     align-items: flex-end;
 }
 
@@ -42,6 +40,12 @@ input::placeholder{
     border: none;
 }
 
+.input-d-img{
+    width: 150px;
+    height: 150px;
+
+    margin-right: 3rem;
+}
 input[type=file]{
     display: none;
 }

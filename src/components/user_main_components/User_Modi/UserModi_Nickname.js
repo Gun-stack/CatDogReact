@@ -73,10 +73,10 @@ function UserModi_Nickname() {
                     });
                 }
             } catch (error) {
-                console.error('닉네임 변경에 실패했습니다', error);
+                console.error('서버통신에 실패했습니다', error);
                 Swal.fire({
                     icon: 'error',
-                    html: "<p style='text-align:center;'>닉네임 변경에 실패했습니다<p>",
+                    html: "<p style='text-align:center;'>서버통신에 실패했습니다<p>",
                     confirmButtonColor: '#F9950F',
                     confirmButtonText: '확인',
                 });
@@ -93,7 +93,7 @@ function UserModi_Nickname() {
 
         try {
 
-            const res = await axios.post('http://localhost:8090/modinickname', {num : user.num, nickname : userNickname});
+            const res = await axios.post('http://localhost:8090/modinickname', { nickname : userNickname});
 
             console.log(res);
             if (res.data === "success") {
@@ -113,10 +113,10 @@ function UserModi_Nickname() {
                 });
             }
         } catch (error) {
-            console.error('닉네임 변경에 실패했습니다', error);
+            console.error('서버통신에 실패했습니다', error);
             Swal.fire({
                 icon: 'error',
-                html: "<p style='text-align:center;'>닉네임 변경에 실패했습니다<p>",
+                html: "<p style='text-align:center;'>서버통신에 실패했습니다<p>",
                 confirmButtonColor: '#F9950F',
                 confirmButtonText: '확인',
             });
