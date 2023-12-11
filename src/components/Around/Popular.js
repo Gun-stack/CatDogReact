@@ -12,7 +12,7 @@ function Popular() {
         {
                 shopname: '코스타2 살롱살롱',
                 address: '서울 금천구 가산 디지털 1로 70 호서대 벤쳐 타워',
-                image: '/img/gallrey-img/6.jpg',
+                image: '/img/gallrey-img/7.jpg',
                 num: '2',
                 dist: '6m',
                 worktime: '11:00 - 14:00',
@@ -35,7 +35,7 @@ function Popular() {
 
     const shops = useSelector((state) => state.shop);
     useEffect(() => {
-        // dispatch({ type: 'SET_SHOP', payload: shoplist1 });
+        dispatch({ type: 'SET_SHOP', payload: shoplist1 });
         console.log(shops);
     }, [shops]);
     
@@ -50,7 +50,7 @@ function Popular() {
             <div className="nearby-shop-container">
                 <div className="nearby-shop-address-container">
                     <div className="nearby-shop-img-container">
-                        <img className="nearby-shop-img" name="image" src={shoplist.image}></img>
+                        <img className="nearby-shop-img" name="image" alt='' src={shoplist.image}></img>
                     </div>
 
                         {/* // 제목을 누르면 지도에서 마커 찍어주기?? */}
@@ -65,7 +65,7 @@ function Popular() {
                     </div>
 
                 </div>
-                <Link to={"/shop/"+shoplist.num}>샵 바로가기</Link>
+                <Link to={`/shop/${shoplist.num}`}>샵 바로가기</Link>
             </div>
         </li>
         ))}

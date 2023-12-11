@@ -186,26 +186,26 @@ function UserJoin() {
         const {value,name} = e.target;
         if(name === 'id'){
             setId(value);
-            console.log('id  : ' + id);
+            // console.log('id  : ' + id);
         }else if(name === 'password'){
             setPassword(value);
-            console.log('password  : ' + password);
+            // console.log('password  : ' + password);
         }else if(name === 'passwordCheck'){
             setPasswordCheck(value);
-            console.log('passwordCheck  : ' + passwordCheck);
+            // console.log('passwordCheck  : ' + passwordCheck);
         }else if(name === 'username'){
             setUserName(value);
-            console.log('name  : ' + username);
+            // console.log('name  : ' + username);
         }else if(name === 'nickname'){
             setNickname(value);
-            console.log('nickname  : ' + nickname);
+            // console.log('nickname  : ' + nickname);
         }else if(name === 'tel'){
             setTel(value);
-            console.log('tel  : ' + tel);
+            // console.log('tel  : ' + tel);
         }
         else if(name === 'email'){
             setEmail(value);
-            console.log('email  : ' + email);
+            // console.log('email  : ' + email);
         }
     }
 

@@ -1,25 +1,36 @@
-import React, { useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Route, Routes, useParams } from 'react-router-dom';
 import ShopResrevationDate from './ShopResrevationDate';
 import ShopReservationForm from './ShopReservationForm';
 import Error404 from '../error/Error404';
+import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 
 
 function ShopReservation(props) {
+    const dispatch = useDispatch();
     const shopInfo = props.shopInfo;
-
-
-    const desInfo ={
-        num: '1',
-        img: '/img/gallrey-img/8.jpg',
-        position: '박원장',
-        name: '행복행',
-        shop: '복행복 동물병원',
-        info: '행복해 그리고 퇴근해'
-    }
+    const des = useParams();
+    const desInfo =  useSelector(state => state.des);
     
+    //디자이너 넘버로 디자이너 정보 찾아오기
+    useEffect(() => {
+        console.log(shopInfo);
+        axios.get(`http://localhost:8090/desinfobynum?desNum=${des.desnum}`)
+        .then((res) => {
+            dispatch({type:'SET_DES', payload:res.data})
+            }
+        )
+        .catch((err) => {
+            console.log(err);
+        })
+    
+    },[]);
+    
+
+
 
 
 
@@ -40,6 +51,8 @@ function ShopReservation(props) {
                         </div>
                         <div className="st-profile-shop">
                             {desInfo.shop}
+                            
+                            별{desInfo.star}
                         </div>
                         <div className="st-profile-info">
                             {desInfo.info}

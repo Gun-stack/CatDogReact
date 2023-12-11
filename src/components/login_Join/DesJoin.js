@@ -19,8 +19,9 @@ function DesJoin() {
         const joinInfo = {
             id : id,
             password : password,
-            desname : desname,
+            name : desname,
             nickname : nickname,
+            
         }
         console.log(joinInfo);
        

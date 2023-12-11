@@ -16,11 +16,12 @@ import { useSelector } from 'react-redux';
 
 
 function ShopMain() {
-    const { num } = useParams();
+    const  num  = useParams();
     const [shopInfo, setShopInfo] = useState({
-        num: num,
+        num: num.shopnum,
         image: '/img/gallrey-img/3.jpg',
         shopname: '코스타리카 망하샵',
+        sId : 1,
         worktime: '11:00 - 14:00',
         address: '서울시 금천구 가산 디지털 1로 (호서벤쳐타운) 901호',
         info: '매장정보 입니다 엘베 내려서 여자화장실 방향으로 나와서 우회전',
@@ -30,12 +31,15 @@ function ShopMain() {
 
     const shoplist = useSelector((state) => state.shop);
     const shop = shoplist.find(shop => shop.num === num);
+
     useEffect(() => {
         if (shop) {
             setShopInfo(shop);
         }
         console.log(shop);
     }, [shoplist]);
+
+    
 
     return (
         <div className="web-container">
@@ -70,7 +74,7 @@ function ShopMain() {
                             <Route path="designer" element={<ShopMainDesLIst shopInfo={shopInfo} />} />
                             <Route path="style" element={<ShopMainStyle shopInfo={shopInfo} />} />
                             <Route path="review" element={<ShopMainReview shopInfo={shopInfo} />} />
-                            <Route path="reservation/:desnum/*" element={<ShopReservation shopInfo={shopInfo} />} />
+                            <Route path="/reservation/:desnum/*" element={<ShopReservation shopInfo={shopInfo} />} />
                             <Route path='/*' element={<Error404 />} />
                         </Routes>
 

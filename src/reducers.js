@@ -30,6 +30,10 @@ const initialState = { isLoggedIn: false,   };
         localStorage.removeItem('user');
         localStorage.removeItem('resv');
         localStorage.removeItem('pet');
+        localStorage.removeItem('shop');
+        localStorage.removeItem('des');
+        localStorage.removeItem('resvList');
+        
         localStorage.clear();
         sessionStorage.clear();
 
@@ -96,7 +100,7 @@ const isAutoLoginReducer = (state = false, action) => {
   }
 
 const initialShopState = 
-JSON.parse(localStorage.getItem('shop')) || [];
+JSON.parse(localStorage.getItem('shop')) || [  ];
 
 const shopReducer = (state = initialShopState, action) => {
   switch (action.type) {
@@ -107,18 +111,20 @@ const shopReducer = (state = initialShopState, action) => {
   }
 }
 
-const initialDesignerState = JSON.parse(localStorage.getItem('des')) || [
-    {num: '1',
-    img: '/img/gallrey-img/8.jpg',
-    position: '박원장',
-    name: '행복행',
-    shop: '복행복 동물병원',
-    info: '행복해 그리고 퇴근해'},
-    
-];
+const initialDesignerState = JSON.parse(localStorage.getItem('des')) || [];
 const designerReducer = (state = initialDesignerState, action) => {
   switch (action.type) {
     case 'SET_DES':
+      return action.payload;
+    default:
+      return state;
+  }
+}
+
+const initialResvListState = JSON.parse(localStorage.getItem('resvList')) || [];
+const resvListReducer = (state = initialResvListState, action) => {
+  switch (action.type) {
+    case 'SET_RESV_LIST':
       return action.payload;
     default:
       return state;
@@ -138,6 +144,7 @@ const rootReducer = combineReducers({
     pet: petReducer,
     shop: shopReducer,
     des: designerReducer,
+    resvList : resvListReducer,
 
 });
 

@@ -1,15 +1,21 @@
 import { DateCalendar, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { render } from '@testing-library/react';
+import axios from 'axios';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 function ShopResrevationDate(props) {
     //today
     const shopInfo = props.shopInfo;
-    const desInfo = props.desInfo;
-    const [selectDate, setSelectDate] = useState(new Date().toLocaleDateString('ko-KR').slice(0,11));
+    const desInfo = useSelector(state => state.des);
+    const [selectDate, setSelectDate] = useState(new Date().toLocaleDateString());
+    const [sqlDate, setSqlDate] = useState(new Date().getFullYear() + '-' + (new Date().getMonth() + 1).toString().padStart(2, '0') + '-' + new Date().getDate().toString().padStart(2, '0'));
+    const resList = useSelector(state => state.resvList);
+    const dispatch = useDispatch();
     
 
     const onChangeDate = (newValue) => {
@@ -17,15 +23,19 @@ function ShopResrevationDate(props) {
         const date = new Date(newValue.toISOString());
 
         // 한국 시간대로 조정 (UTC+9)
-        const offset = date.getTimezoneOffset() * 60000;
+        const offset = date.getTimezoneOffset() * 60000;       
         const koreaTime = new Date(date.getTime() - offset + (9 * 60 * 60000)); // UTC+9
 
-        const isoString = koreaTime.toISOString().slice(0, 10);
+        const month = (koreaTime.getMonth() + 1).toString().padStart(2, '0');
+        const day = koreaTime.getDate().toString().padStart(2, '0');
+
+        const sqlDate = `${koreaTime.getFullYear()}-${month}-${day}`;
+        setSqlDate(sqlDate);
+
+
+        const isoString = koreaTime.toLocaleDateString();
         setSelectDate(isoString);
-        console.log(isoString);
     };
-
-
 
     //지난 날짜는 선택못하게하기
     const disablePastDates = (date) => {
@@ -34,23 +44,22 @@ function ShopResrevationDate(props) {
     };
 
 
-    const resList = [{
-        desNum: '1',
-        date: '2023-12-08',
-        time: '10:00'
-    },
-    {
-        desNum: '1',
-        date: '2021-09-09',
-        time: '14:00'
-    },
-    {
-        desNum: '1',
-        date: '2021-09-09',
-        time: '16:00'
-    },
-    ]
     
+    useEffect(() => {
+        console.log(sqlDate);
+        console.log(desInfo.num);
+        console.log(resList);
+        axios.get(`http://localhost:8090/resinfobydesnum?desNum=${desInfo.num}&date=${sqlDate}`)
+        .then((res) => {
+            dispatch({type:'SET_RESV_LIST', payload:res.data})
+            }
+        )
+        .catch((err) => {
+            console.log(err);
+        })
+    },[sqlDate])
+
+
     
         // 예약된 시간인지 확인
         const isReserved = (date, time) => {
@@ -74,14 +83,14 @@ function ShopResrevationDate(props) {
             <hr className="divide-line" />
             {availableTimes.map(time => (
                 <div key={time}>
-                    {isReserved(selectDate, time) ? (
+                    {isReserved(sqlDate, time) ? (
                         <div className={`reser-time-container btn-gray`}>
                             <div className="reser-time">
                                 <span className="reser-time-text">{time}</span>
                             </div>
                         </div>
                     ) : (
-                        <Link to={`/shop/${shopInfo.num}/reservation/${desInfo.num}/form`} state={{ data1: time, data2: selectDate }}>
+                        <Link to={`/shop/${shopInfo.num}/reservation/${desInfo.num}/form`} state={{ data1: time, data2:sqlDate}}>
                             <div className="reser-time-container">
                                 <div className="reser-time">
                                     <span className="reser-time-text">{time}</span>

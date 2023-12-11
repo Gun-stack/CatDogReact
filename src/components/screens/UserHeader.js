@@ -25,7 +25,7 @@ function UserHeader() {
                 '',
                 'success'
                 )
-                navigate('/main');
+                navigate('/');
             }
             })
             

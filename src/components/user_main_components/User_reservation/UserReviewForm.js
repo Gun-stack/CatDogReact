@@ -1,18 +1,26 @@
-import { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { useNavigate,useParams } from "react-router-dom";
 import Loding from "../../tools/Loding";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { useSelector,useDispatch } from "react-redux";
+
+
 
 function UserReviewForm() {
-    let navigate = useNavigate();
+    const dispatch = useDispatch();
+    const params = useParams();
+    const resvList = useSelector((state) => state.resv);
+    const resvInfo = resvList.find((resv) => resv.num == params.resnum);
+    const desInfo = useSelector((state) => state.des);
+    const user = useSelector((state) => state.user);
+    const navigate = useNavigate();
     function goBack(e) {
         e.preventDefault();
         navigate(-1);
     }
 
     const [rating, setRating] = useState(0);
-
     const [image, setImage] = useState(null);
     const imgBoxRef = useRef();
     const [loading, setLoading] = useState(false);
@@ -29,6 +37,21 @@ function UserReviewForm() {
         }
     };
 
+    useEffect(() => {
+        console.log(resvInfo);
+        axios.get(`http://localhost:8090/desinfobyid?desId=${resvInfo.desId}`)
+            .then((res) => {
+                dispatch({ type: 'SET_DES', payload: res.data });
+                console.log(res.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    },[]);
+    
+
+
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -40,7 +63,7 @@ function UserReviewForm() {
         });
         formData.append('star', rating); // 별점 추가
         try{
-            const res = await axios.post('http://localhost:8080/user/reviewreg', { review })
+            const res = await axios.post('http://localhost:8090/reviewreg',formData, {headers: {'Content-Type': 'multipart/form-data'}})
             if (res.data === true) {
                 Swal.fire({
                     icon: 'success',
@@ -78,8 +101,9 @@ function UserReviewForm() {
                     <div className="review-write-title"><i className="fas fa-paw review-icon"></i>만족도 평가 및 리뷰</div>
                     <hr className="divide-line" />
                     <div className="review-name-container">
-                        <div className="review-write-username"><i className="fas fa-dog review-icon"></i>보호자 닉네임</div>
-                        <div className="review-write-desname"><i className="fas fa-cut review-icon"></i>미용사 이름 </div>
+                        <div className="review-write-username"><i className="fas fa-dog review-icon"></i>보호자 닉네임 : {user.nickname}</div>
+                        <div className="review-write-desname"><i className="fas fa-cut review-icon"></i>미용사 이름 : {desInfo.desNickname} </div>
+                        <div className="review-write-desname"><i className="fas fa-cut review-icon"></i> 강쥐 : {resvInfo.petName} </div>
                     </div>
                     <hr className="divide-line" />
 
@@ -104,7 +128,6 @@ function UserReviewForm() {
                     <div className="review-write-text">
                         <textarea
                             placeholder="리뷰를 작성해주세요"
-                            value={review}
                             className="text-area-size"
                             onChange={(e) => setReview(e.target.value)} />
                     </div>

@@ -1,10 +1,12 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 
 function ShopMainDesLIst(props) {
- const shopInfo = props.shopInfo;
+const shopInfo = props.shopInfo;
+
 
     const desList  = [{
         num: '1',
@@ -24,6 +26,20 @@ function ShopMainDesLIst(props) {
     },
 
 ];
+
+// useEffect(() => {
+//     console.log(shopInfo);
+//     axios.get(`http://localhost:8090/deslist?shopNum=${shopInfo.num}`)
+//     .then((res) => {
+//         console.log(res.data);
+//         }
+//     )
+//     .catch((err) => {
+//         console.log(err);
+//     })
+// }
+// ,[]);
+
 
 
 

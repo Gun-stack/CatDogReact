@@ -28,19 +28,25 @@ function UserLogin() {
         console.log( "res : "+ JSON.stringify(res.data));
         const user1 = res.data;
         console.log(token);
-        const user1 = res.data;
         dispatch(setToken(token));
         dispatch(setUserStore(user1));
         dispatch(loginStore());
         navigate('/main');
         } catch (error) {
             console.error(error);
+            Swal.fire({
+                icon: 'error',
+                title: '로그인 실패',
+                text: '아이디 또는 비밀번호를 확인해주세요.',
+                footer: '<a href="findid">아이디 또는 비밀번호를 잊으셨나요?</a>'
+              })
         }
       };
 
       const handleAutoLogin = () => {
         dispatch(setAutoLogin(!isAutoLogin));
         console.log(isAutoLogin);
+    
       };
 
    useEffect(() => {

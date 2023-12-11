@@ -69,7 +69,7 @@ function UserMy() {
 
                         <Route exact path='/reservation' element={<Reservation />} />
                         <Route exact path='/check/:num' element={<ReservationCheck />} />
-                        <Route path='/review' element={<UserReviewForm />} />
+                        <Route path='/review/:resnum' element={<UserReviewForm />} />
 
                         <Route path='/*' element={<Error404/>}/>
 

@@ -27,6 +27,11 @@ export const setToken = (token) => ({
     payload: reservation,
   });
 
+  export const setReservationList = (reservationList) => ({
+    type: 'SET_RESV_LIST',
+    payload: reservationList,
+  });
+
   export const PetStore = (pet) => ({
     type: 'SET_PET',
     payload: pet,

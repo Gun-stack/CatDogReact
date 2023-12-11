@@ -16,6 +16,7 @@ function PetReg() {
         axios.get(`http://localhost:8090/petinfo?userId=${user.id}`)
         .then((res) => {
                 dispatch({type:'SET_PET', payload:res.data} );
+                console.log(res.data);
             }
         )
         .catch((err) => {
