@@ -8,46 +8,46 @@ import DesInfo from "./DesInfo";
 import DesReg from "./DesReg";
 import DesResvList from "../Des_reservation/DesResvList";
 
-function  DesMy() {
-    return ( 
+function DesMy() {
+    return (
         <div className="web-container ">
-        <div className="cd-container bg-white bg-dogs">
-        <Header/>
+            <div className="cd-container bg-white bg-dogs">
+                <Header />
 
-            <main className="cd-main dis-center ">
+                <main className="cd-main dis-center ">
 
-                <section className="section-header">
-                    <div className="section-header-container">
-                        <span className="section-header-text">마이 페이지</span>
-                    </div>
-                </section>
+                    <section className="section-header">
+                        <div className="section-header-container">
+                            <span className="section-header-text">마이 페이지</span>
+                        </div>
+                    </section>
 
-                <Routes>
+                    {/* <Routes>
                         <Route path='/' element={<DesMyList />} />
 
                         <Route exact path='/shopreg' element={<ShopReg />} />
                         <Route exact path='/shopregform' element={<ShopRegForm />} />
-                        <Route exact path='/desinfo' element={<DesInfo />} />
+                        {/* <Route exact path='/desinfo' element={<DesInfo />} />
                         <Route exact path='desreg' element={<DesReg />} />
-                        <Route exact path='desresvlist' element={<DesResvList />} />
+                        <Route exact path='desresvlist' element={<DesResvList />} /> */}
 
-                        {/* <Route exact path='/petreg' element={<PetReg />} />
-                        <Route exact path='/petregform' element={<PetRegForm />} />
+                    {/* <Route exact path='/petreg' element={<PetReg />} />
+                        <Route exact path='/petregform' element={<PetRegForm />} /> */}
 
 
-                        <Route path='modinick' element={<UserModi_Nickname />} />
+                    {/* <Route path='modinick' element={<UserModi_Nickname />} />
                         <Route path='moditel' element={<UserModi_Tel />} />
                         <Route path='modipassword' element={<UserModi_Password />} />
 
 
-                        <Route exact path='/check' element={<ReservationCheck />} /> */}
-                        <Route path='/*' element={<Error404/>}/>
+                        <Route exact path='/check' element={<ReservationCheck />} />  */}
+                    {/* <Route path='/*' element={<Error404/>}/>
 
-                    </Routes>
-            </main>
+                    </Routes> */}
+                </main>
 
+            </div>
         </div>
-    </div>
     );
 }
 

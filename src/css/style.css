@@ -13,6 +13,7 @@
 @import url('component/error.css');
 @import url('component/loding.css');
 @import url('component/review.css');
+@import url('component/user-my-idcard.css');
 
 /** Screen */
 @import url('screen/main.css');
