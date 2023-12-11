@@ -22,7 +22,7 @@ function  DesMy() {
                     </div>
                 </section>
 
-                <Routes>
+                {/* <Routes>
                         <Route path='/' element={<DesMyList />} />
 
                         <Route exact path='/shopreg' element={<ShopReg />} />
@@ -31,7 +31,7 @@ function  DesMy() {
                         <Route exact path='desreg' element={<DesReg />} />
                         <Route exact path='desresvlist' element={<DesResvList />} />
 
-                        {/* <Route exact path='/petreg' element={<PetReg />} />
+                        <Route exact path='/petreg' element={<PetReg />} />
                         <Route exact path='/petregform' element={<PetRegForm />} />
 
 
@@ -40,10 +40,10 @@ function  DesMy() {
                         <Route path='modipassword' element={<UserModi_Password />} />
 
 
-                        <Route exact path='/check' element={<ReservationCheck />} /> */}
+                        <Route exact path='/check' element={<ReservationCheck />} /> 
                         <Route path='/*' element={<Error404/>}/>
 
-                    </Routes>
+                    </Routes> */}
             </main>
 
         </div>

@@ -48,6 +48,12 @@ useEffect(() => {
                                     </div>
                                     <i className="fas fa-store"></i>
                                 </li>
+                                <li className="nav-li">
+                                    <div>
+                                        <i className="fas fa-caret-square-right mypage-arrow"></i><Link to= "desreg">디자이너 등록/수정하기</Link>
+                                    </div>
+                                    <i className="fas fa-store"></i>
+                                </li>
                             </ul>
                         </section>
                 </main>
