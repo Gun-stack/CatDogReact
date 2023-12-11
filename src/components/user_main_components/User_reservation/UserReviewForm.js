@@ -14,6 +14,23 @@ function UserReviewForm() {
     const resvInfo = resvList.find((resv) => resv.num == params.resnum);
     const desInfo = useSelector((state) => state.des);
     const user = useSelector((state) => state.user);
+
+    const date1 = new Date();
+    const offset = date1.getTimezoneOffset() * 60000;       
+    const koreaTime = new Date(date1.getTime() - offset + (9 * 60 * 60000)); // UTC+9
+    const month = (koreaTime.getMonth() + 1).toString().padStart(2, '0');
+    const day = koreaTime.getDate().toString().padStart(2, '0');
+    const sqlDate = `${koreaTime.getFullYear()}-${month}-${day}`;
+
+
+
+
+
+
+
+
+
+
     const navigate = useNavigate();
     function goBack(e) {
         e.preventDefault();
@@ -25,10 +42,16 @@ function UserReviewForm() {
     const imgBoxRef = useRef();
     const [loading, setLoading] = useState(false);
 
+    
+
     const [review, setReview] = useState({
         after_img: '',
         content: '',
         star: '',
+        desId: resvInfo.desId,
+        userId: user.id,
+        date : sqlDate  ,
+        resNum: resvInfo.num
     });
 
     const handleImageChange = (e) => {
@@ -38,7 +61,7 @@ function UserReviewForm() {
     };
 
     useEffect(() => {
-        console.log(resvInfo);
+        console.log(review);
         axios.get(`http://localhost:8090/desinfobyid?desId=${resvInfo.desId}`)
             .then((res) => {
                 dispatch({ type: 'SET_DES', payload: res.data });
@@ -57,13 +80,15 @@ function UserReviewForm() {
         setLoading(true);
         setLoading(true);
         const formData = new FormData();
-        formData.append('image', image); // 이미지 파일을 formData에 추가
-        Object.keys(review).forEach(key => {
-            formData.append(key, review[key]); // 텍스트 데이터를 formData에 추가
-        });
+        formData.append('file', image); // 이미지 파일을 formData에 추가
+        formData.append('content', review); // 리뷰 내용 추가
         formData.append('star', rating); // 별점 추가
+        formData.append('desId', desInfo.id); // 미용사 아이디 추가
+        formData.append('userId', user.id); // 유저 아이디 추가
+        formData.append('date', sqlDate); // 날짜 추가
+        formData.append('resNum', resvInfo.num); // 예약번호 추가
         try{
-            const res = await axios.post('http://localhost:8090/reviewreg',formData, {headers: {'Content-Type': 'multipart/form-data'}})
+            const res = await axios.post('http://localhost:8090/reviewreg',formData)
             if (res.data === true) {
                 Swal.fire({
                     icon: 'success',

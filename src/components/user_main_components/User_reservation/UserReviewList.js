@@ -3,13 +3,14 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
-function Reservation() {
+
+function UserReviewList() {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.user);
 
-    const reservationList = useSelector((state) => state.resv);
-    const resvList = reservationList.filter((resv) => resv.status === "예약" );
-
+    const reservationList = useSelector((state) => state.resv) ;
+    const resvList = reservationList.filter((resv) => resv.status === "완료" );
+    
 
 
     useEffect(() => {
@@ -26,22 +27,14 @@ function Reservation() {
             })
     }
         , [user.id]);
-
-
-
-
-
-
-
-
         return (
         <main className="cd-main dis-center">
         <section className="shop-main-section bg-white">
             <ul className="nav-ul">
             <li className="nav-li">
-                <Link to="/usermy/reservation">
+                <Link to={`/usermy/reservationdone/${user.num}`}>
                 <div>
-                    <i className="fas fa-caret-square-right mypage-arrow"></i>예약 확인 하기
+                    <i className="fas fa-caret-square-right mypage-arrow"></i>이용 완료 내역보기
                 </div>
                 </Link>
                 <i className="fas fa-store"></i>
@@ -51,13 +44,14 @@ function Reservation() {
             {resvList.length === 0 ? (
             <div action="" className="shop-form-container">
                 <div className="input-img-click sm-input-img">
-                <p>예약한 내역이 없습니다</p>
+                <p>이전 이용 내역이 없습니다</p>
                 </div>
             </div>
             ) : 
             (
                 <div>
-                {resvList.map((resv, index) => (
+                {/* 최근 방문순서? */}
+                {resvList.reverse().map((resv, index) => (
                 <div key={index} className="reservation-container">
                     <hr className="divide-line" />
                     <div className="re-shop-info">
@@ -75,7 +69,7 @@ function Reservation() {
                     <span className="is-visit">
                         {resv.status ==="완료" && resv.isReview === 0 ?
                         (<Link to={`/usermy/reviewregform/${resv.num}`}>리뷰쓰기</Link>)
-                        : '' }
+                        : (<Link to={`/usermy/reviewregform/${resv.num}`}>리뷰보기</Link>) }
                     </span>
                     <button className="small-btn">
                         <Link to={`/usermy/check/${resv.num}`} className="btn-text">
@@ -91,6 +85,6 @@ function Reservation() {
         </section>
         </main>
     );
-    
 }
-export default Reservation;
+
+export default UserReviewList;

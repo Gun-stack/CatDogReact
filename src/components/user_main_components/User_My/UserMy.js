@@ -19,6 +19,7 @@ import { setUserStore } from '../../../actions';
 import UserReviewForm from "../User_reservation/UserReviewForm";
 import PetModi from './PetModi';
 import { useNavigate } from "react-router";
+import UserReviewList from '../User_reservation/UserReviewList';
 
 
 
@@ -69,7 +70,8 @@ function UserMy() {
 
                         <Route exact path='/reservation' element={<Reservation />} />
                         <Route exact path='/check/:num' element={<ReservationCheck />} />
-                        <Route path='/review/:resnum' element={<UserReviewForm />} />
+                        <Route path='/reviewregform/:resnum' element={<UserReviewForm />} />
+                        <Route path='/reservationdone/:desnum' element={<UserReviewList/>}/>
 
                         <Route path='/*' element={<Error404/>}/>
 
