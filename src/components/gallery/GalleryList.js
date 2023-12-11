@@ -9,6 +9,7 @@ import UserGal from './UserGal';
 import DesGalleryView from './DesGalleryView';
 import UserGalleryView from './UserGalleryView';
 import Error404 from '../error/Error404';
+import GalleryRegForm from './GalleryRegForm';
 
 
 
@@ -48,6 +49,8 @@ function GalleryList() {
                     <Routes >
                         <Route path="/" element={<DesGal />} />
                         <Route path="/des" element={<DesGal />} />
+                        <Route path="/des/galleryregform" element={<GalleryRegForm />} />
+
                         <Route path="/user" element={<UserGal />} />
                         <Route path='user/:usernum' element={<UserGalleryView />} />
                         <Route path='des/:desgalnum' element={<DesGalleryView />} />
