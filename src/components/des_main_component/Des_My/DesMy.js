@@ -22,16 +22,16 @@ function DesMy() {
                         </div>
                     </section>
 
-                    {/* <Routes>
+                        <Routes>
                         <Route path='/' element={<DesMyList />} />
 
                         <Route exact path='/shopreg' element={<ShopReg />} />
                         <Route exact path='/shopregform' element={<ShopRegForm />} />
-                        {/* <Route exact path='/desinfo' element={<DesInfo />} />
+                        <Route exact path='/desinfo' element={<DesInfo />} />
                         <Route exact path='desreg' element={<DesReg />} />
-                        <Route exact path='desresvlist' element={<DesResvList />} /> */}
+                        <Route exact path='desresvlist' element={<DesResvList />} />
 
-                    {/* <Route exact path='/petreg' element={<PetReg />} />
+                        {/* <Route exact path='/petreg' element={<PetReg />} />
                         <Route exact path='/petregform' element={<PetRegForm />} /> */}
 
 
@@ -41,9 +41,9 @@ function DesMy() {
 
 
                         <Route exact path='/check' element={<ReservationCheck />} />  */}
-                    {/* <Route path='/*' element={<Error404/>}/>
+                    <Route path='/*' element={<Error404/>}/>
 
-                    </Routes> */}
+                    </Routes>
                 </main>
 
             </div>
