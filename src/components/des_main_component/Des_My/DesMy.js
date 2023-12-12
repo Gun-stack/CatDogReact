@@ -7,8 +7,10 @@ import ShopRegForm from "./ShopRegForm";
 import DesInfo from "./DesInfo";
 import DesReg from "./DesReg";
 import DesResvList from "../Des_reservation/DesResvList";
+import { useSelector } from 'react-redux';
 
 function DesMy() {
+    const user = useSelector((state) => state.user);
     return (
         <div className="web-container ">
             <div className="cd-container bg-white bg-dogs">
