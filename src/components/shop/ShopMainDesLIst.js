@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 function ShopMainDesLIst(props) {
 const shopInfo = props.shopInfo;
 
-
     const desList  = [{
         num: '1',
         img: '/img/gallrey-img/1.jpg',    
@@ -68,8 +67,6 @@ const shopInfo = props.shopInfo;
 
                 <div className="st-button-container">
                     <a href="#"><button className="st-button">편집<i className="fas fa-pen btn-icon"></i></button></a>
-
-                    
                     <Link to={`/shop/${shopInfo.num}/reservation/${des.num}`} ><button className="st-button">예약하기<i className="far fa-calendar-alt btn-icon"></i></button></Link>
                 </div>
             </div>
