@@ -28,7 +28,7 @@ function UserModi_Nickname() {
 
     const onChangeNick = (e) => {
         setUserNickname(e.target.value);
-        console.log(userNickname);
+        console.log("UserNickname : " +userNickname);
     }
 
     const checkNickname = async (e) => {
@@ -63,7 +63,7 @@ function UserModi_Nickname() {
                         confirmButtonColor: '#F9950F',
                         confirmButtonText: '확인'
                     });
-                    setUserNickname(true);
+                    // setUserNickname(true);
                 } else {
                     Swal.fire({
                         title: '중복된 닉네임 입니다',
@@ -89,11 +89,13 @@ function UserModi_Nickname() {
     const onSubmit = async (e) => {
         
         e.preventDefault();
-        setLoading(true); // 로딩 시작
+        // setLoading(true); // 로딩 시작
+        console.log("Nickname : " + userNickname);
+        
 
         try {
 
-            const res = await axios.post('http://localhost:8090/modinickname', { nickname : userNickname});
+            const res = await axios.post('http://localhost:8090/modinickname', {num : user.num, nickname : userNickname});
 
             console.log(res);
             if (res.data === "success") {
