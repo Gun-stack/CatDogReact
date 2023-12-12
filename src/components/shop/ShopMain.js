@@ -13,36 +13,28 @@ import ShopMainReview from './ShopMainReview';
 import ShopReservation from './ShopReservation';
 import Error404 from '../error/Error404';
 import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 
 function ShopMain() {
+    const dispatch = useDispatch();
     const location = useLocation();
-
     const isActive = (path) => {
         return location.pathname === path;
     };
-    const  num  = useParams();
-    const [shopInfo, setShopInfo] = useState({
-        num: num.shopnum,
-        image: '/img/gallrey-img/3.jpg',
-        shopname: '코스타리카 망하샵',
-        sId : 1,
-        worktime: '11:00 - 14:00',
-        address: '서울시 금천구 가산 디지털 1로 (호서벤쳐타운) 901호',
-        info: '매장정보 입니다 엘베 내려서 여자화장실 방향으로 나와서 우회전',
-        notice: '월요일은 자체 휴강입니다',
-        tel: '01022222232',
-    });
+    const  params  = useParams();
+    
 
-    const shoplist = useSelector((state) => state.shop);
-    const shop = shoplist.find(shop => shop.num === num);
+    const shopInfo = useSelector((state) => state.shop);
+    
 
     useEffect(() => {
-        if (shop) {
-            setShopInfo(shop);
-        }
-        console.log(shop);
-    }, [shoplist]);
+        axios.get(`http://localhost:8090/shopinfobynum?num=${params.shopnum}`)
+        .then((res) => {
+            dispatch({type:'SET_SHOP',payload:res.data});
+
+        })
+    }, []);
 
     
 
@@ -56,12 +48,12 @@ function ShopMain() {
                         {/* <div className="input-img-click">
                                 이미지를 등록하세요
                             </div> */}
-                        <img src={shopInfo.image} alt='' className='shop-title-img'/>
+                        <img src={`http://localhost:8090/shopimg/${shopInfo.bgImg}`} alt='' className='shop-title-img'/>
 
                     </section>
 
                     <section className="shop-main-section">
-                        <div className="shop-title-text">{shopInfo.shopname}</div>
+                        <div className="shop-title-text">{shopInfo.name}</div> 
                         <nav className="main-nav">
                             <ul className="main-nav-list">
                                 <li className={`main-nav-list-text ${isActive('/') ? 'active' : ''}`}><Link to="" >홈</Link></li>
@@ -73,7 +65,7 @@ function ShopMain() {
                         </nav>
                         <hr className="divide-line" />
 
-                        <Routes>
+                         <Routes>
                             <Route path="/" element={<ShopMainHome shopInfo={shopInfo} />} />
                             <Route path="menu" element={<ShopMainMenu shopInfo={shopInfo} />} />
                             <Route path="designer" element={<ShopMainDesLIst shopInfo={shopInfo} />} />

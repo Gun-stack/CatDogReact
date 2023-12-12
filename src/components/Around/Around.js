@@ -10,10 +10,12 @@ import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import useKakaoLoader from './useKakaoLoader';
 import Swal from "sweetalert2";
 import Error404 from "../error/Error404";
+import { useDispatch } from "react-redux";
 
 
 
 function Around() {
+    const dispatch = useDispatch();
     const location = useLocation();
 
     const isActive = (path) => {
@@ -81,6 +83,8 @@ function Around() {
                         isLoading: false,
                         isPanto: true
                     }));
+                    dispatch({type:'SET_LATITUDE',payload:position.coords.latitude});
+                    dispatch({type:'SET_LONGITUDE',payload:position.coords.longitude});                    
                     console.log(position.coords.latitude);
                     console.log(position.coords.longitude);
                 },

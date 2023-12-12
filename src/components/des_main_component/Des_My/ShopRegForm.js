@@ -43,6 +43,7 @@ function ShopRegForm() {
         imgBoxRef.current.src = imageSrc;
     }
 
+
     const onSubmit = (e) => {
         e.preventDefault();
         console.log(" latitude: " + latitude);
@@ -71,7 +72,6 @@ function ShopRegForm() {
             }
 
             console.log("address_detail : " + shop.address_detail);
-
 
             formData.append("name", shop.name);
             formData.append("sId", sId);
