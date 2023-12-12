@@ -18,7 +18,7 @@ function ShopRegForm() {
     const user = useSelector((state) => state.user);
     const [sId, setSId] = useState('');
     const [backsId, setBackSId] = useState('');
-    
+
 
     // DB에 들어가는 데이터
     const [shop, setShop] = useState({
@@ -79,7 +79,7 @@ function ShopRegForm() {
             formData.append("address_detail", shop.address_detail);
             formData.append("latitude", latitude);
             formData.append("longitude", longitude);
-            
+
             formData.append("userId", user.id);
 
 
@@ -102,22 +102,22 @@ function ShopRegForm() {
     const formatNumber = (input) => {
         // 숫자만 추출
         const cleaned = ('' + input).replace(/\D/g, '');
-    
+
         // 3자리-5자리-4자리 형식으로 포맷팅
         const formatted = cleaned.replace(/^(\d{3})(\d{0,2})(\d{0,5})/, (match, p1, p2, p3) => {
-          let result = p1;
-          if (p2) result += `-${p2}`;
-          if (p3) result += `-${p3}`;
-          return result;
-        });   
+            let result = p1;
+            if (p2) result += `-${p2}`;
+            if (p3) result += `-${p3}`;
+            return result;
+        });
         setBackSId(formatted.substring(0, 14));
-      };
+    };
 
 
     const idChange = (e) => {
         setSId(e.target.value.replace(/\D/g, ''));
         formatNumber(e.target.value);
-      };
+    };
 
     const open = useDaumPostcodePopup('https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js');
 
