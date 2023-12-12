@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
+
 
 function UserModi_MemberWithDraw() {
     const [user, setUser] = useState({id:"", password:""});

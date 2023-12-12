@@ -19,7 +19,6 @@ function GalleryRegForm() {
         }
     };
 
-
     return (<>
         {loading ? <Loding /> :
             <main className="cd-main dis-center">

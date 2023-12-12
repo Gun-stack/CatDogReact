@@ -41,10 +41,6 @@ const shopInfo = props.shopInfo;
 // ,[]);
 
 
-
-
-
-
     return (
         <div>
             <div action="" className="shop-form-container">

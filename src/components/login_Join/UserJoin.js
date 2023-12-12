@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import Footer from "../screens/Footer";
 import Swal from "sweetalert2";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import Loding from "../tools/Loding";
 
@@ -9,20 +9,37 @@ import Loding from "../tools/Loding";
 
 function UserJoin() {
     const [id, setId] = useState('');
-    const [password, setPassword] = useState('');
     const [username, setUserName] = useState('');
     const [nickname, setNickname] = useState('');
     const [tel, setTel] = useState('');
     const [email, setEmail] = useState('');
-
+    
+    //패스워드 관련
+    const [password, setPassword] = useState('');
+    const [passMessage, setPassMessage] = useState('비밀번호를 입력하세요');
     const [passwordCheck, setPasswordCheck] = useState('');
+    
+    const changePass = (e) => {
+        setPassword(e.target.value);
+    }
+
+    useEffect(() => {
+        if (password && passwordCheck) {
+            if (password !== passwordCheck) {
+                setPassMessage('비밀번호가 일치하지 않습니다.');
+            } else {
+                setPassMessage('비밀번호가 일치합니다.');
+            }
+        }
+    }, [password, passwordCheck]);
+
+    function changePassCheck(e) {
+        setPasswordCheck(e.target.value);
+    }
 
     const [idcheck, setIdCheck] = useState(false);
     const [nicknamecheck, setNicknameCheck] = useState(false);
-
     const [loading, setLoading] = useState(false);
-
-
     const [phoneNumber, setPhoneNumber] = useState('');
 
     const formatPhoneNumber = (input) => {
@@ -59,29 +76,28 @@ function UserJoin() {
         console.log(joinInfo);
         try {
             axios.post('http://localhost:8090/userjoin', joinInfo)
-            .then((res) => {
-                console.log(res);
-                console.log(res.data);
-                if (res.data === "joinsuccess") {
-                    Swal.fire({
-                        icon: 'success',
-                        title: '회원가입 성공',
-                        text: '로그인 페이지로 이동합니다.',
-                        confirmButtonColor: '#F9950F',
-                        confirmButtonText: '확인',
-                    });
-                    // window.location.href("/userlogin");
-                    window.location.replace("userlogin");
-                } else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: '회원가입 실패',
-                        text: '다시 시도해주세요.',
-                        confirmButtonColor: '#F9950F',
-                        confirmButtonText: '확인',
-                    });
-                }
-            })
+                .then((res) => {
+                    console.log(res);
+                    console.log(res.data);
+                    if (res.data === "joinsuccess") {
+                        Swal.fire({
+                            icon: 'success',
+                            title: '회원가입 성공',
+                            text: '로그인 페이지로 이동합니다.',
+                            confirmButtonColor: '#F9950F',
+                            confirmButtonText: '확인',
+                        });
+                        window.location.replace("userlogin");
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: '회원가입 실패',
+                            text: '다시 시도해주세요.',
+                            confirmButtonColor: '#F9950F',
+                            confirmButtonText: '확인',
+                        });
+                    }
+                })
         } catch (error) {
             Swal.fire({
                 icon: 'error',
@@ -142,7 +158,14 @@ function UserJoin() {
                     }
                 })
                 .catch(err => {
-
+                    console.error(err);
+                    Swal.fire({
+                        title: '서버와 연결이 실패했습니다',
+                        text: '다시 시도해주세요',
+                        icon: 'warning',
+                        confirmButtonColor: '#F9950F',
+                        confirmButtonText: '확인',
+                    });
                 })
         }
     }
@@ -190,37 +213,44 @@ function UserJoin() {
                     }
                 })
                 .catch(err => {
-
+                    console.error(err);
+                    Swal.fire({
+                        title: '서버와 연결이 실패했습니다',
+                        text: '다시 시도해주세요',
+                        icon: 'warning',
+                        confirmButtonColor: '#F9950F',
+                        confirmButtonText: '확인',
+                    });
                 })
 
         }
     }
 
-    //입력잘되나
+
     const onChange = (e) => {
         const { value, name } = e.target;
         if (name === 'id') {
             setId(value);
-            // console.log('id  : ' + id);
+
         } else if (name === 'password') {
             setPassword(value);
-            // console.log('password  : ' + password);
+
         } else if (name === 'passwordCheck') {
             setPasswordCheck(value);
-            // console.log('passwordCheck  : ' + passwordCheck);
+
         } else if (name === 'username') {
             setUserName(value);
-            // console.log('name  : ' + username);
+
         } else if (name === 'nickname') {
             setNickname(value);
-            // console.log('nickname  : ' + nickname);
+
         } else if (name === 'tel') {
             setTel(value);
-            // console.log('tel  : ' + tel);
+
         }
         else if (name === 'email') {
             setEmail(value);
-            // console.log('email  : ' + email);
+
         }
     }
 
@@ -248,7 +278,6 @@ function UserJoin() {
         }
         );
     };
-
 
 
     return (
@@ -302,11 +331,13 @@ function UserJoin() {
 
                                             {/** 비밀번호 */}
                                             <input type="password" id="password" name="password" placeholder="비밀번호"
-                                                className="input-text" onChange={onChange} />
+                                                className="input-text" onChange={(e) => { onChange(e); changePass(e); }} />
 
                                             {/** 비밀번호  체크*/}
                                             <input type="password" id="passwordCheck" name="passwordCheck" placeholder="비밀번호 확인"
-                                                className="input-text" onChange={onChange} />
+                                                className="input-text" onChange={(e) => { onChange(e); changePassCheck(e); }} />
+                                            <span className="notice">{passMessage}</span>
+
 
                                             {/** 전화번호 */}
                                             <input type="text" id="tel" name="tel" placeholder="전화 번호"

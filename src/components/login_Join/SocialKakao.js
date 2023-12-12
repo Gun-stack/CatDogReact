@@ -34,7 +34,6 @@ const SocialKakao = () => {
             })
         }
 
-
     }
     const kakaoOnFailure = (error) => {
         console.log(error);
@@ -48,9 +47,6 @@ const SocialKakao = () => {
             />
         </>
     )
-
-
-
 
 }
 
