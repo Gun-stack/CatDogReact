@@ -150,10 +150,6 @@ input[type='date']::before {
     padding: 1rem;
 }
 
-.form-container{
-    margin-bottom: 2rem;
-}
-
 .input-container{
     width: 100%;
     display: flex;
@@ -213,10 +209,11 @@ input[type='date']::before {
 }
 
 .form-container{
-    min-height: 80vh;
+    min-height: 60vh;
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-bottom: 2rem;
 }
 
 .boader-none{
