@@ -24,7 +24,7 @@ function DesJoin() {
             
         }
         console.log(joinInfo);
-       
+
         axios.post('http://localhost:8090/userjoin',joinInfo)
         .then((res)=>{
             console.log(res);

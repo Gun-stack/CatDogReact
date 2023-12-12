@@ -21,14 +21,12 @@ function UserModi_Tel() {
 
     const onChange = (e) => {
         setUserTel(e.target.value);
-        console.log(e.target.value);
     }
 
     const onSubmit = async (e) => {
-
-
         e.preventDefault();
         setLoading(true); // 로딩 시작
+        
         try {
             const res = await axios.post('http://localhost:8090/moditel', { num: user.num, userTel : userTel });
             console.log(res);

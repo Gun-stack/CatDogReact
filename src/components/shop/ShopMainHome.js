@@ -22,7 +22,7 @@ function ShopMainHome({ shopInfo }) {
                 case 'titleimg':
                     result = await Swal.fire({
                         title: '타이틀 사진',
-                        input: 'file', // 일반 텍스트 입력
+                        input: 'file',
                         inputLabel: '사진을 가져오세요',
                         inputPlaceholder: '이미지 파일만 가능',
                         confirmButtonColor: '#F9950F',
