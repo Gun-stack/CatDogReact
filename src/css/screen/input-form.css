@@ -197,6 +197,7 @@ input[type='date']::before {
 
 .logintool-text{
     font-weight: 600;
+    margin: .3rem;
 }
 
 .form-section{

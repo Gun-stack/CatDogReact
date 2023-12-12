@@ -4,11 +4,11 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
 function FindPassword() {
-    const[email, setEmail] = useState('');
+    const [email, setEmail] = useState('');
     const onChange = (e) => {
         setEmail(e.target.value);
     }
-    
+
     return (
         <div>
             <div className="web-container">
@@ -25,10 +25,8 @@ function FindPassword() {
                             <form action="#" method="post" className="form-css">
                                 <div className="form-container">
                                     <div className="input-container">
-                                        <input type="text" id="email" name="email" placeholder="가입한 이메일을 입력하세요" className="input-text" onChange={onChange}/>
-                                        
-                                    
-                                        
+                                        <input type="text" id="email" name="email" placeholder="가입한 이메일을 입력하세요" className="input-text" onChange={onChange} />
+
                                         <div className="login-tools">
                                             <span></span>
                                             <div>
@@ -39,7 +37,7 @@ function FindPassword() {
                                     </div>
 
                                     <div className="button-container">
-                                        <button type="submit" className="main-btn magin-t-1"><a href="cl-passwordresult.html" className="btn-text">비밀번호 찾기</a></button>
+                                        <button type="submit" className="main-btn magin-t-1">비밀번호 찾기</button>
                                     </div>
                                 </div>
                             </form>
@@ -48,8 +46,6 @@ function FindPassword() {
                     <Footer />
                 </div>
             </div>
-
-            {/* <script src="https://kit.fontawesome.com/ad2be14d60.js" crossorigin="anonymous"></script> */}
         </div>
     );
 }
