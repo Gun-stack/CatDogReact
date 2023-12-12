@@ -257,3 +257,12 @@
 .shop-btn{
     margin: .5rem 1rem;
 }
+
+.info-input-btn{
+    margin: .5rem 1rem;
+    padding: .5rem;
+    border-radius: 8px;
+    background-color: var(--btn-nomal);
+    font-weight: 600;
+    color: rgb(255, 241, 222);
+}

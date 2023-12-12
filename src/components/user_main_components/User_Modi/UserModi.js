@@ -29,7 +29,7 @@ function UserModi() {
             left: "0",
         },
         content: {
-            width: "500px",
+            width: "80%",
             height: "400px",
             zIndex: "200",
             position: "absolute",

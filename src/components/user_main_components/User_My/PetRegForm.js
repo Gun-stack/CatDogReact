@@ -1,11 +1,8 @@
 import React from 'react';
-import Footer from '../../screens/Footer';
-import Header from '../../screens/Header';
 import { useState, useRef } from 'react';
 import Swal from 'sweetalert2';
 import axios from 'axios';
-import { Link, json } from 'react-router-dom';
-import { contextType } from 'react-modal';
+import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 
