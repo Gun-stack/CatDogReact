@@ -5,6 +5,7 @@ import { useDaumPostcodePopup } from 'react-daum-postcode';
 import Swal from "sweetalert2";
 import axios from "axios";
 import useKakaoLoader from "../../Around/useKakaoLoader";
+import { useSelector } from 'react-redux';
 
 function ShopRegForm() {
     const imgBoxRef = useRef();
@@ -14,6 +15,10 @@ function ShopRegForm() {
     const [longitude, setLongitude] = useState();
     const [geocoder, setGeocoder] = useState(null);
     useKakaoLoader();
+    const user = useSelector((state) => state.user);
+    const [sId, setSId] = useState('');
+    const [backsId, setBackSId] = useState('');
+    
 
     // DB에 들어가는 데이터
     const [shop, setShop] = useState({
@@ -69,10 +74,14 @@ function ShopRegForm() {
 
 
             formData.append("name", shop.name);
+            formData.append("sId", sId);
             formData.append("address_road", shop.address_road);
             formData.append("address_detail", shop.address_detail);
             formData.append("latitude", latitude);
             formData.append("longitude", longitude);
+            
+            formData.append("userId", user.id);
+
 
 
             axios.post('http://localhost:8090/shopreg', formData)
@@ -88,6 +97,27 @@ function ShopRegForm() {
             }
         });
     }
+
+
+    const formatNumber = (input) => {
+        // 숫자만 추출
+        const cleaned = ('' + input).replace(/\D/g, '');
+    
+        // 3자리-5자리-4자리 형식으로 포맷팅
+        const formatted = cleaned.replace(/^(\d{3})(\d{0,2})(\d{0,5})/, (match, p1, p2, p3) => {
+          let result = p1;
+          if (p2) result += `-${p2}`;
+          if (p3) result += `-${p3}`;
+          return result;
+        });   
+        setBackSId(formatted.substring(0, 14));
+      };
+
+
+    const idChange = (e) => {
+        setSId(e.target.value.replace(/\D/g, ''));
+        formatNumber(e.target.value);
+      };
 
     const open = useDaumPostcodePopup('https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js');
 
@@ -109,7 +139,7 @@ function ShopRegForm() {
 
         setShop({ ...shop, address_road: fullAddress });
 
-        
+
         if (geocoder) {
             geocoder.addressSearch(fullAddress, (result, status) => {
                 if (status === window.kakao.maps.services.Status.OK) {
@@ -192,6 +222,10 @@ function ShopRegForm() {
                                     {/* 샵 이름 */}
                                     <input type="text" id="name" name="name" placeholder="샵 이름"
                                         className="input-text" onChange={change} required />
+
+                                    {/* 사업자 등록번호 */}
+                                    <input type="text" id="SId" name="sId" placeholder="사업자 등록번호"
+                                        className="input-text" value={backsId} onChange={idChange} maxLength={12} required />
 
                                     {/* 주소 검색 */}
                                     <div className="address-container">
