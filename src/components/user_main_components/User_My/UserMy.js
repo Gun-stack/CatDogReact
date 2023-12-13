@@ -32,6 +32,7 @@ import Home from "../../des_main_component/Des_My/Home";
 import DesModi from "../../des_main_component/Des_Modi/Des_Modi";
 
 
+
 function UserMy() {
     const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
     const navigate = useNavigate();
@@ -71,7 +72,6 @@ function UserMy() {
                         <Route path='modipassword' element={<UserModi_Password />} />
                         <Route path='desmodi' element={<DesModi />} />
 
-
                         <Route exact path='/reservation' element={<Reservation />} />
                         <Route exact path='/check/:num' element={<ReservationCheck />} />
                         <Route path='/reviewregform/:resnum' element={<UserReviewForm />} />
@@ -79,13 +79,12 @@ function UserMy() {
                         <Route path='/reviewdetail/:resnum' element={<UserReviewDetail/>}/>
                         <Route path='/reviewmodi/:reviewnum' element={<UserReviewModi/>}/>
 
-
                         <Route exact path='/desreg' element={<DesReg />} />
                         <Route exact path='/shopreg' element={<ShopReg />} />
                         <Route exact path='/shopregform' element={<ShopRegForm />} />
                         <Route exact path='/desinfo' element={<DesInfo />} />
                         <Route exact path='desresvlist' element={<DesResvList />} />
-                        <Route exact path='/desnum/home' element={<Home/>}/>
+                        <Route exact path='home' element={<Home/>}/>
                         <Route path='/*' element={<Error404 />} />
 
                     </Routes>

@@ -68,7 +68,6 @@ function UserMylist() {
                             <i class="fas fa-cut"></i>
                         </li>
 
-                        {/* 이 밑으로 아직 연결하지 않았어요! */}
                         <li className="nav-li">
                             <div>
                                 <i className="fas fa-caret-square-right mypage-arrow"></i>

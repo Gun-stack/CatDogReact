@@ -39,7 +39,6 @@ function PetReg() {
                 </li>
             </ul> 
 
-       
             <div className="shop-form-container">
                 <div className="input-img-click sm-input-img">
                     {petList.length < 1 ?

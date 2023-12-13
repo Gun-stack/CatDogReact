@@ -40,7 +40,7 @@ function DesReg() {
                             </div>
 
                             <div className="st-button-container">
-                                <button className="st-button"><Link to="/desnum/home">갤러리<i className="fa-solid fa-image btn-icon"></i></Link></button>
+                                <button className="st-button"><Link to="/usermy/home">갤러리<i className="fa-solid fa-image btn-icon"></i></Link></button>
                                 <button className="st-button"><Link to="/usermy/usermodi">수정하기<i className="far fa-calendar-alt btn-icon"></i></Link></button>
                             </div>
 

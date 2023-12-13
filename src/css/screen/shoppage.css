@@ -1,6 +1,3 @@
-.shop-main-section{
-    margin-top: 2rem;
-}
 
 .dis-center{
     display: flex;
@@ -17,7 +14,6 @@
 
 .input-img-click{
     width: 100%;
-    height: 10rem;
     background-color: rgb(246, 246, 246);
     border-radius: 8px;
 
@@ -26,10 +22,15 @@
     align-items: center;
     color: rgb(163, 163, 163);
 }
-
+.shop-main-img-section{
+    width: 100%;
+    position: relative;
+}
 .shop-title-img{
-    width: 35rem;
-    height: 15rem;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 400px;
 }
 
 .sm-input-img{
@@ -313,4 +314,22 @@
     background-color: rgb(250, 250, 250);
 }
 
+.gradient-overlay {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.gradient-overlay::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    background: linear-gradient(180deg, rgba(255,255,255,0.00043767507002800965) 25%, rgba(255,255,255,1) 68%, rgba(255,255,255,1) 83%);
+    z-index: 1;
+}
+
+.gradient-overlay img {
+    display: block;
+    width: 100%;
+}
 

@@ -41,11 +41,11 @@ function UserModi_Password() {
         console.log("UserNum : " + user.num );
         e.preventDefault();
         setLoading(true);
-        if (password !== passwordCheck) {
-            setPassMessage('비밀번호가 일치하지 않습니다.');
-        } else {
-            setPassMessage('비밀번호가 일치합니다.');
-        }
+        // if (password !== passwordCheck) {
+        //     setPassMessage('비밀번호가 일치하지 않습니다.');
+        // } else {
+        //     setPassMessage('비밀번호가 일치합니다.');
+        // }
         try {
             const res = await axios.post('http://localhost:8090/modipassword', { num: user.num, password : password });
             if (res.data === "success") {

@@ -41,17 +41,9 @@ const shopInfo = props.shopInfo;
 
 
     return (
-        <div>
-            <div action="" className="shop-form-container">
-                <div className="input-img-click sm-input-img">
-                    <p>스타일리스트 등록하기 <i className="fas fa-plus-circle"></i></p>
-                </div>
-            </div>
-
-            <hr className="divide-line" />
-
+        <>
             {desList.map((des) => (
-
+            <>
             <div className="stylelist-content"key={des.num} >
                 <div className="st-profile-container">
                     <div className="st-profile-img">
@@ -70,12 +62,12 @@ const shopInfo = props.shopInfo;
                     <Link to={`/shop/${shopInfo.num}/reservation/${des.num}`} ><button className="st-button">예약하기<i className="far fa-calendar-alt btn-icon"></i></button></Link>
                 </div>
             </div>
+            <hr className="divide-line" />
+            </>
+
             ))}
 
-    <hr className="divide-line" />
-
-
-        </div>
+        </>
     );
 }
 

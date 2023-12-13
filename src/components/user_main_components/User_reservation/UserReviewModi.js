@@ -78,7 +78,6 @@ function UserReviewModi() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        setLoading(true);
         const formData = new FormData();
         formData.append('afterImg', oldReview.afterImg); // 기존 이미지 추가(수정시에는 기존 이미지를 그대로 사용')
         formData.append('num', oldReview.num); // 리뷰번호 추가
@@ -144,7 +143,6 @@ function UserReviewModi() {
                             />
                         ))}
                     </div>
-                   
                     <div className="review-filebox">
                         <img src={image ? image : "/img/logo/pet_defult_img.png"} accept="image/*" alt='펫 기본이미지'
                             className="input-box-style input-img-size" placeholder='사진을 올려주세요'  ref={imgBoxRef}/>

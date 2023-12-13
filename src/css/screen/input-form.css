@@ -252,8 +252,3 @@ input[type='date']::before {
     color: var(--text-color);
     text-align: center;
 }
-
-.main-nav-list-text.active{
-    font-weight: 600;
-    color: var(--btn-submit);
-}

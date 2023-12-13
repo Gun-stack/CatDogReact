@@ -18,18 +18,6 @@ function ShopMainHome({ shopInfo }) {
         try {
             let result;
             switch (btnValue) {
-
-                case 'titleimg':
-                    result = await Swal.fire({
-                        title: '타이틀 사진',
-                        input: 'file',
-                        inputLabel: '사진을 가져오세요',
-                        inputPlaceholder: '이미지 파일만 가능',
-                        confirmButtonColor: '#F9950F',
-
-                    });
-                    break;
-
                 case 'notice':
                     result = await Swal.fire({
                         title: '공지사항',
@@ -92,7 +80,6 @@ function ShopMainHome({ shopInfo }) {
         { loading ? <Loding/> :
             <div>
             <div className="shop-title-text sm-text magin-t-1">공지사항 <i class="fas fa-check btn-icon"></i>
-                <button className='info-input-btn' value='titleimg' onClick={handleBtnClick}>매장그림 올리기<i class="far fa-plus-square"></i></button>
                 <button className='info-input-btn' value='notice' onClick={handleBtnClick}>공지사항 입력 <i class="far fa-plus-square"></i></button>
             </div>
 
