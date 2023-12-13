@@ -266,3 +266,51 @@
     font-weight: 600;
     color: rgb(255, 241, 222);
 }
+
+/* 샵 메뉴 테이블  */
+.table-container{
+    display: flex;
+    flex-direction: column;    
+}
+
+
+.table-title{
+    font-size: 1.1rem;
+    font-weight: 600;
+    border: 1px solid rgb(233, 233, 233);
+    padding: .2rem;
+}
+
+.shop-table{
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(233, 233, 233);
+    text-align: center;
+    margin: 1rem 0;
+}
+
+.shop-th{
+    padding: .5rem;
+    font-weight: 600;
+    background-color: var(--btn-submit);
+    color: rgb(255, 255, 255);
+    border-bottom: 1px solid salmon;
+    text-align: center;
+}
+
+.table-span{
+    font-size: .8rem;
+    margin-left: .5rem;
+}
+
+.shop-tr{
+    height: 2rem;
+    text-align: center;
+
+}
+
+.shop-tr:nth-child(2n){
+    background-color: rgb(250, 250, 250);
+}
+
+

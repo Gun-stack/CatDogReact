@@ -42,8 +42,8 @@ function GalleryList() {
                 <main className="cd-main">
                     <nav className="main-nav">
                         <ul className="main-nav-list">
-                            <li className={`main-nav-list-text ${isActive('des') ? 'active' : ''}`}><Link to="des">스타일리스트 갤러리</Link></li>
-                            <li className={`main-nav-list-text ${isActive('user') ? 'active' : ''}`}><Link to="user">회원 갤러리</Link></li>
+                            <li className="main-nav-list-text"><Link to="des">디자이너 갤러리</Link></li>
+                            <li className="main-nav-list-text"><Link to="user">회원 갤러리</Link></li>
                         </ul>
                     </nav>
                     <Routes >

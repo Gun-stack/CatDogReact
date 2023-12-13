@@ -88,7 +88,6 @@ function DesResvList(props) {
                 <hr className="divide-line magin-t-1" key={`hr-${time}`} />
             </section>
         ))}
-        <Footer />
 
     </>);
 }

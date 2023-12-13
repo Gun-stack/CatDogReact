@@ -5,8 +5,6 @@ import ReactModal from 'react-modal';
 import UserModi_MemberWithDraw from "./UserModi_MemberWithDraw";
 import { useSelector } from 'react-redux';
 
-
-
 function UserModi() {
     const user = useSelector((state) => state.user);
 
@@ -86,7 +84,27 @@ function UserModi() {
                                 }
                             </div>
                         </div>
-
+                        {/* 
+                        <div>
+                            {userType === "일반유저" ? (
+                                <NormalUserPage />
+                            ) : userType === "디자이너" ? (
+                                <DesignerPage />
+                            ) : (
+                                <ShopOwnerPage />
+                            )}
+                        </div> */}
+                        {/* 일반유저면 */}
+                        <div className="id-card-back">
+                            <img src="/img/logo/logo_color.png" alt="로고 이미지" className="id-logo" />
+                            <span className="id-card-title tx-white">유저 정보 카드</span>
+                        </div>
+                        {/* 디자이너면 */}
+                        <div className="id-card-back">
+                            <img src="/img/logo/logo_color.png" alt="로고 이미지" className="id-logo" />
+                            <span className="id-card-title tx-white">유저 정보 카드</span>
+                        </div>
+                        {/* 샵주라면 */}
                         <div className="id-card-back">
                             <img src="/img/logo/logo_color.png" alt="로고 이미지" className="id-logo" />
                             <span className="id-card-title tx-white">유저 정보 카드</span>
@@ -119,6 +137,14 @@ function UserModi() {
                                     <i class="fas fa-unlock-alt tx-white"></i>
                                 </button>
                             </Link>
+
+                            <Link to="/usermy/desmodi">
+                                <button className="main-btn magin-t-1 btn-text wi-30 btn-display">
+                                    <span className="btn-inner-text">디자이너 정보 변경</span>
+                                    <i class="fas fa-unlock-alt tx-white"></i>
+                                </button>
+                            </Link>
+
 
                             <button className="main-btn magin-t-1 btn-red btn-text wi-30 btn-display" onClick={() => setismodal(true)}>
                                 <span className="btn-inner-text">회원탈퇴</span>

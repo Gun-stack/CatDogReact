@@ -23,6 +23,13 @@ import DesReg from "../../des_main_component/Des_My/DesReg";
 import UserReviewList from '../User_reservation/UserReviewList';
 import UserReviewDetail from '../User_reservation/UserReviewDetail';
 import UserReviewModi from '../User_reservation/UserReviewModi';
+import ShopReg from "../../des_main_component/Des_My/ShopReg";
+import ShopRegForm from "../../des_main_component/Des_My/ShopRegForm";
+import DesInfo from "../../des_main_component/Des_My/DesInfo";
+
+import DesResvList from "../../des_main_component/Des_reservation/DesResvList";
+import Home from "../../des_main_component/Des_My/Home";
+import DesModi from "../../des_main_component/Des_Modi/Des_Modi";
 
 
 function UserMy() {
@@ -61,6 +68,9 @@ function UserMy() {
                         <Route path='modinick' element={<UserModi_Nickname />} />
                         <Route path='moditel' element={<UserModi_Tel />} />
                         <Route path='modipassword' element={<UserModi_Password />} />
+                        <Route path='modipassword' element={<UserModi_Password />} />
+                        <Route path='desmodi' element={<DesModi />} />
+
 
                         <Route exact path='/reservation' element={<Reservation />} />
                         <Route exact path='/check/:num' element={<ReservationCheck />} />
@@ -71,7 +81,11 @@ function UserMy() {
 
 
                         <Route exact path='/desreg' element={<DesReg />} />
-
+                        <Route exact path='/shopreg' element={<ShopReg />} />
+                        <Route exact path='/shopregform' element={<ShopRegForm />} />
+                        <Route exact path='/desinfo' element={<DesInfo />} />
+                        <Route exact path='desresvlist' element={<DesResvList />} />
+                        <Route exact path='/desnum/home' element={<Home/>}/>
                         <Route path='/*' element={<Error404 />} />
 
                     </Routes>
