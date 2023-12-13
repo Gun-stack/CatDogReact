@@ -7,6 +7,8 @@ import axios from "axios";
 import useKakaoLoader from "../../Around/useKakaoLoader";
 import { useSelector } from 'react-redux';
 import { useParams } from "react-router";
+import { useNavigate } from "react-router-dom";
+
 
 function ShopModiForm() {
     const params = useParams();
@@ -21,6 +23,11 @@ function ShopModiForm() {
     const user = useSelector((state) => state.user);
     const [sId, setSId] = useState('');
     const [backsId, setBackSId] = useState('');
+    const navigate = useNavigate();
+    const goBack = () => {
+        navigate('/usermy/shopreg');
+    }
+
     // DB에 들어가는 데이터
     const [shop, setShop] = useState({
         name: '',
@@ -276,7 +283,7 @@ function ShopModiForm() {
                                 {/* submit 버튼 */}
                                 <div className="magin-t-5">
                                     <button id="submit-btn" type="submit" className="main-btn btn-text magin-t-1" onClick={onSubmit}>등록하기</button>
-                                    <div className="main-btn magin-t-1 btn-gray btn-text">취소</div>
+                                    <div className="main-btn magin-t-1 btn-gray btn-text" onClick={goBack}>취소</div>
                                 </div>
 
                             </div>
