@@ -33,6 +33,11 @@ const initialState = { isLoggedIn: false,   };
         localStorage.removeItem('shop');
         localStorage.removeItem('des');
         localStorage.removeItem('resvList');
+        localStorage.removeItem('shopList');
+        localStorage.removeItem('desList');
+        localStorage.removeItem('review');
+        localStorage.removeItem('position');
+
         
         localStorage.clear();
         sessionStorage.clear();
@@ -114,7 +119,8 @@ const initialShopListState = JSON.parse(localStorage.getItem('shopList')) || [];
 const shopListReducer = (state = initialShopListState, action) => {
   switch (action.type) {
     case 'SET_SHOP_LIST':
-      return action.payload;
+      return [...action.payload];
+
     default:
       return state;
   }

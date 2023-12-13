@@ -3,9 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 
-
 function ShopReg() {
-
     const user = useSelector((state) => state.user);
     const [shopList, setShopList] = useState([]);
 
@@ -26,7 +24,8 @@ function ShopReg() {
 
 
 
-    return (<>
+    return (
+    <>
         <div className="web-container ">
             <div className="cd-container bg-white bg-dogs">
                 <main className="cd-main dis-center ">
@@ -36,7 +35,7 @@ function ShopReg() {
                         <ul className="nav-ul">
                             <li className="nav-li">
                                 <div>
-                                    <i className="fas fa-caret-square-right mypage-arrow"></i><a href="#">샵 정보 등록 / 수정하기</a>
+                                    <i className="fas fa-caret-square-right mypage-arrow"></i> <a href="#">샵 정보 등록 / 수정하기</a>
                                 </div>
                                 <i className="fas fa-store"></i>
                             </li>
@@ -92,7 +91,8 @@ function ShopReg() {
         </div>
 
 
-    </>);
+    </>
+    );
 }
 
 export default ShopReg;
