@@ -99,6 +99,7 @@
 }
 
 .btn-inner-text{
+    text-align: left;
     width: 10rem;
     color: #ffffff;
 }

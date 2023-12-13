@@ -15,7 +15,7 @@ function Index() {
             </section>
 
 
-            <section className="main-login-join">
+            <section className="main-login-join magin-b-5">
 
                 {/* 보호자 회원가입 */}
                 <div className="join-container">
@@ -30,18 +30,6 @@ function Index() {
                     <span className="main-info-text">댕냥꽁냥 회원이신가요 ?</span>
                     <div className="main-btn">
                         <Link to="/userlogin" className="btn-text">로그인</Link>
-                    </div>
-                </div>
-
-            </section>
-
-            <section className="main-login-join-stylelist">
-
-                {/* 디자이너 로그인 */}
-                <div className="login-container">
-                    <span className="main-info-text">펫 디자이너 이신가요?</span>
-                    <div className="main-btn">
-                        <Link to="/deslogin" className="btn-text">로그인</Link>
                     </div>
                 </div>
 

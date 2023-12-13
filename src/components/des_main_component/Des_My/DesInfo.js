@@ -11,20 +11,11 @@ function DesReg() {
                         <ul className="nav-ul">
                             <li className="nav-li">
                                 <div>
-                                    <i className="fas fa-caret-square-right mypage-arrow"></i>디자이너 등록
+                                    <i className="fas fa-caret-square-right mypage-arrow"></i>디자이너 수정하기
                                 </div>
                                 <i className="fas fa-cut"></i>
                             </li>
                         </ul>
-
-                        {/* <!-- 등록한 디자이너가 없다면 --> */}
-                        <form action="" className="shop-form-container">
-                            <div className="input-img-click sm-input-img">
-                                <p>
-                                    <Link to="/desmy/desreg">디자이너 등록하기<i className="fas fa-plus-circle"></i></Link>
-                                </p>
-                            </div>
-                        </form>
 
                         {/* <!-- 디자이너 프로필 --> */}
                         <div className="stylelist-content">
@@ -49,8 +40,8 @@ function DesReg() {
                             </div>
 
                             <div className="st-button-container">
-                                <button className="st-button"><Link to="/desmy/home">갤러리<i className="fa-solid fa-image btn-icon"></i></Link></button>
-                                <button className="st-button"><Link to="/desmy/desmodi">수정하기<i className="far fa-calendar-alt btn-icon"></i></Link></button>
+                                <button className="st-button"><Link to="/desnum/home">갤러리<i className="fa-solid fa-image btn-icon"></i></Link></button>
+                                <button className="st-button"><Link to="/usermy/usermodi">수정하기<i className="far fa-calendar-alt btn-icon"></i></Link></button>
                             </div>
 
                         </div>
