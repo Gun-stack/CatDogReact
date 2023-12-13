@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 
 function ShopModiForm() {
     const params = useParams();
-    const selectShop = useSelector((state) => state.shopList).find((shop) => shop.num == params.shopnum);
+    const selectShop = useSelector((state) => state.shop)
     const [address, setAddress] = useState();
     const imgBoxRef = useRef();
     const [files, setFiles] = useState([]);
@@ -178,7 +178,11 @@ function ShopModiForm() {
     };
 
     useEffect(() => {
-        console.log(selectShop);
+        axios.get(`http://localhost:8090/shopinfobynum?num=${params.shopnum}`)
+        .then((res) => {
+            console.log(res);
+            setShop(res.data);
+        })
         setShop({name:selectShop.name,
             address_road:selectShop.addressRoad,address_detail:selectShop.addressDetail});
         setBackSId(selectShop.sid);
