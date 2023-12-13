@@ -1,16 +1,19 @@
 import { DateCalendar, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Footer from '../../screens/Footer';
+import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 
 
 function DesResvList(props) {
     //today
     const shopInfo = props.shopInfo;
-    const desInfo = props.desInfo;
+    const user = useSelector((state) => state.user);
+    const desInfo = useSelector((state) => state.des);
     const [selectDate, setSelectDate] = useState(new Date().toLocaleDateString('ko-KR').slice(0, 11));
 
 
@@ -43,6 +46,18 @@ function DesResvList(props) {
         time: '16:00'
     },
     ]
+
+    useEffect(() => {
+        console.log(desInfo);   
+        console.log();
+        axios.get(`http://localhost:8090/resinfobydesnum?desNum=${desInfo.num}&date=${selectDate}`)
+        
+        
+    }
+        , []);
+
+
+
 
     // 예약된 시간인지 확인
     const isReserved = (date, time) => {

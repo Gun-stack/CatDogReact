@@ -1,4 +1,4 @@
-import React, { useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import Swal from 'sweetalert2';
 // import axios from 'axios';
@@ -13,39 +13,35 @@ import ShopMainReview from './ShopMainReview';
 import ShopReservation from './ShopReservation';
 import Error404 from '../error/Error404';
 import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 
 function ShopMain() {
+    const dispatch = useDispatch();
+    const location = useLocation();
+    const isActive = (path) => {
+        return location.pathname === path;
+    };
+    const params = useParams();
 
-    const num = useParams();
-    const [shopInfo, setShopInfo] = useState({
-        num: num.shopnum,
-        image: '/img/gallrey-img/5.jpg',
-        shopname: '코스타리카 망하샵',
-        sId: 1,
-        worktime: '11:00 - 14:00',
-        address: '서울시 금천구 가산 디지털 1로 (호서벤쳐타운) 901호',
-        info: '매장정보 입니다 엘베 내려서 여자화장실 방향으로 나와서 우회전',
-        notice: '월요일은 자체 휴강입니다',
-        tel: '01022222232',
-    });
 
-    const shoplist = useSelector((state) => state.shop);
-    const shop = shoplist.find(shop => shop.num === num);
+    const shopInfo = useSelector((state) => state.shop);
+
 
     useEffect(() => {
-        if (shop) {
-            setShopInfo(shop);
-        }
-        console.log(shop);
-    }, [shoplist]);
+        axios.get(`http://localhost:8090/shopinfobynum?num=${params.shopnum}`)
+            .then((res) => {
+                dispatch({ type: 'SET_SHOP', payload: res.data });
+
+            })
+    }, []);
 
 
     const [image, setImage] = useState(null);
     const maxWidth = 1024; // 최대 너비 설정
     const maxHeight = 768; // 최대 높이 설정
 
-    const showImageUploadModal = async() => {
+    const showImageUploadModal = async () => {
         const result = await Swal.fire({
             title: '타이틀 업로드',
             text: '이미지 높이는 500px을 넘길수 없습니다',
@@ -95,14 +91,12 @@ function ShopMain() {
                         {/* <div className="input-img-click">
                                 이미지를 등록하세요
                             </div> */}
-                        <div className="gradient-overlay">
-                            <img src={shopInfo.image} alt='샵 이미지' className='shop-title-img' />
-                        </div>
+                        <img src={`http://localhost:8090/shopimg/${shopInfo.bgImg}`} alt='' className='shop-title-img' />
+
                     </section>
 
-                    <section className="shop-main-section nearby-container">
-                        <div className="shop-title-text">{shopInfo.shopname}</div>
-                        <button className='info-input-btn' onClick={showImageUploadModal}>매장그림 올리기<i class="far fa-plus-square"></i></button>
+                    <section className="shop-main-section">
+                        <div className="shop-title-text">{shopInfo.name}</div>
                         <nav className="main-nav">
                             <ul className="main-nav-list">
                                 <li className="main-nav-list-text"><Link to="" >홈</Link></li>

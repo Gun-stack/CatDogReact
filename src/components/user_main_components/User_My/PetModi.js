@@ -164,7 +164,7 @@ function PetModi() {
                             <div className="input-container">
 
                                 <div className="filebox">
-
+                                
                                 <img src={`http://localhost:8090/petimg/${pet.num}`} width="100px" height="100px"  accept="image/*" alt=''
                         className="input-box-style" placeholder='사진을 올려주세요' ref={imgBoxRef}/>
 

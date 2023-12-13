@@ -1,7 +1,33 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
 
 function ShopReg() {
-    return (<>
+    const params = useParams();
+    const user = useSelector((state) => state.user);
+    const [shopList, setShopList] = useState([]);
+
+    useEffect(() => {
+        console.log(params);
+        axios.get(`http://localhost:8090/shoplist?id=${user.id}`)
+            .then((res) => {
+                console.log("RES:");
+                res.data.forEach((shop, index) => {
+                    console.log(`Object ${index + 1}:`, shop);
+                });
+                setShopList(Array.isArray(res.data) ? res.data : []);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }, [user.id]);
+
+
+
+
+    return (
+    <>
         <div className="web-container ">
             <div className="cd-container bg-white bg-dogs">
                 <main className="cd-main dis-center ">
@@ -11,7 +37,7 @@ function ShopReg() {
                         <ul className="nav-ul">
                             <li className="nav-li">
                                 <div>
-                                    <i className="fas fa-caret-square-right mypage-arrow"></i><a href="#">샵 정보 등록 / 수정하기</a>
+                                    <i className="fas fa-caret-square-right mypage-arrow"></i> <a href="#">샵 정보 등록 / 수정하기</a>
                                 </div>
                                 <i className="fas fa-store"></i>
                             </li>
@@ -28,35 +54,38 @@ function ShopReg() {
 
                         {/* 등록한 샵이 있다면 */}
                         <div className="stylelist-content">
-                            <div className="shpo-list-li">
-                                {/* 구분선 */}
-                                <hr className="divide-line"/>
+                            {shopList.map((shop, index) => (
+                                <div className="shpo-list-li" key={index}>
+                                    {/* 구분선 */}
+                                    <hr className="divide-line" />
                                     {/* 샵 정보 컨테이너 */}
                                     <div className="nearby-shop-container">
                                         <div className="nearby-shop-address-container">
                                             {/* 샵 이미지 */}
                                             <div className="nearby-shop-img-container">
-                                                <div className="nearby-shop-img"></div>
+                                                <div className="nearby-shop-img"><img src={`http://localhost:8090/shopimg/${shop.profImg}`}  alt="등록한 반려동물 사진" className="st-profile-img" /></div>
                                             </div>
                                             {/* 주소 컨테이너 */}
                                             <div className="shop-text-container">
-                                                <h3 className="shop-name">KOSTA 살롱 10km</h3>
+                                                <h3 className="shop-name">{shop.name}</h3>
                                                 <div className="shop-adderss">
                                                     <p className="shop-adderss-text">
-                                                        서울 금천구 가산 디지털 1로 70
-                                                        호서대 벤쳐 타워
+                                                        {shop.addressRoad}
                                                     </p>
                                                 </div>
                                             </div>
 
                                         </div>
                                     </div>
-                            </div>
+                                    <div className="st-button-container">
+                                        <button className="st-button"><a href="shoppagemain.html">바로가기</a><i className="fas fa-pen btn-icon"></i></button>
+                                       <Link to={`/usermy/shopmodiform/${shop.num}`}>
+                                        <div className="st-button">편집<i className="fas fa-pen btn-icon"></i></div>
+                                       </Link> 
+                                    </div>
+                                </div>
+                            ))}
 
-                            <div className="st-button-container">
-                                <button className="st-button"><a href="shoppagemain.html">바로가기</a><i className="fas fa-pen btn-icon"></i></button>
-                                <button className="st-button">편집<i className="fas fa-pen btn-icon"></i></button>
-                            </div>
                         </div>
 
                     </section>
@@ -66,7 +95,8 @@ function ShopReg() {
         </div>
 
 
-    </>);
+    </>
+    );
 }
 
 export default ShopReg;

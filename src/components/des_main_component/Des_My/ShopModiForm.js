@@ -6,19 +6,27 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import useKakaoLoader from "../../Around/useKakaoLoader";
 import { useSelector } from 'react-redux';
+import { useParams } from "react-router";
+import { useNavigate } from "react-router-dom";
 
-function ShopRegForm() {
+
+function ShopModiForm() {
+    const params = useParams();
+    const selectShop = useSelector((state) => state.shop)
+    const [address, setAddress] = useState();
     const imgBoxRef = useRef();
     const [files, setFiles] = useState([]);
-    const [address, setAddress] = useState();
+    useKakaoLoader();
     const [latitude, setLatitude] = useState();
     const [longitude, setLongitude] = useState();
     const [geocoder, setGeocoder] = useState(null);
-    useKakaoLoader();
     const user = useSelector((state) => state.user);
     const [sId, setSId] = useState('');
     const [backsId, setBackSId] = useState('');
-
+    const navigate = useNavigate();
+    const goBack = () => {
+        navigate('/usermy/shopreg');
+    }
 
     // DB에 들어가는 데이터
     const [shop, setShop] = useState({
@@ -50,14 +58,27 @@ function ShopRegForm() {
         console.log(" longitude: " + longitude);
 
         if (!shop.name) {
-            Swal.fire({ icon: 'error', title: 'Oops...', text: '샵 이름을 입력해주세요!' });
-            return;
+            setShop({ ...shop, name: selectShop.name });
+        }
+        if (!shop.address_detail) {
+            setShop({ ...shop, address_detail: selectShop.addressDetail });
         }
         if (!shop.address_road) {
-            Swal.fire({ icon: 'error', title: 'Oops...', text: '주소를 검색해주세요!' });
-            return;
+            setShop({ ...shop, address_road: selectShop.addressRoad });
         }
 
+        if(!files[0]){
+            setFiles([selectShop.profImg]);
+        }
+        if(!sId){
+            setSId(selectShop.sid);
+        }
+        if(!latitude){
+            setLatitude(selectShop.lat);
+        }
+        if(!longitude){
+            setLongitude(selectShop.lon);
+        }
         // 샵을 등록하시겠습니까?
         Swal.fire({
             icon: 'question',
@@ -82,9 +103,7 @@ function ShopRegForm() {
 
             formData.append("userId", user.id);
 
-
-
-            axios.post('http://localhost:8090/shopreg', formData)
+            axios.post('http://localhost:8090/shopmodi', formData)
                 .then((res) => {
                     console.log(res);
                     console.log(res.data);
@@ -97,8 +116,6 @@ function ShopRegForm() {
             }
         });
     }
-
-
     const formatNumber = (input) => {
         // 숫자만 추출
         const cleaned = ('' + input).replace(/\D/g, '');
@@ -149,6 +166,7 @@ function ShopRegForm() {
 
                     setLatitude(newLatitude);
                     setLongitude(newLongitude);
+                    setShop({ ...shop, address_detail: '' });
                 } else {
                     console.error('Geocoding error');
                 }
@@ -160,7 +178,17 @@ function ShopRegForm() {
     };
 
     useEffect(() => {
-        console.log("UseEffect!!");
+        axios.get(`http://localhost:8090/shopinfobynum?num=${params.shopnum}`)
+        .then((res) => {
+            console.log(res);
+            setShop(res.data);
+        })
+        setShop({name:selectShop.name,
+            address_road:selectShop.addressRoad,address_detail:selectShop.addressDetail});
+        setBackSId(selectShop.sid);
+        setSId(selectShop.sid);
+        setAddress(selectShop.addressRoad);
+        
         // Geocoder 초기화 유무
         let isGeocoderInitialized = false;
 
@@ -221,7 +249,8 @@ function ShopRegForm() {
 
                                     {/* 샵 이름 */}
                                     <input type="text" id="name" name="name" placeholder="샵 이름"
-                                        className="input-text" onChange={change} required />
+                                        className="input-text"
+                                        value={shop.name} onChange={change} required />
 
                                     {/* 사업자 등록번호 */}
                                     <input type="text" id="SId" name="sId" placeholder="사업자 등록번호"
@@ -232,7 +261,9 @@ function ShopRegForm() {
 
                                         <input type="text" value={address} onChange={(e) => setAddress(e.target.value)} className="input-box-style address-input" required />
                                         <div className="address-btn-container">
-                                            <input type="text" name="address_detail" placeholder="상세주소를 적어주세요" className="input-box-style address-input" onChange={change} />
+                                            <input type="text" name="address_detail" placeholder="상세주소를 적어주세요" 
+                                            value={shop.address_detail}
+                                            className="input-box-style address-input" onChange={change} />
                                             <button className="address-btn" type='button' onClick={handleClick}>
                                                 주소 검색
                                             </button>
@@ -243,7 +274,7 @@ function ShopRegForm() {
 
                                     {/* 샵 사진 올리기 */}
                                     <div className="filebox">
-                                        <img src="/img/logo/shop_defult_img.png" accept="image/*" alt='샵 기본이미지'
+                                        <img src={`http://localhost:8090/shopimg/${selectShop.profImg}`} accept="image/*" alt='샵 기본이미지'
                                             className="input-img" placeholder='사진을 올려주세요' ref={imgBoxRef} />
                                         <label htmlFor="shopImgFile">샵 사진 올리기</label>
                                         <input type="file" id="shopImgFile" accept="image/*" onChange={fileChange} />
@@ -256,7 +287,7 @@ function ShopRegForm() {
                                 {/* submit 버튼 */}
                                 <div className="magin-t-5">
                                     <button id="submit-btn" type="submit" className="main-btn btn-text magin-t-1" onClick={onSubmit}>등록하기</button>
-                                    <div className="main-btn magin-t-1 btn-gray btn-text">취소</div>
+                                    <div className="main-btn magin-t-1 btn-gray btn-text" onClick={goBack}>취소</div>
                                 </div>
 
                             </div>
@@ -271,4 +302,4 @@ function ShopRegForm() {
     );
 }
 
-export default ShopRegForm;
+export default ShopModiForm;
