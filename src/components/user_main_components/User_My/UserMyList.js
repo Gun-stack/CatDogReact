@@ -63,7 +63,7 @@ function UserMylist() {
                         <li className="nav-li">
                             <div>
                                 <i className="fas fa-caret-square-right mypage-arrow"></i>
-                                <Link to="desreg">디자이너 수정 하기</Link>
+                                <Link to="desinfo">디자이너 수정 하기</Link>
                             </div>
                             <i class="fas fa-cut"></i>
                         </li>

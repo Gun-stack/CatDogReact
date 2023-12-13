@@ -8,14 +8,13 @@ import axios from "axios";
 
 
 
-
-function DesReg() {
+function DesModi() {
     const imgBoxRef = useRef();
     const [files, setFiles] = useState([]);
     const user = useSelector((state) => state.user);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-    function goBack(e){
+    function goBack(e) {
         e.preventDefault();
         navigate(-1);
     }
@@ -66,13 +65,13 @@ function DesReg() {
             }
         });
     }
-    
-    
+
+
     const [des, setDes] = useState({
         shopName: '',
         shopNumber: ''
     });
-    
+
     const change = (e) => {
         const name = e.target.name;
         const value = e.target.value;
@@ -89,7 +88,6 @@ function DesReg() {
         imgBoxRef.current.src = imageSrc;
     }
 
-
     return (<>
         <div className="web-container">
 
@@ -98,8 +96,7 @@ function DesReg() {
                 <main className="cd-main">
 
                     <section className="main-logo">
-                        <img src="/img/logo/logo_color.png" alt="댕냥꽁냥 로고" />
-                        <span className="main-logo-text">디자이너 등록하기</span>
+                        <span className="main-logo-text">디자이너 수정하기</span>
                     </section>
 
                     {/* <!-- 폼 --> */}
@@ -109,19 +106,19 @@ function DesReg() {
                                 <div className="input-container">
 
                                     {/* <!-- 디자이너 닉네임 : des_nickname --> */}
-                                    <input type="text" id="shopName" name="shopName" placeholder="디자이너 이름" className="input-text" 
-                                    onChange={change}/>
+                                    <input type="text" id="shopName" name="shopName" placeholder="디자이너 이름" className="input-text"
+                                        onChange={change} />
 
                                     {/* <!-- 디자이너 직책 : position --> */}
-                                    <input type="text" id="shopNumber" name="shopNumber" placeholder="디자이너 직책" className="input-text" 
-                                    onChange={change}/>
+                                    <input type="text" id="shopNumber" name="shopNumber" placeholder="디자이너 직책" className="input-text"
+                                        onChange={change} />
 
                                     {/* <!-- 프로필 사진 사진 올리기 --> */}
                                     <div className="filebox">
                                         <img src="/img/logo/shop_defult_img.png" accept="image/*"
-                                            className="input-img" value="사진을 올려주세요" ref={imgBoxRef}/>
+                                            className="input-img" value="사진을 올려주세요" ref={imgBoxRef} />
                                         <label htmlFor="shopImgFile">프로필 사진 올리기</label>
-                                        <input type="file" id="shopImgFile" accept="image/*" onChange={fileChange}/>
+                                        <input type="file" id="shopImgFile" accept="image/*" onChange={fileChange} />
                                     </div>
                                     <hr className="gray-line" />
 
@@ -141,6 +138,7 @@ function DesReg() {
             </div>
         </div>
     </>);
+
 }
 
-export default DesReg;
+export default DesModi;
