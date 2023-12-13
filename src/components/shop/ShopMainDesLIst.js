@@ -10,40 +10,22 @@ const shopInfo = useSelector((state) => state.shop);
 const desList = useSelector((state) => state.desList);
 
 
-function ShopMainDesLIst(props) {
-const shopInfo = props.shopInfo;
 
-    const desList  = [{
-        num: '1',
-        img: '/img/gallrey-img/1.jpg',    
-        position:   '스타일리스트',  
-        name: '행복행',
-        shop: '복행복',
-        info: '행복해 그리고 퇴근해'
-    },
-    {
-        num: '2',
-        img: '/img/gallrey-img/textimg.png',    
-        position:   '스타일리스트',  
-        name: '행복행',
-        shop: '복행복',
-        info: '행복해 그리고 박근해'
-    },
 
-];
 
-// useEffect(() => {
-//     console.log(shopInfo);
-//     axios.get(`http://localhost:8090/deslist?shopNum=${shopInfo.num}`)
-//     .then((res) => {
-//         console.log(res.data);
-//         }
-//     )
-//     .catch((err) => {
-//         console.log(err);
-//     })
-// }
-// ,[]);
+useEffect(() => {
+    console.log(shopInfo);
+    axios.get(`http://localhost:8090/deslist?sId=${shopInfo.sId}`)
+    .then((res) => {
+        console.log(res.data);
+        dispatch({type:'SET_DES_LIST',payload:res.data});
+        }
+    )
+    .catch((err) => {
+        console.log(err);
+    })
+}
+,[]);
 
 
 
@@ -104,5 +86,5 @@ useEffect(() => {
         </div>
     );
     }
-}
+
 export default ShopMainDesLIst;

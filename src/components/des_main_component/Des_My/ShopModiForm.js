@@ -5,12 +5,13 @@ import { useDaumPostcodePopup } from 'react-daum-postcode';
 import Swal from "sweetalert2";
 import axios from "axios";
 import useKakaoLoader from "../../Around/useKakaoLoader";
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
 import { useParams } from "react-router";
 import { useNavigate } from "react-router-dom";
 
 
 function ShopModiForm() {
+    const dispatch = useDispatch();
     const params = useParams();
     const selectShop = useSelector((state) => state.shop)
     const [address, setAddress] = useState();
@@ -180,11 +181,12 @@ function ShopModiForm() {
     useEffect(() => {
         axios.get(`http://localhost:8090/shopinfobynum?num=${params.shopnum}`)
         .then((res) => {
-            console.log(res);
-            setShop(res.data);
+            dispatch({type:'SET_SHOP',payload:res.data});
         })
         setShop({name:selectShop.name,
-            address_road:selectShop.addressRoad,address_detail:selectShop.addressDetail});
+
+            address_road:selectShop.addressRoad,
+            address_detail:selectShop.addressDetail});
         setBackSId(selectShop.sid);
         setSId(selectShop.sid);
         setAddress(selectShop.addressRoad);

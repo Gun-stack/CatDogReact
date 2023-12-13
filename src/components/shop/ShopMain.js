@@ -32,7 +32,6 @@ function ShopMain() {
         axios.get(`http://localhost:8090/shopinfobynum?num=${params.shopnum}`)
         .then((res) => {
             dispatch({type:'SET_SHOP',payload:res.data});
-
         })
     }, []);
 
