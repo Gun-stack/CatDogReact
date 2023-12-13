@@ -1,6 +1,4 @@
-import React, { useEffect, useRef } from 'react';
-import { useState } from 'react';
-import Swal from 'sweetalert2';
+import React, { useEffect } from 'react';
 import axios from 'axios';
 import { Link, Route, Routes, useLocation, useParams } from 'react-router-dom';
 import Header from '../screens/Header';

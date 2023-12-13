@@ -32,16 +32,16 @@ function UserModi_Tel() {
             console.log(res);
             if (res.data === "success") {
                 Swal.fire({
-                    icon: 'success',
-                    html: "<p style='text-align:center;'>전화번호가 변경되었습니다<p>",
+                    html:'<img src="/img/logo/modal_success_logo.png"/></span>',
+                    title: '<span class="sweet-modal-title">전화번호가 변경 되었습니다</span>',
                     confirmButtonColor: '#F9950F',
                     confirmButtonText: '확인',
                 });
                 navigate(-1);
             } else {
                 Swal.fire({
-                    icon: 'error',
-                    html: "<p style='text-align:center;'>전화번호 변경에 실패했습니다<p>",
+                    html:'<img src="/img/logo/modal_fail_logo.png"/></span>',
+                    title: '<span class="sweet-modal-title">전화번호 변경에 실패했습니다</span>',
                     confirmButtonColor: '#F9950F',
                     confirmButtonText: '확인',
                 });

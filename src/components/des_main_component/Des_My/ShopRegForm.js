@@ -1,14 +1,15 @@
 import React, { useRef, useState, useEffect } from "react";
-import { Helmet } from 'react-helmet';
 import Footer from "../../screens/Footer";
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import Swal from "sweetalert2";
 import axios from "axios";
 import useKakaoLoader from "../../Around/useKakaoLoader";
 import { useSelector } from 'react-redux';
+import { useNavigate } from "react-router-dom";
 
 function ShopRegForm() {
     const imgBoxRef = useRef();
+    const navigate = useNavigate();
     const [files, setFiles] = useState([]);
     const [address, setAddress] = useState();
     const [latitude, setLatitude] = useState();
@@ -50,20 +51,31 @@ function ShopRegForm() {
         console.log(" longitude: " + longitude);
 
         if (!shop.name) {
-            Swal.fire({ icon: 'error', title: 'Oops...', text: '샵 이름을 입력해주세요!' });
+            Swal.fire({
+                html: '<img src="/img/logo/modal_fail_logo.png"/></span>',
+                title: '<span class="sweet-modal-title">샵 이름을 입력해주세요!</span>',
+                confirmButtonColor: '#F9950F',
+                confirmButtonText: '확인',
+            });
             return;
         }
         if (!shop.address_road) {
-            Swal.fire({ icon: 'error', title: 'Oops...', text: '주소를 검색해주세요!' });
+            Swal.fire({
+                html: '<img src="/img/logo/modal_fail_logo.png"/></span>',
+                title: '<span class="sweet-modal-title">샵 주소를 입력해주세요!</span>',
+                confirmButtonColor: '#F9950F',
+                confirmButtonText: '확인',
+            });
             return;
         }
 
         // 샵을 등록하시겠습니까?
         Swal.fire({
-            icon: 'question',
-            title: '샵을 등록하시겠습니까?',
-            showCancelButton: true,
+            html: '<img src="/img/logo/modal_notice_logo.png"/></span>',
+            title: '<span class="sweet-modal-title">샵 등록을 하시겠습니까?</span>',
+            confirmButtonColor: '#F9950F',
             confirmButtonText: '등록',
+            showCancelButton: true,
             cancelButtonText: '취소',
         }).then((result) => {
             const formData = new FormData();
@@ -90,8 +102,13 @@ function ShopRegForm() {
                     console.log(res.data);
                 });
             if (result.isConfirmed) {
-                Swal.fire('등록완료!', '', 'success');
-                window.location.href = '/catdog/usermy';
+                Swal.fire({
+                    html: '<img src="/img/logo/modal_success_logo.png"/></span>',
+                    title: '<span class="sweet-modal-title">샵 등록이 완료되었습니다</span>',
+                    confirmButtonColor: '#F9950F',
+                    confirmButtonText: '확인'
+                });
+                navigate('/usermy');
             } else if (result.isDenied) {
                 Swal.fire('취소하였습니다.', '', 'info');
             }
@@ -216,8 +233,8 @@ function ShopRegForm() {
                     <section className="form-section">
                         <form action="#" method="post" className="form-css" onSubmit={onSubmit}>
                             <div className="form-container">
-                                {/* 인풋 모여있는 컨테이너 */}
-                                <div className="input-container">
+
+                                <div className="address-container">
 
                                     {/* 샵 이름 */}
                                     <input type="text" id="name" name="name" placeholder="샵 이름"
@@ -229,27 +246,24 @@ function ShopRegForm() {
 
                                     {/* 주소 검색 */}
                                     <div className="address-container">
-
-                                        <input type="text" value={address} onChange={(e) => setAddress(e.target.value)} className="input-box-style address-input" required />
                                         <div className="address-btn-container">
-                                            <input type="text" name="address_detail" placeholder="상세주소를 적어주세요" className="input-box-style address-input" onChange={change} />
+                                            <input type="text" value={address} onChange={(e) => setAddress(e.target.value)} className="input-text" required />
                                             <button className="address-btn" type='button' onClick={handleClick}>
                                                 주소 검색
                                             </button>
-                                            <input type="hidden" id="latitude" name="lat" placeholder="위도"></input>
-                                            <input type="hidden" id="longitude" name="lon" placeholder="경도"></input>
                                         </div>
+                                        <input type="text" name="address_detail" placeholder="상세주소를 적어주세요" className="input-box-style input-text" onChange={change} />
+                                        <input type="hidden" id="latitude" name="lat" placeholder="위도"></input>
+                                        <input type="hidden" id="longitude" name="lon" placeholder="경도"></input>
                                     </div>
 
                                     {/* 샵 사진 올리기 */}
                                     <div className="filebox">
                                         <img src="/img/logo/shop_defult_img.png" accept="image/*" alt='샵 기본이미지'
-                                            className="input-img" placeholder='사진을 올려주세요' ref={imgBoxRef} />
+                                            className="input-img magin-r-1" placeholder='사진을 올려주세요' ref={imgBoxRef} />
                                         <label htmlFor="shopImgFile">샵 사진 올리기</label>
                                         <input type="file" id="shopImgFile" accept="image/*" onChange={fileChange} />
                                     </div>
-
-                                    <hr className="gray-line" />
 
                                 </div>
 
