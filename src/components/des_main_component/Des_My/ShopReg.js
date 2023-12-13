@@ -1,13 +1,15 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 
 function ShopReg() {
+    const params = useParams();
     const user = useSelector((state) => state.user);
     const [shopList, setShopList] = useState([]);
 
     useEffect(() => {
+        console.log(params);
         axios.get(`http://localhost:8090/shoplist?id=${user.id}`)
             .then((res) => {
                 console.log("RES:");
@@ -77,7 +79,9 @@ function ShopReg() {
                                     </div>
                                     <div className="st-button-container">
                                         <button className="st-button"><a href="shoppagemain.html">바로가기</a><i className="fas fa-pen btn-icon"></i></button>
-                                        <button className="st-button">편집<i className="fas fa-pen btn-icon"></i></button>
+                                       <Link to={`/usermy/shopmodiform/${shop.num}`}>
+                                        <div className="st-button">편집<i className="fas fa-pen btn-icon"></i></div>
+                                       </Link> 
                                     </div>
                                 </div>
                             ))}

@@ -30,6 +30,7 @@ import DesInfo from "../../des_main_component/Des_My/DesInfo";
 import DesResvList from "../../des_main_component/Des_reservation/DesResvList";
 import Home from "../../des_main_component/Des_My/Home";
 import DesModi from "../../des_main_component/Des_Modi/Des_Modi";
+import ShopModiForm from '../../des_main_component/Des_My/ShopModiForm';
 
 
 function UserMy() {
@@ -83,6 +84,8 @@ function UserMy() {
                         <Route exact path='/desreg' element={<DesReg />} />
                         <Route exact path='/shopreg' element={<ShopReg />} />
                         <Route exact path='/shopregform' element={<ShopRegForm />} />
+                        <Route exact path='/shopmodiform/:shopnum' element={<ShopModiForm />} />
+
                         <Route exact path='/desinfo' element={<DesInfo />} />
                         <Route exact path='desresvlist' element={<DesResvList />} />
                         <Route exact path='/desnum/home' element={<Home/>}/>

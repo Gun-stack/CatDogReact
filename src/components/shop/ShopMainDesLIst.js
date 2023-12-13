@@ -103,6 +103,6 @@ useEffect(() => {
 
         </div>
     );
+    }
 }
-
 export default ShopMainDesLIst;

@@ -10,22 +10,25 @@ import {calculateDistance} from '../tools/DistanceCalculator';
 function Distance() {
 
 const coord = useSelector((state) => state.position);
-
+const [sortedShops, setSortedShops] = useState([]);
 const dispatch = useDispatch();
 const shops = useSelector((state) => state.shopList);
 
 useEffect(() => {
-    console.log(shops);
     axios.get(`http://localhost:8090/shoplistall`)
     .then((res) => {
-        console.log(res);
 
-        dispatch({type:'SET_SHOP_LIST',payload:res.data});
-
-        const distance = calculateDistance(coord.latitude, coord.longitude, shops[0].lat, shops[0].lon);
-        console.log(distance);
+        const fetchedShops = res.data;
+        const sortedByDistance = fetchedShops.map(shop => {
+            const distance = calculateDistance(coord.latitude, coord.longitude, shop.lat, shop.lon,);
+            return { ...shop, distance };
+        }).sort((a, b) => a.distance - b.distance);
+        
+        dispatch({type:'SET_SHOP_LIST',payload:sortedByDistance});
+        setSortedShops(sortedByDistance);
+        console.log(sortedShops);
     })
-},[]);
+},[dispatch]);
 
 
 
@@ -43,9 +46,9 @@ return (
                     {/* // 제목을 누르면 지도에서 마커 찍어주기?? */}
                 <div className="shop-text-container">
                 <Link to={"/shop/"+shoplist.num}><h3 className="shop-name" name = "shopname">{shoplist.name}</h3></Link>
-                    {/* <h3 className="shop-dist">
-                        <DistanceCalculator lat1={shoplist.lat} lon1={shoplist.lon} lat2={coord.latitude} lon2={coord.longitude} />
-                    </h3> */}
+                    <h3 className="shop-dist">
+                       {shoplist.distance}Km
+                    </h3>
                         <div className="shop-adderss"  >
                         <p className="shop-adderss-text" name="address" >
                         {shoplist.addressRoad}
