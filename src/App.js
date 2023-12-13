@@ -29,7 +29,7 @@ import Loding from './components/tools/Loding';
 import Oauth from './components/Oauth';
 import DesMy from './components/des_main_component/Des_My/DesMy';
 import ShopReg from './components/des_main_component/Des_My/ShopReg';
-
+import DistanceCalculator from './components/tools/DistanceCalculator';
 
 export const persistor = persistStore(store);
 

@@ -110,6 +110,16 @@ const shopReducer = (state = initialShopState, action) => {
       return state;
   }
 }
+const initialShopListState = JSON.parse(localStorage.getItem('shopList')) || [];
+const shopListReducer = (state = initialShopListState, action) => {
+  switch (action.type) {
+    case 'SET_SHOP_LIST':
+      return action.payload;
+    default:
+      return state;
+  }
+}
+
 
 const initialDesignerState = JSON.parse(localStorage.getItem('des')) || [];
 const designerReducer = (state = initialDesignerState, action) => {
@@ -120,6 +130,17 @@ const designerReducer = (state = initialDesignerState, action) => {
       return state;
   }
 }
+
+const initialDesignerListState = JSON.parse(localStorage.getItem('desList')) || [];
+const designerListReducer = (state = initialDesignerListState, action) => {
+  switch (action.type) {
+    case 'SET_DES_LIST':
+      return action.payload;
+    default:
+      return state;
+  }
+}
+
 
 const initialResvListState = JSON.parse(localStorage.getItem('resvList')) || [];
 const resvListReducer = (state = initialResvListState, action) => {
@@ -141,6 +162,19 @@ const reviewReducer = (state = initialReviewState, action) => {
   }
 }
 
+const initialPositionState = JSON.parse(localStorage.getItem('position')) || {latitude: 37.5665, longitude: 126.9780};
+const positionReducer = (state = initialPositionState, action) => {
+  switch (action.type) {
+    case 'SET_LATITUDE':
+      return {...state, latitude: action.payload};
+    case 'SET_LONGITUDE':
+      return {...state, longitude: action.payload};
+    default:
+      return state;
+  }
+}
+//내위치
+
 
 
 
@@ -150,12 +184,21 @@ const rootReducer = combineReducers({
     user: userReducer,
     isAutoLogin: isAutoLoginReducer,
     auth: authReducer,
+
     resv: reservationReducer,
-    pet: petReducer,
-    shop: shopReducer,
-    des: designerReducer,
     resvList : resvListReducer,
+
+    pet: petReducer,
+
+    shop: shopReducer,
+    shopList: shopListReducer,
+
+    des: designerReducer,
+    desList: designerListReducer,
+
     review : reviewReducer,
+    
+    position : positionReducer,
 
 });
 

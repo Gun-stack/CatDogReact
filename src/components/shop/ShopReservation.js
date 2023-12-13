@@ -43,15 +43,15 @@ function ShopReservation(props) {
                 <div className="st-profile-container">
 
                     <div className="st-profile-img-container">
-                        <img src={`http://localhost:8090/desimg/${desInfo.profImg}`} alt="프로필 이미지" className="st-profile-img" />
+                        <img src={`http://localhost:8090/desimg/${desInfo.num}`} alt="프로필 이미지" className="st-profile-img" />
                     </div>
 
                     <div className="st-profile-context">
                         <div className="st-profile-name">
-                            {desInfo.position} {desInfo.name}
+                            {desInfo.position} {desInfo.desNickname}
                         </div>
                         <div className="st-profile-shop">
-                            {desInfo.shop}
+                            {shopInfo.name}
                             
                             별{desInfo.star}
                         </div>

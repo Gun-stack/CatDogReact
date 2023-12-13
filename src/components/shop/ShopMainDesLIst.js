@@ -1,7 +1,13 @@
 import axios from 'axios';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
+import { useSelector,useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+
+function ShopMainDesLIst() {
+const dispatch = useDispatch(); 
+const shopInfo = useSelector((state) => state.shop);
+const desList = useSelector((state) => state.desList);
 
 
 function ShopMainDesLIst(props) {
@@ -40,6 +46,26 @@ const shopInfo = props.shopInfo;
 // ,[]);
 
 
+
+
+
+useEffect(() => {
+    console.log(shopInfo);
+    axios.get(`http://localhost:8090/deslist?sId=${shopInfo.sid}`)
+    .then((res) => {
+        console.log(res.data);
+        dispatch({type:'SET_DES_LIST',payload:res.data});
+        
+        }
+    )
+    .catch((err) => {
+        console.log(err);
+    })
+}
+,[]);
+
+
+
     return (
         <div>
             <div action="" className="shop-form-container">
@@ -55,12 +81,12 @@ const shopInfo = props.shopInfo;
             <div className="stylelist-content"key={des.num} >
                 <div className="st-profile-container">
                     <div className="st-profile-img">
-                        <img src={des.img}alt="프로필 이미지" className="st-profile-img" />
+                        <img src={`http://localhost:8090/petimg/${des.num}`}alt="프로필 이미지" className="st-profile-img" />
                     </div>
 
                     <div className="st-profile-context">
-                        <div className="st-profile-name">{des.position}  {des.name}</div>
-                        <div className="st-profile-shop">{des.shop}</div>
+                        <div className="st-profile-name">{des.position}  {des.desNickname}</div>
+                        <div className="st-profile-shop">{shopInfo.name}</div>
                         <div className="st-profile-info">{des.info}</div>
                     </div>
                 </div>

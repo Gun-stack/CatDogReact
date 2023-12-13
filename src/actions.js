@@ -42,12 +42,34 @@ export const setToken = (token) => ({
     payload: shop,
   });
 
+  export const setShopList = (shopList) => ({
+    type: 'SET_SHOP_LIST',
+    payload: shopList,
+  });
+
+
   export const setDesigner = (designer) => ({
     type: 'SET_DES',
     payload: designer,
+  });
+
+  export const setDesignerList = (designerList) => ({
+    type: 'SET_DES_LIST',
+    payload: designerList,
   });
 
   export const setReview = (review) => ({
     type: 'SET_REVIEW',
     payload: review,
   });
+
+export const setLatitude =  (latitude) => ({
+    type: 'SET_LATITUDE',
+    payload: latitude,
+  });
+
+  export const setLongitude =  (longitude) => ({
+    type: 'SET_LONGITUDE',
+    payload: longitude,
+  });
+  
