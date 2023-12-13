@@ -50,25 +50,25 @@ function UserModi_Password() {
             const res = await axios.post('http://localhost:8090/modipassword', { num: user.num, password : password });
             if (res.data === "success") {
                 Swal.fire({
-                    icon: 'success',
-                    html: "<p style='text-align:center;'>비밀번호가 변경되었습니다<p>",
+                    html:'<img src="/img/logo/modal_success_logo.png"/></span>',
+                    title: '<span class="sweet-modal-title">비밀번호가 변경되었습니다</span>',
                     confirmButtonColor: '#F9950F',
                     confirmButtonText: '확인',
                 });
                 navigate(-1);
             } else {
                 Swal.fire({
-                    icon: 'error',
-                    html: "<p style='text-align:center;'>비밀번호 변경에 실패했습니다<p>",
+                    html:'<img src="/img/logo/modal_fail_logo.png"/></span>',
+                    title: '<span class="sweet-modal-title">비밀번호 변경에 실패했습니다</span>',
                     confirmButtonColor: '#F9950F',
                     confirmButtonText: '확인',
                 });
             }
         } catch (error) {
-            console.error('닉네임 변경에 실패했습니다', error);
+            console.error('서버와 통신에 실패하였습니다', error);
             Swal.fire({
-                icon: 'error',
-                html: "<p style='text-align:center;'>비밀번호 변경에 실패했습니다<p>",
+                html:'<img src="/img/logo/modal_fail_logo.png"/></span>',
+                title: '<span class="sweet-modal-title">서버와 통신에 실패하였습니다</span>',
                 confirmButtonColor: '#F9950F',
                 confirmButtonText: '확인',
             });

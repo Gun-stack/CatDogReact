@@ -68,25 +68,26 @@ function ShopModiForm() {
             setShop({ ...shop, address_road: selectShop.addressRoad });
         }
 
-        if(!files[0]){
+        if (!files[0]) {
             setFiles([selectShop.profImg]);
         }
-        if(!sId){
+        if (!sId) {
             setSId(selectShop.sid);
         }
-        if(!latitude){
+        if (!latitude) {
             setLatitude(selectShop.lat);
         }
-        if(!longitude){
+        if (!longitude) {
             setLongitude(selectShop.lon);
         }
         // 샵을 등록하시겠습니까?
         Swal.fire({
-            icon: 'question',
-            title: '샵을 등록하시겠습니까?',
+            title: '<span class="sweet-modal-title">샵 정보 수정</span>',
+            html: '<img src="/img/logo/modal_modi_logo.png"/><br/> <span class="sweet-modal-text">샵 정보 수정 하시겠습니까 ?</span>',
             showCancelButton: true,
             confirmButtonText: '등록',
             cancelButtonText: '취소',
+            confirmButtonColor: '#F9950F',
         }).then((result) => {
             const formData = new FormData();
             for (let file of files) {
@@ -110,7 +111,12 @@ function ShopModiForm() {
                     console.log(res.data);
                 });
             if (result.isConfirmed) {
-                Swal.fire('등록완료!', '', 'success');
+                Swal.fire({
+                    html: '<img src="/img/logo/modal_success_logo.png"/></span>',
+                    title: '<span class="sweet-modal-title">샵 정보 수정이 완료되었습니다</span>',
+                    confirmButtonColor: '#F9950F',
+                    confirmButtonText: '확인'
+                });
                 window.location.href = '/catdog/usermy';
             } else if (result.isDenied) {
                 Swal.fire('취소하였습니다.', '', 'info');
@@ -190,7 +196,7 @@ function ShopModiForm() {
         setBackSId(selectShop.sid);
         setSId(selectShop.sid);
         setAddress(selectShop.addressRoad);
-        
+
         // Geocoder 초기화 유무
         let isGeocoderInitialized = false;
 
@@ -239,7 +245,7 @@ function ShopModiForm() {
                     {/* 로고 */}
                     <section className="main-logo">
                         <img src="/img/logo/logo_color.png" alt="댕냥꽁냥 로고" />
-                        <span className="main-logo-text">샵 등록하기</span>
+                        <span className="main-logo-text">샵 정보 수정하기</span>
                     </section>
 
                     {/* 폼 */}
@@ -261,17 +267,15 @@ function ShopModiForm() {
                                     {/* 주소 검색 */}
                                     <div className="address-container">
 
-                                        <input type="text" value={address} onChange={(e) => setAddress(e.target.value)} className="input-box-style address-input" required />
                                         <div className="address-btn-container">
-                                            <input type="text" name="address_detail" placeholder="상세주소를 적어주세요" 
-                                            value={shop.address_detail}
-                                            className="input-box-style address-input" onChange={change} />
+                                            <input type="text" value={address} onChange={(e) => setAddress(e.target.value)} className="input-box-style input-text" required />
                                             <button className="address-btn" type='button' onClick={handleClick}>
                                                 주소 검색
                                             </button>
-                                            <input type="hidden" id="latitude" name="lat" placeholder="위도"></input>
-                                            <input type="hidden" id="longitude" name="lon" placeholder="경도"></input>
                                         </div>
+                                        <input type="text" name="address_detail" placeholder="상세주소를 적어주세요" value={shop.address_detail} className="input-box-style input-text" onChange={change} />
+                                        <input type="hidden" id="latitude" name="lat" placeholder="위도"></input>
+                                        <input type="hidden" id="longitude" name="lon" placeholder="경도"></input>
                                     </div>
 
                                     {/* 샵 사진 올리기 */}
@@ -282,13 +286,11 @@ function ShopModiForm() {
                                         <input type="file" id="shopImgFile" accept="image/*" onChange={fileChange} />
                                     </div>
 
-                                    <hr className="gray-line" />
-
                                 </div>
 
                                 {/* submit 버튼 */}
                                 <div className="magin-t-5">
-                                    <button id="submit-btn" type="submit" className="main-btn btn-text magin-t-1" onClick={onSubmit}>등록하기</button>
+                                    <button id="submit-btn" type="submit" className="main-btn btn-text magin-t-1" onClick={onSubmit}>수정 하기</button>
                                     <div className="main-btn magin-t-1 btn-gray btn-text" onClick={goBack}>취소</div>
                                 </div>
 
@@ -297,7 +299,6 @@ function ShopModiForm() {
                     </section>
 
                 </main>
-                <Footer />
             </div>
 
         </div>

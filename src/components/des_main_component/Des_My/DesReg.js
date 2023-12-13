@@ -24,16 +24,22 @@ function DesReg() {
         e.preventDefault();
         console.log("File info : " + files)
         if (!des.shopName) {
-            Swal.fire({ icon: 'error', title: 'Oops...', text: '디자이너 이름을 입력해주세요!' });
+            Swal.fire({
+                html:'<img src="/img/logo/modal_notice_logo.png"/></span>',
+                title: '<span class="sweet-modal-title">디자이너 이름을 입력해주세요!</span>',
+                confirmButtonColor: '#F9950F',
+                confirmButtonText: '확인',
+            });
             return;
         }
 
         // 디자이너 등록을 하시겠습니까?
         Swal.fire({
-            icon: 'question',
-            title: '디자이너 등록을 하시겠습니까?',
+            html:'<img src="/img/logo/modal_agree_logo.png"/></span>',
+            title: '<span class="sweet-modal-title">디자이너 등록을 하시겠습니까?</span>',
             showCancelButton: true,
             confirmButtonText: '등록',
+            confirmButtonColor: '#F9950F',
             cancelButtonText: '취소',
         }).then((result) => {
             const formData = new FormData();
