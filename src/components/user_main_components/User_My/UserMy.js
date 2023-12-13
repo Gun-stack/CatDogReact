@@ -31,6 +31,7 @@ import DesResvList from "../../des_main_component/Des_reservation/DesResvList";
 import Home from "../../des_main_component/Des_My/Home";
 import DesModi from "../../des_main_component/Des_Modi/Des_Modi";
 import ShopModiForm from '../../des_main_component/Des_My/ShopModiForm';
+import DesResvDetail from '../../des_main_component/Des_reservation/DesResvDetail';
 
 
 function UserMy() {
@@ -88,6 +89,7 @@ function UserMy() {
 
                         <Route exact path='/desinfo' element={<DesInfo />} />
                         <Route exact path='desresvlist' element={<DesResvList />} />
+                        <Route exact path='deservedetail/:resvnum' element={<DesResvDetail/>}/>
                         <Route exact path='/desnum/home' element={<Home/>}/>
                         <Route path='/*' element={<Error404 />} />
 

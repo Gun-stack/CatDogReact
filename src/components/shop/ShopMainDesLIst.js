@@ -4,32 +4,12 @@ import { useState } from 'react';
 import { useSelector,useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
+
+
 function ShopMainDesLIst() {
-const dispatch = useDispatch(); 
-const shopInfo = useSelector((state) => state.shop);
-const desList = useSelector((state) => state.desList);
-
-
-
-
-
-useEffect(() => {
-    console.log(shopInfo);
-    axios.get(`http://localhost:8090/deslist?sId=${shopInfo.sId}`)
-    .then((res) => {
-        console.log(res.data);
-        dispatch({type:'SET_DES_LIST',payload:res.data});
-        }
-    )
-    .catch((err) => {
-        console.log(err);
-    })
-}
-,[]);
-
-
-
-
+    const dispatch = useDispatch(); 
+    const shopInfo = useSelector((state) => state.shop);
+    const desList = useSelector((state) => state.desList);
 
 useEffect(() => {
     console.log(shopInfo);
@@ -85,6 +65,6 @@ useEffect(() => {
 
         </div>
     );
-    }
-
+    
+}
 export default ShopMainDesLIst;

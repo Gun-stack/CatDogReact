@@ -1,11 +1,22 @@
 import { useRef, useState } from "react";
 import Loding from "../tools/Loding";
 import { useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2';
+import axios from "axios";
+import { useSelector } from 'react-redux';
+
 
 function GalleryRegForm() {
     const [image, setImage] = useState(null);
     const imgBoxRef = useRef();
     const [loading, setLoading] = useState(false);
+    const userInfo = useSelector((state) => state.des);
+    const [content, setContent] = useState('');
+
+    const changeContent = (e) => {
+        setContent(e.target.value);
+    }
+
     
     let navigate = useNavigate();
     function goBack(e) {
@@ -18,6 +29,36 @@ function GalleryRegForm() {
             setImage(e.target.files[0]);
         }
     };
+
+    const onSubmit = (e) => {
+        Swal.fire({
+            title: '갤러리에 올리시겠습니까?',
+            showCancelButton: true,
+            confirmButtonText: `예`,
+            cancelButtonText: `아니오`,
+        }).then((result) => {
+            const formData = new FormData();
+            formData.append('file', image); // 이미지 파일을 formData에 추가
+            formData.append('content', content); // 리뷰 내용 추가
+            formData.append('desId', userInfo.id); // 미용사 아이디 추가
+            try{
+                const res = axios.post('http://localhost:8090/desgalleryreg',formData)
+                if (res.data == true) {
+                    Swal.fire({
+                        title: '겔러리에 등록되었습니다.',
+                        confirmButtonText: `확인`,
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            navigate(-1);
+                        }
+                    })
+                }
+            }catch(err){
+                console.log(err);
+            }
+       }
+    )}
+
 
     return (<>
         {loading ? <Loding /> :
@@ -38,12 +79,13 @@ function GalleryRegForm() {
                         <textarea
                             placeholder="갤러리 글을 입력해 주세요"
                             className="text-area-size"
+                            onChange={changeContent}
                             />
                     </div>
 
                     <div className="review-btns">
                         <button className="main-btn btn-text review-btn btn-gray" onClick={goBack}>취소</button>
-                        <button className="main-btn btn-text review-btn">글 올리기</button>
+                        <button className="main-btn btn-text review-btn" onClick={onSubmit}>글 올리기</button>
                     </div>
 
                 </section>

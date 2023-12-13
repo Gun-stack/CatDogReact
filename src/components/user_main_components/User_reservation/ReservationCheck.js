@@ -18,9 +18,9 @@ function ReservationCheck() {
 
     
     //선택한 예약넘버와 같은 예약을 찾아온다
-    const resv = resvList.find((resv) => resv.num == params.num);
     //가져온 펫리스트중에 예약넘버의 펫이름과 같은 펫정보를 찾아온다
     
+    const resv = resvList.find((resv) => resv.num == params.num);
     const pet1 = petList.find((pet) => pet.name == resv.petName);
 
     async function updateStyleT() {
@@ -49,7 +49,10 @@ function ReservationCheck() {
 
 //  유저의 펫 정보 리스트를 가져옴 
     useEffect(() => {
-        axios.get(`http://localhost:8090/petinfo?userId=${user.id}`)
+        console.log(user.id);
+        console.log(params.num);
+        console.log(resv);
+        axios.get(`http://localhost:8090/petinfo?userId=${user.id}`)    
         .then((res) => {
             console.log(res.data);
                 dispatch(PetStore(res.data));
