@@ -24,7 +24,7 @@ function DesModi() {
         console.log("File info : " + files)
         if (!des.shopName) {
             Swal.fire({
-                html:'<img src="/img/logo/modal_notice_logo.png"/></span>',
+                html: '<img src="/img/logo/modal_notice_logo.png"/></span>',
                 title: '<span class="sweet-modal-title">디자이너 이름을 입력해주세요!</span>',
                 confirmButtonColor: '#F9950F',
                 confirmButtonText: '확인',
@@ -34,7 +34,7 @@ function DesModi() {
 
         // 디자이너 수정을 하시겠습니까?
         Swal.fire({
-            html:'<img src="/img/logo/modal_agree_logo.png"/></span>',
+            html: '<img src="/img/logo/modal_agree_logo.png"/></span>',
             title: '<span class="sweet-modal-title">디자이너 수정을 하시겠습니까?</span>',
             showCancelButton: true,
             confirmButtonText: '수정',
@@ -64,7 +64,13 @@ function DesModi() {
                     console.log(res.data);
                 });
             if (result.isConfirmed) {
-                Swal.fire('수정완료!', '', 'success');
+                Swal.fire({
+                    title: '<span class="sweet-modal-title">디자이너 등록 완료!</span>',
+                    html: '<img src="/img/logo/modal_success_logo.png"/><br/> <span class="sweet-modal-text">샵 정보 수정 하시겠습니까 ?</span>',
+                    showCancelButton: true,
+                    confirmButtonText: '확인',
+                    confirmButtonColor: '#F9950F',
+                });
                 window.location.href = '/catdog/usermy';
             } else if (result.isDenied) {
                 Swal.fire('취소하였습니다.', '', 'info');

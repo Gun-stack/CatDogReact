@@ -4,8 +4,6 @@ import { Route, Routes } from 'react-router-dom';
 import Index from './components/Index';
 import UserJoin from './components/login_Join/UserJoin';
 import UserLogin from './components/login_Join/UserLogin';
-import DesLogin from './components/login_Join/DesLogin';
-import DesJoin from './components/login_Join/DesJoin';
 import Main from './components/user_main_components/Main';
 
 
@@ -24,10 +22,8 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
 import store from './persist-store';
 import Error404 from './components/error/Error404';
-import { useState } from 'react';
 import Loding from './components/tools/Loding';
 import Oauth from './components/Oauth';
-import DesMy from './components/des_main_component/Des_My/DesMy';
 import ShopReg from './components/des_main_component/Des_My/ShopReg';
 import DistanceCalculator from './components/tools/DistanceCalculator';
 
@@ -37,7 +33,6 @@ function App() {
 
   return (
   <>
- 
     <Provider store={store}>
       <PersistGate loading={<Loding/>} persistor={persistor}>
 
@@ -58,14 +53,6 @@ function App() {
 
       <Route path='/around/*' element={<Around/>}/>
 
-      {/** Des 관련 라우터 */}
-      <Route path='/deslogin' element={<DesLogin/>}/>
-      <Route path='/deslogin' element={<DesLogin/>}/>
-      <Route path='/desjoin' element={<DesJoin/>}/>
-
-      {/* desmy */}
-      <Route path='/desmy/*' element={<DesMy/>}/>
-      
       {/* 갤러리 관련 라우터 */}
       
       <Route path='/gallery/*' element={<GalleryList/>}/>

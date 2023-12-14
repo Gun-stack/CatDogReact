@@ -173,9 +173,3 @@ function UserModi() {
 }
 
 export default UserModi;
-
-
-
-
-
-
