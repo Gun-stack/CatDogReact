@@ -89,7 +89,6 @@ function DesModi() {
         const value = e.target.value;
         setDes({ ...des, [name]: value });
     }
-
     const fileChange = (e) => {
         if (e.target.files.length > 0) {
             setFiles([e.target.files[0]]);

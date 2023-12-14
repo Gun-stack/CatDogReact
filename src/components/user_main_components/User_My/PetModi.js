@@ -4,9 +4,10 @@ import { useSelector ,useDispatch } from 'react-redux';
 import { useEffect, useState, useRef } from 'react';
 import Swal from 'sweetalert2';
 import axios from 'axios';
-
+import { useNavigate } from 'react-router-dom';
 
 function PetModi() {
+    const navigate = useNavigate(); 
         //가져온 펫넘버
         const params = useParams();
         // 펫정보 추가
@@ -35,7 +36,7 @@ function PetModi() {
     }
 
     const goBack = () => {
-        window.history.back();
+        navigate('/usermy/petreg');
     };
 
     const fileChange = (e) => {

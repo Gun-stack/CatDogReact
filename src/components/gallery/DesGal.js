@@ -43,6 +43,7 @@ function DesGal() {
         <section className="st-gallery-section">
         <Link to='/gallery/des/galleryregform'> <button className='info-input-btn'>사진 올리기</button></Link>
         <div className="st-gallery-grid">
+            
             {galleryList.map((gallery, index) => (
                 <div className="st-gallery-img" key={index} >
                     <Link to={"/gallery/des/"+gallery.num}><img src={`http://localhost:8090/desgalview/${gallery.num}`} alt="" className="hover-img" /></Link>

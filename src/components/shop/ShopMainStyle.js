@@ -13,7 +13,7 @@ function ShopMainStyle() {
     const [offset, setOffset] = useState(0);
     
     const PlusOffset = () => {    
-        setOffset(offset+1);
+        setOffset(offset+12);
         console.log(offset);
     }
     const [hasMore, setHasMore] = useState(true);

@@ -5,9 +5,9 @@ import { useSelector, useDispatch } from 'react-redux';
 
 
 function UserReviewList() {
+    
     const dispatch = useDispatch();
     const user = useSelector((state) => state.user);
-
     const reservationList = useSelector((state) => state.resvList) ;
     const resvList = reservationList.filter((resv) => resv.status === "완료" );
     
@@ -18,15 +18,14 @@ function UserReviewList() {
         axios.get(`http://localhost:8090/resinfobyuserid?userId=${user.id}`)
             .then((res) => {
                 if (res.data !== undefined) {
-                    dispatch({ type: 'SET_RES_LIST', payload: res.data });
+                    dispatch({ type: 'SET_RESV_LIST', payload: res.data }); 
                     console.log(res.data);
                 }
             })
             .catch((err) => {
                 console.log(err);
-            })
-    }
-        , [user.id]);
+            })  
+        }, [user.id]);
         return (
         <main className="cd-main dis-center">
         <section className="shop-main-section bg-white">
@@ -60,7 +59,7 @@ function UserReviewList() {
                     <span className="re-pet-name">{resv.petName}</span>
                     </div>
                     <div className="re-date">
-                    {resv.date} {(resv.time).slice(0, -3)}
+                    {resv.date}  , {(resv.time).slice(0, -3)}시
                     </div>
                     <div className="re-btns">
                     <span className="is-visit">

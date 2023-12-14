@@ -149,7 +149,7 @@ function DesReg() {
 
                                         {/* <!-- 프로필 사진 사진 올리기 --> */}
                                         <div className="filebox">
-                                            <img src="/img/logo/shop_defult_img.png" accept="image/*"
+                                            <img src="/img/logo/shop_defult_img.png" accept="image/*" alt='프로필 사진'
                                                 className="input-img" value="사진을 올려주세요" ref={imgBoxRef} />
                                             <label htmlFor="shopImgFile">프로필 사진 올리기</label>
                                             <input type="file" id="shopImgFile" accept="image/*" onChange={fileChange} />

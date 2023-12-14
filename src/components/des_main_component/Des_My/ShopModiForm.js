@@ -1,16 +1,11 @@
 import React, { useRef, useState, useEffect } from "react";
-import { Helmet } from 'react-helmet';
-import Footer from "../../screens/Footer";
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import Swal from "sweetalert2";
 import axios from "axios";
 import useKakaoLoader from "../../Around/useKakaoLoader";
-
 import { useDispatch, useSelector } from 'react-redux';
-
 import { useParams } from "react-router";
 import { useNavigate } from "react-router-dom";
-import { Experimental_CssVarsProvider } from "@mui/material";
 
 
 function ShopModiForm() {

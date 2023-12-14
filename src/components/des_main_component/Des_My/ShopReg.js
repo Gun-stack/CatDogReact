@@ -70,7 +70,7 @@ function ShopReg() {
                             {/* 등록한 샵이 있다면 */}
                             <div className="stylelist-content">
                                 {shopList.map((shop,index) => (
-                                    <div className="shpo-list-li" key={index.num}>
+                                    <div className="shpo-list-li" key={shop.num}>
                                         {/* 구분선 */}
                                         <hr className="divide-line" />
                                         {/* 샵 정보 컨테이너 */}
