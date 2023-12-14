@@ -1,9 +1,10 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Swal from 'sweetalert2';
 import Loding from '../../tools/Loding';
 import {useSelector} from 'react-redux';
+import SwalCustomAlert from '../../Alerts/SwalCustomAlert';
+import Server500Err_Alert from '../../Alerts/Server500Err_Alert';
 
 
 function UserModi_Password() {
@@ -49,30 +50,23 @@ function UserModi_Password() {
         try {
             const res = await axios.post('http://localhost:8090/modipassword', { num: user.num, password : password });
             if (res.data === "success") {
-                Swal.fire({
-                    html:'<img src="/img/logo/modal_success_logo.png"/></span>',
-                    title: '<span class="sweet-modal-title">비밀번호가 변경되었습니다</span>',
-                    confirmButtonColor: '#F9950F',
-                    confirmButtonText: '확인',
-                });
-                navigate(-1);
+                SwalCustomAlert(
+                    'success',
+                    '비밀번호가 변경 되었습니다.',
+                )
             } else {
-                Swal.fire({
-                    html:'<img src="/img/logo/modal_fail_logo.png"/></span>',
-                    title: '<span class="sweet-modal-title">비밀번호 변경에 실패했습니다</span>',
-                    confirmButtonColor: '#F9950F',
-                    confirmButtonText: '확인',
-                });
-            }
-        } catch (error) {
-            console.error('서버와 통신에 실패하였습니다', error);
-            Swal.fire({
-                html:'<img src="/img/logo/modal_fail_logo.png"/></span>',
-                title: '<span class="sweet-modal-title">서버와 통신에 실패하였습니다</span>',
-                confirmButtonColor: '#F9950F',
-                confirmButtonText: '확인',
-            });
-        } finally {
+                console.log(res);
+                SwalCustomAlert(
+                    'fail',
+                    '비밀번호 변경 에 실패했습니다',
+                    )
+                }
+            } catch (error) {
+                //500Err 처리
+                console.error('서버통신에 실패했습니다', error);
+                <Server500Err_Alert />
+            } finally {
+            navigate(-1);
             setLoading(false);
         }
 

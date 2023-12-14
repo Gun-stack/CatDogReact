@@ -57,7 +57,7 @@ function ShopMainHome() {
                         confirmButtonText: '등록',
                         cancelButtonText: '취소',
                         confirmButtonColor: '#F9950F',
-                        reverseButtons:'true',
+                        reverseButtons: 'true',
                     });
 
                     if (result.isConfirmed && result.value) {
@@ -132,8 +132,7 @@ function ShopMainHome() {
                             const formData = new FormData();
                             formData.append('shopNum', shopInfo.num);
                             formData.append('worktime', result.value);
-                            const res = await axios.post('http://localhost:8090/regshopworktime', formData
-                            );
+                            const res = await axios.post('http://localhost:8090/regshopworktime', formData);
                             console.log(res);
                         } catch (error) {
                             Swal.fire({
@@ -178,8 +177,6 @@ function ShopMainHome() {
                         console.log('입력한값:', result.value);
                     }
 
-
-
                     break;
 
                 default:
@@ -219,7 +216,8 @@ function ShopMainHome() {
                     </div>
 
                     <div className="shop-form-container">
-                        <div className="input-img-click sm-input-img">{shopInfo.workTime}</div>
+                        <div className="input-img-click sm-input-img">
+                            <span></span>{shopInfo.workTime}</div>
                     </div>
                     <div className="shop-title-text sm-text">매장위치<i className="fas fa-map-pin btn-icon"></i></div>
                     <div className="shop-address">{shopInfo.addressRoad}</div>

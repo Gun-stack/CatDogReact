@@ -1,10 +1,10 @@
 import React from 'react';
 import { useState, useRef } from 'react';
-import Swal from 'sweetalert2';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
+import SwalCustomAlert from '../../Alerts/SwalCustomAlert';
 
 
 
@@ -27,44 +27,61 @@ function PetRegForm() {
         const name = e.target.name;
         const value = e.target.value;
         setPet({ ...pet, [name]: value });
-        console.log(value);
+        // console.log(value);
     }
 
 
     const fileChange = (e) => {
         if (e.target.files.length > 0) {
             setFiles([e.target.files[0]]);
-            console.log(files);
+            // console.log(files);
         }
 
         const imageSrc = URL.createObjectURL(e.target.files[0]);
         imgBoxRef.current.src = imageSrc;
     }
 
-
     const onSubmit = e => {
         e.preventDefault();
 
         if (!pet.name) {
-            Swal.fire({ icon: 'error', title: 'Oops...', text: '이름을 입력해주세요!', })
+            SwalCustomAlert(
+                'notice',
+                '반려동물 이름을 입력해주세요!',
+            );  
             return;
         } if (!pet.dogOrCat) {
-            Swal.fire({ icon: 'error', title: 'Oops...', text: '반려동물 종류를 선택해주세요!', })
+            SwalCustomAlert(
+                'notice',
+                '반려동물 종류를 선택 해주세요!',
+            )
             return;
         } if (!pet.age) {
-            Swal.fire({ icon: 'error', title: 'Oops...', text: '나이를 입력해주세요!', })
+            SwalCustomAlert(
+                'notice',
+                '나이를 입력해주세요!',
+            )
             return;
         } if (!pet.weight) {
-            Swal.fire({ icon: 'error', title: 'Oops...', text: '몸무게를 입력해주세요!', })
+            SwalCustomAlert(
+                'notice',
+                '몸무게를 입력해주세요!',
+            )
             return;
         } if (!pet.breed) {
-            Swal.fire({ icon: 'error', title: 'Oops...', text: '품종을 입력해주세요!', })
+            SwalCustomAlert(
+                'notice',
+                '품종을 입력해주세요!',
+            )
             return;
         }
 
 
         //반려동물을 등록하시겠습니까?
-        Swal.fire({ icon: 'question', title: '반려동물을 등록하시겠습니까?', showCancelButton: true, confirmButtonText: '등록', cancelButtonText: '취소', }).then((result) => {
+        SwalCustomAlert(
+            'agree',
+            '반려동물을 등록하시겠습니까?',
+        ).then((result) => {
             const formData = new FormData();
             for (let file of files) {
                 formData.append("file", file);
@@ -86,10 +103,16 @@ function PetRegForm() {
                     console.log(res.data);
                 })
             if (result.isConfirmed) {
-                Swal.fire('등록완료!', '', 'success')
+                SwalCustomAlert(
+                    'success',
+                    '반려동물을 등록 완료!',
+                )
                 navigate('/usermy');
             } else if (result.isDenied) {
-                Swal.fire('취소하였습니다.', '', 'info')
+                SwalCustomAlert(
+                    'fail',
+                    '취소 하셨습니다',
+                )
             }
         })
     }
@@ -137,17 +160,17 @@ function PetRegForm() {
 
                         {/* 반려동물 나이 Age */}
                         <input type="number" id="age" name="age" placeholder="나이"
-                            className="input-text boader-none" onChange={change} />
+                            className="input-text boader-none"  min="0" onChange={change}/>
                         <hr className="gray-line" />
 
                         {/* 반려동물 나이  weight*/}
                         <input type="number" id="weight" name="weight" placeholder="몸무게 (kg)"
-                            className="input-text boader-none" onChange={change} />
+                            className="input-text boader-none" min="0" onChange={change}/>
                         <hr className="gray-line" />
 
                         {/* 반려동물 종류 Breed */}
                         <input type="text" id="breed" name="breed" placeholder="반려동물 품종"
-                            className="input-text boader-none" onChange={change} />
+                            className="input-text boader-none"  onChange={change} />
                         <hr className="gray-line" />
 
                         {/* 반려동물 종류 gender */}

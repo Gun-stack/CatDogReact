@@ -2,14 +2,13 @@ import axios from 'axios';
 import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Swal from 'sweetalert2';
 import Loding from '../../tools/Loding';
 
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 
-
-
+import Server500Err_Alert from '../../Alerts/Server500Err_Alert';
+import SwalCustomAlert from '../../Alerts/SwalCustomAlert';
 
 
 
@@ -39,23 +38,16 @@ function UserModi_Nickname() {
         e.preventDefault();
 
         if (userNickname === '' && userNickname.trim() === '') {
-            Swal.fire({
-                //닉네임이 빈 문자면 체크
-                html: '<img src="/img/logo/modal_notice_logo.png"/></span>',
-                title: '<span class="sweet-modal-title">닉네임을 입력해주세요</span>',
-                confirmButtonColor: '#F9950F',
-                confirmButtonText: '확인',
-            });
+            SwalCustomAlert(
+                '닉네임을 입력해주세요',
+            )
         } else {
             //닉네임 정규식 에서 틀린지 조건체크
             const nicknameRegExp = /^[가-힣a-zA-Z0-9]{2,10}$/;
             if (!nicknameRegExp.test(userNickname)) {
-                Swal.fire({
-                    html: '<img src="/img/logo/modal_notice_logo.png"/></span>',
-                    title: '<span class="sweet-modal-title">닉네임은 한글,영문 대소문자와<br/> 숫자 2~10자리로 입력해주세요</span>',
-                    confirmButtonColor: '#F9950F',
-                    confirmButtonText: '확인',
-                });
+                SwalCustomAlert(
+                    '닉네임은 한글 영문 대소문자와 숫자 4~12자리로 입력해주세요.',
+                )
                 return false;
             }
 
@@ -63,31 +55,21 @@ function UserModi_Nickname() {
                 const res = await axios.get(`http://localhost:8090/checkusernickname?nickname=${userNickname}`)
                 if (res.data === "success") {
                     //닉네임 중복이 아니고 조건에 부합에 사용 가능하다면
-                    Swal.fire({
-                        html: '<img src="/img/logo/modal_success_logo.png"/></span>',
-                        title: '<span class="sweet-modal-title">사용가능한 닉네임 입니다</span>',
-                        confirmButtonColor: '#F9950F',
-                        confirmButtonText: '확인'
-                    });
-                    
+                    SwalCustomAlert(
+                        'success',
+                        '사용 할 수 있는 닉네임 입니다.',
+                    );
                 } else {
                     // 중복 됐다면
-                    Swal.fire({
-                        title: '중복된 닉네임 입니다',
-                        icon: 'warning',
-                        confirmButtonColor: '#F9950F',
-                        confirmButtonText: '확인',
-                    });
+                    SwalCustomAlert(
+                        'fail',
+                        '중복되는 닉네임 입니다.',
+                    );
                 }
             } catch (error) {
                 //500 error 체크
                 console.error('서버통신에 실패했습니다', error);
-                Swal.fire({
-                    html: '<img src="/img/logo/modal_fail_logo.png"/></span>',
-                    title: '<span class="sweet-modal-title">서버통신에 실패했습니다</span>',
-                    confirmButtonColor: '#F9950F',
-                    confirmButtonText: '확인',
-                });
+                <Server500Err_Alert />
             } finally {
                 console.log('닉네임 확인 완료');
             }
@@ -98,25 +80,20 @@ function UserModi_Nickname() {
 
         e.preventDefault();
         setLoading(true); // 로딩 시작
-        console.log("Nickname : " + userNickname);
 
         try {
             const res = await axios.post('http://localhost:8090/modinickname', { num: user.num, nickname: userNickname });
-            console.log(res);
-            console.log(res.data);
-            dispath({ type: 'SET_USER', payload :res.data });
-            navigate("/usermy/usermodi");
-
+            dispath({ type: 'SET_USER', payload: res.data });
+            SwalCustomAlert(
+                'success',
+                '닉네임이 변경되었습니다!',
+            );
         } catch (error) {
             //500 error 처리
             console.error('서버통신에 실패했습니다', error);
-            Swal.fire({
-                html: '<img src="/img/logo/modal_fail_logo.png"/></span>',
-                title: '<span class="sweet-modal-title">서버통신에 실패했습니다</span>',
-                confirmButtonColor: '#F9950F',
-                confirmButtonText: '확인',
-            });
+            <Server500Err_Alert />
         } finally {
+            navigate("/usermy/usermodi");
             setLoading(false); // 로딩 종료
         }
     };

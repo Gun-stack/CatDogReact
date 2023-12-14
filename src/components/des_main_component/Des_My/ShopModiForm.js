@@ -132,24 +132,24 @@ function ShopModiForm() {
                         console.log(res);
                         console.log("res data : " + res.data);
                     });
-            //    if (result.isConfirmed) {
+                //    if (result.isConfirmed) {
                 Swal.fire({
                     html: '<img src="/img/logo/modal_success_logo.png"/></span>',
                     title: '<span class="sweet-modal-title">샵 정보 수정이 완료되었습니다</span>',
                     confirmButtonColor: '#F9950F',
                     confirmButtonText: '확인'
                 });
-              window.location.href = '/catdog/usermy';
+                window.location.href = '/catdog/usermy';
             }
             else if (result.isDenied === false) {
                 Swal.fire('취소하였습니다.', '', 'info');
-                
+
             }
         });
     }
 
 
-    
+
     const formatNumber = (input) => {
         // 숫자만 추출
         const cleaned = ('' + input).replace(/\D/g, '');
