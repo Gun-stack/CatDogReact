@@ -56,7 +56,8 @@ function UserModi() {
 
 
 
-            <section className="form-section">
+            {/* <section className="form-section"> */}
+            <section className="form-section magin-b-5">
 
                 <div className="usermy-id-card" onClick={handleFlip}>
                     <div className={`id-cards ${isFlipped ? 'flipped' : ''}`}>
