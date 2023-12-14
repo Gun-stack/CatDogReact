@@ -23,10 +23,10 @@ function ShopReg() {
     },[]);
 
     useEffect(() => {
-        if (user.roles!=="ROLE_SHOP"){
-            alert("권한이 없습니다.");
-            navigate(-1);
-        }
+        // if (user.roles!=="ROLE_SHOP"){
+        //     alert("권한이 없습니다.");
+        //     navigate(-1);
+        // }
         console.log(params);
         axios.get(`http://localhost:8090/shoplist?id=${user.id}`)
             .then((res) => {

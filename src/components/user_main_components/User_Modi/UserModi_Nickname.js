@@ -6,12 +6,16 @@ import Swal from 'sweetalert2';
 import Loding from '../../tools/Loding';
 
 import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+
 
 
 
 
 
 function UserModi_Nickname() {
+    const dispath = useDispatch();
+
 
     const [userNickname, setUserNickname] = useState('보호자 닉네임');
     const [loading, setLoading] = useState(false);
@@ -65,6 +69,7 @@ function UserModi_Nickname() {
                         confirmButtonColor: '#F9950F',
                         confirmButtonText: '확인'
                     });
+                    
                 } else {
                     // 중복 됐다면
                     Swal.fire({
@@ -97,26 +102,11 @@ function UserModi_Nickname() {
 
         try {
             const res = await axios.post('http://localhost:8090/modinickname', { num: user.num, nickname: userNickname });
-
             console.log(res);
-            if (res.data === "success") {
-                //변경에 성공했다면 성공 후 뒤로가기
-                Swal.fire({
-                    html: '<img src="/img/logo/modal_success_logo.png"/></span>',
-                    title: '<span class="sweet-modal-title">닉네임이 변경되었습니다</span>',
-                    confirmButtonColor: '#F9950F',
-                    confirmButtonText: '확인',
-                });
-                navigate(-1);
-            } else {
-                Swal.fire({
-                    //실패 했다면
-                    html: '<img src="/img/logo/modal_fail_logo.png"/></span>',
-                    title: '<span class="sweet-modal-title">닉네임 변경에 실패했습니다</span>',
-                    confirmButtonColor: '#F9950F',
-                    confirmButtonText: '확인',
-                });
-            }
+            console.log(res.data);
+            dispath({ type: 'SET_USER', payload :res.data });
+            navigate("/usermy/usermodi");
+
         } catch (error) {
             //500 error 처리
             console.error('서버통신에 실패했습니다', error);

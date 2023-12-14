@@ -5,9 +5,12 @@ import Loding from '../../tools/Loding';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import {useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 
 
 function UserModi_Tel() {
+    const dispatch = useDispatch();
+
 
     const [userTel, setUserTel] = useState('010-0000-0000');
     const [loading, setLoading] = useState(false);
@@ -30,23 +33,10 @@ function UserModi_Tel() {
         try {
             const res = await axios.post('http://localhost:8090/moditel', { num: user.num, userTel : userTel });
             console.log(res);
-            if (res.data === "success") {
-                Swal.fire({
-                    html:'<img src="/img/logo/modal_success_logo.png"/></span>',
-                    title: '<span class="sweet-modal-title">전화번호가 변경 되었습니다</span>',
-                    confirmButtonColor: '#F9950F',
-                    confirmButtonText: '확인',
-                });
-                navigate(-1);
-            } else {
-                Swal.fire({
-                    html:'<img src="/img/logo/modal_fail_logo.png"/></span>',
-                    title: '<span class="sweet-modal-title">전화번호 변경에 실패했습니다</span>',
-                    confirmButtonColor: '#F9950F',
-                    confirmButtonText: '확인',
-                });
+            dispatch({type:'SET_USER',payload:res.data});
+            navigate("/usermy/usermodi");
             }
-        } catch (error) {
+         catch (error) {
             console.error('전화번호 변경에 실패했습니다', error);
             Swal.fire({
                 icon: 'error',

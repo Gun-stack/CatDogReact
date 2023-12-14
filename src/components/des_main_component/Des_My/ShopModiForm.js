@@ -14,7 +14,6 @@ import { Experimental_CssVarsProvider } from "@mui/material";
 
 
 function ShopModiForm() {
-    const dispatch = useDispatch();
     const params = useParams();
     const selectShop = useSelector((state) => state.shop)
     const [address, setAddress] = useState();
@@ -99,7 +98,6 @@ function ShopModiForm() {
         // 샵을 등록하시겠습니까?
         Swal.fire({
 
-          
             title: '<span class="sweet-modal-title">샵 정보 수정</span>',
             html: '<img src="/img/logo/modal_modi_logo.png"/><br/> <span class="sweet-modal-text">샵 정보 수정 하시겠습니까 ?</span>',
 
@@ -125,9 +123,6 @@ function ShopModiForm() {
             }
             formData.append("shopnum", params.shopnum);
 
-           
-
-
 
             if (result.isConfirmed === true) {
                 console.log(formData.get("latitude"));
@@ -137,7 +132,7 @@ function ShopModiForm() {
                         console.log(res);
                         console.log("res data : " + res.data);
                     });
-               if (result.isConfirmed) {
+            //    if (result.isConfirmed) {
                 Swal.fire({
                     html: '<img src="/img/logo/modal_success_logo.png"/></span>',
                     title: '<span class="sweet-modal-title">샵 정보 수정이 완료되었습니다</span>',
@@ -145,14 +140,16 @@ function ShopModiForm() {
                     confirmButtonText: '확인'
                 });
               window.location.href = '/catdog/usermy';
-              
-            } else if (result.isDenied == false) {
-            
-
+            }
+            else if (result.isDenied === false) {
                 Swal.fire('취소하였습니다.', '', 'info');
+                
             }
         });
     }
+
+
+    
     const formatNumber = (input) => {
         // 숫자만 추출
         const cleaned = ('' + input).replace(/\D/g, '');
@@ -338,5 +335,6 @@ function ShopModiForm() {
         </div>
     );
 }
+
 
 export default ShopModiForm;

@@ -10,7 +10,7 @@ function PetModi() {
         //가져온 펫넘버
         const params = useParams();
         // 펫정보 추가
-        const petList = useSelector((state) => state.pet);
+        const petList = useSelector((state) => state.petList);
         const pet = petList.find((pet) => pet.num == params.num);
 
         const imgBoxRef = useRef();
@@ -46,8 +46,8 @@ function PetModi() {
         const imageSrc = URL.createObjectURL(e.target.files[0]);
         imgBoxRef.current.src = imageSrc;
     };
-
     useEffect(() => {
+        console.log(params.num);
         setNewPet({
             num: pet.num,
             name: pet.name,
