@@ -2,13 +2,19 @@ import { Link, useParams } from "react-router-dom";
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
 function ShopReg() {
     const params = useParams();
     const user = useSelector((state) => state.user);
     const [shopList, setShopList] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
+        if (user.roles!=="ROLE_SHOP"){
+            alert("권한이 없습니다.");
+            navigate(-1);
+        }
         console.log(params);
         axios.get(`http://localhost:8090/shoplist?id=${user.id}`)
             .then((res) => {

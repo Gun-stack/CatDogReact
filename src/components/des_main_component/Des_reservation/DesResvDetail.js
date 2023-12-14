@@ -14,15 +14,19 @@ function DesResvDetail() {
     const [Modal, setModal] = useState(false);
     const [styleT, setStyleT] = useState('');
     const dispatch = useDispatch();
-    const user = useSelector((state) => state.user);
-    const resvList = useSelector((state) => state.resvList);
-    const resv = resvList.find(resv => resv.num == params.resvnum);
     
-    const petList = useSelector((state) => state.petList);
-    const pet1 = petList.find(pet => pet.name == resv.petName);
-
     const [completePic,setCompletePic] = useState([]);
     const [completeText,setCompletetext] = useState([]);
+    const [resv,setResv] = useState({});
+    const [pet1,setPet1] = useState({});
+    const [user,setUser] = useState({});
+
+
+
+
+
+    
+
 
 //swal창으로 이미지 업로드하기
     const CompleteImg = () => {
@@ -71,15 +75,14 @@ function DesResvDetail() {
     }
 
 
-
-
-
 //  유저의 펫 정보 리스트를 가져옴 
     useEffect(() => {
-        axios.get(`http://localhost:8090/petinfo?userId=${resv.userId}`)
+        axios.get(`http://localhost:8090/reservedetail?num=${params.resvnum}`)
         .then((res) => {
             console.log(res.data);
-                dispatch({type:'SET_PET_LIST',payload:res.data});
+                setResv(res.data.resv);
+                setPet1(res.data.pet);
+                setUser(res.data.user);
             }
         )
         .catch((err) => {

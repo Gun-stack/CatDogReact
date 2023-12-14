@@ -13,6 +13,8 @@ import UserModi_Password from '../User_Modi/UserModi_Password';
 import PetRegForm from './PetRegForm';
 import Error404 from "../../error/Error404";
 import { useSelector } from 'react-redux';
+import axios from "axios";
+import { useDispatch } from "react-redux";
 
 import UserReviewForm from "../User_reservation/UserReviewForm";
 import PetModi from './PetModi';
@@ -34,15 +36,28 @@ import ShopModiForm from '../../des_main_component/Des_My/ShopModiForm';
 import DesResvDetail from '../../des_main_component/Des_reservation/DesResvDetail';
 
 
+
+
+
 function UserMy() {
+    const dispatch = useDispatch();
     const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
     const navigate = useNavigate();
+    const user = useSelector((state) => state.user);
+    const desInfo = useSelector((state) => state.des);
 
     useEffect(() => {
-
+        console.log(user);
         if (!isLoggedIn) {
             alert('로그인이 필요한 서비스입니다.');
             navigate('/main');
+        }
+        if(user.roles =="ROLE_DES"||user.roles =="ROLE_SHOP"){
+            axios.get(`http://localhost:8090/desinfobyid?desId=${user.id}`)
+            .then((res) => {
+                console.log(res);
+                dispatch({ type: 'SET_DES', payload: res.data })
+            })
         }
 
     }, []);

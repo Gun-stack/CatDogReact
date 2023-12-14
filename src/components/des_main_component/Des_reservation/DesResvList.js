@@ -7,10 +7,12 @@ import Footer from '../../screens/Footer';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router';
 
 
 
-function DesResvList(props) {
+function DesResvList() {
+    const navigate = useNavigate();
     //today
     const dispatch = useDispatch();
     const user = useSelector((state) => state.user);
@@ -41,6 +43,11 @@ function DesResvList(props) {
     const resList = useSelector(state => state.resvList);
 
     useEffect(() => {
+        if(desInfo.id!==user.id){
+            alert('잘못된 접근입니다.');
+            navigate(-1);
+        }
+
         console.log();
         axios.get(`http://localhost:8090/resinfobydesnum?desNum=${desInfo.num}&date=${sqlDate}`)
             .then((res) => {

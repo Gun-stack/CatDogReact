@@ -35,8 +35,6 @@ function DesGalleryView() {
         <>
             <section className="st-gallery-section">
 
-                {/* 이미지 게시판 요소  */}
-                <hr className="divide-line" />
                 <div className="st-gallery-view">
                     <div className="st-gallery-view-img">
                         <div className="view-gallery-profile-container magin-l-1">

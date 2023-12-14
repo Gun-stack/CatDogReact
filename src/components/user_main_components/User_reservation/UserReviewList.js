@@ -8,7 +8,7 @@ function UserReviewList() {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.user);
 
-    const reservationList = useSelector((state) => state.resv) ;
+    const reservationList = useSelector((state) => state.resvList) ;
     const resvList = reservationList.filter((resv) => resv.status === "완료" );
     
 
@@ -18,7 +18,7 @@ function UserReviewList() {
         axios.get(`http://localhost:8090/resinfobyuserid?userId=${user.id}`)
             .then((res) => {
                 if (res.data !== undefined) {
-                    dispatch({ type: 'SET_RESERVATION', payload: res.data });
+                    dispatch({ type: 'SET_RES_LIST', payload: res.data });
                     console.log(res.data);
                 }
             })

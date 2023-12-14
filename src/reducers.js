@@ -29,12 +29,13 @@ const initialState = { isLoggedIn: false,   };
         localStorage.removeItem('token');
         localStorage.removeItem('user');
         localStorage.removeItem('resv');
+        localStorage.removeItem('resvList');
         localStorage.removeItem('pet');
+        localStorage.removeItem('petList');
         localStorage.removeItem('shop');
         localStorage.removeItem('des');
-        localStorage.removeItem('resvList');
-        localStorage.removeItem('shopList');
         localStorage.removeItem('desList');
+        localStorage.removeItem('shopList');
         localStorage.removeItem('review');
         localStorage.removeItem('position');
 
@@ -57,9 +58,11 @@ const initialState = { isLoggedIn: false,   };
 
 
 
+
+
 const initialUserState = JSON.parse(localStorage.getItem('user')) || { id: '', email: '', name: '', num:'',nickname:'',roles:'',tel:'',kid:'',password:'',provider:'',providerId:'' };
 
-
+//유저
 const userReducer = (state = initialUserState, action) => {
   switch (action.type) {
     case 'SET_USER':
@@ -69,6 +72,7 @@ const userReducer = (state = initialUserState, action) => {
       return state;
   }
 };
+
 
 const isAutoLoginReducer = (state = false, action) => {
     switch (action.type) {
@@ -191,6 +195,8 @@ const positionReducer = (state = initialPositionState, action) => {
   }
 }
 //내위치
+
+
 
 
 

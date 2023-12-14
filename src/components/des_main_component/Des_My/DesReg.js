@@ -4,12 +4,14 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import Swal from "sweetalert2";
 import axios from "axios";
+import { useDispatch } from "react-redux";
 
 
 
 
 
 function DesReg() {
+    const dispatch = useDispatch();
     const imgBoxRef = useRef();
     const [files, setFiles] = useState([]);
     const user = useSelector((state) => state.user);
@@ -61,9 +63,9 @@ function DesReg() {
 
             axios.post('http://localhost:8090/desreg', formData)
                 .then((res) => {
-                    console.log(res);
-                    console.log(res.data);
-                });
+                    dispatch({ type: 'SET_DES', payload: res.data })
+            });
+                
             if (result.isConfirmed) {
                 Swal.fire('등록완료!', '', 'success');
                 window.location.href = '/catdog/usermy';
