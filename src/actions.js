@@ -36,6 +36,10 @@ export const setToken = (token) => ({
     type: 'SET_PET',
     payload: pet,
   });
+  export const PetListStore = (petList) => ({
+    type: 'SET_PET_LIST',
+    payload: petList,
+  });
   
   export const setShop = (shop) => ({
     type: 'SET_SHOP',

@@ -86,7 +86,7 @@ function UserReviewForm() {
         formData.append('resNum', resvInfo.num); // 예약번호 추가
         try{
             const res = await axios.post('http://localhost:8090/reviewreg',formData)
-            if (res.data === true) {
+            if (res.data == true) {
                 Swal.fire({
                     icon: 'success',
                     html: "<p style='text-align:center;'>리뷰가 등록 되었습니다.<p>",

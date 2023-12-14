@@ -83,9 +83,9 @@ function UserReviewModi() {
         formData.append('afterImg', oldReview.afterImg); // 기존 이미지 추가(수정시에는 기존 이미지를 그대로 사용')
         formData.append('num', oldReview.num); // 리뷰번호 추가
         formData.append('file', image); // 이미지 파일을 formData에 추가
-        formData.append('content',review); // 리뷰 내용 추가
+        formData.append('content',review.content); // 리뷰 내용 추가
         formData.append('star', rating); // 별점 추가
-        formData.append('desId', desInfo.id); // 미용사 아이디 추가
+        formData.append('desId', oldReview.desId); // 미용사 아이디 추가
         formData.append('userId', user.id); // 유저 아이디 추가
         formData.append('date', sqlDate); // 날짜 추가
         formData.append('resNum', resvInfo.num); // 예약번호 추가

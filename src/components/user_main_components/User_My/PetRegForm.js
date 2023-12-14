@@ -27,6 +27,7 @@ function PetRegForm() {
         const name = e.target.name;
         const value = e.target.value;
         setPet({ ...pet, [name]: value });
+        console.log(value);
     }
 
 

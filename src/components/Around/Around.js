@@ -46,7 +46,7 @@ function Around() {
         isPanto: false,
     })
 
-    function mapClickModal() {        
+    function mapClickModal() {
         const shoplist = [
             {
                 shopname: '코스타 살롱살롱',
@@ -63,12 +63,15 @@ function Around() {
                 dist: '6m'
             },
         ]
-    Swal.fire({
-        html: ` <div style="font-family: 'Pretendard-Regular';">${shoplist[0].shopname}</div><br/>
-                <div style="font-family: 'Pretendard-Regular';">${shoplist[0].address}</div><br/>
-                <div style="font-family: 'Pretendard-Regular';">${shoplist[0].dist}</div><br/>`
-            })
-}
+        Swal.fire({
+            html: ` <div class="sweet-modal-title">${shoplist[0].shopname}<span class="sweet-modal-sub-text">${shoplist[0].dist}</span>
+            </div><span class="sweet-modal-text">${shoplist[0].address}</span><br/>`,
+            confirmButtonColor: '#F9950F',
+            confirmButtonText: '바로가기',
+            showCancelButton: true,
+            cancelButtonText: '취소',
+        })
+    }
 
     function updateCurrentLocation() {
         if (navigator.geolocation) {
@@ -83,8 +86,8 @@ function Around() {
                         isLoading: false,
                         isPanto: true
                     }));
-                    dispatch({type:'SET_LATITUDE',payload:position.coords.latitude});
-                    dispatch({type:'SET_LONGITUDE',payload:position.coords.longitude});                    
+                    dispatch({ type: 'SET_LATITUDE', payload: position.coords.latitude });
+                    dispatch({ type: 'SET_LONGITUDE', payload: position.coords.longitude });
                     console.log(position.coords.latitude);
                     console.log(position.coords.longitude);
                 },
@@ -160,7 +163,7 @@ function Around() {
                                 <li className={`main-nav-list-text ${isActive('/') ? 'active' : ''}`}><Link to="">인기순</Link></li>
                                 {/* 거리순 */}
                                 <li className={`main-nav-list-text ${isActive('distance') ? 'active' : ''}`}><Link to="distance">가까운순</Link></li>
-                                 {/* 샵등록 */}
+                                {/* 샵등록 */}
                                 <li className={`main-nav-list-text ${isActive('/shopreg/1') ? 'active' : ''}`}><Link to="/shopreg/1">샵등록</Link></li>
 
                             </ul>
@@ -169,7 +172,7 @@ function Around() {
                         <Routes >
                             <Route path="/" element={<Popular />} />
                             <Route path="distance" element={<Distance />} />
-                            <Route path='/*' element={<Error404/>}/>
+                            <Route path='/*' element={<Error404 />} />
                         </Routes>
                     </section>
                 </main>

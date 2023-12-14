@@ -85,12 +85,6 @@ function ShopReservationForm(props) {
         })
     }
 
-    
-
-
-
-
-
 
 
     return (
@@ -105,7 +99,7 @@ function ShopReservationForm(props) {
                     </div>
                 </div>
                 <hr className="divide-line" />
-                <div> <span className="form-text">예약자 닉네임 :</span> {user.nickName}</div>
+                <div> <span className="form-text">예약자 닉네임 :</span> {user.nickname}</div>
                 <hr className="divide-line" />
                 <div> <span className="form-text">반려동물 정보 </span>
                     <button className="bg-orange style-btn">
@@ -130,7 +124,7 @@ function ShopReservationForm(props) {
                                 {pet.name}
                             </div>
                             <div className="st-profile-shop">
-                                {pet.dogOrCat==='dog' ? '강아지' : '고양이'}
+                                {pet.dogOrCat=== true ? '강아지' : '고양이'}
                             </div>
                         </div>
                     </div>

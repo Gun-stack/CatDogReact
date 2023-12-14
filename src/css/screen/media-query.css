@@ -1,13 +1,12 @@
-/* 
-/** 화면  1024px 이하일때 */
-/* @media (max-width: 1024px) {
+/* 화면  1024px 이하일때 */
+@media (max-width: 1024px) {
 
-    .main-logo>img{
+    /* .main-logo>img{
         width: 70vw;
     }
 
     .main-btn{
-        width: 80vw;
+        width: 70vw;
     }
     .main-sm-btn{
         width: 40vw;
@@ -15,10 +14,13 @@
     .input-text{
         width: 70vw;
     }
+    .gray-line{
+        width: 70vw;
+    }
     .cd-main{
         width: 100vw;
-    }
-} */
+    } */
+}
 
 
 /** 화면  450px 이하일때 */
@@ -38,7 +40,20 @@
         align-items: center;
         margin-top: 1rem;
     }
+    .input-text{
+        width: 80vw;
+    }
+    .radio-container{
+        width: 80vw;
+    }
 
+    .address-input{
+        width: 70vw;
+    }
+
+    .wi-30{
+        width: 70vw;
+    }
     .main-nav-list{
         width: 100%;
         justify-content: center;

@@ -13,12 +13,12 @@ function UserJoin() {
     const [nickname, setNickname] = useState('');
     const [tel, setTel] = useState('');
     const [email, setEmail] = useState('');
-    
+
     //패스워드 관련
     const [password, setPassword] = useState('');
     const [passMessage, setPassMessage] = useState('비밀번호를 입력하세요');
     const [passwordCheck, setPasswordCheck] = useState('');
-    
+
     const changePass = (e) => {
         setPassword(e.target.value);
     }
@@ -81,28 +81,26 @@ function UserJoin() {
                     console.log(res.data);
                     if (res.data === "joinsuccess") {
                         Swal.fire({
-                            icon: 'success',
-                            title: '회원가입 성공',
-                            text: '로그인 페이지로 이동합니다.',
+                            html: '<img src="/img/logo/modal_success_logo.png"/></span>',
+                            title: '<span class="sweet-modal-title">회원가입 성공! 로그인페이지로이동합니다</span>',
                             confirmButtonColor: '#F9950F',
                             confirmButtonText: '확인',
                         });
                         window.location.replace("userlogin");
                     } else {
                         Swal.fire({
-                            icon: 'error',
-                            title: '회원가입 실패',
-                            text: '다시 시도해주세요.',
+                            html: '<img src="/img/logo/modal_fail_logo.png"/></span>',
+                            title: '<span class="sweet-modal-title">회원가입에 실패했습니다</span>',
                             confirmButtonColor: '#F9950F',
                             confirmButtonText: '확인',
                         });
                     }
                 })
         } catch (error) {
+            console.error('서버통신에 실패했습니다', error);
             Swal.fire({
-                icon: 'error',
-                title: '서버통신 실패',
-                text: '다시 시도해주세요.',
+                html: '<img src="/img/logo/modal_fail_logo.png"/></span>',
+                title: '<span class="sweet-modal-title">서버통신에 실패했습니다</span>',
                 confirmButtonColor: '#F9950F',
                 confirmButtonText: '확인',
             });
@@ -115,12 +113,11 @@ function UserJoin() {
 
     //아이디 중복체크 여부 
     const checkId = (e) => {
-
         e.preventDefault();
         if (id === '') {
             Swal.fire({
-                title: '아이디를 입력해주세요',
-                icon: 'warning',
+                html: '<img src="/img/logo/modal_notice_logo.png"/></span>',
+                title: '<span class="sweet-modal-title">아이디를 입력해주세요</span>',
                 confirmButtonColor: '#F9950F',
                 confirmButtonText: '확인',
             });
@@ -129,8 +126,8 @@ function UserJoin() {
             const idRegExp = /^[a-zA-Z0-9]{4,12}$/;
             if (!idRegExp.test(id)) {
                 Swal.fire({
-                    title: '아이디는 영문 대소문자와 숫자 4~12자리로 입력해주세요',
-                    icon: 'warning',
+                    title: '<span class="sweet-modal-title">아이디는 영문 대소문자와 숫자 4~12자리로 입력해주세요</span>',
+                    html: '<img src="/img/logo/modal_notice_logo.png"/></span>',
                     confirmButtonColor: '#F9950F',
                     confirmButtonText: '확인',
                 });
@@ -142,16 +139,16 @@ function UserJoin() {
                     console.log("res.data : " + res.data);
                     if (res.data === "success") {
                         Swal.fire({
-                            title: '사용 가능한 아이디 입니다.',
-                            icon: 'success',
+                            html: '<img src="/img/logo/modal_success_logo.png"/></span>',
+                            title: '<span class="sweet-modal-title">사용가능한 아이디 입니다</span>',
                             confirmButtonColor: '#F9950F',
-                            confirmButtonText: '확인',
+                            confirmButtonText: '확인'
                         });
                         setIdCheck(true);
                     } else {
                         Swal.fire({
-                            title: '중복된 아이디 입니다',
-                            icon: 'warning',
+                            html: '<img src="/img/logo/modal_fail_logo.png"/></span>',
+                            title: '<span class="sweet-modal-title">중복된 아이디 입니다.</span>',
                             confirmButtonColor: '#F9950F',
                             confirmButtonText: '확인',
                         });
@@ -160,9 +157,8 @@ function UserJoin() {
                 .catch(err => {
                     console.error(err);
                     Swal.fire({
-                        title: '서버와 연결이 실패했습니다',
-                        text: '다시 시도해주세요',
-                        icon: 'warning',
+                        html: '<img src="/img/logo/modal_fail_logo.png"/></span>',
+                        title: '<span class="sweet-modal-title">서버통신에 실패했습니다</span>',
                         confirmButtonColor: '#F9950F',
                         confirmButtonText: '확인',
                     });
@@ -185,8 +181,8 @@ function UserJoin() {
             const nicknameRegExp = /^[가-힣a-zA-Z0-9]{2,10}$/;
             if (!nicknameRegExp.test(nickname)) {
                 Swal.fire({
-                    title: '닉네임은 한글,영문 대소문자와 숫자 2~10자리로 입력해주세요',
-                    icon: 'warning',
+                    title: '<span class="sweet-modal-title">아이디는 영문 대소문자와 숫자 4~12자리로 입력해주세요</span>',
+                    html: '<img src="/img/logo/modal_notice_logo.png"/></span>',
                     confirmButtonColor: '#F9950F',
                     confirmButtonText: '확인',
                 });
@@ -197,16 +193,16 @@ function UserJoin() {
                 .then(res => {
                     if (res.data === "success") {
                         Swal.fire({
-                            title: '사용 가능한 닉네임 입니다.',
-                            icon: 'success',
+                            html: '<img src="/img/logo/modal_success_logo.png"/></span>',
+                            title: '<span class="sweet-modal-title">사용가능한 닉네임 입니다</span>',
                             confirmButtonColor: '#F9950F',
                             confirmButtonText: '확인'
                         });
                         setNicknameCheck(true);
                     } else {
                         Swal.fire({
-                            title: '중복된 닉네임 입니다',
-                            icon: 'warning',
+                            html: '<img src="/img/logo/modal_fail_logo.png"/></span>',
+                            title: '<span class="sweet-modal-title">중복된 닉네임 입니다</span>',
                             confirmButtonColor: '#F9950F',
                             confirmButtonText: '확인',
                         });
@@ -215,9 +211,8 @@ function UserJoin() {
                 .catch(err => {
                     console.error(err);
                     Swal.fire({
-                        title: '서버와 연결이 실패했습니다',
-                        text: '다시 시도해주세요',
-                        icon: 'warning',
+                        html: '<img src="/img/logo/modal_fail_logo.png"/></span>',
+                        title: '<span class="sweet-modal-title">서버통신에 실패했습니다</span>',
                         confirmButtonColor: '#F9950F',
                         confirmButtonText: '확인',
                     });
@@ -258,19 +253,19 @@ function UserJoin() {
     const handleSubBtnClick = (e) => {
         e.preventDefault();
         Swal.fire({
-            title: username + ' 님',
-            text: '가입 하시겠습니까?',
-            iconHtml: '<i class="fa-solid fa-user tx-gray"></i>',
+            html: '<img src="/img/logo/modal_agree_logo.png"/></span>',
+            title: `<span class="sweet-modal-title"><span class="tx-orange">${username }</span> 님 가입 하시겠습니까 ?</span>`,
             showCancelButton: true,
             confirmButtonColor: '#F9950F',
             confirmButtonText: "가입하기",
+            cancelButtonText:"취소"
         }).then((result) => {
             if (result.isConfirmed) {
                 idcheck && nicknamecheck ?
                     submit(e) :
                     Swal.fire({
-                        title: '아이디 또는 닉네임 중복확인을 해주세요',
-                        icon: 'warning',
+                        html: '<img src="/img/logo/modal_notice_logo.png"/></span>',
+                        title: '<span class="sweet-modal-title">아이디 또는 닉네임 중복확인 해주세요</span>',
                         confirmButtonColor: '#F9950F',
                         confirmButtonText: '확인',
                     });

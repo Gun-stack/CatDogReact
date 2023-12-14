@@ -6,66 +6,64 @@ import { Link, useParams } from 'react-router-dom';
 import Footer from '../../screens/Footer';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 
 
 function DesResvList(props) {
     //today
-    const shopInfo = props.shopInfo;
+    const dispatch = useDispatch();
     const user = useSelector((state) => state.user);
     const desInfo = useSelector((state) => state.des);
-    const [selectDate, setSelectDate] = useState(new Date().toLocaleDateString('ko-KR').slice(0, 11));
+    const [sqlDate, setSqlDate] = useState(new Date().getFullYear() + '-' + (new Date().getMonth() + 1).toString().padStart(2, '0') + '-' + new Date().getDate().toString().padStart(2, '0'));
+    const [selectDate, setSelectDate] = useState(new Date().toLocaleDateString('ko-KR').slice(0, 12));
+    
 
 
     const onChangeDate = (newValue) => {
         //toISOString: UTF 시간 기준이라 우리나라 시간으로 만들려면 9시간 빼야합니다
         const date = new Date(newValue.toISOString());
-
         // 한국 시간대로 조정 (UTC+9)
         const offset = date.getTimezoneOffset() * 60000;
         const koreaTime = new Date(date.getTime() - offset + (9 * 60 * 60000)); // UTC+9
 
-        const isoString = koreaTime.toISOString().slice(0, 10);
-        setSelectDate(isoString);
+        const isoString = koreaTime.toLocaleDateString('ko-KR').slice(0, 12);
         console.log(isoString);
+        setSelectDate(isoString);
+        const month = (koreaTime.getMonth() + 1).toString().padStart(2, '0');
+        const day = koreaTime.getDate().toString().padStart(2, '0');
+        const sqlDate = `${koreaTime.getFullYear()}-${month}-${day}`;
+        setSqlDate(sqlDate);
+        console.log(sqlDate);
+
     };
 
-    const resList = [{
-        desNum: '1',
-        date: '2023-12-07',
-        time: '10:00'
-    },
-    {
-        desNum: '1',
-        date: '2021-09-09',
-        time: '14:00'
-    },
-    {
-        desNum: '1',
-        date: '2021-09-09',
-        time: '16:00'
-    },
-    ]
+    const resList = useSelector(state => state.resvList);
 
     useEffect(() => {
-        console.log(desInfo);   
         console.log();
-        axios.get(`http://localhost:8090/resinfobydesnum?desNum=${desInfo.num}&date=${selectDate}`)
-        
-        
+        axios.get(`http://localhost:8090/resinfobydesnum?desNum=${desInfo.num}&date=${sqlDate}`)
+            .then((res) => {
+                dispatch({ type: 'SET_RESV_LIST', payload: res.data })
+             }
+            )
+            .catch((err) => {
+                console.log(err);
+            })
+            console.log(resList);
     }
-        , []);
+        , [sqlDate]);
 
 
 
 
     // 예약된 시간인지 확인
     const isReserved = (date, time) => {
-        const reserved = resList.find(res => res.date === date && res.time === time);
+        const reserved = resList.find(resv => resv.date === date && resv.time === time);
         return reserved;
     };
     // 
-    const availableTimes = ['10:00', '12:00', '14:00', '16:00'];
+    const availableTimes = ["10:00", "12:00", "14:00", "16:00"];
     return (<>
 
         <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -78,28 +76,34 @@ function DesResvList(props) {
 
         {availableTimes.map(time => (
             <section key={time} className='reser-time-section'>
-                {isReserved(selectDate, time) ? (
-                    <div className={`reser-time-container btn-gray`}>
-                        <div className="reser-time">
-                            <span className="reser-time-text">{time}</span>
-                        </div>
-                    </div>
-                ) : (
-                    <Link to={``} state={{ data1: time, data2: selectDate }}>
+                {isReserved(sqlDate,time) ? 
+                 (
+                    <>
+                    <Link to={`/usermy/deservedetail/${isReserved(sqlDate,time).num}`} state={{ data1: time, data2: sqlDate }}>
                         <div className="reser-time-container reser-time-sm">
                             <div className="reser-time">
-                                <span className="reser-time-text">{time}</span>
+                                <span className="reser-time-text">{time} 예약됨</span>
                             </div>
                         </div>
+                    </Link>
                         <p>
                             <br />
-                            <span className='f-w-600'>반려동물 이름</span>
+                            <span className='f-w-600'>반려동물 이름 : {isReserved(sqlDate,time).petName}</span>
                             <br />
-                            <span className='magin-t-1 f-size-14px'>반려동물 종류</span>
+                            <span className='magin-t-1 f-size-14px'>주의사항  : {isReserved(sqlDate,time).notice} </span>
                             <br />
                         </p>
-                    </Link>
-                )}
+                    </>
+                )
+                : 
+                (
+                    <div className={`reser-time-container btn-gray`}>
+                        <div className="reser-time">
+                            <span className="reser-time-text">{time} 예약안됨</span>
+                        </div>
+                    </div>
+                ) 
+               }
                 <hr className="divide-line magin-t-1" key={`hr-${time}`} />
             </section>
         ))}

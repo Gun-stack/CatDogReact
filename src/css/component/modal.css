@@ -1,50 +1,21 @@
-.cd-container{
-    position: relative;
-}
-.modal-alert{
-    position:absolute;
-    width:inherit;
-    height:100%;
-    
-    top:0;
-    left: 0;
-    z-index: 5;
-    
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
-    background-color: rgba(0,0,0,0.4);
+.sweet-modal-title{
+    font-family: 'Pretendard-Regular';
+    font-size: 1.2rem;
 }
 
-.modal-body{
-    width: 22vw;
-    height: 200px;
-    background-color: white;
-    border-radius: 10px;
 
-    transition: all 1s ease-in-out;
-}
-
-.modal-text,.modal-body{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
-
-.modal-text{
-    font-weight: 600;
+.sweet-modal-text{
+    font-family: 'Pretendard-Regular';
     font-size: 1.1rem;
 }
 
-.modal-body{
-    justify-content: space-around;
-}
-.modal-btns{
-    display: flex;
+.sweet-modal-sub-text{
+    margin: 0 .5rem;
+    font-family: 'Pretendard-Regular';
+    font-size: 1rem;
+    color: gray;
 }
 
-.hidden{
-    display: none;
+.sweet-modal-icon{
+    font-size: 2rem;
 }

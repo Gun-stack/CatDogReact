@@ -35,9 +35,9 @@ function UserModi_Nickname() {
         e.preventDefault();
 
         if (userNickname === '' && userNickname.trim() === '' ) {
-            Swal.fire({     
-                title: '닉네임을 입력해주세요',
-                icon: 'warning',
+            Swal.fire({
+                html:'<img src="/img/logo/modal_notice_logo.png"/></span>',
+                title: '<span class="sweet-modal-title">닉네임을 입력해주세요</span>',
                 confirmButtonColor: '#F9950F',
                 confirmButtonText: '확인',
             });
@@ -46,8 +46,8 @@ function UserModi_Nickname() {
             const nicknameRegExp = /^[가-힣a-zA-Z0-9]{2,10}$/;
             if (!nicknameRegExp.test(userNickname)) {
                 Swal.fire({
-                    icon: 'warning',
-                    html: "<div><p style='text-align:center;'>닉네임은 한글,영문 대소문자와<br/> 숫자 2~10자리로 입력해주세요<p></div>",
+                    html:'<img src="/img/logo/modal_notice_logo.png"/></span>',
+                    title: '<span class="sweet-modal-title">닉네임은 한글,영문 대소문자와<br/> 숫자 2~10자리로 입력해주세요</span>',
                     confirmButtonColor: '#F9950F',
                     confirmButtonText: '확인',
                 });
@@ -58,12 +58,11 @@ function UserModi_Nickname() {
                 const res = await axios.get(`http://localhost:8090/checkusernickname?nickname=${userNickname}`)
                 if (res.data === "success") {
                     Swal.fire({
-                        html: "<p style='text-align:center;'>사용 가능한 닉네임 입니다<p>",
-                        icon: 'success',
+                        html:'<img src="/img/logo/modal_success_logo.png"/></span>',
+                        title: '<span class="sweet-modal-title">사용가능한 닉네임 입니다</span>',
                         confirmButtonColor: '#F9950F',
                         confirmButtonText: '확인'
                     });
-                    // setUserNickname(true);
                 } else {
                     Swal.fire({
                         title: '중복된 닉네임 입니다',
@@ -75,13 +74,13 @@ function UserModi_Nickname() {
             } catch (error) {
                 console.error('서버통신에 실패했습니다', error);
                 Swal.fire({
-                    icon: 'error',
-                    html: "<p style='text-align:center;'>서버통신에 실패했습니다<p>",
+                    html:'<img src="/img/logo/modal_fail_logo.png"/></span>',
+                    title: '<span class="sweet-modal-title">서버통신에 실패했습니다</span>',
                     confirmButtonColor: '#F9950F',
                     confirmButtonText: '확인',
                 });
             } finally {
-                setLoading(false); // 로딩 종료
+                console.log('닉네임 확인 완료');
             }
         }
     };
@@ -89,27 +88,25 @@ function UserModi_Nickname() {
     const onSubmit = async (e) => {
         
         e.preventDefault();
-        // setLoading(true); // 로딩 시작
+        setLoading(true); // 로딩 시작
         console.log("Nickname : " + userNickname);
-        
 
         try {
-
             const res = await axios.post('http://localhost:8090/modinickname', {num : user.num, nickname : userNickname});
 
             console.log(res);
             if (res.data === "success") {
                 Swal.fire({
-                    icon: 'success',
-                    html: "<p style='text-align:center;'>닉네임이 변경되었습니다<p>",
+                    html:'<img src="/img/logo/modal_success_logo.png"/></span>',
+                    title: '<span class="sweet-modal-title">닉네임이 변경되었습니다</span>',
                     confirmButtonColor: '#F9950F',
                     confirmButtonText: '확인',
                 });
                 navigate(-1);
             } else {
                 Swal.fire({
-                    icon: 'error',
-                    html: "<p style='text-align:center;'>닉네임 변경에 실패했습니다<p>",
+                    html:'<img src="/img/logo/modal_fail_logo.png"/></span>',
+                    title: '<span class="sweet-modal-title">닉네임 변경에 실패했습니다</span>',
                     confirmButtonColor: '#F9950F',
                     confirmButtonText: '확인',
                 });
@@ -117,8 +114,8 @@ function UserModi_Nickname() {
         } catch (error) {
             console.error('서버통신에 실패했습니다', error);
             Swal.fire({
-                icon: 'error',
-                html: "<p style='text-align:center;'>서버통신에 실패했습니다<p>",
+                html:'<img src="/img/logo/modal_fail_logo.png"/></span>',
+                title: '<span class="sweet-modal-title">서버통신에 실패했습니다</span>',
                 confirmButtonColor: '#F9950F',
                 confirmButtonText: '확인',
             });

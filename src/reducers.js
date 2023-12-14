@@ -104,6 +104,17 @@ const isAutoLoginReducer = (state = false, action) => {
     }
   }
 
+  const initialPetListState = JSON.parse(localStorage.getItem('petList')) || [];
+  const petListReducer = (state = initialPetListState, action) => {
+    switch (action.type) {
+      case 'SET_PET_LIST':
+        return action.payload;
+      default:
+        return state;
+    }
+  }
+
+
 const initialShopState = 
 JSON.parse(localStorage.getItem('shop')) || [  ];
 
@@ -195,6 +206,7 @@ const rootReducer = combineReducers({
     resvList : resvListReducer,
 
     pet: petReducer,
+    petList: petListReducer,
 
     shop: shopReducer,
     shopList: shopListReducer,
