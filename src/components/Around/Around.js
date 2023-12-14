@@ -17,7 +17,6 @@ import { useDispatch } from "react-redux";
 function Around() {
     const dispatch = useDispatch();
     const location = useLocation();
-
     const isActive = (path) => {
         return location.pathname === path;
     };
@@ -29,6 +28,7 @@ function Around() {
 
     const iconSize = { width: 50, height: 50 };
 
+    //위도경도 불러오는걸 여기다가 집어 넣으면됨
     const shopPositions = [
         { lat: 37.4731841, lng: 126.8843495 },
         { lat: 37.4733758, lng: 126.8854484 },
@@ -36,6 +36,7 @@ function Around() {
         { lat: 37.472292, lng: 126.8842626 },
     ]
 
+    //위치동의 하기전에 기본위치
     const [state, setState] = useState({
         center: {
             lat: 33.450701,
