@@ -5,9 +5,10 @@ import { useDaumPostcodePopup } from 'react-daum-postcode';
 import Swal from "sweetalert2";
 import axios from "axios";
 import useKakaoLoader from "../../Around/useKakaoLoader";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from "react-router";
 import { useNavigate } from "react-router-dom";
+import { Experimental_CssVarsProvider } from "@mui/material";
 
 
 function ShopModiForm() {
@@ -27,6 +28,10 @@ function ShopModiForm() {
     const goBack = () => {
         navigate('/usermy/shopreg');
     }
+
+
+
+    const dispatch = useDispatch();
 
     // DB에 들어가는 데이터
     const [shop, setShop] = useState({
@@ -54,8 +59,17 @@ function ShopModiForm() {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        console.log(" latitude: " + latitude);
-        console.log(" longitude: " + longitude);
+        console.log("File : " + files);
+        console.log("ShopNmae : " + shop.name);
+        console.log("SId : " + sId);
+        console.log("address : " + address);
+        console.log("shop.address_detail : " + shop.address_detail);
+        console.log("params.shopnum : " + params.shopnum);
+        console.log("selectShop.lat : " + selectShop.lat);
+        console.log("selectShop.lon : " + selectShop.lon);
+        console.log("latitude : " + latitude);
+        console.log("longitude : " + longitude);
+        console.log("Files : " + files);
 
         if (!shop.name) {
             setShop({ ...shop, name: selectShop.name });
@@ -67,22 +81,22 @@ function ShopModiForm() {
             setShop({ ...shop, address_road: selectShop.addressRoad });
         }
 
-        if(!files[0]){
+        if (!files[0]) {
             setFiles([selectShop.profImg]);
         }
-        if(!sId){
+        if (!sId) {
             setSId(selectShop.sid);
         }
-        if(!latitude){
+        if (!latitude) {
             setLatitude(selectShop.lat);
         }
-        if(!longitude){
+        if (!longitude) {
             setLongitude(selectShop.lon);
         }
         // 샵을 등록하시겠습니까?
         Swal.fire({
             icon: 'question',
-            title: '샵을 등록하시겠습니까?',
+            title: '샵을 수정하시겠습니까?',
             showCancelButton: true,
             confirmButtonText: '등록',
             cancelButtonText: '취소',
@@ -91,27 +105,32 @@ function ShopModiForm() {
             for (let file of files) {
                 formData.append("file", file);
             }
-
-            console.log("address_detail : " + shop.address_detail);
-
             formData.append("name", shop.name);
             formData.append("sId", sId);
-            formData.append("address_road", shop.address_road);
+            formData.append("address_road", address);
             formData.append("address_detail", shop.address_detail);
-            formData.append("latitude", latitude);
-            formData.append("longitude", longitude);
+            if (latitude === undefined && longitude === undefined) {
+                formData.append("latitude", selectShop.lat);
+                formData.append("longitude", selectShop.lon);
+            } else {
+                formData.append("latitude", latitude);
+                formData.append("longitude", longitude);
+            }
+            formData.append("shopnum", params.shopnum);
 
-            formData.append("userId", user.id);
+           
 
-            axios.post('http://localhost:8090/shopmodi', formData)
-                .then((res) => {
-                    console.log(res);
-                    console.log(res.data);
-                });
-            if (result.isConfirmed) {
+
+            if (result.isConfirmed === true) {
+                console.log(formData.get("latitude"));
+                console.log(formData.get("longitude"));
+                axios.post('http://localhost:8090/shopmodi', formData)
+                    .then((res) => {
+                        console.log(res);
+                        console.log("res data : " + res.data);
+                    });
                 Swal.fire('등록완료!', '', 'success');
-                window.location.href = '/catdog/usermy';
-            } else if (result.isDenied) {
+            } else if (result.isDenied == false) {
                 Swal.fire('취소하였습니다.', '', 'info');
             }
         });
@@ -178,17 +197,20 @@ function ShopModiForm() {
     };
 
     useEffect(() => {
+
         axios.get(`http://localhost:8090/shopinfobynum?num=${params.shopnum}`)
-        .then((res) => {
-            console.log(res);
-            setShop(res.data);
-        })
-        setShop({name:selectShop.name,
-            address_road:selectShop.addressRoad,address_detail:selectShop.addressDetail});
+            .then((res) => {
+                // console.log(res);
+                dispatch({ type: 'SET_SHOP', payload: res.data });
+            })
+        setShop({
+            name: selectShop.name,
+            address_road: selectShop.addressRoad, address_detail: selectShop.addressDetail
+        });
         setBackSId(selectShop.sid);
         setSId(selectShop.sid);
         setAddress(selectShop.addressRoad);
-        
+
         // Geocoder 초기화 유무
         let isGeocoderInitialized = false;
 
@@ -196,10 +218,7 @@ function ShopModiForm() {
         // 초기화가 한번에 되지 않아서 이런식으로 더러워 졌습니다..
         const initializeGeocoder = () => {  // Geocoder 초기화 하는 함수 이게 생성되어야 주소값으로 위도 경도 구해올 수 있다
             if (window.kakao && window.kakao.maps) {
-                console.log("Gecoder 초기화 전 !!");
                 const newGeocoder = new window.kakao.maps.services.Geocoder();
-                console.log('newGeocoder:', newGeocoder);
-                console.log("Gecoder 초기화 후 !!");
                 setGeocoder(newGeocoder);
                 isGeocoderInitialized = true;
             }
@@ -261,9 +280,9 @@ function ShopModiForm() {
 
                                         <input type="text" value={address} onChange={(e) => setAddress(e.target.value)} className="input-box-style address-input" required />
                                         <div className="address-btn-container">
-                                            <input type="text" name="address_detail" placeholder="상세주소를 적어주세요" 
-                                            value={shop.address_detail}
-                                            className="input-box-style address-input" onChange={change} />
+                                            <input type="text" name="address_detail" placeholder="상세주소를 적어주세요"
+                                                value={shop.address_detail}
+                                                className="input-box-style address-input" onChange={change} />
                                             <button className="address-btn" type='button' onClick={handleClick}>
                                                 주소 검색
                                             </button>
@@ -286,7 +305,7 @@ function ShopModiForm() {
 
                                 {/* submit 버튼 */}
                                 <div className="magin-t-5">
-                                    <button id="submit-btn" type="submit" className="main-btn btn-text magin-t-1" onClick={onSubmit}>등록하기</button>
+                                    <button id="submit-btn" type="submit" className="main-btn btn-text magin-t-1" onClick={onSubmit}>수정하기</button>
                                     <div className="main-btn magin-t-1 btn-gray btn-text" onClick={goBack}>취소</div>
                                 </div>
 
