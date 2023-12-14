@@ -282,11 +282,12 @@ function UserJoin() {
 
                     <div className="cd-container bg-white bg-dogs">
                         <main className="cd-main">
-
-                            <section className="main-logo">
-                                <img src="/img/logo/logo_color.png" alt="댕냥꽁냥 로고" />
-                                <span className="main-logo-text">보호자 회원가입</span>
-                            </section>
+                            <Link to="/">
+                                <section className="main-logo">
+                                    <img src="/img/logo/logo_color.png" alt="댕냥꽁냥 로고" />
+                                    <span className="main-logo-text">보호자 회원가입</span>
+                                </section>
+                            </Link>
 
                             {/**회원가입 폼 */}
                             <section className="form-section">

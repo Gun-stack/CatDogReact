@@ -10,6 +10,7 @@ import DesGalleryView from './DesGalleryView';
 import UserGalleryView from './UserGalleryView';
 import Error404 from '../error/Error404';
 import GalleryRegForm from './GalleryRegForm';
+import GalleryRegFormUser from './GalleryRegFormUser';
 
 
 
@@ -36,7 +37,7 @@ function GalleryList() {
                 <Header />
                 <section className="section-header">
                     <div className="section-header-container">
-                        <span className="section-header-text">갤러리</span>
+                       <Link to ='/gallery'><span className="section-header-text">갤러리</span></Link> 
                     </div>
                 </section>
                 <main className="cd-main">
@@ -46,10 +47,12 @@ function GalleryList() {
                             <li className="main-nav-list-text"><Link to="user">회원 갤러리</Link></li>
                         </ul>
                     </nav>
+                    <hr className="divide-line" />
                     <Routes >
                         <Route path="/" element={<DesGal />} />
                         <Route path="/des" element={<DesGal />} />
                         <Route path="/des/galleryregform" element={<GalleryRegForm />} />
+                        <Route path="/user/galleryregform" element={<GalleryRegFormUser/>} />
 
                         <Route path="/user" element={<UserGal />} />
                         <Route path='user/:usernum' element={<UserGalleryView />} />

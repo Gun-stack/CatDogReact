@@ -1,69 +1,63 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
+import axios from 'axios';
+
 
 
 function UserGal() {
-
     const [galleryList, setGalleryList] = useState([
-        {
-            galNum: '1', galWriter: '23', galImg: '/img/gallrey-img/textimg.png', galLike: '50', galComment: '50', galDate: '2023-10-10'
-        },
-        {
-            galNum: '2', galWriter: '22', galImg: '/img/gallrey-img/5.jpg', galLike: '50', galComment: '50', galDate: '2023-10-11'
-        },
-        {
-            galNum: '3', galWriter: '21', galImg: '/img/gallrey-img/4.jpg', galLike: '50', galComment: '50', galDate: '2023-10-12'
-        },
-        {
-            galNum: '4', galWriter: '20', galImg: '/img/gallrey-img/3.jpg', galLike: '50', galComment: '50', galDate: '2023-10-13'
-        },
-        {
-            galNum: '5', galWriter: '19', galImg: '/img/gallrey-img/2.jpg', galLike: '50', galComment: '50', galDate: '2023-10-14'
-        },
-        {
-            galNum: '6', galWriter: '18', galImg: '/img/gallrey-img/1.jpg', galLike: '50', galComment: '50', galDate: '2023-10-15'
-        },
-        {
-            galNum: '7', galWriter: '17', galImg: '/img/gallrey-img/3.jpg', galLike: '50', galComment: '50', galDate: '2023-10-16'
-        },
-        {
-            galNum: '8', galWriter: '16', galImg: '/img/gallrey-img/5.jpg', galLike: '50', galComment: '50', galDate: '2023-10-17'
-        },
-        {
-            galNum: '9', galWriter: '15', galImg: '/img/gallrey-img/7.jpg', galLike: '50', galComment: '50', galDate: '2023-10-18'
-        },
-        {
-            galNum: '10', galWriter: '14', galImg: '/img/gallrey-img/3.jpg', galLike: '50', galComment: '50', galDate: '2023-10-19'
-        }
     ]);
+    const [page, setPage] = useState(0);
+    
+    const PlusPage = () => {    
+        setPage(page+1);
+        console.log(page);
+    }
+    const [hasMore, setHasMore] = useState(true);
+
+
+    useEffect(() => {
+        axios.get('http://localhost:8090/usergallery', {
+        params: {
+            page: page, // 필요한 페이지 번호
+            size: 12, // 페이지당 아이템 개수
+          },})
+            .then((res) => {
+                console.log(res.data.content);
+                setGalleryList([...galleryList, ...res.data.content]);
+
+                if (res.data.content.length == 0) {
+                    setHasMore(false);
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }, [page]);
 
     
-    // useEffect(() => {
-    //     axios.get('http://localhost:8080/gallery/user')
-    //         .then((res) => {
-    //             setGalleryList(res.data);
-    //         })
-    //         .catch((err) => {
-    //             console.log(err);
-    //         })
-    // }, []); 
 
-return (
+    return (
         <section className="st-gallery-section">
+        <Link to='/gallery/user/galleryregform'> <button className='info-input-btn'>사진 올리기</button></Link>
         <div className="st-gallery-grid">
-
             {galleryList.map((gallery, index) => (
-                <div className="st-gallery-img" key={index}>
-                    <Link to={"/gallery/user/"+gallery.galNum}><img src={gallery.galImg} alt="" className="hover-img" /></Link>
+                <div className="st-gallery-img" key={index} >
+                    <Link to={"/gallery/user/"+gallery.num}><img src={`http://localhost:8090/usergalview/${gallery.num}`} alt="" className="hover-img" /></Link>
                     <div className="img-comment-hover">
-                        <span className="img-hover-icon"><i className="fas fa-heart" ></i>{gallery.galLike}</span>
-                        <span className="img-hover-icon"><i className="fas fa-comment"></i>{gallery.galComment}</span>
+                        <span className="img-hover-icon"><i className="fas fa-heart" ></i>{gallery.likeCnt}</span>
+                        <span className="img-hover-icon"><i className="fas fa-comment"></i>{gallery.commentCnt}</span>
                     </div>
                 </div>
             ))}
         </div>
-        <div className="main-btn main-sm-btn"><span className="btn-text">더보기</span></div>
+        {hasMore?
+        <div className="main-btn main-sm-btn" onClick={PlusPage}><span className="btn-text">더보기</span></div>
+            :<div className="main-btn main-sm-btn"><span className="btn-text">마지막 페이지 입니다.</span></div>
+        }
+
+
     </section>
     );
 }

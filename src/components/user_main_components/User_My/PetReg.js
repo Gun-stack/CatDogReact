@@ -9,13 +9,16 @@ function PetReg() {
 
     //store에 있는 user.id로 서버에 요청해서 반려동물 정보 가져오기
     const user = useSelector(state => state.user);
-    const petList = useSelector(state => state.pet);
+    const petList = useSelector(state => state.petList);
     const dispatch = useDispatch();
 
     useEffect(() => {
         axios.get(`http://localhost:8090/petinfo?userId=${user.id}`)
-            .then((res) => {
-                dispatch({ type: 'SET_PET', payload: res.data });
+
+
+        .then((res) => {
+                dispatch({type:'SET_PET_LIST', payload:res.data} );
+
                 console.log(res.data);
             }
             )

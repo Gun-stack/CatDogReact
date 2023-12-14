@@ -51,7 +51,6 @@ export const setToken = (token) => ({
     payload: shopList,
   });
 
-
   export const setDesigner = (designer) => ({
     type: 'SET_DES',
     payload: designer,

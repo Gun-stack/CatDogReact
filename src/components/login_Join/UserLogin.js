@@ -5,8 +5,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setToken, setUserStore, loginStore, setAutoLogin } from "../../actions"; // 액션 생성자 가져오기
+import { setToken, setUserStore, loginStore, setAutoLogin, setUserAuth } from "../../actions"; // 액션 생성자 가져오기
 import Loding from "../tools/Loding";
+import { type } from '@testing-library/user-event/dist/type';
 
 
 
@@ -33,8 +34,8 @@ function UserLogin() {
         try {
             const res = await axios.post('http://localhost:8090/login', user);
             const token = res.headers.authorization;
-            console.log("res : " + JSON.stringify(res.data));
             const user1 = res.data;
+            console.log("res : " + JSON.stringify(res.data));
             console.log(token);
             dispatch(setToken(token));
             dispatch(setUserStore(user1));
@@ -74,10 +75,12 @@ function UserLogin() {
                 <div className="web-container">
                     <div className="cd-container bg-white bg-dogs">
                         <main className="cd-main">
+                        <Link to="/">
                             <section className="main-logo">
                                 <img src="/img/logo/logo_color.png" alt="댕냥꽁냥 로고" />
                                 <span className="main-logo-text">보호자 로그인</span>
                             </section>
+                        </Link>
                             <section className="form-section">
                                 <div className="form-container">
                                     <div className="input-container">
