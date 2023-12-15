@@ -15,6 +15,8 @@ import DesReview from './DesReview';
 import Error404 from '../../error/Error404';
 import { useLocation } from 'react-router';
 import StarRating from './StarRating';
+import DesHome from './DesHome';
+import DesGalleryView from '../../gallery/DesGalleryView';
 
 
 
@@ -96,7 +98,7 @@ function Home() {
                     {/* <!-- 스타일 리스트 정보 메뉴 --> */}
                     <nav className="main-nav">
                         <ul className="main-nav-list">
-                            <li className="main-nav-list-text"><a href="st-infopage.html">홈</a></li>
+                            <li className={`main-nav-list-text ${isActive `/des/${des.num}/style` ? 'active' : ''}`}><Link to={`/des/${des.num}/home`}>홈</Link></li>
                             <li className={`main-nav-list-text ${isActive `/des/${des.num}/style` ? 'active' : ''}`}><Link to={`/des/${des.num}/style`}>스타일</Link></li>
                             <li className={`main-nav-list-text ${isActive `/des/${des.num}/review` ? 'active' : ''}`}><Link to={`/des/${des.num}/review`}>리뷰</Link></li>
 
@@ -104,9 +106,10 @@ function Home() {
                     </nav>
                     <hr className="divide-line" />
                     <Routes>
-                            {/* <Route path="/" element={<Home desInfo={des} />} /> */}
+                            <Route path="home" element={<DesHome desInfo={des} />} />
                             <Route path="style" element={<DesStyle desInfo={des} />} />
                             <Route path="review" element={<DesReview desInfo={des} />} />
+                            <Route path='/:desgalnum' element={<DesGalleryView />} />
                             {/* <Route path="/reservation/:desnum/*" element={<DesReservation desInfo={des} />} /> */}
                             <Route path='/*' element={<Error404 />} />
                     </Routes>

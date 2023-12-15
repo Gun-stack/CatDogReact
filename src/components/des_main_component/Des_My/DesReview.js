@@ -25,6 +25,9 @@ function DesReview(props) {
             .then((res) => {
                 console.log(res.data);
                 setReviewList([...reviewList, ...res.data]);
+                if (res.data.length < 12) {
+                    setHasMore(false);
+                }
             })
             .catch((err) => {
                 console.log(err);
@@ -43,7 +46,7 @@ function DesReview(props) {
                         {reviewList.map((review, index) => (
                         <div className="review-container" key={index}>
                             <div className="review-text-container">
-                                <h3 className="guest-nickname">보호자 {review.userId}</h3>
+                                <h3 className="guest-nickname">작성자 : {review.userNickname}</h3>
                                 <h3 className="stylelist-nam">디자이너: {des.desNickname}</h3>
                                 <div className="review-text">
                                     <p>
@@ -53,11 +56,15 @@ function DesReview(props) {
                                 </div>
                             </div>
                             <div className="review-img-container">
-                                <div className="review-img"></div>
+                                <img className="review-img" src={`http://localhost:8090/reviewimg/${review.afterImg}`} alt=''/>
                             </div>
                         </div>
                     ))}
 
+                    {hasMore?
+            <div className="main-btn main-sm-btn" onClick={PlusOffset}><span className="btn-text">더보기</span></div>
+            :<div className="main-btn main-sm-btn"><span className="btn-text">마지막 페이지 입니다.</span></div>
+        }
 
 
                         <hr className="divide-line" />

@@ -12,6 +12,10 @@ import ShopReservation from './ShopReservation';
 import Error404 from '../error/Error404';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
+import { useState } from 'react';
+import ImageSlider from '../tools/ImageSlider';
+import SimpleSlider from '../tools/SimpleSlider';
+
 
 
 function ShopMain() {
@@ -21,23 +25,26 @@ function ShopMain() {
         return location.pathname === path;
     };
     const params = useParams();
-
-
     const shopInfo = useSelector((state) => state.shop);
+
+    const [images,setImage] = useState(shopInfo.bgImg.split(',')); 
+    
+
 
 
     useEffect(() => {
+        console.log(shopInfo.bgImg );
+        console.log(images);
         console.log("Num : " + params.shopnum);
         axios.get(`http://localhost:8090/shopinfobynum?num=${params.shopnum}`)
             .then((res) => {
                 dispatch({ type: 'SET_SHOP', payload: res.data });
             })
-    }, []);
-
-
-
-    return (
-        <div className="web-container">
+        }, [params.shopnum,images]);
+        
+        
+        return (
+            <div className="web-container">
             <div className="cd-container bg-white">
                 <Header />
                 <main className="cd-main dis-center">
@@ -47,8 +54,9 @@ function ShopMain() {
                                 이미지를 등록하세요
                             </div> */}
                         <div className="input-img-click">
-                            <img src={`http://localhost:8090/shopimg/${shopInfo.bgImg}`} alt='' className='shop-title-img' />
+                           <ImageSlider images={images} />  
                         </div>
+
                     </section>
 
                     <section className="shop-main-section">
@@ -63,7 +71,6 @@ function ShopMain() {
                             </ul>
                         </nav>
                         <hr className="divide-line" />
-
                         <Routes>
                             <Route path="/" element={<ShopMainHome shopInfo={shopInfo} />} />
                             <Route path="menu" element={<ShopMainMenu shopInfo={shopInfo} />} />
@@ -73,8 +80,6 @@ function ShopMain() {
                             <Route path="/reservation/:desnum/*" element={<ShopReservation shopInfo={shopInfo} />} />
                             <Route path='/*' element={<Error404 />} />
                         </Routes>
-
-
 
                     </section>
                 </main>

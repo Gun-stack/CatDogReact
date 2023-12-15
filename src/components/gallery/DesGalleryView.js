@@ -5,11 +5,18 @@ import { Link, Route, Routes, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router';
 
 
 
 
 function DesGalleryView() {
+    const navigate = useNavigate();
+    function goBack(e) {
+        e.preventDefault();
+        navigate(-1);
+    }
+
     const dispatch = useDispatch();
     const galNum = useParams();
 
@@ -37,10 +44,15 @@ function DesGalleryView() {
 
                 <div className="st-gallery-view">
                     <div className="st-gallery-view-img">
+                        <Link to={`/des/${desInfo.num}/home`}>
                         <div className="view-gallery-profile-container magin-l-1">
-                            <img src="./img/gallrey-img/textimg.png" alt="프로필 이미지" className="view-profile-img" />
+                            {desInfo.num &&
+                            <img src={`http://localhost:8090/desimg/${desInfo.num}`} alt="프로필 이미지" className="view-profile-img" />
+                            }
+
                             <div className="view-img-nickname">{desInfo.position}  {desInfo.desNickname}</div>
                         </div>
+                        </Link>
 
                         <div className="view-img-container">
                             <img src={`http://localhost:8090/desgalview/${galNum.desgalnum}`} alt="스타일리스트 사진" className="view-img" />
@@ -60,7 +72,7 @@ function DesGalleryView() {
                 {/* 이미지 게시판 요소 끝 */}
 
                 <div>
-                    <button className="main-btn main-sm-btn btn-text">더보기</button>
+                    <button className="main-btn main-sm-btn btn-text" onClick={goBack}>목록보기</button>
                 </div>
             </section>
         </>
