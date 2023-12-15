@@ -13,7 +13,7 @@ function ShopMainDesLIst() {
     const shopInfo = useSelector((state) => state.shop);
     const desList = useSelector((state) => state.desList);
     const user = useSelector((state) => state.user);
-    
+
     const navigate = useNavigate();
 
     const [editable, setEditable] = useState(false);
@@ -21,7 +21,7 @@ function ShopMainDesLIst() {
     const [editableDesId, setEditableDesId] = useState(null);
 
 
-    
+
 
 
     const handleEditClick = (desId) => {
@@ -30,10 +30,10 @@ function ShopMainDesLIst() {
     };
 
     const handleDeleteClick = async (desId) => {
+        
         const formData = new FormData();
-        console.log("DesID : " + desId);
-        formData.append("num" , desId);
-        formData.append("sId" , shopInfo.sid)
+        formData.append("num", desId);
+        formData.append("sId", shopInfo.sid)
         await Swal.fire({
             html: '<img src="/img/logo/withdraw.png" alt="회원 탈퇴이미지" className="withdraw-img"/>',
             title: '<span class="sweet-modal-title">디자이너를 삭제하시겠습니까?</span>',
@@ -42,45 +42,45 @@ function ShopMainDesLIst() {
             confirmButtonColor: '#F9950F',
             cancelButtonText: '취소',
         })
-        .then((result) =>{
-            if(result.isConfirmed){
-                axios.post("http://localhost:8090/shopoutdes", formData)
-                .then(()=>{
-                    navigate(0);
-                })
-            }
+            .then((result) => {
+                if (result.isConfirmed) {
+                    axios.post("http://localhost:8090/shopoutdes", formData)
+                        .then(() => {
+                            navigate(0);
+                        })
+                }
 
-        })
-        
+            })
+
         setEditableDesId("");
-        
+
         // Optionally, initialize editedPosition with the current des.position or other default value
     };
 
     const handleSaveClick = (async (desId) => {
         console.log("editedPosition : " + editedPosition);
         console.log("desId : " + desId);
-        if(editedPosition === "" || editedPosition === null){
+        if (editedPosition === "" || editedPosition === null) {
             SwalCustomAlert(
                 'fail',
                 '직책을 입력하세요!!',
             );
             setEditableDesId(null);
-        }else{
+        } else {
             const formData = new FormData();
             formData.append("num", desId);
             formData.append("position", editedPosition);
             await axios.post("http://localhost:8090/updateposition", formData)
-            .then(() => {
-                setEditableDesId(null);
-                setEditedPosition("");
-                navigate(0);
-            });
+                .then(() => {
+                    setEditableDesId(null);
+                    setEditedPosition("");
+                    navigate(0);
+                });
         }
-        
-        
+
+
         // Implement logic to save the editedPosition for the specific stylist
-        
+
     });
 
     const handleCancelClick = (desId) => {
@@ -163,12 +163,12 @@ function ShopMainDesLIst() {
                                                     navigate(0);
                                                 })
                                             })
-                                    } 
+                                    }
                                 })
-                                
 
 
-                        }).catch((err)=>{
+
+                        }).catch((err) => {
                             Swal.fire({
                                 html: '<img src="/img/logo/modal_notice_logo.png"/></span>',
                                 title: '<span class="sweet-modal-title">등록되지 않은 디자이너 입니다.</span>',
@@ -195,6 +195,7 @@ function ShopMainDesLIst() {
 
             {desList.map((des) => (
 
+
                 <div className="stylelist-content" key={des.num} >
                     <div className="st-profile-container">
                         <div className="st-profile-img">
@@ -219,9 +220,13 @@ function ShopMainDesLIst() {
                         </div>
                     </div>
                     <div className="st-button-container">
-                    <button className="st-button" onClick={() => handleDeleteClick(des.num)}>
+
+                        {shopInfo.sid === des.sid && user.roles === "ROLE_SHOP" && (
+                            <button className="st-button" onClick={() => handleDeleteClick(des.num)}>
                                 삭제<i className="fas fa-pen btn-icon"></i>
                             </button>
+                        )}
+
                         {editableDesId === des.num ? (
                             <>
                                 <button className="st-button" onClick={() => handleSaveClick(des.num)}>
@@ -230,11 +235,11 @@ function ShopMainDesLIst() {
                                 <button className="st-button" onClick={handleCancelClick}>
                                     취소<i className="fas fa-times btn-icon"></i>
                                 </button>
-                                
+
                             </>
 
                         ) : (
-                            
+
                             <button className="st-button" onClick={() => handleEditClick(des.num)}>
                                 편집<i className="fas fa-pen btn-icon"></i>
                             </button>
