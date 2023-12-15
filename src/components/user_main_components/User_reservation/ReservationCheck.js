@@ -49,6 +49,7 @@ function ReservationCheck() {
 
 //  유저의 펫 정보 리스트를 가져옴 
     useEffect(() => {
+        
         console.log(user.id);
         console.log(params.num);
         console.log(resv);

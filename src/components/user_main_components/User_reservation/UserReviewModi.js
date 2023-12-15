@@ -12,12 +12,7 @@ function UserReviewModi() {
     const params = useParams();
     const oldReview = useSelector((state) => state.review) ;
 
-    //순서중요
-    const resvList = useSelector((state) => state.resv);
-    const resvInfo = resvList.find((resv) => resv.num == oldReview.resNum);
-
-    const desInfo = useSelector((state) => state.des);
-    const user = useSelector((state) => state.user);
+    
 
     const date1 = new Date();
     const offset = date1.getTimezoneOffset() * 60000;       
@@ -49,6 +44,8 @@ function UserReviewModi() {
         content: '',
         star: '',
         desId: oldReview.desId,
+        desNickname: oldReview.desNickname,
+        userNickname: oldReview.nickname,
         userId: oldReview.userId,
         date : sqlDate,
         resNum: oldReview.resNum
@@ -68,6 +65,8 @@ function UserReviewModi() {
         star: oldReview.star,
         desId: oldReview.desId,
         userId: oldReview.userId,
+        desNickname: oldReview.desNickname,
+        userNickname: oldReview.nickname,
         date : sqlDate,
         resNum: oldReview.resNum
         });
@@ -86,9 +85,12 @@ function UserReviewModi() {
         formData.append('content',review.content); // 리뷰 내용 추가
         formData.append('star', rating); // 별점 추가
         formData.append('desId', oldReview.desId); // 미용사 아이디 추가
-        formData.append('userId', user.id); // 유저 아이디 추가
+        formData.append('desNickname', oldReview.desNickname); // 미용사 닉네임 추가
+        formData.append('userNickname', oldReview.userNickname); // 유저 닉네임 추가
+        formData.append('userId', oldReview.userId); // 유저 아이디 추가
         formData.append('date', sqlDate); // 날짜 추가
-        formData.append('resNum', resvInfo.num); // 예약번호 추가
+        formData.append('resNum', oldReview.resNum); // 예약번호 추가
+        formData.append('petName', oldReview.petName); // 반려동물 이름 추가
         try{
             const res = await axios.post('http://localhost:8090/reviewmodi',formData)
             if (res.data === true) {
@@ -128,9 +130,9 @@ function UserReviewModi() {
                     <div className="review-write-title"><i className="fas fa-paw review-icon"></i>만족도 평가 및 리뷰 수정하기 </div>
                     <hr className="divide-line" />
                     <div className="review-name-container">
-                        <div className="review-write-username"><i className="fas fa-dog review-icon"></i>보호자 닉네임 : {user.nickname}</div>
-                        <div className="review-write-desname"><i className="fas fa-cut review-icon"></i>미용사 이름 : {desInfo.desNickname} </div>
-                        <div className="review-write-desname"><i className="fas fa-cut review-icon"></i> 강쥐 : {resvInfo.petName} </div>
+                        <div className="review-write-username"><i className="fas fa-dog review-icon"></i>보호자 닉네임 : {oldReview.userNickname}</div>
+                        <div className="review-write-desname"><i className="fas fa-cut review-icon"></i>미용사 이름 : {oldReview.desNickname} </div>
+                        <div className="review-write-desname"><i className="fas fa-cut review-icon"></i> 강쥐 : {oldReview.petName} </div>
                     </div>
                     <hr className="divide-line" />
 

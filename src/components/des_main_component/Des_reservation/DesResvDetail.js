@@ -17,8 +17,6 @@ function DesResvDetail() {
     const [styleT, setStyleT] = useState('');
     const dispatch = useDispatch();
     
-    const [completePic,setCompletePic] = useState([ ]);
-    const [completeText,setCompletetext] = useState([ ]);
     const [resv,setResv] = useState({ });
     const [pet1,setPet1] = useState({ });
     const [user,setUser] = useState({ });
@@ -42,9 +40,9 @@ function DesResvDetail() {
             confirmButtonText: '확인',
             cancelButtonText: '취소',
             showLoaderOnConfirm: true
-        }).then((result) => {
-            if (result.isConfirmed) {
-                setCompletePic(result.value);
+        }).then((result1) => {
+            if (result1.isConfirmed) {
+                console.log(result1.value);
                 Swal.fire({
                     title: '시술내용 입력',
                     input: 'text',
@@ -53,12 +51,12 @@ function DesResvDetail() {
                     confirmButtonText: '확인',
                     cancelButtonText: '취소',
                     showLoaderOnConfirm: true}
-                ).then((result) => {
-                    if (result.isConfirmed) {
-                        setCompletetext(result.value);
+                ).then((result2) => {
+                    if (result2.isConfirmed) {
+                        console.log(result2.value);
                         const formData = new FormData();
-                        formData.append('file', completePic[0]);
-                        formData.append('text', completeText);
+                        formData.append('file', result1.value);
+                        formData.append('text', result2.value);
                         formData.append('num', resv.num);
                         axios.post(`http://localhost:8090/completereserve`, formData)
                             .then((res) => {

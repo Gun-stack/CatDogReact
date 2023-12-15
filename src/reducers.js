@@ -38,13 +38,12 @@ const initialState = { isLoggedIn: false,   };
         localStorage.removeItem('shopList');
         localStorage.removeItem('review');
         localStorage.removeItem('position');
-
-        
+        localStorage.removeItem('isAutoLogin');
         localStorage.clear();
         sessionStorage.clear();
 
         return {
-          ...state,
+          state,
           isLoggedIn: false,
 
         };

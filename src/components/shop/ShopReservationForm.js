@@ -14,9 +14,6 @@ function ShopReservationForm(props) {
     const desInfo = props.desInfo;
     const user = useSelector((state) => state.user);
     const pets = useSelector((state) => state.petList);
-
-                
-
     const location= useLocation();
     const time = location.state?.data1;
     const sqlDate = location.state?.data2;
@@ -28,8 +25,8 @@ function ShopReservationForm(props) {
     const [resvInfo, setResvInfo] = useState({
         userId: user.id,
         desId: desInfo.id,
-        sid: shopInfo.sId,
-        shopName: shopInfo.shopname,
+        sid: shopInfo.sid,
+        shopName: shopInfo.name,
         time: time,
         date: sqlDate,
         petName: '',
@@ -54,6 +51,7 @@ function ShopReservationForm(props) {
         window.history.back();
     }
     useEffect(() => {
+        console.log(shopInfo);
         axios.get(`http://localhost:8090/petinfo?userId=${user.id}`)
         .then((res) => {
             console.log(res);
