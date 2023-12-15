@@ -14,10 +14,10 @@ function Popular() {
     const shops = useSelector((state) => state.shopList);
 
     useEffect(() => {
-        console.log(shops);
+        // console.log(shops);
         axios.get(`http://localhost:8090/shoplistall`)
             .then((res) => {
-                console.log(res);
+                // console.log(res);
                 dispatch({ type: 'SET_SHOP_LIST', payload: res.data });
             })
     }, []);

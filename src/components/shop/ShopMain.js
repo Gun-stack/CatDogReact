@@ -27,6 +27,7 @@ function ShopMain() {
 
 
     useEffect(() => {
+        console.log("Num : " + params.shopnum);
         axios.get(`http://localhost:8090/shopinfobynum?num=${params.shopnum}`)
             .then((res) => {
                 dispatch({ type: 'SET_SHOP', payload: res.data });

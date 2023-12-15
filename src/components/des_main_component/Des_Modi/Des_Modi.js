@@ -21,7 +21,7 @@ function DesModi() {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        console.log("File info : " + files)
+        // console.log("File info : " + files)
         if (!des.shopName) {
             Swal.fire({
                 html: '<img src="/img/logo/modal_notice_logo.png"/></span>',

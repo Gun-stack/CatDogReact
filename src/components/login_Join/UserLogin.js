@@ -11,6 +11,8 @@ import Loding from "../tools/Loding";
 
 
 function UserLogin() {
+    const token = useSelector(state => state.token);
+    // console.log("로그인 전 토큰 값 : " + token);
     const [user, setUser] = useState({ id: "", password: "" });
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -33,8 +35,8 @@ function UserLogin() {
             const res = await axios.post('http://localhost:8090/login', user);
             const token = res.headers.authorization;
             const user1 = res.data;
-            console.log("res : " + JSON.stringify(res.data));
-            console.log(token);
+            // console.log("res : " + JSON.stringify(res.data));
+            // console.log(token);
             dispatch(setToken(token));
             dispatch(setUserStore(user1));
             dispatch(loginStore());
@@ -54,7 +56,7 @@ function UserLogin() {
 
     const handleAutoLogin = () => {
         dispatch(setAutoLogin(!isAutoLogin));
-        console.log(isAutoLogin);
+        // console.log(isAutoLogin);
 
     };
 

@@ -25,7 +25,7 @@ function Distance() {
 
                 dispatch({ type: 'SET_SHOP_LIST', payload: sortedByDistance });
                 setSortedShops(sortedByDistance);
-                console.log(sortedShops);
+                // console.log(sortedShops);
             })
     }, [dispatch]);
 

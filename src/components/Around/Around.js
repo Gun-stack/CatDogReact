@@ -89,8 +89,8 @@ function Around() {
                     }));
                     dispatch({ type: 'SET_LATITUDE', payload: position.coords.latitude });
                     dispatch({ type: 'SET_LONGITUDE', payload: position.coords.longitude });
-                    console.log(position.coords.latitude);
-                    console.log(position.coords.longitude);
+                    // console.log(position.coords.latitude);
+                    // console.log(position.coords.longitude);
                 },
                 (err) => {
                     setState((prev) => ({

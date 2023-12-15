@@ -19,13 +19,13 @@ const initialState = { isLoggedIn: false,   };
   const authReducer = (state = initialState, action) => {
     switch (action.type) {
       case 'LOGIN':
-      console.log(state);
+      // console.log(state);
       return {
           ...state,
           isLoggedIn: true,
         };
       case 'LOGOUT':
-        console.log(state);
+        // console.log(state);
         localStorage.removeItem('token');
         localStorage.removeItem('user');
         localStorage.removeItem('resv');
