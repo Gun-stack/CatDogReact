@@ -30,12 +30,12 @@ function ShopMainDesLIst() {
         , []);
 
 
-        
+
 
     const handleBtnClick = async (e) => {
         e.preventDefault();
-        let result;
-        result = await Swal.fire({
+        console.log("1번 모달!!");
+        await Swal.fire({
             title: '디자이너 등록',
             html: '<div class="swal2-input-container">' +
                 '  <input id="swal-input1" class="swal2-input" placeholder="ID를 입력하세요.">' +
@@ -49,16 +49,15 @@ function ShopMainDesLIst() {
                 const desId = document.getElementById('swal-input1').value;
                 return desId;
             }
-            
+
         })
             .then((result) => {
-                const desId = result.value;
-
-                if (result.isConfirmed === true) {
-                    console.log("result.isConfirmed : " + result.isConfirmed);
+                if (result.isConfirmed) {
+                    console.log("2번 모달!!");
+                    const desId = result.value;
                     axios.get(`http://localhost:8090/desinfobyid?desId=${desId}`)
-                        .then((res) => {
-                            Swal.fire({
+                        .then(async (res) => {
+                            await Swal.fire({
                                 title: res.data.name,
                                 text: res.data.desNickname,
                                 imageUrl: `http://localhost:8090/desimg/${res.data.num}`,
@@ -68,27 +67,32 @@ function ShopMainDesLIst() {
                                 confirmButtonText: '등록',
                                 cancelButtonText: '취소',
                                 confirmButtonColor: '#F9950F',
-                            });
-                            if (result.isConfirmed) {
-                                // const formData = new FormData();
-                                // console.log("res.data.num : " + res.data.num);
-                                // formData.append("desnum", res.data.num);
-                                // formData.append("sid", shopInfo.sid);
-                                res.data.sid = shopInfo.sid;
-                                console.log("sid" + shopInfo.sid);
-                                axios.post('http://localhost:8090/shopdesreg', res.data)
-                                    .then((res) => {
-                                        Swal.fire({
-                                            html: '<img src="/img/logo/modal_success_logo.png"/></span>',
-                                            title: '<span class="sweet-modal-title">스타일리스트 등록이 완료되었습니다</span>',
-                                            confirmButtonColor: '#F9950F',
-                                            confirmButtonText: '확인'
-                                        });
-                                        navigate(0);
-                                    })
-                            } else {
-                                console.log("false 고정?");
-                            }
+                            })
+                                .then((res2) => {
+                                    if (res2.isConfirmed) {
+                                        console.log("모든 확인 후 데이터 저장");
+                                        // const formData = new FormData();
+                                        // console.log("res.data.num : " + res.data.num);
+                                        // formData.append("desnum", res.data.num);
+                                        // formData.append("sid", shopInfo.sid);
+                                        res.data.sid = shopInfo.sid;
+                                        console.log("sid" + shopInfo.sid);
+                                        axios.post('http://localhost:8090/shopdesreg', res.data)
+                                            .then(async (res) => {
+                                                await Swal.fire({
+                                                    html: '<img src="/img/logo/modal_success_logo.png"/></span>',
+                                                    title: '<span class="sweet-modal-title">스타일리스트 등록이 완료되었습니다</span>',
+                                                    confirmButtonColor: '#F9950F',
+                                                    confirmButtonText: '확인'
+                                                }).then(() => {
+                                                    navigate(0);
+                                                })
+                                            })
+                                    } else {
+                                        console.log("false 고정?");
+                                    }
+                                })
+
 
                         })
                 }
