@@ -2,10 +2,13 @@ import React, { useRef, useState, useEffect } from "react";
 import Footer from "../../screens/Footer";
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import Swal from "sweetalert2";
+import SwalCustomAlert from "/Users/baghaengbog/Desktop/Study/CatDogReact/src/components/Alerts/SwalCustomAlert.js";
 import axios from "axios";
 import useKakaoLoader from "../../Around/useKakaoLoader";
 import { useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom";
+import $ from 'jquery';
+
 
 function ShopRegForm() {
     const imgBoxRef = useRef();
@@ -215,6 +218,60 @@ function ShopRegForm() {
         open({ onComplete: handleComplete });
     };
 
+    const callApi = async (value) => {
+        console.log("Call API!!!");
+        console.log("Value : " + value);
+        if(value === "" || value === null){
+            SwalCustomAlert(
+                'fail',
+                '사업자 번호를 입력해 주세요',
+            );
+            return;
+        }
+        var data = {
+            "b_no": [value+""] // 사업자번호 "xxxxxxx" 로 조회 시,
+           }; 
+           
+           try {
+            const result = await $.ajax({
+                url: "https://api.odcloud.kr/api/nts-businessman/v1/status?serviceKey=43jTbFaB1Bw0bFtBXRHs2WW0Mk%2Bi71oEulvkm9CIAkn2wvwt88c1lJRBA8eYtIjHXXmVMWEEjI0ZPh%2BEMfCTUg%3D%3D",
+                type: "POST",
+                data: JSON.stringify(data),
+                dataType: "JSON",
+                contentType: "application/json",
+                accept: "application/json",
+            })
+            // console.log(result.data[0].b_stt_cd);
+            .then((result) =>{
+                if(result.data[0].b_stt_cd === "01"){
+                    SwalCustomAlert(
+                        'success',
+                        '인증에 성공하였습니다.',
+                    );
+                }else if(result.data[0].b_stt_cd === "02"){
+                    SwalCustomAlert(
+                        'fail',
+                        '휴업한 사업자 번호입니다.',
+                    );
+                }else if(result.data[0].b_stt_cd === "03"){
+                    SwalCustomAlert(
+                        'fail',
+                        '폐업한 사업자 번호입니다.',
+                    );
+                }else{
+                    SwalCustomAlert(
+                        'fail',
+                        '유효하지 않은 사업자 번호입니다.',
+                    );
+                }
+            })
+
+        } catch (error) {
+            console.error(error);
+        }
+
+    };
+
     return (
         <div className="web-container">
             {/* 앱 컨테이너 */}
@@ -241,8 +298,13 @@ function ShopRegForm() {
                                         className="input-text" onChange={change} required />
 
                                     {/* 사업자 등록번호 */}
-                                    <input type="text" id="SId" name="sId" placeholder="사업자 등록번호"
-                                        className="input-text" value={backsId} onChange={idChange} maxLength={12} required />
+                                    <div>
+                                        <input type="text" id="SId" name="sId" placeholder="사업자 등록번호"
+                                            className="input-text" value={backsId} onChange={idChange} maxLength={12} required />
+                                             <button className="address-btn" type='button' onClick={()=>callApi(sId)}>
+                                                사업자 번호 조회
+                                            </button>
+                                    </div>
 
                                     {/* 주소 검색 */}
                                     <div className="address-container">
