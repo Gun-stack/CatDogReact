@@ -2,7 +2,7 @@ import {useEffect} from 'react';
 import { useParams, useNavigate } from 'react-router';
 import {useDispatch, useSelector} from 'react-redux';
 import axios from 'axios';
-import { loginStore } from '../actions';
+import { setToken, loginStore } from '../actions';
 
 
 
@@ -21,12 +21,12 @@ const Oauth = () => {
     
 
     useEffect(()=> {
-        console.log("token:"+token);
-        dispatch({type:"token", payload:token})
+        // console.log("token:"+token);
+        dispatch(setToken(token));
         axios.get(`http://localhost:8090/user`, axiosConfig)
         .then((res)=>{
-            console.log(res);
-            console.log(res.data);
+            // console.log(res);
+            // console.log(res.data);
             dispatch({type:"SET_USER", payload:res.data})
             dispatch(loginStore())
         })

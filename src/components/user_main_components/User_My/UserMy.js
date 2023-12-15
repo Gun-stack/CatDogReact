@@ -45,6 +45,7 @@ function UserMy() {
     const navigate = useNavigate();
     const user = useSelector((state) => state.user);
     const desInfo = useSelector((state) => state.des);
+    const token = useSelector(state => state.token);
 
     useEffect(() => {
         console.log(user);

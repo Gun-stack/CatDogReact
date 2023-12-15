@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from "react-router-dom";
-import { logoutStore } from "../../actions";
+import { setToken, logoutStore } from "../../actions";
 import Swal from "sweetalert2";
 
 
@@ -21,6 +21,7 @@ function UserHeader() {
         }).then((result) => {
             if (result.isConfirmed) {
                 dispatch(logoutStore());
+                dispatch(setToken("")); // 토큰 값이 남아 있어서 서버에 이전 로그인 사용자의 토큰값이 서버에 넘어감
                 Swal.fire({
                         html: '<img src="/img/logo/modal_success_logo.png"/></span>',
                         title: '<span class="sweet-modal-title">로그아웃 되었습니다</span>',
