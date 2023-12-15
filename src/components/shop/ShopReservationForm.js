@@ -4,6 +4,8 @@ import { useSelector,useDispatch } from 'react-redux';
 import {useLocation} from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import SwalCustomAlert from '../Alerts/SwalCustomAlert';
+import Server500Err_Alert from '../Alerts/Server500Err_Alert';
 
 
 
@@ -13,10 +15,7 @@ function ShopReservationForm(props) {
     const shopInfo = props.shopInfo;
     const desInfo = props.desInfo;
     const user = useSelector((state) => state.user);
-    const pets = useSelector((state) => state.pet);
-
-                
-
+    const pets = useSelector((state) => state.petList);
     const location= useLocation();
     const time = location.state?.data1;
     const sqlDate = location.state?.data2;
@@ -28,8 +27,8 @@ function ShopReservationForm(props) {
     const [resvInfo, setResvInfo] = useState({
         userId: user.id,
         desId: desInfo.id,
-        sid: shopInfo.sId,
-        shopName: shopInfo.shopname,
+        sid: shopInfo.sid,
+        shopName: shopInfo.name,
         time: time,
         date: sqlDate,
         petName: '',
@@ -54,10 +53,11 @@ function ShopReservationForm(props) {
         window.history.back();
     }
     useEffect(() => {
+        console.log(shopInfo);
         axios.get(`http://localhost:8090/petinfo?userId=${user.id}`)
         .then((res) => {
             console.log(res);
-            dispatch({type:'SET_PET',payload:res.data});
+            dispatch({type:'SET_PET_LIST',payload:res.data});
 
         })
         .catch((err) => {
@@ -72,16 +72,16 @@ function ShopReservationForm(props) {
         .then((res) => {
             console.log(res);
             dispatch({type:'SET_RESV',payload:res.data});
-            Swal.fire({
-                icon: 'success',
-                title: '예약이 완료되었습니다',
-                showConfirmButton: false,
-                timer: 1500
-            });
+
+            SwalCustomAlert(
+                '<img src="/img/logo/modal_success_logo.png"/>',
+                '<span class="sweet-modal-title">예약이 완료 되었습니다</span>',
+            );
             window.history.back();
         })
         .catch((err) => {
             console.log(err);
+            <Server500Err_Alert/>
         })
     }
 

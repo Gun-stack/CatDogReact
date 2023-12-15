@@ -46,7 +46,7 @@ function Distance() {
                             <div className="shop-text-container">
                                 <Link to={"/shop/" + shoplist.num}><h3 className="shop-name" name="shopname">{shoplist.name}</h3></Link>
                                 <h3 className="shop-dist">
-                                    {shoplist.distance}Km
+                                    {shoplist.distance} Km
                                 </h3>
                                 <div className="shop-adderss"  >
                                     <p className="shop-adderss-text" name="address" >

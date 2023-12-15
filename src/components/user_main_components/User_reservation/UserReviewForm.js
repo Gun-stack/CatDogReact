@@ -8,11 +8,7 @@ import { useSelector,useDispatch } from "react-redux";
 
 
 function UserReviewForm() {
-    const dispatch = useDispatch();
     const params = useParams();
-    const resvList = useSelector((state) => state.resv);
-    const resvInfo = resvList.find((resv) => resv.num == params.resnum);
-    const desInfo = useSelector((state) => state.des);
     const user = useSelector((state) => state.user);
 
     const date1 = new Date();
@@ -21,8 +17,12 @@ function UserReviewForm() {
     const month = (koreaTime.getMonth() + 1).toString().padStart(2, '0');
     const day = koreaTime.getDate().toString().padStart(2, '0');
     const sqlDate = `${koreaTime.getFullYear()}-${month}-${day}`;
+    
 
-
+    const [desInfo ,setDes] = useState({ });
+    const [shopInfo ,setShop] = useState({ });
+    const [resvInfo ,setResv] = useState({ });
+    const [petInfo ,setPet] = useState({ });
 
 
 
@@ -39,17 +39,14 @@ function UserReviewForm() {
     const imgBoxRef = useRef();
     const [loading, setLoading] = useState(false);
 
-    
+    const [content,setContent] = useState('');  
 
-    const [review, setReview] = useState({
-        after_img: '',
-        content: '',
-        star: '',
-        desId: resvInfo.desId,
-        userId: user.id,
-        date : sqlDate  ,
-        resNum: resvInfo.num
-    });
+    const onChangeCont = (e) => {
+        setContent(e.target.value);
+    }
+
+
+    
 
     const handleImageChange = (e) => {
         if (e.target.files[0]) {
@@ -58,10 +55,12 @@ function UserReviewForm() {
     };
 
     useEffect(() => {
-        console.log(review);
-        axios.get(`http://localhost:8090/desinfobyid?desId=${resvInfo.desId}`)
+        axios.get(`http://localhost:8090/reservedetail?num=${params.resnum}`)
             .then((res) => {
-                dispatch({ type: 'SET_DES', payload: res.data });
+                setDes(res.data.des);
+                setShop(res.data.shop);
+                setResv(res.data.resv);
+                setPet(res.data.pet)
                 console.log(res.data);
             })
             .catch((err) => {
@@ -78,12 +77,15 @@ function UserReviewForm() {
         setLoading(true);
         const formData = new FormData();
         formData.append('file', image); // 이미지 파일을 formData에 추가
-        formData.append('content', review); // 리뷰 내용 추가
+        formData.append('content', content); // 리뷰 내용 추가
         formData.append('star', rating); // 별점 추가
         formData.append('desId', desInfo.id); // 미용사 아이디 추가
         formData.append('userId', user.id); // 유저 아이디 추가
         formData.append('date', sqlDate); // 날짜 추가
         formData.append('resNum', resvInfo.num); // 예약번호 추가
+        formData.append('desNickname', desInfo.desNickname); // 미용사 닉네임 추가
+        formData.append('userNickname', user.nickname); // 유저 닉네임 추가
+        formData.append('petName', petInfo.name); // 반려동물 이름 추가
         try{
             const res = await axios.post('http://localhost:8090/reviewreg',formData)
             if (res.data == true) {
@@ -112,7 +114,6 @@ function UserReviewForm() {
             });
         }finally{
         setLoading(false);
-        console.log(setReview());
         }
     }
 
@@ -151,7 +152,7 @@ function UserReviewForm() {
                         <textarea
                             placeholder="리뷰를 작성해주세요"
                             className="text-area-size"
-                            onChange={(e) => setReview(e.target.value)} />
+                            onChange={onChangeCont} />
                     </div>
                     
 

@@ -43,12 +43,10 @@ function DesResvList() {
     const resList = useSelector(state => state.resvList);
 
     useEffect(() => {
-        if(desInfo.id!==user.id){
+        if(user.roles ==null || user.roles==='ROLE_USER' ){
             alert('잘못된 접근입니다.');
             navigate(-1);
         }
-
-        console.log();
         axios.get(`http://localhost:8090/resinfobydesnum?desNum=${desInfo.num}&date=${sqlDate}`)
             .then((res) => {
                 dispatch({ type: 'SET_RESV_LIST', payload: res.data })
@@ -83,7 +81,7 @@ function DesResvList() {
 
         {availableTimes.map(time => (
             <section key={time} className='reser-time-section'>
-                {isReserved(sqlDate,time) ? 
+                {isReserved(sqlDate,time) && isReserved(sqlDate,time).status == "예약"  ? 
                  (
                     <>
                     <Link to={`/usermy/deservedetail/${isReserved(sqlDate,time).num}`} state={{ data1: time, data2: sqlDate }}>
@@ -102,11 +100,20 @@ function DesResvList() {
                         </p>
                     </>
                 )
-                : 
+                : isReserved(sqlDate,time) === undefined  ?
+
                 (
                     <div className={`reser-time-container btn-gray`}>
                         <div className="reser-time">
                             <span className="reser-time-text">{time} 예약안됨</span>
+                        </div>
+                    </div>
+                ) 
+                        :
+                (
+                    <div className={`reser-time-container btn-gray`}>
+                        <div className="reser-time">
+                            <span className="reser-time-text">{time} 시술완료</span>
                         </div>
                     </div>
                 ) 

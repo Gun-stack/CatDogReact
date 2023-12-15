@@ -13,8 +13,8 @@ function ReservationCheck() {
     const [styleT, setStyleT] = useState('');
     const dispatch = useDispatch();
     const user = useSelector((state) => state.user);
-    const petList = useSelector((state) => state.pet);
-    const resvList = useSelector((state) => state.resv);
+    const petList = useSelector((state) => state.petList);
+    const resvList = useSelector((state) => state.resvList);
 
     
     //선택한 예약넘버와 같은 예약을 찾아온다
@@ -49,6 +49,7 @@ function ReservationCheck() {
 
 //  유저의 펫 정보 리스트를 가져옴 
     useEffect(() => {
+        
         console.log(user.id);
         console.log(params.num);
         console.log(resv);

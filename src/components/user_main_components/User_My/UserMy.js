@@ -30,7 +30,7 @@ import ShopRegForm from "../../des_main_component/Des_My/ShopRegForm";
 import DesInfo from "../../des_main_component/Des_My/DesInfo";
 
 import DesResvList from "../../des_main_component/Des_reservation/DesResvList";
-import Home from "../../des_main_component/Des_My/Home";
+
 import DesModi from "../../des_main_component/Des_Modi/Des_Modi";
 import ShopModiForm from '../../des_main_component/Des_My/ShopModiForm';
 import DesResvDetail from '../../des_main_component/Des_reservation/DesResvDetail';
@@ -49,15 +49,16 @@ function UserMy() {
 
     useEffect(() => {
         console.log(user);
+        console.log(desInfo);
         if (!isLoggedIn) {
             alert('로그인이 필요한 서비스입니다.');
             navigate('/main');
         }
-        if(user.roles =="ROLE_DES"||user.roles =="ROLE_SHOP"){
+        if(user.roles === "ROLE_DES" || user.roles === "ROLE_SHOP"){
             axios.get(`http://localhost:8090/desinfobyid?desId=${user.id}`)
             .then((res) => {
-                console.log(res);
-                dispatch({ type: 'SET_DES', payload: res.data })
+                console.log("DESINFO : "+ JSON.stringify(res.data.des));
+                dispatch({ type: 'SET_DES', payload: res.data.des })
             })
         }
 
@@ -82,11 +83,16 @@ function UserMy() {
                         <Route exact path='/petregform' element={<PetRegForm />} />
                         <Route exact path='/petmodi/:num' element={<PetModi />} />
 
+        
+
                         <Route path='usermodi' element={<UserModi />} />
                         <Route path='modinick' element={<UserModi_Nickname />} />
                         <Route path='moditel' element={<UserModi_Tel />} />
                         <Route path='modipassword' element={<UserModi_Password />} />
                         <Route path='modipassword' element={<UserModi_Password />} />
+
+
+
                         <Route path='desmodi' element={<DesModi />} />
 
 
@@ -106,7 +112,7 @@ function UserMy() {
                         <Route exact path='/desinfo' element={<DesInfo />} />
                         <Route exact path='desresvlist' element={<DesResvList />} />
                         <Route exact path='deservedetail/:resvnum' element={<DesResvDetail/>}/>
-                        <Route exact path='/desnum/home' element={<Home/>}/>
+                        
                         <Route path='/*' element={<Error404 />} />
 
                     </Routes>

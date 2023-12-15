@@ -25,10 +25,9 @@ const [loading, setLoading] = useState(false);
 const params = useParams();
 const resnum = params.resnum;
 //예약내역
-const resvList = useSelector((state) => state.resv);
-const resv = resvList.find((resv) => resv.num == resnum);
 //리뷰정보
-const reviewInfo = useSelector((state) => state.review);
+const[reviewInfo,setReview] = useState({});
+const[resv,setResv] = useState({});
 
 //유저정보
 const user = useSelector((state) => state.user);
@@ -45,7 +44,10 @@ useEffect(() => {
     axios.get(`http://localhost:8090/reviewdetail?resNum=${resnum}`)
     .then((res) => {
         console.log(res.data);
-        dispatch({ type: 'SET_REVIEW', payload: res.data });
+        setReview(res.data.review);
+        setResv(res.data.res);
+        dispatch({type:'SET_REVIEW',payload:res.data.review});
+
     })
     .catch((err) => {
         console.log(err);
@@ -72,9 +74,9 @@ useEffect(() => {
                     <hr className="divide-line" />
                     <div className="review-name-container">
                         <div className="review-write-desname"><i className="fas fa-cut review-icon"></i>    시술 일자 : {resv.date}    </div>
-                        <div className="review-write-desname"><i className="fas fa-cut review-icon"></i>    시술 일자 : {resv.time}시  </div>
-                        <div className="review-write-username"><i className="fas fa-dog review-icon"></i>   보호자 닉네임 :{reviewInfo.userId} </div>
-                        <div className="review-write-desname"><i className="fas fa-cut review-icon"></i>    미용사 이름 : {reviewInfo.desId} </div>
+                        <div className="review-write-desname"><i className="fas fa-cut review-icon"></i>    시술 시간 : {resv.time}  </div>
+                        <div className="review-write-username"><i className="fas fa-dog review-icon"></i>   보호자 닉네임 :{reviewInfo.userNickname} </div>
+                        <div className="review-write-desname"><i className="fas fa-cut review-icon"></i>    미용사 이름 : {reviewInfo.desNickname} </div>
                         <div className="review-write-desname"><i className="fas fa-cut review-icon"></i>    반려동물 이름 :{resv.petName} </div>
                     </div>
                     <hr className="divide-line" />
@@ -89,7 +91,7 @@ useEffect(() => {
                     </div>
 
                     <div className="review-filebox">
-                    <img src={ reviewInfo.afterImg !=='' ? `http://localhost:8090/reviewimg/${reviewInfo.num}` : "/img/logo/pet_defult_img.png" } accept="image/*" alt='펫 기본이미지'
+                    <img src={ reviewInfo.afterImg !==undefined? `http://localhost:8090/reviewimg/${reviewInfo.num}` : "/img/logo/pet_defult_img.png" } accept="image/*" alt='펫 기본이미지'
                         className="input-box-style input-img-size" placeholder='사진을 올려주세요' />
 
                     {/* <label htmlFor="petImgFile">반려동물 사진 올리기</label>

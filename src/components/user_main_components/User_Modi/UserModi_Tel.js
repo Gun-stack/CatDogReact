@@ -3,9 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import Loding from '../../tools/Loding';
 import axios from 'axios';
-import Swal from 'sweetalert2';
-import {useSelector} from 'react-redux';
-import {useDispatch} from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+
+import SwalCustomAlert from '../../Alerts/SwalCustomAlert';
+import Server500Err_Alert from '../../Alerts/Server500Err_Alert';
 
 
 function UserModi_Tel() {
@@ -29,22 +31,22 @@ function UserModi_Tel() {
     const onSubmit = async (e) => {
         e.preventDefault();
         setLoading(true); // 로딩 시작
-        
+
         try {
-            const res = await axios.post('http://localhost:8090/moditel', { num: user.num, userTel : userTel });
-            console.log(res);
-            dispatch({type:'SET_USER',payload:res.data});
-            navigate("/usermy/usermodi");
-            }
-         catch (error) {
-            console.error('전화번호 변경에 실패했습니다', error);
-            Swal.fire({
-                icon: 'error',
-                html: "<p style='text-align:center;'>전화번호 변경에 실패했습니다<p>",
-                confirmButtonColor: '#F9950F',
-                confirmButtonText: '확인',
-            });
+            const res = await axios.post('http://localhost:8090/moditel', { num: user.num, userTel: userTel });
+            
+            dispatch({ type: 'SET_USER', payload: res.data });
+            SwalCustomAlert(
+                'success',
+                '전화번호가 변경되었습니다!',
+            );
+        }
+        catch (error) {
+            //500Err 처리
+            console.error('서버통신에 실패했습니다', error);
+            <Server500Err_Alert />
         } finally {
+            navigate("/usermy/usermodi");
             setLoading(false); // 로딩 종료
         }
     };

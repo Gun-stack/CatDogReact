@@ -55,7 +55,7 @@ function GalleryList() {
                         <Route path="/user/galleryregform" element={<GalleryRegFormUser/>} />
 
                         <Route path="/user" element={<UserGal />} />
-                        <Route path='user/:usernum' element={<UserGalleryView />} />
+                        <Route path='user/:usergalnum' element={<UserGalleryView />} />
                         <Route path='des/:desgalnum' element={<DesGalleryView />} />
                         <Route path='/*' element={<Error404 />} />
                     </Routes>

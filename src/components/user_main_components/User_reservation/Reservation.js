@@ -2,21 +2,26 @@ import React, { useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router';
+import { useState } from 'react';
+
 
 function Reservation() {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.user);
 
-    const reservationList = useSelector((state) => state.resvList);
+    // const reservationList = useSelector((state) => state.resvList);
+    // const resvList = reservationList.filter((resv) => resv.status === "예약" );
+    const [reservationList, setReservationList] = useState([]);
     const resvList = reservationList.filter((resv) => resv.status === "예약" );
-
-
 
     useEffect(() => {
         axios.get(`http://localhost:8090/resinfobyuserid?userId=${user.id}`)
             .then((res) => {
                 if (res.data !== undefined) {
-                    dispatch({ type: 'SET_RES_LIST', payload: res.data });
+                    // dispatch({ type: 'SET_RES_LIST', payload: res.data });
+                    setReservationList(res.data);
+                   
                 }
             })
             .catch((err) => {

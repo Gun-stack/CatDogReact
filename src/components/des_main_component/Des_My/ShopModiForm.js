@@ -1,16 +1,11 @@
 import React, { useRef, useState, useEffect } from "react";
-import { Helmet } from 'react-helmet';
-import Footer from "../../screens/Footer";
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import Swal from "sweetalert2";
 import axios from "axios";
 import useKakaoLoader from "../../Around/useKakaoLoader";
-
 import { useDispatch, useSelector } from 'react-redux';
-
 import { useParams } from "react-router";
 import { useNavigate } from "react-router-dom";
-import { Experimental_CssVarsProvider } from "@mui/material";
 
 
 function ShopModiForm() {
@@ -132,24 +127,24 @@ function ShopModiForm() {
                         console.log(res);
                         console.log("res data : " + res.data);
                     });
-            //    if (result.isConfirmed) {
+                //    if (result.isConfirmed) {
                 Swal.fire({
                     html: '<img src="/img/logo/modal_success_logo.png"/></span>',
                     title: '<span class="sweet-modal-title">샵 정보 수정이 완료되었습니다</span>',
                     confirmButtonColor: '#F9950F',
                     confirmButtonText: '확인'
                 });
-              window.location.href = '/catdog/usermy';
+                window.location.href = '/catdog/usermy';
             }
             else if (result.isDenied === false) {
                 Swal.fire('취소하였습니다.', '', 'info');
-                
+
             }
         });
     }
 
 
-    
+
     const formatNumber = (input) => {
         // 숫자만 추출
         const cleaned = ('' + input).replace(/\D/g, '');

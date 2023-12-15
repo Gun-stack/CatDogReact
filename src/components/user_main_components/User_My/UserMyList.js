@@ -29,35 +29,35 @@ function UserMylist() {
                                 <i className="fas fa-caret-square-right mypage-arrow"></i>
                                 <Link to="usermodi" >보호자 정보 수정하기</Link>
                             </div>
-                            <i class="fas fa-user"></i>
+                            <i className="fas fa-user"></i>
                         </li>
                         <li className="nav-li">
                             <div>
                                 <i className="fas fa-caret-square-right mypage-arrow"></i>
                                 <Link to="reservation">예약 확인하기</Link>
                             </div>
-                            <i class="fas fa-calendar-alt"></i>
+                            <i className="fas fa-calendar-alt"></i>
                         </li>
                         <li className="nav-li">
                             <div>
                                 <i className="fas fa-caret-square-right mypage-arrow"></i>
                                 <Link to={`reservationdone/${user.num}`}>이전 이용내역 보기</Link>
                             </div>
-                            <i class="fas fa-history"></i>
+                            <i className="fas fa-history"></i>
                         </li>
                         <li className="nav-li">
                             <div>
                                 <i className="fas fa-caret-square-right mypage-arrow"></i>
                                 <Link to="petreg">반려동물 등록/수정하기</Link>
                             </div>
-                            <i class="fas fa-cat"></i>
+                            <i className="fas fa-cat"></i>
                         </li>
                         <li className="nav-li">
                             <div>
                                 <i className="fas fa-caret-square-right mypage-arrow"></i>
                                 <Link to="desreg">디자이너 등록 하기</Link>
                             </div>
-                            <i class="fas fa-cut"></i>
+                            <i className="fas fa-cut"></i>
                         </li>
 
                         <li className="nav-li">
@@ -65,7 +65,7 @@ function UserMylist() {
                                 <i className="fas fa-caret-square-right mypage-arrow"></i>
                                 <Link to="desinfo">디자이너 수정 하기</Link>
                             </div>
-                            <i class="fas fa-cut"></i>
+                            <i className="fas fa-cut"></i>
                         </li>
 
                         {/* 이 밑으로 아직 연결하지 않았어요! */}

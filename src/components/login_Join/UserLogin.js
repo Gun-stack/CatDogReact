@@ -5,10 +5,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setToken, setUserStore, loginStore, setAutoLogin, setUserAuth } from "../../actions"; // 액션 생성자 가져오기
+import { setToken, setUserStore, loginStore, setAutoLogin } from "../../actions"; // 액션 생성자 가져오기
 import Loding from "../tools/Loding";
-import { type } from '@testing-library/user-event/dist/type';
-
 
 
 
@@ -46,10 +44,10 @@ function UserLogin() {
         } catch (error) {
             console.error(error);
             Swal.fire({
-                icon: 'error',
-                title: '로그인 실패',
-                text: '아이디 또는 비밀번호를 확인해주세요.',
-                footer: '<a href="findid">아이디 또는 비밀번호를 잊으셨나요?</a>'
+                html: '<img src="/img/logo/modal_success_logo.png"/>',
+                title: '<span class="sweet-modal-title">아이디 또는 비밀번호를 확인해주세요.</span>',
+                footer: '<a href="findid" class="sweet-modal-title tx-gray f-size-14px">아이디 또는 비밀번호를 잊으셨나요?</a>',
+                confirmButtonColor: '#F9950F',
             })
         } finally {
             setLoading(false);

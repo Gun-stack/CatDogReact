@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -14,8 +14,8 @@ function PetReg() {
 
     useEffect(() => {
         axios.get(`http://localhost:8090/petinfo?userId=${user.id}`)
-        .then((res) => {
-                dispatch({type:'SET_PET_LIST', payload:res.data} );
+            .then((res) => {
+                dispatch({ type: 'SET_PET_LIST', payload: res.data });
                 console.log(res.data);
             }
             )

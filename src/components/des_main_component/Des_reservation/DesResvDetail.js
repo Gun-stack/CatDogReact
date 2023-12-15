@@ -5,21 +5,22 @@ import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { useSelector ,useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router';
 
 
 
 function DesResvDetail() {
+    const navigate = useNavigate();
     const params = useParams();
     const [inputValue, setInputValue] = useState('')
     const [Modal, setModal] = useState(false);
     const [styleT, setStyleT] = useState('');
     const dispatch = useDispatch();
     
-    const [completePic,setCompletePic] = useState([]);
-    const [completeText,setCompletetext] = useState([]);
-    const [resv,setResv] = useState({});
-    const [pet1,setPet1] = useState({});
-    const [user,setUser] = useState({});
+    const [resv,setResv] = useState({ });
+    const [pet1,setPet1] = useState({ });
+    const [user,setUser] = useState({ });
+
 
 
 
@@ -39,9 +40,9 @@ function DesResvDetail() {
             confirmButtonText: '확인',
             cancelButtonText: '취소',
             showLoaderOnConfirm: true
-        }).then((result) => {
-            if (result.isConfirmed) {
-                setCompletePic(result.value);
+        }).then((result1) => {
+            if (result1.isConfirmed) {
+                console.log(result1.value);
                 Swal.fire({
                     title: '시술내용 입력',
                     input: 'text',
@@ -50,17 +51,19 @@ function DesResvDetail() {
                     confirmButtonText: '확인',
                     cancelButtonText: '취소',
                     showLoaderOnConfirm: true}
-                ).then((result) => {
-                    if (result.isConfirmed) {
-                        setCompletetext(result.value);
+                ).then((result2) => {
+                    if (result2.isConfirmed) {
+                        console.log(result2.value);
                         const formData = new FormData();
-                        formData.append('file', completePic[0]);
-                        formData.append('text', completeText);
+                        formData.append('file', result1.value);
+                        formData.append('text', result2.value);
                         formData.append('num', resv.num);
                         axios.post(`http://localhost:8090/completereserve`, formData)
                             .then((res) => {
                                 console.log(res);
                                 Swal.fire('업로드 완료', '', 'success');
+                                navigate('/usermy/desresvlist');
+
                             })
                             .catch((err) => {
                                 console.log(err);
@@ -77,6 +80,7 @@ function DesResvDetail() {
 
 //  유저의 펫 정보 리스트를 가져옴 
     useEffect(() => {
+
         axios.get(`http://localhost:8090/reservedetail?num=${params.resvnum}`)
         .then((res) => {
             console.log(res.data);
@@ -111,7 +115,7 @@ function DesResvDetail() {
 
             <div className="reservation-container">
                 <hr className="divide-line" />
-                <div className="re-date">{resv.date} {(resv.time).slice(0,-3)}시</div>
+                <div className="re-date"> {resv.date} '{resv.time}'' 시</div>
                 예약번호 : {resv.num}
                 <div className="magin-t-1"><span className="re-text">샵 이름 :</span><span className="magin-l-05">{resv.shopName}</span></div>
                 <div className="magin-t-1"><span className="re-text">반려동물 이름 :</span><span className="magin-l-05">{resv.petName}</span></div>

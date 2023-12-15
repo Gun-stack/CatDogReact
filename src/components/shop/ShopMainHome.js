@@ -57,7 +57,7 @@ function ShopMainHome() {
                         confirmButtonText: '등록',
                         cancelButtonText: '취소',
                         confirmButtonColor: '#F9950F',
-                        reverseButtons:'true',
+                        reverseButtons: 'true',
                     });
 
                     if (result.isConfirmed && result.value) {
@@ -132,8 +132,7 @@ function ShopMainHome() {
                             const formData = new FormData();
                             formData.append('shopNum', shopInfo.num);
                             formData.append('worktime', result.value);
-                            const res = await axios.post('http://localhost:8090/regshopworktime', formData
-                            );
+                            const res = await axios.post('http://localhost:8090/regshopworktime', formData);
                             console.log(res);
                         } catch (error) {
                             Swal.fire({
@@ -178,8 +177,6 @@ function ShopMainHome() {
                         console.log('입력한값:', result.value);
                     }
 
-
-
                     break;
 
                 default:
@@ -197,11 +194,11 @@ function ShopMainHome() {
         <>
             {loading ? <Loding /> :
                 <div>
-                    <div className="shop-title-text sm-text magin-t-1">공지사항 <i class="fas fa-check btn-icon"></i>
+                    <div className="shop-title-text sm-text magin-t-1">공지사항 <i className="fas fa-check btn-icon"></i>
 
                         <>
-                            <button className='info-input-btn' value='titleimg' onClick={handleBtnClick}>매장그림 올리기<i class="far fa-plus-square"></i></button>
-                            <button className='info-input-btn' value='notice' onClick={handleBtnClick}>공지사항 입력 <i class="far fa-plus-square"></i></button>
+                            <button className='info-input-btn' value='titleimg' onClick={handleBtnClick}>매장그림 올리기<i className="far fa-plus-square"></i></button>
+                            <button className='info-input-btn' value='notice' onClick={handleBtnClick}>공지사항 입력 <i className="far fa-plus-square"></i></button>
                         </>
 
 
@@ -212,14 +209,15 @@ function ShopMainHome() {
                     </div>
                     <div className="shop-title-text sm-text">영업시간<i className="fas fa-clock btn-icon"></i>
 
-                        <button className='info-input-btn' value='worktime' onClick={handleBtnClick}>영업시간 입력 <i class="far fa-plus-square"></i></button>
+                        <button className='info-input-btn' value='worktime' onClick={handleBtnClick}>영업시간 입력 <i className="far fa-plus-square"></i></button>
 
 
 
                     </div>
 
                     <div className="shop-form-container">
-                        <div className="input-img-click sm-input-img">{shopInfo.workTime}</div>
+                        <div className="input-img-click sm-input-img">
+                            <span></span>{shopInfo.workTime}</div>
                     </div>
                     <div className="shop-title-text sm-text">매장위치<i className="fas fa-map-pin btn-icon"></i></div>
                     <div className="shop-address">{shopInfo.addressRoad}</div>
@@ -250,9 +248,9 @@ function ShopMainHome() {
                     </div>
                     <hr className="divide-line" />
 
-                    <div className="shop-title-text sm-text ma-top2rem">매장정보<i class="fas fa-info-circle btn-icon"></i>
+                    <div className="shop-title-text sm-text ma-top2rem">매장정보<i className="fas fa-info-circle btn-icon"></i>
 
-                        <button className='info-input-btn' value='shopinfo' onClick={handleBtnClick}>매장정보 입력 <i class="far fa-plus-square"></i></button>
+                        <button className='info-input-btn' value='shopinfo' onClick={handleBtnClick}>매장정보 입력 <i className="far fa-plus-square"></i></button>
 
 
                     </div>
