@@ -4,6 +4,8 @@ import { useSelector,useDispatch } from 'react-redux';
 import {useLocation} from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import SwalCustomAlert from '../Alerts/SwalCustomAlert';
+import Server500Err_Alert from '../Alerts/Server500Err_Alert';
 
 
 
@@ -70,16 +72,16 @@ function ShopReservationForm(props) {
         .then((res) => {
             console.log(res);
             dispatch({type:'SET_RESV',payload:res.data});
-            Swal.fire({
-                icon: 'success',
-                title: '예약이 완료되었습니다',
-                showConfirmButton: false,
-                timer: 1500
-            });
+
+            SwalCustomAlert(
+                '<img src="/img/logo/modal_success_logo.png"/>',
+                '<span class="sweet-modal-title">예약이 완료 되었습니다</span>',
+            );
             window.history.back();
         })
         .catch((err) => {
             console.log(err);
+            <Server500Err_Alert/>
         })
     }
 

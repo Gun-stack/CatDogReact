@@ -20,7 +20,7 @@ function UserHeader() {
             cancelButtonText: '아니오'
         }).then((result) => {
             if (result.isConfirmed) {
-                dispatch(logoutStore());
+                dispatch(logoutStore()); 
                 Swal.fire({
                         html: '<img src="/img/logo/modal_success_logo.png"/></span>',
                         title: '<span class="sweet-modal-title">로그아웃 되었습니다</span>',

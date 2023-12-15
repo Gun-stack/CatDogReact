@@ -4,6 +4,8 @@ import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Loding from "../tools/Loding";
+import Server500Err_Alert from "../Alerts/Server500Err_Alert";
+import SwalCustomAlert from "../Alerts/SwalCustomAlert";
 
 
 
@@ -77,33 +79,23 @@ function UserJoin() {
         try {
             axios.post('http://localhost:8090/userjoin', joinInfo)
                 .then((res) => {
-                    console.log(res);
-                    console.log(res.data);
                     if (res.data === "joinsuccess") {
-                        Swal.fire({
-                            html: '<img src="/img/logo/modal_success_logo.png"/></span>',
-                            title: '<span class="sweet-modal-title">회원가입 성공! 로그인페이지로이동합니다</span>',
-                            confirmButtonColor: '#F9950F',
-                            confirmButtonText: '확인',
-                        });
+                        SwalCustomAlert(
+                            'success',
+                            '회원가입 성공! 로그인 페이지로 이동합니다',
+                        );
                         window.location.replace("userlogin");
                     } else {
-                        Swal.fire({
-                            html: '<img src="/img/logo/modal_fail_logo.png"/></span>',
-                            title: '<span class="sweet-modal-title">회원가입에 실패했습니다</span>',
-                            confirmButtonColor: '#F9950F',
-                            confirmButtonText: '확인',
-                        });
+                        console.log(res);
+                        SwalCustomAlert(
+                            'fail',
+                            '회원가입에 실패했습니다.',
+                        );
                     }
                 })
         } catch (error) {
             console.error('서버통신에 실패했습니다', error);
-            Swal.fire({
-                html: '<img src="/img/logo/modal_fail_logo.png"/></span>',
-                title: '<span class="sweet-modal-title">서버통신에 실패했습니다</span>',
-                confirmButtonColor: '#F9950F',
-                confirmButtonText: '확인',
-            });
+            <Server500Err_Alert />
         } finally {
             setLoading(false);
         }
@@ -115,22 +107,18 @@ function UserJoin() {
     const checkId = (e) => {
         e.preventDefault();
         if (id === '') {
-            Swal.fire({
-                html: '<img src="/img/logo/modal_notice_logo.png"/></span>',
-                title: '<span class="sweet-modal-title">아이디를 입력해주세요</span>',
-                confirmButtonColor: '#F9950F',
-                confirmButtonText: '확인',
-            });
+            SwalCustomAlert(
+                'notice',
+                '아이디를 입력해주세요',
+            );
         } else {
             //아이디 정규식
             const idRegExp = /^[a-zA-Z0-9]{4,12}$/;
             if (!idRegExp.test(id)) {
-                Swal.fire({
-                    title: '<span class="sweet-modal-title">아이디는 영문 대소문자와 숫자 4~12자리로 입력해주세요</span>',
-                    html: '<img src="/img/logo/modal_notice_logo.png"/></span>',
-                    confirmButtonColor: '#F9950F',
-                    confirmButtonText: '확인',
-                });
+                SwalCustomAlert(
+                    'notice',
+                    '아이디는 영문 대소문자와 숫자 4~12자리로 입력해주세요',
+                );
                 return false;
             }
             // db 조회
@@ -138,30 +126,21 @@ function UserJoin() {
                 .then(res => {
                     console.log("res.data : " + res.data);
                     if (res.data === "success") {
-                        Swal.fire({
-                            html: '<img src="/img/logo/modal_success_logo.png"/></span>',
-                            title: '<span class="sweet-modal-title">사용가능한 아이디 입니다</span>',
-                            confirmButtonColor: '#F9950F',
-                            confirmButtonText: '확인'
-                        });
+                        SwalCustomAlert(
+                            'success',
+                            '사용가능한 아이디 입니다',
+                        )
                         setIdCheck(true);
                     } else {
-                        Swal.fire({
-                            html: '<img src="/img/logo/modal_fail_logo.png"/></span>',
-                            title: '<span class="sweet-modal-title">중복된 아이디 입니다.</span>',
-                            confirmButtonColor: '#F9950F',
-                            confirmButtonText: '확인',
-                        });
+                        SwalCustomAlert(
+                            'fail',
+                            '중복된 아이디 입니다.',
+                        )
                     }
                 })
                 .catch(err => {
                     console.error(err);
-                    Swal.fire({
-                        html: '<img src="/img/logo/modal_fail_logo.png"/></span>',
-                        title: '<span class="sweet-modal-title">서버통신에 실패했습니다</span>',
-                        confirmButtonColor: '#F9950F',
-                        confirmButtonText: '확인',
-                    });
+                    <Server500Err_Alert />
                 })
         }
     }
@@ -169,53 +148,40 @@ function UserJoin() {
     const checkNickname = (e) => {
         e.preventDefault();
         if (nickname === '') {
-            Swal.fire({
-                title: '닉네임을 입력해주세요',
-                icon: 'warning',
-                confirmButtonColor: '#F9950F',
-                confirmButtonText: '확인',
-            });
+            SwalCustomAlert(
+                'notice',
+                '닉네임을 입력해주세요',
+            )
         } else {
 
             //닉네임 정규식
             const nicknameRegExp = /^[가-힣a-zA-Z0-9]{2,10}$/;
             if (!nicknameRegExp.test(nickname)) {
-                Swal.fire({
-                    title: '<span class="sweet-modal-title">아이디는 영문 대소문자와 숫자 4~12자리로 입력해주세요</span>',
-                    html: '<img src="/img/logo/modal_notice_logo.png"/></span>',
-                    confirmButtonColor: '#F9950F',
-                    confirmButtonText: '확인',
-                });
+                SwalCustomAlert(
+                    'notice',
+                    '닉네임은 한글 영문 대소문자와 숫자 4~12자리로 입력해주세요.',
+                )
                 return false;
             }
 
             axios.get(`http://localhost:8090/checkusernickname?nickname=${nickname}`)
                 .then(res => {
                     if (res.data === "success") {
-                        Swal.fire({
-                            html: '<img src="/img/logo/modal_success_logo.png"/></span>',
-                            title: '<span class="sweet-modal-title">사용가능한 닉네임 입니다</span>',
-                            confirmButtonColor: '#F9950F',
-                            confirmButtonText: '확인'
-                        });
+                        SwalCustomAlert(
+                            'success',
+                            '사용가능한 닉네임 입니다',
+                        )
                         setNicknameCheck(true);
                     } else {
-                        Swal.fire({
-                            html: '<img src="/img/logo/modal_fail_logo.png"/></span>',
-                            title: '<span class="sweet-modal-title">중복된 닉네임 입니다</span>',
-                            confirmButtonColor: '#F9950F',
-                            confirmButtonText: '확인',
-                        });
+                        SwalCustomAlert(
+                            'fail',
+                            '중복된 닉네임 입니다',
+                        )
                     }
                 })
                 .catch(err => {
                     console.error(err);
-                    Swal.fire({
-                        html: '<img src="/img/logo/modal_fail_logo.png"/></span>',
-                        title: '<span class="sweet-modal-title">서버통신에 실패했습니다</span>',
-                        confirmButtonColor: '#F9950F',
-                        confirmButtonText: '확인',
-                    });
+                    <Server500Err_Alert />
                 })
 
         }
@@ -245,30 +211,26 @@ function UserJoin() {
         }
         else if (name === 'email') {
             setEmail(value);
-
         }
     }
 
-    {/**모달 창 */ }
     const handleSubBtnClick = (e) => {
         e.preventDefault();
-        Swal.fire({
-            html: '<img src="/img/logo/modal_agree_logo.png"/></span>',
-            title: `<span class="sweet-modal-title"><span class="tx-orange">${username }</span> 님 가입 하시겠습니까 ?</span>`,
-            showCancelButton: true,
-            confirmButtonColor: '#F9950F',
-            confirmButtonText: "가입하기",
-            cancelButtonText:"취소"
-        }).then((result) => {
+        
+        SwalCustomAlert(
+            'agree',
+            `<span class="tx-orange">${username}</span> 님 가입 하시겠습니까 ?`,
+            '#F9950F',
+            '가입하기',
+            'true'
+        ).then((result) => {
             if (result.isConfirmed) {
                 idcheck && nicknamecheck ?
                     submit(e) :
-                    Swal.fire({
-                        html: '<img src="/img/logo/modal_notice_logo.png"/></span>',
-                        title: '<span class="sweet-modal-title">아이디 또는 닉네임 중복확인 해주세요</span>',
-                        confirmButtonColor: '#F9950F',
-                        confirmButtonText: '확인',
-                    });
+                    SwalCustomAlert(
+                        'notice',
+                        '아이디 또는 닉네임 중복 확인해주세요',
+                    );
             }
         }
         );
