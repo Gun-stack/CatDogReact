@@ -15,7 +15,7 @@ function ShopReservationForm(props) {
     const shopInfo = props.shopInfo;
     const desInfo = props.desInfo;
     const user = useSelector((state) => state.user);
-    const pets = useSelector((state) => state.pet);
+    const pets = useSelector((state) => state.petList);
 
                 
 
@@ -59,7 +59,7 @@ function ShopReservationForm(props) {
         axios.get(`http://localhost:8090/petinfo?userId=${user.id}`)
         .then((res) => {
             console.log(res);
-            dispatch({type:'SET_PET',payload:res.data});
+            dispatch({type:'SET_PET_LIST',payload:res.data});
 
         })
         .catch((err) => {

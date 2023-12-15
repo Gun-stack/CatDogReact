@@ -127,35 +127,35 @@ function UserModi() {
                             <Link to="/usermy/modinick">
                                 <button className="main-btn magin-t-1 btn-text wi-30 btn-display">
                                     <span className="btn-inner-text">닉네임 변경</span>
-                                    <i class="fas fa-id-card tx-white"></i>
+                                    <i className="fas fa-id-card tx-white"></i>
                                 </button>
                             </Link>
 
                             <Link to="/usermy/moditel">
                                 <button className="main-btn magin-t-1 btn-text wi-30 btn-display">
                                     <span className="btn-inner-text">전화번호 변경</span>
-                                    <i class="fas fa-mobile-alt tx-white"></i>
+                                    <i className="fas fa-mobile-alt tx-white"></i>
                                 </button>
                             </Link>
 
                             <Link to="/usermy/modipassword">
                                 <button className="main-btn magin-t-1 btn-text wi-30 btn-display">
                                     <span className="btn-inner-text">비밀번호 변경</span>
-                                    <i class="fas fa-unlock-alt tx-white"></i>
+                                    <i className="fas fa-unlock-alt tx-white"></i>
                                 </button>
                             </Link>
 
                             <Link to="/usermy/desmodi">
                                 <button className="main-btn magin-t-1 btn-text wi-30 btn-display">
                                     <span className="btn-inner-text">디자이너 정보 변경</span>
-                                    <i class="fas fa-unlock-alt tx-white"></i>
+                                    <i className="fas fa-unlock-alt tx-white"></i>
                                 </button>
                             </Link>
 
 
                             <button className="main-btn magin-t-1 btn-red btn-text wi-30 btn-display" onClick={() => setismodal(true)}>
                                 <span className="btn-inner-text">회원탈퇴</span>
-                                <i class="fas fa-sign-out-alt tx-white"></i>
+                                <i className="fas fa-sign-out-alt tx-white"></i>
                             </button>
 
                             <Link to="/usermy">

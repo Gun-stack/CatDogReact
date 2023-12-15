@@ -10,9 +10,8 @@ import { useSelector,useDispatch } from "react-redux";
 function UserReviewForm() {
     const dispatch = useDispatch();
     const params = useParams();
-    const resvList = useSelector((state) => state.resv);
+    const resvList = useSelector((state) => state.resvList);
     const resvInfo = resvList.find((resv) => resv.num == params.resnum);
-    const desInfo = useSelector((state) => state.des);
     const user = useSelector((state) => state.user);
 
     const date1 = new Date();
@@ -21,8 +20,8 @@ function UserReviewForm() {
     const month = (koreaTime.getMonth() + 1).toString().padStart(2, '0');
     const day = koreaTime.getDate().toString().padStart(2, '0');
     const sqlDate = `${koreaTime.getFullYear()}-${month}-${day}`;
-
-
+    const [desInfo ,setDes] = useState({ });
+    
 
 
 
@@ -61,7 +60,7 @@ function UserReviewForm() {
         console.log(review);
         axios.get(`http://localhost:8090/desinfobyid?desId=${resvInfo.desId}`)
             .then((res) => {
-                dispatch({ type: 'SET_DES', payload: res.data });
+                setDes(res.data.des);
                 console.log(res.data);
             })
             .catch((err) => {

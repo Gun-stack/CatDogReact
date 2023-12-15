@@ -194,11 +194,11 @@ function ShopMainHome() {
         <>
             {loading ? <Loding /> :
                 <div>
-                    <div className="shop-title-text sm-text magin-t-1">공지사항 <i class="fas fa-check btn-icon"></i>
+                    <div className="shop-title-text sm-text magin-t-1">공지사항 <i className="fas fa-check btn-icon"></i>
 
                         <>
-                            <button className='info-input-btn' value='titleimg' onClick={handleBtnClick}>매장그림 올리기<i class="far fa-plus-square"></i></button>
-                            <button className='info-input-btn' value='notice' onClick={handleBtnClick}>공지사항 입력 <i class="far fa-plus-square"></i></button>
+                            <button className='info-input-btn' value='titleimg' onClick={handleBtnClick}>매장그림 올리기<i className="far fa-plus-square"></i></button>
+                            <button className='info-input-btn' value='notice' onClick={handleBtnClick}>공지사항 입력 <i className="far fa-plus-square"></i></button>
                         </>
 
 
@@ -209,7 +209,7 @@ function ShopMainHome() {
                     </div>
                     <div className="shop-title-text sm-text">영업시간<i className="fas fa-clock btn-icon"></i>
 
-                        <button className='info-input-btn' value='worktime' onClick={handleBtnClick}>영업시간 입력 <i class="far fa-plus-square"></i></button>
+                        <button className='info-input-btn' value='worktime' onClick={handleBtnClick}>영업시간 입력 <i className="far fa-plus-square"></i></button>
 
 
 
@@ -248,9 +248,9 @@ function ShopMainHome() {
                     </div>
                     <hr className="divide-line" />
 
-                    <div className="shop-title-text sm-text ma-top2rem">매장정보<i class="fas fa-info-circle btn-icon"></i>
+                    <div className="shop-title-text sm-text ma-top2rem">매장정보<i className="fas fa-info-circle btn-icon"></i>
 
-                        <button className='info-input-btn' value='shopinfo' onClick={handleBtnClick}>매장정보 입력 <i class="far fa-plus-square"></i></button>
+                        <button className='info-input-btn' value='shopinfo' onClick={handleBtnClick}>매장정보 입력 <i className="far fa-plus-square"></i></button>
 
 
                     </div>

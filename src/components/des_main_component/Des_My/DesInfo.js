@@ -1,7 +1,32 @@
 import { Link, Route, Routes } from "react-router-dom";
-import Home from "./Home";
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
+import { useState } from "react";
+
 
 function DesReg() {
+    const user = useSelector((state) => state.user);
+    const [des, setDes] = useState({});
+    const [shop, setShop] = useState({});
+
+    
+    
+    useEffect(() => {
+        axios.get(`http://localhost:8090/desinfobyid?desId=${user.id}`)
+            .then((res) => {
+                console.log(res.data);
+                setDes(res.data.des);
+                setShop(res.data.shop);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }, []);
+
+
+
+
     return (<>
         <div className="web-container wed-bg">
             <div className="cd-container bg-white bg-dogs">
@@ -18,30 +43,31 @@ function DesReg() {
                         </ul>
 
                         {/* <!-- 디자이너 프로필 --> */}
-                        <div className="stylelist-content">
+                        <div className="stylelist-content"> 
                             <div className="st-profile-container">
 
                                 <div className="st-profile-img">
-                                    <img src="/img/gallrey-img/1.jpg" alt="디자이너 이미지" className="st-profile-img" />
+                                    {des.num &&<img src={`http://localhost:8090/desimg/${des.num}`} alt="디자이너 이미지" className="st-profile-img" />}
                                 </div>
 
                                 <div className="st-profile-context">
                                     <div className="st-profile-name">
-                                        스타일리스트 이름
+                                        {des.position} {des.desNickname} 
                                     </div>
                                     <div className="st-profile-shop">
-                                        스타일리스트 근무 샵
+                                        {shop.name}
                                     </div>
                                     <div className="st-profile-info">
-                                        스타일리스트 소개
+                                        {des.info}
+
                                     </div>
                                 </div>
 
                             </div>
 
                             <div className="st-button-container">
-                                <button className="st-button"><Link to="/desnum/home">갤러리<i className="fa-solid fa-image btn-icon"></i></Link></button>
-                                <button className="st-button"><Link to="/usermy/usermodi">수정하기<i className="far fa-calendar-alt btn-icon"></i></Link></button>
+                                <button className="st-button"><Link to={`/des/${des.num}/home`}>갤러리<i className="fa-solid fa-image btn-icon"></i></Link></button>
+                                <button className="st-button"><Link to="/usermy/desmodi">수정하기<i className="far fa-calendar-alt btn-icon"></i></Link></button>
                             </div>
 
                         </div>
@@ -52,9 +78,7 @@ function DesReg() {
 
             </div>
         </div >
-        <Routes>
-                <Route path='/home' element={<Home />} />
-        </Routes>
+
 
     </>);
 }

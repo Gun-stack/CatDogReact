@@ -3,11 +3,14 @@ import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 import SwalCustomAlert from '../../Alerts/SwalCustomAlert';
 import Server500Err_Alert from '../../Alerts/Server500Err_Alert';
 
 
 function PetModi() {
+    const navigate = useNavigate(); 
     //가져온 펫넘버
     const params = useParams();
     // 펫정보 추가
@@ -16,6 +19,7 @@ function PetModi() {
 
     const imgBoxRef = useRef();
     const user = useSelector((state) => state.user);
+
     const [files, setFiles] = useState([]);
     const [newPet, setNewPet] = useState({
         num: '',
@@ -36,7 +40,7 @@ function PetModi() {
     }
 
     const goBack = () => {
-        window.history.back();
+        navigate('/usermy/petreg');
     };
 
     const fileChange = (e) => {

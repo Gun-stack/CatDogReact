@@ -1,203 +1,120 @@
+import axios from 'axios';
+import React, { useEffect } from 'react';
+import {useParams} from 'react-router-dom';
+import Header from '../../screens/Header';
+import Footer from '../../screens/Footer';
+
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { Routes, Route ,Link } from 'react-router-dom';
+// import DesHome from './DesHome';
+import DesStyle from './DesStyle';
+import DesReview from './DesReview';
+// import Error404 from '../../error/Error404';
+import Error404 from '../../error/Error404';
+import { useLocation } from 'react-router';
+import StarRating from './StarRating';
+
+
+
+
+
+
+
 function Home() {
+    const params = useParams();
+    const [des, setDes] = useState({});
+    const [shop, setShop] = useState({});
+    const location = useLocation();
+    const isActive = (path) => {
+        return location.pathname === path;
+    };
+
+
+    useEffect(() => {   
+        axios.get(`http://localhost:8090/shopdesinfobynum?desNum=${params.desnum}`)
+        .then((res) => {
+            setShop(res.data.shop);
+            setDes(res.data.des);
+            console.log(res.data);
+        })
+    }, [des.num]);
+
+
+
     return (<>
 
-        <div class="web-container">
-            <div class="cd-container bg-white">
-                <section class="section-header">
-                    <div class="section-header-container">
-                        <span class="section-header-text">스타일리스트 정보</span>
+        <div className="web-container">
+            <div className="cd-container bg-white">
+            <Header />
+                <section className="section-header">
+                    <div className="section-header-container">
+                        <span className="section-header-text">스타일리스트 정보</span>
                     </div>
                 </section>
 
-                <main class="cd-main">
+                <main className="cd-main">
 
 
-                    <hr class="divide-line" />
+                    <hr className="divide-line" />
 
                     {/* <!-- 스타일리스트 프로필 --> */}
-                    <div class="stylelist-content">
+                    <div className="stylelist-content">
 
-                        <div class="st-profile-container">
-                            <div class="des-star-location">
-                                <div class="st-profile-img">
-                                    <img src="./img/gallrey-img/textimg.png" alt="프로필 이미지" class="st-profile-img" />
+                        <div className="st-profile-container">
+                            <div className="des-star-location">
+                                <div className="st-profile-img">
+                                    {des.num&&<img src={`http://localhost:8090/desimg/${des.num}`} alt="프로필 이미지" className="st-profile-img" />}
                                 </div>
 
-                                <div class="st-profile-context">
+                                <div className="st-profile-context">
 
-                                    <div class="st-profile-name">
-                                        디자이너 이름
+                                    <div className="st-profile-name">
+                                        {des.position} {des.desNickname}
                                     </div>
 
-                                    <div class="st-profile-shop">
-                                        디자이너 근무 샵
+                                    <div className="st-profile-shop">
+                                        {shop.name}
                                     </div>
 
-                                    <div class="st-profile-info">
-                                        rlfrpTmausdjzpehlasadasfsd
+                                    <div className="st-profile-info">
+                                        {des.info}
                                     </div>
 
-                                    <span class="review-stars"><span class="review-stars-point">별점</span>
-                                        <i class="fa-solid fa-star review-star"></i>
-                                        <i class="fa-solid fa-star review-star"></i>
-                                        <i class="fa-solid fa-star review-star"></i>
-                                        <i class="fa-solid fa-star review-star"></i>
-                                        <i class="fa-solid fa-star review-star"></i>
-                                    </span>
+                                    <StarRating rating={des.star}/>
 
                                 </div>
                             </div>
-
-                            <div class="st-button-container">
-                                <a href="#"><button class="st-button">편집<i class="fas fa-pen btn-icon"></i></button></a>
-                                <a href="reservation.html"><button class="st-button">예약하기<i class="far fa-calendar-alt btn-icon"></i></button></a>
+                            <div className="st-button-container">
+                                <a href="#"><button className="st-button">편집<i className="fas fa-pen btn-icon"></i></button></a>
+                                <a href="reservation.html"><button className="st-button">예약하기<i className="far fa-calendar-alt btn-icon"></i></button></a>
                             </div>
 
                         </div>
                     </div>
                     {/* <!-- 스타일 리스트 정보 메뉴 --> */}
-                    <nav class="main-nav">
-                        <ul class="main-nav-list">
-                            <li class="main-nav-list-text"><a href="st-infopage.html">홈</a></li>
-                            <li class="main-nav-list-text"><a href="st-infostyle.html">스타일</a></li>
-                            <li class="main-nav-list-text"><a href="st-inforeview.html">리뷰</a></li>
+                    <nav className="main-nav">
+                        <ul className="main-nav-list">
+                            <li className="main-nav-list-text"><a href="st-infopage.html">홈</a></li>
+                            <li className={`main-nav-list-text ${isActive `/des/${des.num}/style` ? 'active' : ''}`}><Link to={`/des/${des.num}/style`}>스타일</Link></li>
+                            <li className={`main-nav-list-text ${isActive `/des/${des.num}/review` ? 'active' : ''}`}><Link to={`/des/${des.num}/review`}>리뷰</Link></li>
 
                         </ul>
                     </nav>
-
-                    <hr class="divide-line" />
-                    <div class="shop-title-text sm-text ma-top2rem">스타일</div>
-                    <section class="st-gallery-section">
-                        <div class="st-gallery-grid">
-                            {/* <!-- 이미지 게시판 요소  --> */}
-                            <div class="st-gallery-img">
-                                <a href="st-infopage.html"><img src="img/gallrey-img/textimg.png" alt=""
-                                    class="hover-img" /></a>
-                                <div class="img-comment-hover">
-                                    <span class="img-hover-icon"><i class="fas fa-heart"></i>00</span>
-                                    <span class="img-hover-icon"><i class="fas fa-comment"></i>00</span>
-                                </div>
-                            </div>
-                            {/* <!-- 이미지 게시판 요소 끝 --> */}
-                            <div class="st-gallery-img">
-                                <a href="#"><img src="img/gallrey-img/textimg.png" alt="" class="hover-img" /></a>
-                                <div class="img-comment-hover">
-                                    <span class="img-hover-icon"><i class="fas fa-heart"></i>00</span>
-                                    <span class="img-hover-icon"><i class="fas fa-comment"></i>00</span>
-                                </div>
-                            </div>
-                            <div class="st-gallery-img">
-                                <a href="#"><img src="img/gallrey-img/textimg.png" alt="" class="hover-img" /></a>
-                                <div class="img-comment-hover">
-                                    <span class="img-hover-icon"><i class="fas fa-heart"></i>00</span>
-                                    <span class="img-hover-icon"><i class="fas fa-comment"></i>00</span>
-                                </div>
-                            </div>
-                            <div class="st-gallery-img">
-                                <a href="#"><img src="img/gallrey-img/textimg.png" alt="" class="hover-img" /></a>
-                                <div class="img-comment-hover">
-                                    <span class="img-hover-icon"><i class="fas fa-heart"></i>00</span>
-                                    <span class="img-hover-icon"><i class="fas fa-comment"></i>00</span>
-                                </div>
-                            </div>
-                            <div class="st-gallery-img">
-                                <a href="#"><img src="img/gallrey-img/textimg.png" alt="" class="hover-img" /></a>
-                                <div class="img-comment-hover">
-                                    <span class="img-hover-icon"><i class="fas fa-heart"></i>00</span>
-                                    <span class="img-hover-icon"><i class="fas fa-comment"></i>00</span>
-                                </div>
-                            </div>
-                            <div class="st-gallery-img">
-                                <a href="#"><img src="img/gallrey-img/textimg.png" alt="" class="hover-img" /></a>
-                                <div class="img-comment-hover">
-                                    <span class="img-hover-icon"><i class="fas fa-heart"></i></span>
-                                    <span class="img-hover-icon"><i class="fas fa-comment"></i></span>
-                                </div>
-                            </div>
-                        </div >
-                    </section >
-
-                    <hr class="divide-line" />
-                    <div class="shop-title-text sm-text ma-top2rem">리뷰</div>
-                    <section class="review-section magin-t-1">
-
-                        {/* <!-- 리뷰 컨테이너 --> */}
-                        <div class="review-container">
-                            <div class="review-text-container">
-                                <h3 class="guest-nickname">보호자 닉네임</h3>
-                                <h3 class="stylelist-nam">디자이너:미용사 이름</h3>
-                                <div class="review-text">
-                                    <p>
-                                        리뷰 글 들어가는곳
-                                    </p>
-                                    <span class="review-stars"><span class="review-stars-point">별점</span> <i
-                                        class="fa-solid fa-star review-star"></i><i
-                                            class="fa-solid fa-star review-star"></i><i
-                                                class="fa-solid fa-star review-star"></i><i
-                                                    class="fa-solid fa-star review-star"></i><i
-                                                        class="fa-solid fa-star review-star"></i></span>
-                                </div>
-                            </div>
-                            <div class="review-img-container">
-                                <div class="review-img"></div>
-                            </div>
-                        </div>
-
-
-                        {/* <!-- 리뷰 컨테이너 --> */}
-                        <div class="review-container">
-                            <div class="review-text-container">
-                                <h3 class="guest-nickname">보호자 닉네임</h3>
-                                <h3 class="stylelist-nam">디자이너:미용사 이름</h3>
-                                <div class="review-text">
-                                    <p>
-                                        리뷰 글 들어가는곳
-                                    </p>
-                                    <span class="review-stars"><span class="review-stars-point">별점</span> <i
-                                        class="fa-solid fa-star review-star"></i><i
-                                            class="fa-solid fa-star review-star"></i><i
-                                                class="fa-solid fa-star review-star"></i><i
-                                                    class="fa-solid fa-star review-star"></i><i
-                                                        class="fa-solid fa-star review-star"></i></span>
-                                </div>
-                            </div>
-                            <div class="review-img-container">
-                                <div class="review-img"></div>
-                            </div>
-                        </div>
-
-
-                        {/* <!-- 리뷰 컨테이너 --> */}
-                        <div class="review-container">
-                            <div class="review-text-container">
-                                <h3 class="guest-nickname">보호자 닉네임</h3>
-                                <h3 class="stylelist-nam">디자이너:미용사 이름</h3>
-                                <div class="review-text">
-                                    <p>
-                                        리뷰 글 들어가는곳
-                                    </p>
-                                    <span class="review-stars"><span class="review-stars-point">별점</span> <i
-                                        class="fa-solid fa-star review-star"></i><i
-                                            class="fa-solid fa-star review-star"></i><i
-                                                class="fa-solid fa-star review-star"></i><i
-                                                    class="fa-solid fa-star review-star"></i><i
-                                                        class="fa-solid fa-star review-star"></i></span>
-                                </div>
-                            </div>
-                            <div class="review-img-container">
-                                <div class="review-img"></div>
-                            </div>
-                        </div>
-
-
-                        <hr class="divide-line" />
-
-                    </section>
+                    <hr className="divide-line" />
+                    <Routes>
+                            {/* <Route path="/" element={<Home desInfo={des} />} /> */}
+                            <Route path="style" element={<DesStyle desInfo={des} />} />
+                            <Route path="review" element={<DesReview desInfo={des} />} />
+                            {/* <Route path="/reservation/:desnum/*" element={<DesReservation desInfo={des} />} /> */}
+                            <Route path='/*' element={<Error404 />} />
+                    </Routes>
+                    
 
 
                 </main>
-
-
+                <Footer />
             </div >
         </div >
 

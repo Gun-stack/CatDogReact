@@ -135,7 +135,6 @@ function PetRegForm() {
                                 className="input-box-style input-d-img" placeholder='사진을 올려주세요' ref={imgBoxRef} />
                             <label htmlFor="petImgFile">사진 올리기</label>
                             <input type="file" id="petImgFile" name='file' accept="image/*" onChange={fileChange} />
-
                         </div>
 
                         <hr className="gray-line" />
