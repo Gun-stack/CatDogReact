@@ -7,16 +7,19 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import Loding from "../../components/tools/Loding";
+import { useNavigate } from 'react-router';
+
 
 function ShopResrevationDate(props) {
+    const navigate = useNavigate();
     //today
     const shopInfo = props.shopInfo;
     const desInfo = useSelector(state => state.des);
     const [selectDate, setSelectDate] = useState(new Date().toLocaleDateString());
     const [sqlDate, setSqlDate] = useState(new Date().getFullYear() + '-' + (new Date().getMonth() + 1).toString().padStart(2, '0') + '-' + new Date().getDate().toString().padStart(2, '0'));
-    const resList = useSelector(state => state.resvList);
-    const dispatch = useDispatch();
-    
+    const [resList, setResList] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     const onChangeDate = (newValue) => {
         //toISOString: UTF 시간 기준이라 우리나라 시간으로 만들려면 9시간 빼야합니다
@@ -43,31 +46,41 @@ function ShopResrevationDate(props) {
         return date.isBefore(new Date(), "day");
     };
 
+    
+    
+    
+
 
     
-    useEffect(() => {
-        console.log(sqlDate);
-        console.log(desInfo.num);
+     useEffect(() =>  {
+        
+        setLoading(true);
         console.log(resList);
         axios.get(`http://localhost:8090/resinfobydesnum?desNum=${desInfo.num}&date=${sqlDate}`)
         .then((res) => {
-            dispatch({type:'SET_RESV_LIST', payload:res.data})
+            setResList(res.data);
+            setSelectDate(new Date().toLocaleDateString());
             }
         )
         .catch((err) => {
             console.log(err);
         })
-    },[sqlDate])
+        .finally(() => {
+            setLoading(false); 
+        }     )
+
+    },[sqlDate, desInfo.num])
 
 
     
         // 예약된 시간인지 확인
-        const isReserved = (date, time) => {
-            const reserved = resList.find(res => res.date === date && res.time === time);
-            return reserved;
-        };
-        // 
+            const isReserved = (date, time) => {
+                const reserved = resList.find(res => res.date === date && res.time === time);
+                return reserved;
+            };
+            // 
         const availableTimes = ['10:00', '12:00', '14:00', '16:00'];
+        
 
     return (
         <div>
@@ -81,7 +94,8 @@ function ShopResrevationDate(props) {
             {/* <input type="date" placeholder=" 날짜를 선택해주세요." onChange={onChangeDate} /> */}
             <span className="form-text" style={{ cursor: 'pointer' }} >{selectDate}</span>
             <hr className="divide-line" />
-            {availableTimes.map(time => (
+            {loading ? <Loding/> :<div>
+            { resList  &&  availableTimes.map(time => (
                 <div key={time}>
                     {isReserved(sqlDate, time) ? (
                         <div className={`reser-time-container btn-gray`}>
@@ -101,6 +115,8 @@ function ShopResrevationDate(props) {
                     <hr className="divide-line" key={`hr-${time}`} />
                 </div>
             ))}
+            </div> 
+                    }
         </div>
     );
 }

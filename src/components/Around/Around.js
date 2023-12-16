@@ -17,7 +17,7 @@ import { useDispatch } from "react-redux";
 function Around() {
     const dispatch = useDispatch();
     const location = useLocation();
-    const isActive = (path) => {
+    const isActive = (path) => {    
         return location.pathname === path;
     };
 

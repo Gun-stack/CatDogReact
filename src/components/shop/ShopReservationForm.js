@@ -6,11 +6,13 @@ import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import SwalCustomAlert from '../Alerts/SwalCustomAlert';
 import Server500Err_Alert from '../Alerts/Server500Err_Alert';
+import { useNavigate } from "react-router";
 
 
 
 function ShopReservationForm(props) {
 
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const shopInfo = props.shopInfo;
     const desInfo = props.desInfo;
@@ -20,10 +22,13 @@ function ShopReservationForm(props) {
     const time = location.state?.data1;
     const sqlDate = location.state?.data2;
     
+    const [selected, setSelected] = useState(false);
+    
     const selectDays = new Date(sqlDate).getDay();
     const day = ['일', '월', '화', '수', '목', '금', '토'];
     const selectDay = day[selectDays];
 
+    
     const [resvInfo, setResvInfo] = useState({
         userId: user.id,
         desId: desInfo.id,
@@ -33,9 +38,11 @@ function ShopReservationForm(props) {
         date: sqlDate,
         petName: '',
         status: '예약',
-        isReview: 0
+        isReview: 0,
+        refText: '',
     });
     
+   
     
     //선택된pet의 정보를 resvInfo에 넣어준다
 
@@ -45,12 +52,14 @@ function ShopReservationForm(props) {
             petName: pet.name
         });
         console.log(resvInfo);
+        setSelected(true);
     }
+    
 
 
     
     const goBack = () => {
-        window.history.back();
+       navigate(-1);
     }
     useEffect(() => {
         console.log(shopInfo);
@@ -67,23 +76,26 @@ function ShopReservationForm(props) {
     }
     ,[]);
 
-    const onSubmit = () => {
-        axios.post('http://localhost:8090/makereservation',resvInfo)
-        .then((res) => {
-            console.log(res);
-            dispatch({type:'SET_RESV',payload:res.data});
+    const onSubmit = async () => {
+        try {
 
+            // axios.post
+            await axios.post('http://localhost:8090/makereservation', resvInfo);
             SwalCustomAlert(
                 '<img src="/img/logo/modal_success_logo.png"/>',
                 '<span class="sweet-modal-title">예약이 완료 되었습니다</span>',
             );
-            window.history.back();
-        })
-        .catch((err) => {
+            goBack();
+        } catch (err) {
             console.log(err);
-            <Server500Err_Alert/>
-        })
-    }
+            Server500Err_Alert();
+        }
+    };
+                
+
+
+
+
 
 
 
@@ -114,7 +126,7 @@ function ShopReservationForm(props) {
                 :
 
                 pets.map((pet,index) => (
-                <div className="stylelist-content" onClick={()=> selectPet(pet)} key={index}> 
+                <div className='stylelist-content' onClick={()=> selectPet(pet)} key={index}>   
                     <div className="st-profile-container"  >
                         <div className="st-profile-img">
                             <img src={`http://localhost:8090/petimg/${pet.num}`} alt="등록한 반려동물 사진" className="st-profile-img" />
@@ -133,7 +145,6 @@ function ShopReservationForm(props) {
                 
                 }
             </div>
-
                     <div className="shop-btns">
                         <Link to ={`/shop/${shopInfo.num}/designer`}>   
                         <button className="shop-btn small-btn btn-gray btn-text">

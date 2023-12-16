@@ -12,14 +12,15 @@ import { useDispatch, useSelector } from 'react-redux';
 function ShopReservation(props) {
     const dispatch = useDispatch();
     const shopInfo = props.shopInfo;
-    const des = useParams();
+    const params = useParams();
     const desInfo =  useSelector(state => state.des);
     
     //디자이너 넘버로 디자이너 정보 찾아오기
     useEffect(() => {
         console.log(shopInfo);
-        axios.get(`http://localhost:8090/desinfobynum?desNum=${des.desnum}`)
+        axios.get(`http://localhost:8090/desinfobynum?desNum=${params.desnum}`)
         .then((res) => {
+            // console.log("resdata: "+ res.data);
             dispatch({type:'SET_DES', payload:res.data})
             console.log(desInfo)
             }

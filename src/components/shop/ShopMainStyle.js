@@ -54,11 +54,11 @@ function ShopMainStyle() {
                             </div>
                         </div>
                     ))}
+            </div>
                 {hasMore?
                     <div className="main-btn main-sm-btn" onClick={PlusOffset}><span className="btn-text">더보기</span></div>
                     :<div className="main-btn main-sm-btn"><span className="btn-text">마지막 페이지 입니다.</span></div>
                 }
-            </div>
 
             </section>
 

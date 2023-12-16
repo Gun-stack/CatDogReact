@@ -1,16 +1,28 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,Component } from 'react';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Loding from '../tools/Loding';
 import { useSelector } from 'react-redux';
+import ImageUploading from 'react-images-uploading';
+
+
 
 function ShopMainHome() {
     const shopInfo = useSelector((state) => state.shop);
     const [loading, setLoading] = useState(false);
     const user = useSelector((state) => state.user);
 
+    const [images, setImages] = useState([]);
+
+    const maxNumber = 69;
+
+    const onChange = (imageList, addUpdateIndex) => {
+        // data for submit
+        console.log(imageList, addUpdateIndex);
+        setImages(imageList);
+      };
     // 스타일 리스트
     const [galleryList, setGalleryList] = useState([
     ]);
@@ -50,8 +62,6 @@ function ShopMainHome() {
                 case 'titleimg':
                     result = await Swal.fire({
                         title: '<span class="sweet-modal-title">타이틀에 들어갈 사진을 올려주세요</span>',
-                        input: 'file',
-                        inputPlaceholder: '이미지 파일만 가능',
                         confirmButtonColor: '#F9950F',
                         showCancelButton: true,
                         confirmButtonText: '등록',
@@ -59,12 +69,13 @@ function ShopMainHome() {
                         confirmButtonColor: '#F9950F',
                         reverseButtons: 'true',
                     });
-
-                    if (result.isConfirmed && result.value) {
+                    if (result.isConfirmed ) {
                         setLoading(true);
                         try {
                             const formData = new FormData();
-                            formData.append('file', result.value); // 이미지 파일을 formData에 추가
+                            for(let image of images) {
+                                formData.append("file", image.file);
+                            }
                             formData.append('shopNum', shopInfo.num); // 미용실 번호 추가
                             const res = await axios.post('http://localhost:8090/regshopbgimg', formData
                             );
@@ -194,12 +205,36 @@ function ShopMainHome() {
         <>
             {loading ? <Loding /> :
                 <div>
-                    <div className="shop-title-text sm-text magin-t-1">공지사항 <i className="fas fa-check btn-icon"></i>
+        <button className='info-input-btn' value='titleimg' onClick={handleBtnClick}>매장그림 올리기<i className="far fa-plus-square"></i>
+        </button>
 
-                        <>
-                            <button className='info-input-btn' value='titleimg' onClick={handleBtnClick}>매장그림 올리기<i className="far fa-plus-square"></i></button>
+                       
+        <ImageUploading multiple value={images} onChange={onChange} maxNumber={maxNumber} dataURLKey="data_url">
+        {({ imageList, onImageUpload, onImageRemoveAll, onImageUpdate, onImageRemove, isDragging, dragProps,}) => (
+          
+          <div className="upload__image-wrapper">
+            <button className='info-input-btn' style={isDragging ? { color: 'red' } : undefined} onClick={onImageUpload} {...dragProps} >
+               매장사진 추가하기<i className="far fa-plus-square"></i>
+            </button>
+
+            <button className='info-input-btn' onClick={onImageRemoveAll}> 매장 사진 지우기<i className="far fa-plus-square"></i>
+            </button>
+
+                {imageList.map((image, index) => (
+                <div key={index} className="image-item">
+                    <img src={image['data_url']} alt="" width="150" />
+                    <div className="image-item__btn-wrapper">
+                    <button className='info-input-btn' onClick={() => onImageUpdate(index)}>수정하기</button>
+                    <button className='info-input-btn' onClick={() => onImageRemove(index)}>지우기</button>
+                    </div>
+                </div>
+                ))}
+          </div>
+        )}
+      </ImageUploading>
+
+                <div className="shop-title-text sm-text magin-t-1">공지사항 <i className="fas fa-check btn-icon"></i>
                             <button className='info-input-btn' value='notice' onClick={handleBtnClick}>공지사항 입력 <i className="far fa-plus-square"></i></button>
-                        </>
 
 
                     </div>
