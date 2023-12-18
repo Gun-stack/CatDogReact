@@ -30,7 +30,7 @@ function ShopMainDesLIst() {
     };
 
     const handleDeleteClick = async (desId) => {
-        
+
         const formData = new FormData();
         formData.append("num", desId);
         formData.append("sId", shopInfo.sid)
@@ -96,113 +96,116 @@ function ShopMainDesLIst() {
                 console.log(res.data);
                 dispatch({ type: 'SET_DES_LIST', payload: res.data });
 
-            }
-            )
+            })
             .catch((err) => {
                 console.log(err);
-            })
-    }
+            })}
         , []);
 
 
 
 
-    const handleBtnClick = async (e) => {
-        e.preventDefault();
-        console.log("1번 모달!!");
-        await Swal.fire({
-            title: '<span class="sweet-modal-title">디자이너 등록 하기</span>',
-            html: '<div class="swal2-input-container">' +'<span class="sweet-modal-title">디자이너를 검색하세요</span>'+
-                '  <input id="swal-input1" class="swal2-input" placeholder="ID를 입력하세요.">' +
-                '</div>',
-            showCancelButton: true,
-            confirmButtonText: '조회',
-            cancelButtonText: '취소',
-            confirmButtonColor: '#F9950F',
-            focusConfirm: false,
-            reverseButtons: true,
-            preConfirm: () => {
-                const desId = document.getElementById('swal-input1').value;
-                return desId;
-            }
-
-        })
-            .then((result) => {
-                if (result.isConfirmed) {
-                    console.log("2번 모달!!");
-                    const desId = result.value;
-                    axios.get(`http://localhost:8090/selectdesbyid?desId=${desId}`)
-                        .then(async (res) => {
-                            await Swal.fire({
-                                title: res.data.name,
-                                text: res.data.desNickname,
-                                imageUrl: `http://localhost:8090/desimg/${res.data.num}`,
-                                imageWidth: 280,
-                                imageHeight: 200,
-                                showCancelButton: true,
-                                confirmButtonText: '등록',
-                                cancelButtonText: '취소',
-                                confirmButtonColor: '#F9950F',
-                            })
-                                .then((res2) => {
-                                    if (res2.isConfirmed) {
-                                        console.log("모든 확인 후 데이터 저장");
-                                        // const formData = new FormData();
-                                        // console.log("res.data.num : " + res.data.num);
-                                        // formData.append("desnum", res.data.num);
-                                        // formData.append("sid", shopInfo.sid);
-                                        res.data.sid = shopInfo.sid;
-                                        console.log("sid" + shopInfo.sid);
-                                        axios.post('http://localhost:8090/shopdesreg', res.data)
-                                            .then(async (res) => {
-                                                await Swal.fire({
-                                                    html: '<img src="/img/logo/modal_success_logo.png"/></span>',
-                                                    title: '<span class="sweet-modal-title">스타일리스트 등록이 완료되었습니다</span>',
-                                                    confirmButtonColor: '#F9950F',
-                                                    confirmButtonText: '확인'
-                                                }).then(() => {
-                                                    navigate(0);
-                                                })
+    const handleBtnClick = async (id) => {
+        axios.get(`http://localhost:8090/selectdesbyid?desId=${id}`)
+            .then(async (res) => {
+                if(shopInfo.sid === res.data.sid && user.roles === "ROLE_SHOP"){
+                    await Swal.fire({
+                        title: '디자이너 등록',
+                        html: '<div class="swal2-input-container">' +
+                            '  <input id="swal-input1" class="swal2-input" placeholder="ID를 입력하세요.">' +
+                            '</div>',
+                        showCancelButton: true,
+                        confirmButtonText: '조회',
+                        cancelButtonText: '취소',
+                        confirmButtonColor: '#F9950F',
+                        focusConfirm: false,
+                        preConfirm: () => {
+                            const desId = document.getElementById('swal-input1').value;
+                            return desId;
+                        }
+            
+                    })
+                        .then((result) => {
+                            if (result.isConfirmed) {
+                                console.log("2번 모달!!");
+                                const desId = result.value;
+                                axios.get(`http://localhost:8090/selectdesbyid?desId=${desId}`)
+                                    .then(async (res) => {
+                                        await Swal.fire({
+                                            title: res.data.name,
+                                            text: res.data.desNickname,
+                                            imageUrl: `http://localhost:8090/desimg/${res.data.num}`,
+                                            imageWidth: 280,
+                                            imageHeight: 200,
+                                            showCancelButton: true,
+                                            confirmButtonText: '등록',
+                                            cancelButtonText: '취소',
+                                            confirmButtonColor: '#F9950F',
+                                        })
+                                            .then((res2) => {
+                                                if (res2.isConfirmed) {
+                                                    console.log("모든 확인 후 데이터 저장");
+                                                    // const formData = new FormData();
+                                                    // console.log("res.data.num : " + res.data.num);
+                                                    // formData.append("desnum", res.data.num);
+                                                    // formData.append("sid", shopInfo.sid);
+                                                    res.data.sid = shopInfo.sid;
+                                                    console.log("sid" + shopInfo.sid);
+                                                    axios.post('http://localhost:8090/shopdesreg', res.data)
+                                                        .then(async (res) => {
+                                                            await Swal.fire({
+                                                                html: '<img src="/img/logo/modal_success_logo.png"/></span>',
+                                                                title: '<span class="sweet-modal-title">스타일리스트 등록이 완료되었습니다</span>',
+                                                                confirmButtonColor: '#F9950F',
+                                                                confirmButtonText: '확인'
+                                                            }).then(() => {
+                                                                navigate(0);
+                                                            })
+                                                        })
+                                                }
                                             })
-                                    }
-                                })
-
-
-
+            
+            
+            
+                                    }).catch((err) => {
+                                        Swal.fire({
+                                            html: '<img src="/img/logo/modal_notice_logo.png"/></span>',
+                                            title: '<span class="sweet-modal-title">등록되지 않은 디자이너 입니다.</span>',
+                                            confirmButtonColor: '#F9950F',
+                                            confirmButtonText: '확인',
+                                        });
+                                    })
+                            }
                         }).catch((err) => {
-                            Swal.fire({
-                                html: '<img src="/img/logo/modal_notice_logo.png"/></span>',
-                                title: '<span class="sweet-modal-title">등록되지 않은 디자이너 입니다.</span>',
-                                confirmButtonColor: '#F9950F',
-                                confirmButtonText: '확인',
-                            });
+                            Swal.fire('취소하였습니다.', '', 'info');
                         })
+                } else{
+                    return;
                 }
-            }).catch((err) => {
-                Swal.fire('취소하였습니다.', '', 'info');
             })
+        
     }
 
     return (
         <div>
             <div action="" className="shop-form-container">
                 <div className="input-img-click sm-input-img">
-                    <p onClick={handleBtnClick}>스타일리스트 등록하기 <i className="fas fa-plus-circle"></i></p>
-
+                    <p onClick={() => handleBtnClick(user.id)}>스타일리스트 등록하기 <i className="fas fa-plus-circle"></i></p>
                 </div>
             </div>
-
             <hr className="divide-line" />
+
+
+
 
             {desList.map((des) => (
 
 
                 <div className="stylelist-content" key={des.num} >
                     <div className="st-profile-container">
-
-                            <div className="st-profile-img">
-                                <img src={`http://localhost:8090/desimg/${des.num}`} alt="프로필 이미지" className="st-profile-img" />
-                            </div>
+                        <div className="st-profile-img">
+                            <img src={`http://localhost:8090/desimg/${des.num}`} alt="프로필 이미지" className="st-profile-img" />
+                        </div>
 
                         <div className="st-profile-context">
                             <div className="st-profile-name">
