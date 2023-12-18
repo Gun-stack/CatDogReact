@@ -81,7 +81,7 @@ function Reservation() {
                         : '' }
                     </span>
                     <button className="small-btn">
-                        <Link to={`/usermy/check/${resv.num}`} className="btn-text">
+                        <Link to={`/usermy/check/${resv.num}` } className="btn-text">
                         예약확인
                         </Link>
                     </button>

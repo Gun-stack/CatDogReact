@@ -3,6 +3,7 @@ import Footer from '../screens/Footer';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
+
 function FindPassword() {
     const [email, setEmail] = useState('');
     const onChange = (e) => {
@@ -14,12 +15,12 @@ function FindPassword() {
             <div className="web-container">
                 <div className="cd-container bg-white bg-dogs">
                     <main className="cd-main">
-
+                    <Link to="/">
                         <section className="main-logo">
                             <img src="/img/logo/logo_color.png" alt="댕냥꽁냥 로고" />
                             <span className="main-logo-text">비밀번호 찾기</span>
                         </section>
-
+                    </Link>
 
                         <section className="form-section">
                             <form action="#" method="post" className="form-css">

@@ -212,6 +212,10 @@ function ShopMainHome() {
         <ImageUploading multiple value={images} onChange={onChange} maxNumber={maxNumber} dataURLKey="data_url">
         {({ imageList, onImageUpload, onImageRemoveAll, onImageUpdate, onImageRemove, isDragging, dragProps,}) => (
           
+
+
+
+
           <div className="upload__image-wrapper">
             <button className='info-input-btn' style={isDragging ? { color: 'red' } : undefined} onClick={onImageUpload} {...dragProps} >
                매장사진 추가하기<i className="far fa-plus-square"></i>

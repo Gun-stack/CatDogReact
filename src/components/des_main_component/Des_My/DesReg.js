@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import Swal from "sweetalert2";
 import axios from "axios";
+import { useDispatch } from "react-redux";
 
 import Loding from "../../tools/Loding";
 
@@ -10,6 +11,7 @@ import Loding from "../../tools/Loding";
 
 
 function DesReg() {
+    const dispatch = useDispatch();
     const imgBoxRef = useRef();
     const [files, setFiles] = useState([]);
     const user = useSelector((state) => state.user);
@@ -63,6 +65,9 @@ function DesReg() {
                 const res = await axios.post('http://localhost:8090/desreg', formData);
                 console.log(res);
                 console.log(res.data);
+                dispatch({ type: 'SET_USER', payload: res.data.user });
+
+
 
                 Swal.fire({
                     html: '<img src="/img/logo/modal_success_logo.png"/></span>',
@@ -70,7 +75,7 @@ function DesReg() {
                     confirmButtonColor: '#F9950F',
                     confirmButtonText: '확인',
                 });
-                navigate(-1);
+                navigate('/main');
             } else {
                 Swal.fire({
                     //실패 했다면

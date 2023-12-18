@@ -10,7 +10,7 @@ function GalleryRegFormUser() {
     const [image, setImage] = useState(null);
     const imgBoxRef = useRef();
     const [loading, setLoading] = useState(false);
-    const userInfo = useSelector((state) => state.des);
+    const userInfo = useSelector((state) => state.user);
     const [content, setContent] = useState('');
 
     const changeContent = (e) => {

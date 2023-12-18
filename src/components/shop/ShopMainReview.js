@@ -47,8 +47,8 @@ function ShopMainReview(shopInfo) {
             </div>
             :   
             <section className="review-section">
-                {reviewList.map((review) => (
-                    <div className="review-container">
+                {reviewList.map((review,index) => (
+                    <div className="review-container" key={index}>
                     <div className="review-text-container">
                         <h3 className="guest-nickname">작성자 : {review.userNickname}</h3>
                         <h3 className="stylelist-nam">디자이너 : {review.desNickname}</h3>

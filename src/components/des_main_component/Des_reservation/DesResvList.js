@@ -47,6 +47,7 @@ function DesResvList() {
             alert('잘못된 접근입니다.');
             navigate(-1);
         }
+        
         axios.get(`http://localhost:8090/resinfobydesnum?desNum=${desInfo.num}&date=${sqlDate}`)
             .then((res) => {
                 dispatch({ type: 'SET_RESV_LIST', payload: res.data })
