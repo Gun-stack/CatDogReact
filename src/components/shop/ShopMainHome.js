@@ -204,6 +204,7 @@ function ShopMainHome() {
 
                             <div className="upload__image-wrapper">
                                 <div className="shop-title-text sm-text magin-t-1"> 매장 사진 올리기 <i class="fas fa-photo-video btn-icon"></i></div>
+                                <div className="shop-title-text sm-text magin-t-1 tx-gray f-size-14px"> 높이 260px 이상의 사진은 깨질수있습니다!</div>
 
                                 <div className="shop-form-container">
                                     <div className="input-img-click sm-input-img">
@@ -217,15 +218,15 @@ function ShopMainHome() {
                                     </div>
                                 </div>
                                 <div className="shop-form-container fl-di-column">
-                                {imageList.map((image, index) => (
-                                    <div key={index} className="image-item img-re">
-                                        <img src={image['data_url']} alt="슬라이드에 들어갈 이미지" className='slide-input-img' />
-                                        <div className="image-item__btn-wrapper img-ab-1">
-                                            <button className='img-in-btn' onClick={() => onImageUpdate(index)}>수정</button>
-                                            <button className='img-in-btn' onClick={() => onImageRemove(index)}><i className="fas fa-times tx-white"></i></button>
+                                    {imageList.map((image, index) => (
+                                        <div key={index} className="image-item img-re">
+                                            <img src={image['data_url']} alt="슬라이드에 들어갈 이미지" className='slide-input-img' />
+                                            <div className="image-item__btn-wrapper img-ab-1">
+                                                <button className='img-in-btn' onClick={() => onImageUpdate(index)}>수정</button>
+                                                <button className='img-in-btn' onClick={() => onImageRemove(index)}><i className="fas fa-times tx-white"></i></button>
+                                            </div>
                                         </div>
-                                    </div>
-                                ))}
+                                    ))}
                                 </div>
                             </div>
                         )}
