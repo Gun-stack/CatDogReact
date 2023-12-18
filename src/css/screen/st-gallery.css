@@ -62,6 +62,7 @@
 
 .view-gallery-profile-container{
     display: flex;
+    align-items: center;
     margin-bottom: .5rem;
 }
 .view-profile-img{
@@ -101,6 +102,10 @@
 }
 .view-comment{
     margin-top: .5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-right: 1rem;
 }
 .view-img{
     width: 90%;

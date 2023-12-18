@@ -154,8 +154,9 @@
 .st-profile-img{
     height: 100px;
     width: 100px;
-    background-color: gainsboro;
+    background-color: rgba(245, 245, 245, 0.349);
     border-radius: 50%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .st-button-container{
@@ -358,3 +359,32 @@
 }
 
 
+.pet-resv-container{
+    cursor: pointer;
+    margin: .5rem 0;
+
+}
+
+.pet-resv-container:hover{
+    background-color: var(--btn-nomal);
+    transition: background-color .2s ease-in-out;
+}
+
+.selected{
+    background-image:url('/public/img/logo/resv_bg.png') ;
+    background-size: 100%;
+
+    background-position: right;
+    background-repeat: no-repeat;
+    transition: background-color .2s ease-in-out;
+}
+.selected:hover{
+    background-image:url('/public/img/logo/resv_bg.png') ;
+
+
+    transition: background-color .2s ease-in-out;
+}
+
+/* .photo-shadow{
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+} */

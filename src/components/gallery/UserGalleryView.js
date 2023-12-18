@@ -26,7 +26,7 @@ function UserGalleryView() {
         e.preventDefault();
         navigate(-1);
     }
-    
+
     const postComment = () => {
 
         formData.append("userNum", user.num);
@@ -63,7 +63,7 @@ function UserGalleryView() {
 
         axios.post('http://localhost:8090/usergallerylike', fomrData)
             .then((res) => {
-                console.log(res.data);  
+                console.log(res.data);
                 setLike(res.data);
             }
             )
@@ -82,7 +82,7 @@ function UserGalleryView() {
 
 
 
-    useEffect(() => { 
+    useEffect(() => {
         console.log(params);
         axios.get(`http://localhost:8090/usergallerydetail?galNum=${params.usergalnum}&userNum=${user.num}`)
             .then((res) => {
@@ -92,12 +92,12 @@ function UserGalleryView() {
                 setLike(res.data.isLike);
                 setCommentList(res.data.comments);
                 console.log(commentList);
-                
+
             })
             .catch((err) => {
                 console.log(err);
             })
-    }, [like,isPost]); 
+    }, [like, isPost]);
 
 
 
@@ -105,66 +105,62 @@ function UserGalleryView() {
 
 
     return (
-<div>   
+        <div>
 
-                <section className="st-gallery-section">
-                    <div className="st-gallery-view">
-                        <div className="st-gallery-view-img">
-                            <div className="view-gallery-profile-container magin-l-1">
-                                <img src={`http://localhost:8090/usergalview/${params.usergalnum}`} alt="프로필 이미지" className="view-profile-img" />
-                                <div className="view-img-nickname">{writer.nickname} </div>
-                            </div>
+            <section className="st-gallery-section">
+                <div className="st-gallery-view">
+                    <div className="st-gallery-view-img">
+                        <div className="view-gallery-profile-container magin-l-1">
+                            <img src={`http://localhost:8090/usergalview/${params.usergalnum}`} alt="프로필 이미지" className="view-profile-img" />
+                            <div className="view-img-nickname">{writer.nickname} </div>
+                        </div>
 
-                            <div className="view-img-container">
-                                <img src={`http://localhost:8090/usergalview/${params.usergalnum}`} alt="스타일리스트 사진" className="view-img" />
-                            </div>
-                            <div className="view-img-icons magin-l-1">
-                            <span onClick={likeClick} >{ like === true ? <i className="fa-solid fa-heart"></i> :<i className="fa-regular fa-heart"></i> } {gallery.likeCnt} </span>
-                                <span><i className="fa-regular fa-comment"></i> {gallery.commentCnt} </span>
+                        <div className="view-img-container">
+                            <img src={`http://localhost:8090/usergalview/${params.usergalnum}`} alt="유저갤러리 사진" className="view-img" />
+                        </div>
+                        <div className="view-img-icons magin-l-1">
+                            <span onClick={likeClick} >{like === true ? <i className="fa-solid fa-heart"></i> : <i className="fa-regular fa-heart"></i>} {gallery.likeCnt} </span>
+                            <span><i className="fa-regular fa-comment"></i> {gallery.commentCnt} </span>
 
 
 
-                                <div>
-                                    {commentList.map((comments, index) => (
-                                        <div key={index} className="view-comment">
+                            <div>
+                                {commentList.map((comments, index) => (
+                                    <div key={index} className="view-comment">
+                                        <div>
                                         <span className="view-comment-nickname"> {comments.userNickname} </span>
-
                                         <span className="view-comment-text"> {comments.content} </span>
-
-                                        <span className="view-comment-text"> ({comments.date}) </span>
-
-                                        {comments.userId===user.id && <button value={comments.num}  onClick={deleteComment} >삭제</button> }
                                         </div>
-                                    ))}
-                                </div>
-                                
-                                
-                                
+                                        <div>
+                                        <span className="view-comment-text tx-gray"> ({comments.date}) </span>
 
-
-                                
-                                <div>
-                                    <input type='text' onChange={onChageComment}/>
-                                    <button onClick={postComment}>댓글 달기</button>
-                                </div>
-                                
-
-                                <button className="view-comment-more">덧글 더보기</button>
-
+                                        {comments.userId === user.id && <button value={comments.num} onClick={deleteComment} className='view-comment-more'><i class="fas fa-times"></i></button>}
+                                        </div>
+                                    </div>
+                                ))}
                             </div>
+
+
+
+                            <div className='gal-comment-container'>
+                                <input type='text' onChange={onChageComment} className='input-text gal-text' />
+                                <button className='add-comment-btn' onClick={postComment}>댓글 달기</button>
+                            </div>
+
+                            <button className="view-comment-more">덧글 더보기</button>
+
                         </div>
                     </div>
-                    <hr className="divide-line" />
-                    {/* 이미지 게시판 요소 끝 */}
+                </div>
 
-                    <div>
-                        <button onClick={goBack} className="main-btn main-sm-btn btn-text">목록으로</button>
-                    </div>
-                </section>
+                <div>
+                    <button onClick={goBack} className="main-btn main-sm-btn btn-text">목록으로</button>
+                </div>
+            </section>
 
-                
+
         </div>
-    );   
+    );
 }
 
 export default UserGalleryView;
