@@ -1,11 +1,13 @@
 import axios from 'axios';
-import React, { useEffect, useState,Component } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Loding from '../tools/Loding';
 import { useSelector } from 'react-redux';
 import ImageUploading from 'react-images-uploading';
+import Server500Err_Alert from '../Alerts/Server500Err_Alert';
+import SwalCustomAlert from '../Alerts/SwalCustomAlert';
+
 
 
 
@@ -22,7 +24,7 @@ function ShopMainHome() {
         // data for submit
         console.log(imageList, addUpdateIndex);
         setImages(imageList);
-      };
+    };
     // 스타일 리스트
     const [galleryList, setGalleryList] = useState([
     ]);
@@ -60,20 +62,21 @@ function ShopMainHome() {
             switch (btnValue) {
 
                 case 'titleimg':
-                    result = await Swal.fire({
-                        title: '<span class="sweet-modal-title">타이틀에 들어갈 사진을 올려주세요</span>',
-                        confirmButtonColor: '#F9950F',
-                        showCancelButton: true,
-                        confirmButtonText: '등록',
-                        cancelButtonText: '취소',
-                        confirmButtonColor: '#F9950F',
-                        reverseButtons: 'true',
-                    });
-                    if (result.isConfirmed ) {
+                    result = await SwalCustomAlert(
+                        'agree',
+                        '타이틀에 들어갈 사진을 올리시겠습니까?',
+                        '#F9950F',
+                        '등록',
+                        true,
+                        '취소',
+                        true,
+                    )
+
+                    if (result.isConfirmed) {
                         setLoading(true);
                         try {
                             const formData = new FormData();
-                            for(let image of images) {
+                            for (let image of images) {
                                 formData.append("file", image.file);
                             }
                             formData.append('shopNum', shopInfo.num); // 미용실 번호 추가
@@ -81,17 +84,14 @@ function ShopMainHome() {
                             );
                             console.log(res);
                         } catch (error) {
-                            Swal.fire({
-                                title: '서버와의 통신이 실패했습니다',
-                                confirmButtonColor: '#F9950F'
-                            });
+                            console.error(error);
+                            <Server500Err_Alert />
                         } finally {
                             setLoading(false);
                             window.location.reload();
                         }
                         console.log('입력한값:', result.value);
                     }
-
                     break;
 
                 case 'notice':
@@ -114,17 +114,14 @@ function ShopMainHome() {
                             );
                             console.log(res);
                         } catch (error) {
-                            Swal.fire({
-                                title: '서버와의 통신이 실패했습니다',
-                                confirmButtonColor: '#F9950F'
-                            });
+                            console.error(error);
+                            <Server500Err_Alert />
                         } finally {
                             setLoading(false);
                             window.location.reload();
                         }
                         console.log('입력한값:', result.value);
                     }
-
                     break;
 
                 case 'worktime':
@@ -146,10 +143,8 @@ function ShopMainHome() {
                             const res = await axios.post('http://localhost:8090/regshopworktime', formData);
                             console.log(res);
                         } catch (error) {
-                            Swal.fire({
-                                title: '서버와의 통신이 실패했습니다',
-                                confirmButtonColor: '#F9950F'
-                            });
+                            console.error(error);
+                            <Server500Err_Alert />
                         } finally {
                             setLoading(false);
                             window.location.reload();
@@ -177,13 +172,10 @@ function ShopMainHome() {
                             );
                             console.log(res);
                         } catch (error) {
-                            Swal.fire({
-                                title: '서버와의 통신이 실패했습니다',
-                                confirmButtonColor: '#F9950F'
-                            });
+                            console.error(error);
+                            <Server500Err_Alert />
                         } finally {
                             setLoading(false);
-                            window.location.reload();
                         }
                         console.log('입력한값:', result.value);
                     }
@@ -204,50 +196,52 @@ function ShopMainHome() {
     return (
         <>
             {loading ? <Loding /> :
-                <div>
-        <button className='info-input-btn' value='titleimg' onClick={handleBtnClick}>매장그림 올리기<i className="far fa-plus-square"></i>
-        </button>
-
-                       
-        <ImageUploading multiple value={images} onChange={onChange} maxNumber={maxNumber} dataURLKey="data_url">
-        {({ imageList, onImageUpload, onImageRemoveAll, onImageUpdate, onImageRemove, isDragging, dragProps,}) => (
-          
-          <div className="upload__image-wrapper">
-            <button className='info-input-btn' style={isDragging ? { color: 'red' } : undefined} onClick={onImageUpload} {...dragProps} >
-               매장사진 추가하기<i className="far fa-plus-square"></i>
-            </button>
-
-            <button className='info-input-btn' onClick={onImageRemoveAll}> 매장 사진 지우기<i className="far fa-plus-square"></i>
-            </button>
-
-                {imageList.map((image, index) => (
-                <div key={index} className="image-item">
-                    <img src={image['data_url']} alt="" width="150" />
-                    <div className="image-item__btn-wrapper">
-                    <button className='info-input-btn' onClick={() => onImageUpdate(index)}>수정하기</button>
-                    <button className='info-input-btn' onClick={() => onImageRemove(index)}>지우기</button>
-                    </div>
-                </div>
-                ))}
-          </div>
-        )}
-      </ImageUploading>
-
-                <div className="shop-title-text sm-text magin-t-1">공지사항 <i className="fas fa-check btn-icon"></i>
-                            <button className='info-input-btn' value='notice' onClick={handleBtnClick}>공지사항 입력 <i className="far fa-plus-square"></i></button>
+                <>
 
 
+                    <ImageUploading multiple value={images} onChange={onChange} maxNumber={maxNumber} dataURLKey="data_url">
+                        {({ imageList, onImageUpload, onImageRemoveAll, onImageUpdate, onImageRemove, isDragging, dragProps, }) => (
+
+                            <div className="upload__image-wrapper">
+                                <div className="shop-title-text sm-text magin-t-1"> 매장 사진 올리기 <i class="fas fa-photo-video btn-icon"></i></div>
+
+                                <div className="shop-form-container">
+                                    <div className="input-img-click sm-input-img">
+
+                                        <button className='info-input-btn' style={isDragging ? { color: 'red' } : undefined} onClick={onImageUpload} {...dragProps} >
+                                            매장사진 추가<i className="far fa-plus-square tx-white"></i>
+                                        </button>
+                                        <button className='info-input-btn' onClick={onImageRemoveAll}> 매장 사진 지우기
+                                        </button>
+
+                                    </div>
+                                </div>
+                                <div className="shop-form-container fl-di-column">
+                                {imageList.map((image, index) => (
+                                    <div key={index} className="image-item img-re">
+                                        <img src={image['data_url']} alt="슬라이드에 들어갈 이미지" className='slide-input-img' />
+                                        <div className="image-item__btn-wrapper img-ab-1">
+                                            <button className='img-in-btn' onClick={() => onImageUpdate(index)}>수정</button>
+                                            <button className='img-in-btn' onClick={() => onImageRemove(index)}><i className="fas fa-times tx-white"></i></button>
+                                        </div>
+                                    </div>
+                                ))}
+                                </div>
+                            </div>
+                        )}
+                    </ImageUploading>
+                    <button className='info-input-btn' value='titleimg' onClick={handleBtnClick}>매장그림 올리기<i className="far fa-plus-square tx-white"></i>
+                    </button>
+
+                    <div className="shop-title-text sm-text magin-t-1">공지사항 <i className="fas fa-check btn-icon"></i>
+                        <button className='info-input-btn' value='notice' onClick={handleBtnClick}>공지사항 입력 <i className="far fa-plus-square tx-white"></i></button>
                     </div>
 
                     <div className="shop-form-container">
                         <div className="input-img-click sm-input-img">{shopInfo.notice}</div>
                     </div>
                     <div className="shop-title-text sm-text">영업시간<i className="fas fa-clock btn-icon"></i>
-
-                        <button className='info-input-btn' value='worktime' onClick={handleBtnClick}>영업시간 입력 <i className="far fa-plus-square"></i></button>
-
-
-
+                        <button className='info-input-btn' value='worktime' onClick={handleBtnClick}>영업시간 입력 <i className="far fa-plus-square tx-white"></i></button>
                     </div>
 
                     <div className="shop-form-container">
@@ -285,7 +279,7 @@ function ShopMainHome() {
 
                     <div className="shop-title-text sm-text ma-top2rem">매장정보<i className="fas fa-info-circle btn-icon"></i>
 
-                        <button className='info-input-btn' value='shopinfo' onClick={handleBtnClick}>매장정보 입력 <i className="far fa-plus-square"></i></button>
+                        <button className='info-input-btn' value='shopinfo' onClick={handleBtnClick}>매장정보 입력 <i className="far fa-plus-square tx-white"></i></button>
 
 
                     </div>
@@ -319,7 +313,7 @@ function ShopMainHome() {
 
 
 
-                </div>
+                </>
 
             }
         </>

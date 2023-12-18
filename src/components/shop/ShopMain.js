@@ -26,39 +26,38 @@ function ShopMain() {
     const params = useParams();
     const shopInfo = useSelector((state) => state.shop);
 
-    const [images,setImage] = useState(shopInfo.bgImg.split(',')); 
-    
+    const [images, setImage] = useState(shopInfo.bgImg.split(','));
+
 
 
 
     useEffect(() => {
-        console.log(shopInfo.bgImg );
+        console.log(shopInfo.bgImg);
         console.log(images);
         console.log("Num : " + params.shopnum);
         axios.get(`http://localhost:8090/shopinfobynum?num=${params.shopnum}`)
             .then((res) => {
                 dispatch({ type: 'SET_SHOP', payload: res.data });
             })
-        }, [params.shopnum,images]);
-        
-        
-        return (
-            <div className="web-container">
+    }, [params.shopnum, images]);
+
+
+    return (
+        <div className="web-container">
             <div className="cd-container bg-white">
                 <Header />
-                <main className="cd-main dis-center">
-                    <section className="shop-main-img-section">
-                        {/* 등록된 이미지가 없을때 나와야하는 컴포넌트 */}
-                        {/* <div className="input-img-click">
+                <main className="cd-main dis-center po-re">
+
+                    {/* 등록된 이미지가 없을때 나와야하는 컴포넌트 */}
+                    {/* <div className="input-img-click">
                                 이미지를 등록하세요
                             </div> */}
-                        <div className="input-img-click">
-                           <ImageSlider images={images} />  
-                        </div>
+                    <div className='slider-container  map-section'>
+                    <ImageSlider images={images}/>
+                    </div>
 
-                    </section>
 
-                    <section className="shop-main-section">
+                    <section className="shop-main-section bg-white nearby-container">
                         <div className="shop-title-text">{shopInfo.name}</div>
                         <nav className="main-nav">
                             <ul className="main-nav-list">

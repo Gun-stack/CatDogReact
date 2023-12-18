@@ -42,4 +42,7 @@
     .gray-line{
         width: 90%;
     }
+    .main-nav-list-text>a{
+        margin: 0 .2rem;
+    }
 }
