@@ -14,7 +14,6 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import ImageSlider from '../tools/ImageSlider';
-import SimpleSlider from '../tools/SimpleSlider';
 
 
 

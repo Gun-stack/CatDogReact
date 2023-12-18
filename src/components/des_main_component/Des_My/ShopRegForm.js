@@ -21,9 +21,9 @@ function ShopRegForm() {
     const [geocoder, setGeocoder] = useState(null);
     useKakaoLoader();
     const user = useSelector((state) => state.user);
-    const [sId, setSId] = useState('');
+    const [sId, setSId] = useState(''); 
     const [backsId, setBackSId] = useState('');
-    const [authcomplete, setAuthcomplete] = useState(false); // 인증 완료 여부
+    const [authComplete, setAuthComplete] = useState(false); // 인증 완료 여부
 
 
     // DB에 들어가는 데이터
@@ -250,8 +250,7 @@ function ShopRegForm() {
                         'success',
                         '인증에 성공하였습니다.',
                     );
-                    setAuthcomplete(true);
-
+                    setAuthComplete(true);
                 }else if(result.data[0].b_stt_cd === "02"){
                     SwalCustomAlert(
                         'fail',
@@ -302,21 +301,22 @@ function ShopRegForm() {
                                         className="input-text" onChange={change} required />
 
                                     {/* 사업자 등록번호 */}
-                                    <div>
-                                        <input type="text" id="SId" name="sId" placeholder="사업자 등록번호"
-                                            className="input-text" value={backsId} onChange={idChange} maxLength={12} required
-                                             />
+                                    <div className="address-container">
+                                        <div className="address-btn-container">
+                                            <input type="text" id="SId" name="sId" placeholder="사업자 등록번호"
+                                                className="input-text" value={backsId} onChange={idChange} maxLength={12} required 
+                                                    readOnly={authComplete} />
                                              <button className="address-btn" type='button' onClick={()=>callApi(sId)}>
-                                                사업자 번호 조회
+                                                사업자 조회
                                             </button>
+                                        </div>
                                     </div>
-                                    <input type="text" id="SId" name="sId" placeholder="사업자 등록번호"
-                                        className="input-text" value={backsId} onChange={idChange} maxLength={12} required />
 
                                     {/* 주소 검색 */}
                                     <div className="address-container">
                                         <div className="address-btn-container">
-                                            <input type="text" value={address} onChange={(e) => setAddress(e.target.value)} className="input-text" required />
+                                            <input type="text" value={address} placeholder="주소를 입력하세요" onChange={(e) => setAddress(e.target.value)} className="input-text" required />
+                                            
                                             <button className="address-btn" type='button' onClick={handleClick}>
                                                 주소 검색
                                             </button>
@@ -330,10 +330,9 @@ function ShopRegForm() {
                                     <div className="filebox">
                                         <img src="/img/logo/shop_defult_img.png" accept="image/*" alt='샵 기본이미지'
                                             className="input-img magin-r-1" placeholder='사진을 올려주세요' ref={imgBoxRef} />
-                                        <label htmlFor="shopImgFile">샵 사진 올리기</label>
+                                        <label htmlFor="shopImgFile">샵 프로필 사진  올리기</label>
                                         <input type="file" id="shopImgFile" accept="image/*" onChange={fileChange} />
                                     </div>
-
                                 </div>
 
                                 {/* submit 버튼 */}
@@ -345,11 +344,8 @@ function ShopRegForm() {
                             </div>
                         </form>
                     </section>
-
                 </main>
-                <Footer />
             </div>
-
         </div>
     );
 }
