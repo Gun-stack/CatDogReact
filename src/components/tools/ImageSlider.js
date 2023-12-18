@@ -8,21 +8,24 @@ const ImageSlider = ({ images }) => {
   const baseUrl = 'http://localhost:8090/shopimg/';
   
   const settings = {
-    dots: true,
+      dots: true,
+      arrows: false,
       infinite: true,
       speed: 500,
       slidesToShow: 1,
-      slidesToScroll: 1
+      slidesToScroll: 1,
+      autoplay: true,
+      autoplaySpeed: 3000,  
   };
 
   return (
-    <div style={{width:'200px',height:'160px',zIndex:'0' }}>
+
     <Slider {...settings}>
       {images.map((image, index) => (
-          <img src={baseUrl+`${image}`} key={index} alt='' className='shop-title-img' style={{width:'100%',height:'160px'}} />
+          <img src={baseUrl+`${image}`} key={index} alt={`Slide ${index}`} className='sd-img'/>
           ))}
     </Slider>
-    </div>
+
     
   );
 };

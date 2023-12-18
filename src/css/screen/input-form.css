@@ -50,7 +50,7 @@ input[type=file]{
     display: none;
 }
 
-[type=text],[type=password]{
+[type=text],[type=password],textarea{
     font-family: 'Pretendard-Regular';
     font-size: 1rem;
     color: var(--text-color);
