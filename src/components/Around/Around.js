@@ -165,7 +165,7 @@ function Around() {
                                 {/* 거리순 */}
                                 <li className={`main-nav-list-text ${isActive('distance') ? 'active' : ''}`}><Link to="distance">가까운순</Link></li>
                                 {/* 샵등록 */}
-                                <li className={`main-nav-list-text ${isActive('/shopreg/1') ? 'active' : ''}`}><Link to="/shopreg/1">샵등록</Link></li>
+                                <li className={`main-nav-list-text ${isActive('usermy/shopreg') ? 'active' : ''}`}><Link to="/usermy/shopreg">샵등록</Link></li>
 
                             </ul>
                         </nav>

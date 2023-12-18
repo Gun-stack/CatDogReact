@@ -216,7 +216,7 @@ function UserJoin() {
 
     const handleSubBtnClick = (e) => {
         e.preventDefault();
-        
+
         SwalCustomAlert(
             'agree',
             `<span class="tx-orange">${username}</span> 님 가입 하시겠습니까 ?`,
@@ -320,7 +320,10 @@ function UserJoin() {
                                             {/** submit */}
                                             <button onClick={handleSubBtnClick} id="submit-btn" type="submit" className="main-btn btn-text magin-t-1">회원 가입</button>
                                             {/** 카카오톡 로그인 */}
-                                            <div className="main-btn kakao-login-btn"><i className="fas fa-comment"></i>카카오톡 로그인</div>
+                                            <div className="main-btn kakao-login-btn"><i className="fas fa-comment" >
+                                            </i>
+                                                <Link to="http://localhost:8090/oauth2/authorization/kakao">카카오 로그인</Link>
+                                            </div>
                                         </div>
 
                                     </div>

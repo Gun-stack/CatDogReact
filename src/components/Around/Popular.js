@@ -50,7 +50,9 @@ function Popular() {
                         </div>
 
                     </div>
+                    <div className="st-button-container">
                     <Link to={`/shop/${shoplist.num}`}> <button className="tx-end st-button ">바로가기</button></Link>
+                    </div>
                 </li>
             ))}
         </ul>

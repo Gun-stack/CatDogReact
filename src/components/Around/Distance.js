@@ -57,7 +57,9 @@ function Distance() {
 
                         </div>
                     </div>
+                    <div className="st-button-container">
                     <Link to={`/shop/${shoplist.num}`}> <button className="st-button tx-end">바로가기</button></Link>
+                    </div>
                 </li>
             ))}
         </ul>

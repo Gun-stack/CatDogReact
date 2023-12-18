@@ -75,12 +75,12 @@ function UserLogin() {
                 <div className="web-container">
                     <div className="cd-container bg-white bg-dogs">
                         <main className="cd-main">
-                        <Link to="/">
-                            <section className="main-logo">
-                                <img src="/img/logo/logo_color.png" alt="댕냥꽁냥 로고" />
-                                <span className="main-logo-text">보호자 로그인</span>
-                            </section>
-                        </Link>
+                            <Link to="/">
+                                <section className="main-logo">
+                                    <img src="/img/logo/logo_color.png" alt="댕냥꽁냥 로고" />
+                                    <span className="main-logo-text">보호자 로그인</span>
+                                </section>
+                            </Link>
                             <section className="form-section">
                                 <div className="form-container">
                                     <div className="input-container">
@@ -113,7 +113,7 @@ function UserLogin() {
 
                                         <div className="main-btn kakao-login-btn"><i className="fas fa-comment" >
                                         </i>
-                                            <a href="http://localhost:8090/oauth2/authorization/kakao">카카오 로그인</a>
+                                            <Link to="http://localhost:8090/oauth2/authorization/kakao">카카오 로그인</Link>
                                         </div>
 
 
