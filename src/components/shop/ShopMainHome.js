@@ -96,11 +96,15 @@ function ShopMainHome() {
 
                 case 'notice':
                     result = await Swal.fire({
-                        title: '공지사항',
+                        title: '<span class="sweet-modal-title">공지사항</span>',
                         input: 'textarea', // 텍스트 영역 입력
-                        inputLabel: '공지사항을 작성하세요',
+                        html: '<span class="sweet-modal-title">공지사항 을 작성하세요</span>',
                         inputPlaceholder: '공지 내용 입력',
                         confirmButtonColor: '#F9950F',
+                        confirmButtonText: '등록',
+                        showCancelButton: true,
+                        cancelButtonText: '취소',
+                        reverseButtons: true,
 
                     });
 
@@ -126,11 +130,15 @@ function ShopMainHome() {
 
                 case 'worktime':
                     result = await Swal.fire({
-                        title: '영업시간',
+                        title: '<span class="sweet-modal-title">영업시간</span>',
                         input: 'text', // 일반 텍스트 입력
-                        inputLabel: '영업시간을 입력하세요',
+                        html: '<span class="sweet-modal-title">영업시간을 입력하세요</span>',
                         inputPlaceholder: '예: 월-금 9시 - 6시',
                         confirmButtonColor: '#F9950F',
+                        confirmButtonText: '등록',
+                        showCancelButton: true,
+                        cancelButtonText: '취소',
+                        reverseButtons: true,
                     });
 
 
@@ -156,11 +164,15 @@ function ShopMainHome() {
 
                 case 'shopinfo':
                     result = await Swal.fire({
-                        title: '매장 정보',
-                        input: 'text', // 일반 텍스트 입력
-                        inputLabel: '영업시간을 입력하세요',
-                        inputPlaceholder: '예: 월-금 9시 - 6시',
+                        title: '<span class="sweet-modal-title">매장정보</span>',
+                        input: 'textarea', // 텍스트 영역 입력
+                        html: '<span class="sweet-modal-title">매장에 대한 간단한 소개를 적어주세요.</span>',
+                        inputPlaceholder: '스트레스 받지않게 최선을 다하겠습니다!',
                         confirmButtonColor: '#F9950F',
+                        confirmButtonText: '등록',
+                        showCancelButton: true,
+                        cancelButtonText: '취소',
+                        reverseButtons: true,
                     });
                     if (result.isConfirmed && result.value) {
                         setLoading(true);
@@ -176,6 +188,7 @@ function ShopMainHome() {
                             <Server500Err_Alert />
                         } finally {
                             setLoading(false);
+                            window.location.reload();
                         }
                         console.log('입력한값:', result.value);
                     }

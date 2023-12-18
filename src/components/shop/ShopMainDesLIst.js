@@ -111,8 +111,8 @@ function ShopMainDesLIst() {
         e.preventDefault();
         console.log("1번 모달!!");
         await Swal.fire({
-            title: '디자이너 등록',
-            html: '<div class="swal2-input-container">' +
+            title: '<span class="sweet-modal-title">디자이너 등록 하기</span>',
+            html: '<div class="swal2-input-container">' +'<span class="sweet-modal-title">디자이너를 검색하세요</span>'+
                 '  <input id="swal-input1" class="swal2-input" placeholder="ID를 입력하세요.">' +
                 '</div>',
             showCancelButton: true,
@@ -120,6 +120,7 @@ function ShopMainDesLIst() {
             cancelButtonText: '취소',
             confirmButtonColor: '#F9950F',
             focusConfirm: false,
+            reverseButtons: true,
             preConfirm: () => {
                 const desId = document.getElementById('swal-input1').value;
                 return desId;
