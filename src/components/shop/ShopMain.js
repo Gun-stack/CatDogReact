@@ -26,7 +26,9 @@ function ShopMain() {
     const params = useParams();
     const shopInfo = useSelector((state) => state.shop);
 
-    const [images, setImage] = useState(shopInfo.bgImg.split(','));
+
+    const [images,setImage] = useState(shopInfo.bgImg ? shopInfo.bgImg.split(',') : []); 
+    
 
 
 

@@ -11,11 +11,35 @@ import { useNavigate } from 'react-router';
 
 
 function DesGalleryView() {
+    const user = useSelector((state) => state.user);
     const navigate = useNavigate();
+    const [like, setLike] = useState();
     function goBack(e) {
         e.preventDefault();
         navigate(-1);
     }
+
+    const likeClick = () => {
+        const fomrData = new FormData();
+        fomrData.append("galNum", gallery.num);
+        fomrData.append("userNum", user.num);
+
+        axios.post('http://localhost:8090/desgallerylike', fomrData)
+            .then((res) => {
+                console.log(res.data);
+                setLike(res.data);
+            }
+            )
+            .catch((err) => {
+                console.log(err);
+            })
+
+            
+           
+
+    }
+
+
 
     const dispatch = useDispatch();
     const galNum = useParams();
@@ -26,17 +50,19 @@ function DesGalleryView() {
 
 
     useEffect(() => { 
-        console.log(galNum);
-        axios.get(`http://localhost:8090/desgallerydetail?num=${galNum.desgalnum}`)
+        axios.get(`http://localhost:8090/desgallerydetail?galnum=${galNum.desgalnum}&usernum=${user.num}`)
             .then((res) => {
                 console.log(res.data);
                 setGallery(res.data.desGallery);
                 setDesInfo(res.data.designer);
+                setLike(res.data.isLike);    
+                                
+
             })
             .catch((err) => {
                 console.log(err);
             })
-    }, []);
+    }, [like]);
 
     return (
         <>
@@ -58,7 +84,8 @@ function DesGalleryView() {
                             <img src={`http://localhost:8090/desgalview/${galNum.desgalnum}`} alt="스타일리스트 사진" className="view-img" />
                         </div>
                         <div className="view-img-icons magin-l-1">
-                            <span><i className="fa-regular fa-heart"></i> {gallery.likeCnt}</span>
+
+                            <span onClick={likeClick} >{ like === true ? <i className="fa-solid fa-heart"></i> :<i className="fa-regular fa-heart"></i> } {gallery.likeCnt}</span>
                             {/* <span><i className="fa-regular fa-comment"></i>{gallery.galComment}</span> */}
 
                             <div className="view-comment">

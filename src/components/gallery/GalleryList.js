@@ -21,25 +21,19 @@ function GalleryList() {
         return location.pathname === path;
     };
 
-    const [galleryList, setGalleryList] = useState([]);
-    const [gallery, setGallery] = useState({
-        galNum: '1',
-        galWriter: '',
-        galImg: '',
-        galLike: '3',
-        galComment: '3',
-        galDate: ''
-    });
+    
 
     return (
         <div className="web-container">
             <div className="cd-container bg-white">
-                <Header />
+                
+                <Header />  
                 <section className="section-header">
                     <div className="section-header-container">
                        <Link to ='/gallery'><span className="section-header-text">갤러리</span></Link> 
                     </div>
                 </section>
+
                 <main className="cd-main">
                     <nav className="main-nav">
                         <ul className="main-nav-list">

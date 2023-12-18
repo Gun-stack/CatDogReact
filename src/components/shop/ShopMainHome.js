@@ -209,6 +209,7 @@ function ShopMainHome() {
     return (
         <>
             {loading ? <Loding /> :
+
                 <>
 
 
@@ -244,6 +245,7 @@ function ShopMainHome() {
                             </div>
                         )}
                     </ImageUploading>
+
                     <button className='info-input-btn' value='titleimg' onClick={handleBtnClick}>매장그림 올리기<i className="far fa-plus-square tx-white"></i>
                     </button>
 

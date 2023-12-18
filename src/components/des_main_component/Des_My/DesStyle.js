@@ -42,7 +42,7 @@ useEffect(() => {
         <div className="st-gallery-img" key={index}>    
              <Link to={`/des/${gallery.num}/`+gallery.num}><img src={`http://localhost:8090/desgalview/${gallery.num}`} alt="" className="hover-img" /></Link>
             <div className="img-comment-hover">
-                <span className="img-hover-icon"><i className="fas fa-heart" ></i>{gallery.likeCnt}</span>
+                <span className="img-hover-icon"> <i className="fas fa-heart" ></i> {gallery.likeCnt} </span>
             </div>
         </div>
          ))}

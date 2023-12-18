@@ -51,10 +51,21 @@ function ShopReservation(props) {
                         <div className="st-profile-name">
                             {desInfo.position} {desInfo.desNickname}
                         </div>
+
                         <div className="st-profile-shop">
-                            {shopInfo.name}
-                            
-                            별{desInfo.star}
+                            @{shopInfo.name}
+                        </div>
+                        
+                        <div className="st-profile-shop">
+                            <span className="review-stars">
+                                <span className="review-stars-point">{desInfo.star}</span>
+                                {[...Array(Math.floor(Number(desInfo.star)))].map((_, index) => (
+                                    <i key={index} className="fas fa-star review-star"></i>
+                                    ))}
+                                {[...Array(5 - Math.floor(Number(desInfo.star)))].map((_, index) => (
+                                    <i key={index + Math.floor(Number(desInfo.star))} className="far fa-star review-star"></i>
+                                    ))}
+                            </span>
                         </div>
                         <div className="st-profile-info">
                             {desInfo.info}

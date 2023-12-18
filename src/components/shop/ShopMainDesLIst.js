@@ -199,9 +199,10 @@ function ShopMainDesLIst() {
 
                 <div className="stylelist-content" key={des.num} >
                     <div className="st-profile-container">
-                        <div className="st-profile-img">
-                            <img src={`http://localhost:8090/desimg/${des.num}`} alt="프로필 이미지" className="st-profile-img" />
-                        </div>
+
+                            <div className="st-profile-img">
+                                <img src={`http://localhost:8090/desimg/${des.num}`} alt="프로필 이미지" className="st-profile-img" />
+                            </div>
 
                         <div className="st-profile-context">
                             <div className="st-profile-name">

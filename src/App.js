@@ -18,7 +18,7 @@ import GalleryList from './components/gallery/GalleryList';
 import ShopMain from './components/shop/ShopMain';
 
 
-import { Provider } from 'react-redux';
+import { Provider, useDispatch } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
 import store from './persist-store';
@@ -27,11 +27,17 @@ import Loding from './components/tools/Loding';
 import Oauth from './components/Oauth';
 import ShopReg from './components/des_main_component/Des_My/ShopReg';
 import DistanceCalculator from './components/tools/DistanceCalculator';
+import { useEffect } from 'react';
+import { logoutStore } from './actions';
+
+
+
 
 
 export const persistor = persistStore(store);
 
 function App() {
+
 
   return (
   <>

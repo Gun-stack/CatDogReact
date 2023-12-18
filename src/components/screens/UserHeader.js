@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from "react-router-dom";
 import { setToken, logoutStore } from "../../actions";
 import Swal from "sweetalert2";
+import { persistor } from "../../App"
+
 
 
 
@@ -20,7 +22,7 @@ function UserHeader() {
             cancelButtonText: '아니오'
         }).then((result) => {
             if (result.isConfirmed) {
-
+                persistor.purge();
                 dispatch(logoutStore());
                 dispatch(setToken("")); // 토큰 값이 남아 있어서 서버에 이전 로그인 사용자의 토큰값이 서버에 넘어감
                 Swal.fire({

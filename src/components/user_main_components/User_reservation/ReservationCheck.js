@@ -6,22 +6,20 @@ import { Link, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { useSelector ,useDispatch } from 'react-redux';
 import { PetStore } from '../../../actions';
+
 function ReservationCheck() {
     const params = useParams();
+
     const [inputValue, setInputValue] = useState('')
     const [Modal, setModal] = useState(false);
     const [styleT, setStyleT] = useState('');
     const dispatch = useDispatch();
     const user = useSelector((state) => state.user);
-    const petList = useSelector((state) => state.petList);
-    const resvList = useSelector((state) => state.resvList);
+    const [pet,setPet] = useState([]);
+    const [resv,setResv] = useState([]);
+    const [des,setDes] = useState([]);
 
     
-    //선택한 예약넘버와 같은 예약을 찾아온다
-    //가져온 펫리스트중에 예약넘버의 펫이름과 같은 펫정보를 찾아온다
-    
-    const resv = resvList.find((resv) => resv.num == params.num);
-    const pet1 = petList.find((pet) => pet.name == resv.petName);
 
     async function updateStyleT() {
         setModal(true);
@@ -52,18 +50,22 @@ function ReservationCheck() {
         
         console.log(user.id);
         console.log(params.num);
-        console.log(resv);
-        axios.get(`http://localhost:8090/petinfo?userId=${user.id}`)    
+        // console.log(resv);
+        axios.get(`http://localhost:8090/reservedetail?num=${params.num}`)    
         .then((res) => {
             console.log(res.data);
-                dispatch(PetStore(res.data));
+            setResv(res.data.resv);
+            setPet(res.data.pet);
+            setDes(res.data.des);
+                
+            
             }
         )
         .catch((err) => {
             console.log(err);
         })  
     }
-    , []);
+    , [user.id,params.num]);
 
 
 
@@ -84,18 +86,18 @@ function ReservationCheck() {
             </ul>
 
             <div className="reservation-container">
-                <hr className="divide-line" />
-                <div className="re-date">{resv.date} {(resv.time).slice(0,-3)}시</div>
+                <hr className="divide-line" />  
+                <div className="re-date">{resv.date} 일  {resv.time}시</div>    
                 예약번호 : {resv.num}
                 <div className="magin-t-1"><span className="re-text">샵 이름 :</span><span className="magin-l-05">{resv.shopName}</span></div>
                 <div className="magin-t-1"><span className="re-text">반려동물 이름 :</span><span className="magin-l-05">{resv.petName}</span></div>
 
-                <div className="magin-t-1"><span className="re-text">품종 :</span><span className="magin-l-05">{pet1.breed}</span></div>
-                <div className="magin-t-1"><span className="re-text">나이 :</span><span className="magin-l-05">{pet1.age}</span></div>
+                <div className="magin-t-1"><span className="re-text">품종 :</span><span className="magin-l-05">{pet.breed}</span></div>
+                <div className="magin-t-1"><span className="re-text">나이 :</span><span className="magin-l-05">{pet.age}</span></div>
 
-                <div className="magin-t-1"><span className="re-text">성별 :</span><span className="magin-l-05">{pet1.gender=='1' ? '수컷' : '암컷 '}</span></div>
-                <div className="magin-t-1"><span className="re-text">중성화 여부 :</span><span className="magin-l-05">{pet1.neuter=='1' ? '완료' : '미완료'}</span></div>
-                <div className="magin-t-1"><span className="re-text">특이사항 :</span><span className="magin-l-05">{pet1.petNote}</span></div>
+                <div className="magin-t-1"><span className="re-text">성별 :</span><span className="magin-l-05">{pet.gender=='1' ? '수컷' : '암컷 '}</span></div>
+                <div className="magin-t-1"><span className="re-text">중성화 여부 :</span><span className="magin-l-05">{pet.neuter=='1' ? '완료' : '미완료'}</span></div>
+                <div className="magin-t-1"><span className="re-text">특이사항 :</span><span className="magin-l-05">{pet.petNote}</span></div>
                 
                 <div className="magin-t-1"><span className="re-text">스타일 :</span><span className="magin-l-05">{inputValue}{resv.refText} </span>
 

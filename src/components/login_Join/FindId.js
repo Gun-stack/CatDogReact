@@ -59,12 +59,12 @@ function FindId() {
         <div className="web-container">
             <div className="cd-container bg-white bg-dogs">
                 <main className="cd-main">
-
+                <Link to="/">
                     <section className="main-logo">
                         <img src="/img/logo/logo_color.png" alt="댕냥꽁냥 로고" />
                         <span className="main-logo-text">계정 찾기</span>
                     </section>
-
+                </Link>
 
                     <section className="form-section">
                         <form action="#" method="post" className="form-css">

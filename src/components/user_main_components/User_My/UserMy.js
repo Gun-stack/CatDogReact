@@ -61,8 +61,7 @@ function UserMy() {
                 dispatch({ type: 'SET_DES', payload: res.data.des })
             })
         }
-
-    }, []);
+    }, [user.roles]);
 
     return (
         <div className="web-container">
@@ -97,22 +96,28 @@ function UserMy() {
 
 
                         <Route exact path='/reservation' element={<Reservation />} />
-                        <Route exact path='/check/:num' element={<ReservationCheck />} />
+                        <Route exact path='/check/:num' element={<ReservationCheck  />  } />
                         <Route path='/reviewregform/:resnum' element={<UserReviewForm />} />
                         <Route path='/reservationdone/:desnum' element={<UserReviewList/>}/>
                         <Route path='/reviewdetail/:resnum' element={<UserReviewDetail/>}/>
                         <Route path='/reviewmodi/:reviewnum' element={<UserReviewModi/>}/>
 
 
+
                         <Route exact path='/desreg' element={<DesReg />} />
                         <Route exact path='/shopreg' element={<ShopReg />} />
                         <Route exact path='/shopregform' element={<ShopRegForm />} />
                         <Route exact path='/shopmodiform/:shopnum' element={<ShopModiForm />} />
-
+                        
                         <Route exact path='/desinfo' element={<DesInfo />} />
                         <Route exact path='desresvlist' element={<DesResvList />} />
                         <Route exact path='deservedetail/:resvnum' element={<DesResvDetail/>}/>
-                        
+
+       
+                    
+                
+
+
                         <Route path='/*' element={<Error404 />} />
 
                     </Routes>

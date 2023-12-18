@@ -17,6 +17,10 @@ import { useLocation } from 'react-router';
 import StarRating from './StarRating';
 import DesHome from './DesHome';
 import DesGalleryView from '../../gallery/DesGalleryView';
+import { useNavigate } from 'react-router';
+import DesReservationForm from './DesReservationForm';
+import DesReservationDate from './DesResrevationDate';
+
 
 
 
@@ -25,6 +29,7 @@ import DesGalleryView from '../../gallery/DesGalleryView';
 
 
 function Home() {
+    const dispatch = useDispatch();
     const params = useParams();
     const [des, setDes] = useState({});
     const [shop, setShop] = useState({});
@@ -39,6 +44,8 @@ function Home() {
         .then((res) => {
             setShop(res.data.shop);
             setDes(res.data.des);
+            dispatch({ type: 'SET_DES', payload: res.data.des });
+
             console.log(res.data);
         })
     }, [des.num]);
@@ -74,11 +81,13 @@ function Home() {
 
                                     <div className="st-profile-name">
                                         {des.position} {des.desNickname}
-                                    </div>
+                                    </div>  
+                                    <Link to={`/shop/${shop.num}`}>
 
                                     <div className="st-profile-shop">
                                         {shop.name}
                                     </div>
+                                    </Link>
 
                                     <div className="st-profile-info">
                                         {des.info}
@@ -89,8 +98,11 @@ function Home() {
                                 </div>
                             </div>
                             <div className="st-button-container">
+
                                 <a href="#"><button className="st-button">편집<i className="fas fa-pen btn-icon"></i></button></a>
-                                <a href="reservation.html"><button className="st-button">예약하기<i className="far fa-calendar-alt btn-icon"></i></button></a>
+                            <Link to={`/des/${des.num}/reservation`}>
+                                <button className="st-button">예약하기<i className="far fa-calendar-alt btn-icon"></i></button>
+                            </Link>
                             </div>
 
                         </div>
@@ -101,16 +113,21 @@ function Home() {
                             <li className={`main-nav-list-text ${isActive `/des/${des.num}/style` ? 'active' : ''}`}><Link to={`/des/${des.num}/home`}>홈</Link></li>
                             <li className={`main-nav-list-text ${isActive `/des/${des.num}/style` ? 'active' : ''}`}><Link to={`/des/${des.num}/style`}>스타일</Link></li>
                             <li className={`main-nav-list-text ${isActive `/des/${des.num}/review` ? 'active' : ''}`}><Link to={`/des/${des.num}/review`}>리뷰</Link></li>
+                            <li className={`main-nav-list-text ${isActive `/des/${des.num}/review` ? 'active' : ''}`}><Link to={`/des/${des.num}/reservation`}>예약</Link></li>
 
                         </ul>
                     </nav>
                     <hr className="divide-line" />
                     <Routes>
-                            <Route path="home" element={<DesHome desInfo={des} />} />
+                            <Route path="home" element={<DesHome desInfo={des} ShopInfo={shop} />} />
                             <Route path="style" element={<DesStyle desInfo={des} />} />
                             <Route path="review" element={<DesReview desInfo={des} />} />
                             <Route path='/:desgalnum' element={<DesGalleryView />} />
-                            {/* <Route path="/reservation/:desnum/*" element={<DesReservation desInfo={des} />} /> */}
+                            <Route path='reservation' element={<DesReservationDate desInfo={des} shopInfo={shop} />} />
+                            {/* <Route path='reservation' element={<DesReservationForm desInfo={des} shopInfo={shop} />} /> */}
+
+
+                            {/* <Route path="/reser vation/:desnum/*" element={<DesReservation desInfo={des} />} /> */}
                             <Route path='/*' element={<Error404 />} />
                     </Routes>
                     

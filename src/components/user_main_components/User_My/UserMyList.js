@@ -59,6 +59,9 @@ function UserMylist() {
                             </div>
                             <i className="fas fa-cut"></i>
                         </li>
+                    {user.roles === "ROLE_DES" || user.roles === "ROLE_SHOP" ?
+                    <div>
+                    
 
                         <li className="nav-li">
                             <div>
@@ -68,7 +71,6 @@ function UserMylist() {
                             <i className="fas fa-cut"></i>
                         </li>
 
-                        {/* 이 밑으로 아직 연결하지 않았어요! */}
                         <li className="nav-li">
                             <div>
                                 <i className="fas fa-caret-square-right mypage-arrow"></i>
@@ -84,6 +86,9 @@ function UserMylist() {
                             </div>
                             <i className="fas fa-store"></i>
                         </li>
+                        </div>
+                :""}
+
                     </ul>
                 </section>
             </main>
