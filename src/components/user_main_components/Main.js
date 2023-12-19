@@ -10,18 +10,8 @@ function Main() {
 
     const token = useSelector(state => state.token);
     useEffect(() => {
-        // console.log("로그인 후 토큰 값 : " + token);
-        axios.get('http://localhost:8090/user', {
-            headers: {
-                Authorization: token,
-            }
-        })
-            .then(res => {
-                // console.log("Res : " + res.data);
-            })
-            .catch(err => {
-                // console.log("Err : " + err);
-            })
+        console.log("로그인 후 토큰 값 : " + token);
+       
     }, [])
 
     return (
