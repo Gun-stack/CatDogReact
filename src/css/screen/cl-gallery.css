@@ -24,3 +24,24 @@
     align-items: center;
     justify-content: center;
 }
+
+.gal-comment-container{
+    display: flex;
+    align-items: center;
+    margin-top: .5rem;
+
+}
+
+.gal-text{
+    width: 80%;
+    margin: 0;
+    margin-right: .5rem;
+}
+
+.add-comment-btn{
+    background-color: var(--btn-submit);
+    color: white;
+    padding: .5rem;
+    border-radius: 8px;
+}
+

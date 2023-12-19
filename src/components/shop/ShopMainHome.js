@@ -217,7 +217,7 @@ function ShopMainHome() {
                         {({ imageList, onImageUpload, onImageRemoveAll, onImageUpdate, onImageRemove, isDragging, dragProps, }) => (
 
                             <div className="upload__image-wrapper">
-                                <div className="shop-title-text sm-text magin-t-1"> 매장 사진 올리기 <i class="fas fa-photo-video btn-icon"></i></div>
+                                <div className="shop-title-text sm-text magin-t-1"> 매장 사진 올리기 <i className="fas fa-photo-video btn-icon"></i></div>
                                 <div className="shop-title-text sm-text magin-t-1 tx-gray f-size-14px"> 높이 260px 이상의 사진은 깨질수있습니다!</div>
 
                                 <div className="shop-form-container">
