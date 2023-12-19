@@ -1,17 +1,41 @@
-import { Link, Route, Routes } from "react-router-dom";
+import { Link, Route, Routes, useNavigate } from "react-router-dom";
 import Footer from "../screens/Footer";
 import Header from "../screens/Header";
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import axios from 'axios';
+import SwalCustomAlert from '../Alerts/SwalCustomAlert';
 
 function Main() {
 
+    
+
 
     const token = useSelector(state => state.token);
+    const navigate = useNavigate();
     useEffect(() => {
+        
+        // console.log("로그인 후 토큰 값 : " + token);
+        axios.get('http://localhost:8090/user', {
+            headers: {
+                Authorization: token,
+            }
+        })
+            .then(res => {
+                console.log("Res : " + res.data);
+            })
+            .catch(err => {
+                // console.log("Err : " + err);
+                SwalCustomAlert(
+                    'warning', 
+                    "로그인 이후 사용 가능합니다."
+                    );
+                    navigate('/userlogin');
+            })
+
         console.log("로그인 후 토큰 값 : " + token);
        
+
     }, [])
 
     return (

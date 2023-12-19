@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-
+import SwalCustomAlert from '../../Alerts/SwalCustomAlert';
 import axios from 'axios';
+import { useNavigate } from 'react-router';
 
 
 
@@ -12,8 +13,31 @@ function PetReg() {
     const user = useSelector(state => state.user);
     const petList = useSelector(state => state.petList);
     const dispatch = useDispatch();
+    const token = useSelector(state => state.token);
+    const navigate = useNavigate();
 
     useEffect(() => {
+
+
+        // console.log("로그인 후 토큰 값 : " + token);
+        axios.get('http://localhost:8090/user', {
+            headers: {
+                Authorization: token,
+            }
+        })
+            .then(res => {
+                console.log("Res : " + res.data);
+            })
+            .catch(err => {
+                // console.log("Err : " + err);
+                SwalCustomAlert(
+                    'warning',
+                    "로그인 이후 사용 가능합니다."
+                );
+                navigate('/userlogin');
+            })
+
+
         axios.get(`http://localhost:8090/petinfo?userId=${user.id}`)
             .then((res) => {
                 dispatch({ type: 'SET_PET_LIST', payload: res.data });

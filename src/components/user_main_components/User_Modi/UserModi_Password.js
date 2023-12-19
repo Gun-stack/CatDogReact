@@ -24,15 +24,48 @@ function UserModi_Password() {
         setPassword(e.target.value);
     }
 
+
+
+    const token = useSelector(state => state.token);
     useEffect(() => {
-        if (password && passwordCheck) {
-            if (password !== passwordCheck) {
-                setPassMessage('비밀번호가 일치하지 않습니다.');
-            } else {
-                setPassMessage('비밀번호가 일치합니다.');
+
+        // console.log("로그인 후 토큰 값 : " + token);
+        axios.get('http://localhost:8090/user', {
+            headers: {
+                Authorization: token,
             }
-        }
-    }, [password, passwordCheck]);
+        })
+            .then(res => {
+                console.log("Res : " + res.data);
+            })
+            .catch(err => {
+                // console.log("Err : " + err);
+                SwalCustomAlert(
+                    'warning',
+                    "로그인 이후 사용 가능합니다."
+                );
+                navigate('/userlogin');
+            })
+            if (password && passwordCheck) {
+                if (password !== passwordCheck) {
+                    setPassMessage('비밀번호가 일치하지 않습니다.');
+                } else {
+                    setPassMessage('비밀번호가 일치합니다.');
+                }
+            }
+        }, [password, passwordCheck]);
+
+
+
+    // useEffect(() => {
+    //     if (password && passwordCheck) {
+    //         if (password !== passwordCheck) {
+    //             setPassMessage('비밀번호가 일치하지 않습니다.');
+    //         } else {
+    //             setPassMessage('비밀번호가 일치합니다.');
+    //         }
+    //     }
+    // }, [password, passwordCheck]);
 
     function changePassCheck(e) {
         setPasswordCheck(e.target.value);
