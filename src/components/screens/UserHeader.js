@@ -8,8 +8,8 @@ import { persistor } from "../../App"
 
 
 
-function UserHeader() {
 
+function UserHeader() {
 
     const navigate = useNavigate();
 
@@ -60,7 +60,6 @@ function UserHeader() {
                 <div className="icon-container">
 
 
-                    
 
                     {isLoggedIn ?
                         <button className="header-btn header-btn-text" onClick={onLogout}>로그아웃</button>

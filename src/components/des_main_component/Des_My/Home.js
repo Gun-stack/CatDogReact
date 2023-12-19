@@ -82,6 +82,7 @@ function Home() {
 
                                     <div className="st-profile-name">
                                         {des.position} {des.desNickname}
+
                                     </div>
                                     {shop !== null ? (
                                         <Link to={`/shop/${shop.num}`}>

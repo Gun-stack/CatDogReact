@@ -32,6 +32,10 @@ function Main() {
                     );
                     navigate('/userlogin');
             })
+
+        console.log("로그인 후 토큰 값 : " + token);
+       
+
     }, [])
 
     return (

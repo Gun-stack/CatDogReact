@@ -88,7 +88,9 @@ function UserModi_Nickname() {
                 return false;
             }
             try {
+
                 const res = await axios.get(`http://localhost:8090/checkusernickname?nickname=${userNickname}`);
+
                 if (res.data === "success") {
                     // 닉네임 중복이 아니고 조건에 부합하면
                     SwalCustomAlert(

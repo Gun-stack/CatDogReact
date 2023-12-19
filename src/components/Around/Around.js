@@ -11,32 +11,37 @@ import useKakaoLoader from './useKakaoLoader';
 import Swal from "sweetalert2";
 import Error404 from "../error/Error404";
 import { useDispatch, useSelector } from "react-redux";
+
 import axios from 'axios';
 import SwalCustomAlert from '../Alerts/SwalCustomAlert';
 
 
 
+
 function Around() {
     const dispatch = useDispatch();
-    const location = useLocation();
-    const isActive = (path) => {    
-        return location.pathname === path;
-    };
+    const shops = useSelector((state) => state.shopList);
 
-
+    useEffect(() => {
+        axios.get(`http://localhost:8090/shoplistall`)
+            .then((res) => {
+                dispatch({ type: 'SET_SHOP_LIST', payload: res.data });
+            })
+    }, []);
 
     const markerImageSrc = '/img/logo/map_shop_icon.png';
     const markerUserImageSrc = '/img/logo/map_user_icon.png';
 
     const iconSize = { width: 50, height: 50 };
 
-    //위도경도 불러오는걸 여기다가 집어 넣으면됨
-    const shopPositions = [
-        { lat: 37.4731841, lng: 126.8843495 },
-        { lat: 37.4733758, lng: 126.8854484 },
-        { lat: 37.4713567, lng: 126.8850701 },
-        { lat: 37.472292, lng: 126.8842626 },
-    ]
+    const shopPositions = shops.map((shop) => ({
+        name: shop.name,
+        lat: shop.lat,
+        lng: shop.lon,
+    }));
+    console.log(shopPositions);
+
+
 
     //위치동의 하기전에 기본위치
     const [state, setState] = useState({
@@ -74,25 +79,10 @@ function Around() {
 
 
     function mapClickModal() {
-        const shoplist = [
-            {
-                shopname: '코스타 살롱살롱',
-                address: '서울 금천구 가산 디지털 1로 70 호서대 벤쳐 타워',
-                image: '',
-                num: '1',
-                dist: '5m'
-            },
-            {
-                shopname: '코스타2 살롱살롱',
-                address: '서울 금천구 가산 디지털 1로 70 호서대 벤쳐 타워',
-                image: '',
-                num: '2',
-                dist: '6m'
-            },
-        ]
+        console.log(shopPositions);
         Swal.fire({
-            html: ` <div class="sweet-modal-title">${shoplist[0].shopname}<span class="sweet-modal-sub-text">${shoplist[0].dist}</span>
-            </div><span class="sweet-modal-text">${shoplist[0].address}</span><br/>`,
+            html: ` <div class="sweet-modal-title">${shopPositions[0].name}<span class="sweet-modal-sub-text">${shopPositions[0].dist}</span>
+            </div><span class="sweet-modal-text">${shopPositions.address}</span><br/>`,
             confirmButtonColor: '#F9950F',
             confirmButtonText: '바로가기',
             showCancelButton: true,
@@ -115,8 +105,6 @@ function Around() {
                     }));
                     dispatch({ type: 'SET_LATITUDE', payload: position.coords.latitude });
                     dispatch({ type: 'SET_LONGITUDE', payload: position.coords.longitude });
-                    // console.log(position.coords.latitude);
-                    // console.log(position.coords.longitude);
                 },
                 (err) => {
                     setState((prev) => ({
@@ -187,11 +175,11 @@ function Around() {
                             <ul className="main-nav-list">
 
                                 {/* 인기순 */}
-                                <li className={`main-nav-list-text ${isActive('/') ? 'active' : ''}`}><Link to="">인기순</Link></li>
+                                <li className='main-nav-list-text'><Link to="">인기순</Link></li>
                                 {/* 거리순 */}
-                                <li className={`main-nav-list-text ${isActive('distance') ? 'active' : ''}`}><Link to="distance">가까운순</Link></li>
+                                <li className='main-nav-list-text'><Link to="distance">가까운순</Link></li>
                                 {/* 샵등록 */}
-                                <li className={`main-nav-list-text ${isActive('usermy/shopreg') ? 'active' : ''}`}><Link to="/usermy/shopreg">샵등록</Link></li>
+                                <li className='main-nav-list-text'><Link to="/usermy/shopreg">샵등록</Link></li>
 
                             </ul>
                         </nav>
