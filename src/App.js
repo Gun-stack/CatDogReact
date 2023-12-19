@@ -67,7 +67,6 @@ function App() {
       {/* 갤러리 관련 라우터 */}
       
       <Route path='/gallery/*' element={<GalleryList/>}/>
-      
       {/* 예약관련 라우터 */} 
       <Route path='/des/:desnum/*' element={<Home/>}/>
       

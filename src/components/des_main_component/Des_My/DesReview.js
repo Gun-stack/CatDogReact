@@ -56,7 +56,10 @@ function DesReview(props) {
                                 </div>
                             </div>
                             <div className="review-img-container">
+                                {review.afterImg&&
                                 <img className="review-img" src={`http://localhost:8090/reviewimg/${review.afterImg}`} alt=''/>
+                                }
+
                             </div>
                         </div>
                     ))}

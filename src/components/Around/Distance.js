@@ -3,7 +3,11 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import axios from "axios";
 import { calculateDistance } from '../tools/DistanceCalculator';
+
 import SwalCustomAlert from '../Alerts/SwalCustomAlert';
+
+import StarRating from '../des_main_component/Des_My/StarRating';
+
 
 
 
@@ -84,9 +88,12 @@ function Distance() {
                             {/* // 제목을 누르면 지도에서 마커 찍어주기?? */}
                             <div className="shop-text-container">
                                 <Link to={"/shop/" + shoplist.num}><h3 className="shop-name" name="shopname">{shoplist.name}</h3></Link>
+                                {shoplist.distance &&
                                 <h3 className="shop-dist">
-                                    {shoplist.distance} km
+                                    {shoplist.distance<1 ? `${shoplist.distance*1000} m` : `${shoplist.distance} km` } 
                                 </h3>
+                                }
+                                <StarRating rating={shoplist.star} /> 
                                 <div className="shop-adderss"  >
                                     <p className="shop-adderss-text" name="address" >
                                         {shoplist.addressRoad}

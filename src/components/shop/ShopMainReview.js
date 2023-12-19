@@ -16,7 +16,8 @@ function ShopMainReview(shopInfo) {
     const [hasMore, setHasMore] = useState(true);
 
     useEffect(() => {
-        axios.get('http://localhost:8090/reviewlistbydes', {params: {
+
+        axios.get('http://localhost:8090/reviewlistbyshop', {params: {
             num: shop.num,
             offset: offset, // 필요한 페이지 번호
             limit: 5, // 페이지당 아이템 개수
@@ -65,9 +66,11 @@ function ShopMainReview(shopInfo) {
                             </span>
                         </div>
                     </div>
+                        {review.afterImg&&
                     <div className="review-img-container">
                         <img src={`http://localhost:8090/reviewimg/${review.afterImg}`} alt="리뷰이미지" className="review-img" />
                     </div>
+                        }
                 </div>
                 ))}
 
