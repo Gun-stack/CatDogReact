@@ -1,7 +1,7 @@
 import axios from 'axios';
-import React, { useEffect,useState } from 'react';
-import { useSelector,useDispatch } from 'react-redux';
-import {useLocation} from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import SwalCustomAlert from '../../Alerts/SwalCustomAlert';
@@ -18,17 +18,17 @@ function DesReservationForm(props) {
     const desInfo = props.desInfo;
     const user = useSelector((state) => state.user);
     const pets = useSelector((state) => state.petList);
-    const location= useLocation();
+    const location = useLocation();
     const time = location.state?.data1;
     const sqlDate = location.state?.data2;
-    
+
     const [selected, setSelected] = useState(false);
-    
+
     const selectDays = new Date(sqlDate).getDay();
     const day = ['일', '월', '화', '수', '목', '금', '토'];
     const selectDay = day[selectDays];
 
-    
+
     const [resvInfo, setResvInfo] = useState({
         userId: user.id,
         desId: desInfo.id,
@@ -41,9 +41,9 @@ function DesReservationForm(props) {
         isReview: 0,
         refText: '',
     });
-    
-   
-    
+
+
+
     //선택된pet의 정보를 resvInfo에 넣어준다
 
     const selectPet = (pet) => {
@@ -54,27 +54,49 @@ function DesReservationForm(props) {
         console.log(resvInfo);
         setSelected(true);
     }
-    
 
 
-    
+
+
     const goBack = () => {
-       navigate(-1);
+        navigate(-1);
     }
+
+
+    const token = useSelector(state => state.token);
     useEffect(() => {
         console.log(shopInfo);
-        axios.get(`http://localhost:8090/petinfo?userId=${user.id}`)
-        .then((res) => {
-            console.log(res);
-            dispatch({type:'SET_PET_LIST',payload:res.data});
 
+        // console.log("로그인 후 토큰 값 : " + token);
+        axios.get('http://localhost:8090/user', {
+            headers: {
+                Authorization: token,
+            }
         })
-        .catch((err) => {
-            console.log(err);
-        })
-    
+            .then(res => {
+                console.log("Res : " + res.data);
+            })
+            .catch(err => {
+                // console.log("Err : " + err);
+                SwalCustomAlert(
+                    'warning',
+                    "로그인 이후 사용 가능합니다."
+                );
+                navigate('/userlogin');
+            })
+
+        axios.get(`http://localhost:8090/petinfo?userId=${user.id}`)
+            .then((res) => {
+                console.log(res);
+                dispatch({ type: 'SET_PET_LIST', payload: res.data });
+
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+
     }
-    ,[]);
+        , []);
 
     const onSubmit = async () => {
         try {
@@ -91,7 +113,7 @@ function DesReservationForm(props) {
             Server500Err_Alert();
         }
     };
-                
+
 
 
 
@@ -107,7 +129,7 @@ function DesReservationForm(props) {
                 <hr className="divide-line" />
                 <div className="reser-time-container magin-t-1">
                     <div className="reser-time">
-                        <span className="reser-time-text"onClick={goBack}>{time}</span>
+                        <span className="reser-time-text" onClick={goBack}>{time}</span>
                     </div>
                 </div>
                 <hr className="divide-line" />
@@ -119,39 +141,39 @@ function DesReservationForm(props) {
                     </button>
                 </div>
                 <hr className="divide-line" />
-                {user.pet ==='' ?   
-                <div className="input-img-click sm-input-img">
-                    <p>반려동물을 추가하세요!</p>
-                </div>
-                :
-
-                pets.map((pet,index) => (
-                <div className='stylelist-content' onClick={()=> selectPet(pet)} key={index}>   
-                    <div className="st-profile-container"  >
-                        <div className="st-profile-img">
-                            <img src={`http://localhost:8090/petimg/${pet.num}`} alt="등록한 반려동물 사진" className="st-profile-img" />
-                        </div>
-                        <div className="st-profile-context">
-                            <div className="st-profile-name">
-                                {pet.name}
-                            </div>
-                            <div className="st-profile-shop">
-                                {pet.dogOrCat=== true ? '강아지' : '고양이'}
-                            </div>
-                        </div>
+                {user.pet === '' ?
+                    <div className="input-img-click sm-input-img">
+                        <p>반려동물을 추가하세요!</p>
                     </div>
-                </div>
-                ))
-                
+                    :
+
+                    pets.map((pet, index) => (
+                        <div className='stylelist-content' onClick={() => selectPet(pet)} key={index}>
+                            <div className="st-profile-container"  >
+                                <div className="st-profile-img">
+                                    <img src={`http://localhost:8090/petimg/${pet.num}`} alt="등록한 반려동물 사진" className="st-profile-img" />
+                                </div>
+                                <div className="st-profile-context">
+                                    <div className="st-profile-name">
+                                        {pet.name}
+                                    </div>
+                                    <div className="st-profile-shop">
+                                        {pet.dogOrCat === true ? '강아지' : '고양이'}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    ))
+
                 }
             </div>
-                    <div className="shop-btns">
-                        <Link to ={`/shop/${shopInfo.num}/designer`}>   
-                        <button className="shop-btn small-btn btn-gray btn-text">
-                            취소
-                            </button></Link>
-                        <button className="shop-btn small-btn btn-text" onClick={onSubmit} >예약하기</button>
-                    </div>
+            <div className="shop-btns">
+                <Link to={`/shop/${shopInfo.num}/designer`}>
+                    <button className="shop-btn small-btn btn-gray btn-text">
+                        취소
+                    </button></Link>
+                <button className="shop-btn small-btn btn-text" onClick={onSubmit} >예약하기</button>
+            </div>
 
         </div>
     );

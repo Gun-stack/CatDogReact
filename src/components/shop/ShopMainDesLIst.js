@@ -89,8 +89,31 @@ function ShopMainDesLIst() {
         // Optionally, reset editedPosition to the original value
     };
 
+
+    const token = useSelector(state => state.token);
     useEffect(() => {
         console.log(shopInfo);
+
+
+        // console.log("로그인 후 토큰 값 : " + token);
+        axios.get('http://localhost:8090/user', {
+            headers: {
+                Authorization: token,
+            }
+        })
+            .then(res => {
+                console.log("Res : " + res.data);
+            })
+            .catch(err => {
+                // console.log("Err : " + err);
+                SwalCustomAlert(
+                    'warning',
+                    "로그인 이후 사용 가능합니다."
+                );
+                navigate('/userlogin');
+            })
+
+
         axios.get(`http://localhost:8090/deslist?sId=${shopInfo.sid}`)
             .then((res) => {
                 console.log(res.data);
@@ -99,7 +122,8 @@ function ShopMainDesLIst() {
             })
             .catch((err) => {
                 console.log(err);
-            })}
+            })
+    }
         , []);
 
 
@@ -108,7 +132,7 @@ function ShopMainDesLIst() {
     const handleBtnClick = async (id) => {
         axios.get(`http://localhost:8090/selectdesbyid?desId=${id}`)
             .then(async (res) => {
-                if(shopInfo.sid === res.data.sid && user.roles === "ROLE_SHOP"){
+                if (shopInfo.sid === res.data.sid && user.roles === "ROLE_SHOP") {
                     await Swal.fire({
                         title: '디자이너 등록',
                         html: '<div class="swal2-input-container">' +
@@ -123,7 +147,7 @@ function ShopMainDesLIst() {
                             const desId = document.getElementById('swal-input1').value;
                             return desId;
                         }
-            
+
                     })
                         .then((result) => {
                             if (result.isConfirmed) {
@@ -164,9 +188,9 @@ function ShopMainDesLIst() {
                                                         })
                                                 }
                                             })
-            
-            
-            
+
+
+
                                     }).catch((err) => {
                                         Swal.fire({
                                             html: '<img src="/img/logo/modal_notice_logo.png"/></span>',
@@ -179,27 +203,27 @@ function ShopMainDesLIst() {
                         }).catch((err) => {
                             Swal.fire('취소하였습니다.', '', 'info');
                         })
-                } else{
+                } else {
                     return;
                 }
             })
-        
+
     }
 
     return (
         <div>
 
-            {shopInfo.id===user.id&&
-            <div>
-                
-            <div action="" className="shop-form-container">
-                <div className="input-img-click sm-input-img">
-                    <p onClick={() => handleBtnClick(user.id)}>스타일리스트 등록하기 <i className="fas fa-plus-circle"></i></p>
+            {shopInfo.id === user.id &&
+                <div>
+
+                    <div action="" className="shop-form-container">
+                        <div className="input-img-click sm-input-img">
+                            <p onClick={() => handleBtnClick(user.id)}>스타일리스트 등록하기 <i className="fas fa-plus-circle"></i></p>
+                        </div>
+                    </div>
+                    <hr className="divide-line" />
+
                 </div>
-            </div>
-            <hr className="divide-line" />
-           
-            </div>
             }
 
 
@@ -225,7 +249,7 @@ function ShopMainDesLIst() {
                                 ) : (
                                     `${des.position}`
                                 )}
-                                
+
                             </div>
                             <div className="st-profile-name">{des.desNickname}</div>
                             <div className="st-profile-shop">{shopInfo.name}</div>

@@ -1,8 +1,9 @@
-import { Link, Route, Routes } from "react-router-dom";
+import { Link, Route, Routes, useNavigate } from "react-router-dom";
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { useState } from "react";
+import SwalCustomAlert from '../../Alerts/SwalCustomAlert';
 
 
 function DesReg() {
@@ -11,8 +12,32 @@ function DesReg() {
     const [shop, setShop] = useState({});
 
 
+    const token = useSelector(state => state.token);
+    const navigate = useNavigate();
+
+
 
     useEffect(() => {
+
+        // console.log("로그인 후 토큰 값 : " + token);
+        axios.get('http://localhost:8090/user', {
+            headers: {
+                Authorization: token,
+            }
+        })
+            .then(res => {
+                console.log("Res : " + res.data);
+            })
+            .catch(err => {
+                // console.log("Err : " + err);
+                SwalCustomAlert(
+                    'warning',
+                    "로그인 이후 사용 가능합니다."
+                );
+                navigate('/userlogin');
+            })
+
+
         axios.get(`http://localhost:8090/desinfobyid?desId=${user.id}`)
             .then((res) => {
                 console.log(res.data);
