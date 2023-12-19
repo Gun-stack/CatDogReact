@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { setToken, logoutStore } from "../../actions";
 import Swal from "sweetalert2";
 import { persistor } from "../../App"
-import WebSocketComponent from '../tools/WebSocketComponent';
+import WebSocketComponent from '../tools/WebSocketComponent ';
 
 
 
@@ -61,7 +61,8 @@ function UserHeader() {
                 <div className="icon-container">
 
 
-                    <WebSocketComponent />
+                    <WebSocketComponent/>
+
 
                     {isLoggedIn ?
                         <button className="header-btn header-btn-text" onClick={onLogout}>로그아웃</button>

@@ -82,8 +82,8 @@ function Home() {
                                     <div className="st-profile-name">
                                         {des.position} {des.desNickname}
                                     </div>  
-                                    <Link to={`/shop/${shop.num}`}>
 
+                                    <Link to={`/shop/${shop.num}`}> 
                                     <div className="st-profile-shop">
                                         {shop.name}
                                     </div>
