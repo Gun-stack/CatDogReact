@@ -1,11 +1,8 @@
 import React, { useEffect } from 'react';
-import Footer from '../screens/Footer';
-import Header from '../screens/Header';
 import { useState } from 'react';
-import { Link, Route, Routes, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 
 
@@ -26,9 +23,15 @@ function UserGalleryView() {
         e.preventDefault();
         navigate(-1);
     }
+    
+    //Enter key 누르면 댓글등록
+    const handleOnKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            postComment();
+        }
+    };
 
     const postComment = () => {
-
         formData.append("userNum", user.num);
         formData.append("galNum", gallery.num);
         formData.append("content", comment);
@@ -37,21 +40,27 @@ function UserGalleryView() {
             .then((res) => {
                 console.log(res.data);
                 setIsPost(!isPost);
+                setComment('');
             })
             .catch((err) => {
                 console.log(err);
             })
     }
+
     const deleteComment = (e) => {
-        const commentNum = e.target.value;
+        let commentNum = e.currentTarget.value;
         console.log(commentNum);
+        if (!commentNum) {
+            console.error("댓글 번호가 없습니다.");
+            return;
+        }
         axios.post(`http://localhost:8090/usergallerycommentdelete?commentNum=${commentNum}`)
             .then((res) => {
                 console.log(res.data);
                 setIsPost(!isPost);
             })
             .catch((err) => {
-                console.log(err);
+                console.error(err);
             })
     }
 
@@ -73,14 +82,10 @@ function UserGalleryView() {
     }
 
 
-
-
     const onChageComment = (e) => {
-        setComment(e.target.value);
+        setComment(e.currentTarget.value);
         console.log(comment);
     }
-
-
 
     useEffect(() => {
         console.log(params);
@@ -92,15 +97,11 @@ function UserGalleryView() {
                 setLike(res.data.isLike);
                 setCommentList(res.data.comments);
                 console.log(commentList);
-
             })
             .catch((err) => {
                 console.log(err);
             })
     }, [like, isPost]);
-
-
-
 
 
 
@@ -119,7 +120,7 @@ function UserGalleryView() {
                             <img src={`http://localhost:8090/usergalview/${params.usergalnum}`} alt="유저갤러리 사진" className="view-img" />
                         </div>
                         <div className="view-img-icons magin-l-1">
-                            <span onClick={likeClick} >{like === true ? <i className="fa-solid fa-heart"></i> : <i className="fa-regular fa-heart"></i>} {gallery.likeCnt} </span>
+                            <span onClick={likeClick} >{like === true ? <i className="fa-solid fa-heart hover-icon"></i> : <i className="fa-regular fa-heart hover-icon"></i>} {gallery.likeCnt} </span>
                             <span><i className="fa-regular fa-comment"></i> {gallery.commentCnt} </span>
 
 
@@ -128,13 +129,13 @@ function UserGalleryView() {
                                 {commentList.map((comments, index) => (
                                     <div key={index} className="view-comment">
                                         <div>
-                                        <span className="view-comment-nickname"> {comments.userNickname} </span>
-                                        <span className="view-comment-text"> {comments.content} </span>
+                                            <span className="view-comment-nickname"> {comments.userNickname} </span>
+                                            <span className="view-comment-text"> {comments.content} </span>
                                         </div>
                                         <div>
-                                        <span className="view-comment-text tx-gray"> ({comments.date}) </span>
+                                            <span className="view-comment-text tx-gray"> ({comments.date}) </span>
 
-                                        {comments.userId === user.id && <button value={comments.num} onClick={deleteComment} className='view-comment-more'><i class="fas fa-times"></i></button>}
+                                            {comments.userId === user.id && <button value={comments.num} onClick={deleteComment} className='view-comment-more'><i class="fas fa-times"></i></button>}
                                         </div>
                                     </div>
                                 ))}
@@ -143,7 +144,7 @@ function UserGalleryView() {
 
 
                             <div className='gal-comment-container'>
-                                <input type='text' onChange={onChageComment} className='input-text gal-text' />
+                                <input type='text' value={comment} onChange={onChageComment} onKeyDown={handleOnKeyPress} className='input-text gal-text' />
                                 <button className='add-comment-btn' onClick={postComment}>댓글 달기</button>
                             </div>
 

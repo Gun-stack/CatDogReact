@@ -82,10 +82,4 @@
     margin: 1rem;
 }
 
-.add-comment-btn{
-    background-color: var(--btn-submit);
-    color: white;
-    padding: .5rem;
-    border-radius: 8px;
-}
 

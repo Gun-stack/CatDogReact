@@ -35,10 +35,6 @@
         justify-content: center;
     }
 
-    .hover-img{
-        width: 100%;
-        height: auto;
-    }
     .gray-line{
         width: 90%;
     }
@@ -47,6 +43,6 @@
     }
 
     .gal-text{
-        width: 40vw;
+        width: 70vw;
     }
 }
