@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import SwalCustomAlert from '../../Alerts/SwalCustomAlert';
 
 function ShopReg() {
     const params = useParams();
@@ -10,23 +11,34 @@ function ShopReg() {
     const [shopList, setShopList] = useState([]);
     const navigate = useNavigate();
 
-    const dispatch = useDispatch();
-    const shops = useSelector((state) => state.shopList);
 
-    useEffect(() => {
-        console.log(shops);
-        axios.get(`http://localhost:8090/shoplistall`)
-        .then((res) => {
-            console.log(res);
-            dispatch({type:'SET_SHOP_LIST',payload:res.data});
-        })
-    },[]);
 
+    const token = useSelector(state => state.token);
+    
     useEffect(() => {
         // if (user.roles!=="ROLE_SHOP"){
         //     alert("권한이 없습니다.");
         //     navigate(-1);
         // }
+
+        axios.get('http://localhost:8090/user', {
+            headers: {
+                Authorization: token,
+            }
+        })
+            .then(res => {
+                console.log("Res : " + res.data);
+            })
+            .catch(err => {
+                // console.log("Err : " + err);
+                SwalCustomAlert(
+                    'warning',
+                    "로그인 이후 사용 가능합니다."
+                );
+                navigate('/userlogin');
+            })
+
+
         console.log(params);
         axios.get(`http://localhost:8090/shoplist?id=${user.id}`)
             .then((res) => {
@@ -69,14 +81,14 @@ function ShopReg() {
 
                             {/* 등록한 샵이 있다면 */}
                             <div className="stylelist-content">
-                                {shopList.map((shop,index) => (
+                                {shopList.map((shop, index) => (
                                     <div className="shpo-list-li" key={shop.num}>
                                         {/* 구분선 */}
                                         <hr className="divide-line" />
                                         {/* 샵 정보 컨테이너 */}
                                         <div className="nearby-shop-container">
                                             <div className="nearby-shop-address-container">
-                                                
+
                                                 {/* 샵 이미지 */}
                                                 <div className="nearby-shop-img-container">
                                                     <div className="nearby-shop-img">
@@ -97,7 +109,7 @@ function ShopReg() {
                                             </div>
                                         </div>
                                         <div className="st-button-container">
-                                        <Link to={`/shop/${shop.num}`}> <button className="st-button">바로가기</button></Link>
+                                            <Link to={`/shop/${shop.num}`}> <button className="st-button">바로가기</button></Link>
                                             <Link to={`/usermy/shopmodiform/${shop.num}`}>
                                                 <div className="st-button">편집<i className="fas fa-pen btn-icon"></i></div>
                                             </Link>
