@@ -21,16 +21,16 @@ function GalleryList() {
         return location.pathname === path;
     };
 
-    
+
 
     return (
         <div className="web-container">
             <div className="cd-container bg-white">
-                
-                <Header />  
+
+                <Header />
                 <section className="section-header">
                     <div className="section-header-container">
-                       <Link to ='/gallery'><span className="section-header-text">갤러리</span></Link> 
+                        <Link to='/gallery'><span className="section-header-text">갤러리</span></Link>
                     </div>
                 </section>
 
@@ -46,7 +46,7 @@ function GalleryList() {
                         <Route path="/" element={<DesGal />} />
                         <Route path="/des" element={<DesGal />} />
                         <Route path="/des/galleryregform" element={<GalleryRegForm />} />
-                        <Route path="/user/galleryregform" element={<GalleryRegFormUser/>} />
+                        <Route path="/user/galleryregform" element={<GalleryRegFormUser />} />
 
                         <Route path="/user" element={<UserGal />} />
                         <Route path='user/:usergalnum' element={<UserGalleryView />} />

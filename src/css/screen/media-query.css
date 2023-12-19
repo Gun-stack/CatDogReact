@@ -45,4 +45,8 @@
     .main-nav-list-text>a{
         margin: 0 .2rem;
     }
+
+    .gal-text{
+        width: 40vw;
+    }
 }

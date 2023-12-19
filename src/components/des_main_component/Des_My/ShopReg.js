@@ -80,7 +80,7 @@ function ShopReg() {
                                                 {/* 샵 이미지 */}
                                                 <div className="nearby-shop-img-container">
                                                     <div className="nearby-shop-img">
-                                                        <img src={`http://localhost:8090/shopimg/${shop.profImg}`} alt="등록한 샵 사진" className="st-profile-img" />
+                                                        <img src={`http://localhost:8090/shopimg/${shop.profImg}`} alt="등록한 샵 사진" className="nearby-shop-img" />
                                                     </div>
                                                 </div>
 
