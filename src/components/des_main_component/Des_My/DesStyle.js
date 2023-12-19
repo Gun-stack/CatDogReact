@@ -15,6 +15,7 @@ function DesStyle(props) {
     const [hasMore, setHasMore] = useState(true);
 
 
+
     const token = useSelector(state => state.token);
     const navigate = useNavigate();
 
@@ -40,6 +41,7 @@ function DesStyle(props) {
                 );
                 navigate('/userlogin');
             })
+
 
         axios.get('http://localhost:8090/desgallerydesigner', {
             params: {
@@ -69,8 +71,14 @@ function DesStyle(props) {
                         <div className="st-gallery-img" key={index}>
                             <Link to={`/des/${gallery.num}/` + gallery.num}><img src={`http://localhost:8090/desgalview/${gallery.num}`} alt="" className="hover-img" /></Link>
                             <div className="img-comment-hover">
-                                <span className="img-hover-icon"> <i className="fas fa-heart" ></i> {gallery.likeCnt} </span>
+
+                                <span className="img-hover-icon">
+                                    <i className="fas fa-heart hover-icon" ></i>
+                                    <span className='hover-text'>{gallery.likeCnt}</span>
+                                </span>
                             </div>
+
+
                         </div>
                     ))}
                 </div >

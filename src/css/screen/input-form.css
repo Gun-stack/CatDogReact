@@ -229,6 +229,13 @@ input[type='date']::before {
     font-weight: 600;
 }
 
+.date-center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
 .react-modal-css{
     display: flex;
     flex-direction: column;

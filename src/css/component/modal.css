@@ -3,7 +3,6 @@
     font-size: 1.2rem;
 }
 
-
 .sweet-modal-text{
     font-family: 'Pretendard-Regular';
     font-size: 1.1rem;
@@ -18,4 +17,14 @@
 
 .sweet-modal-icon{
     font-size: 2rem;
+}
+
+.map-modal-container{
+    display: flex;
+}
+
+.map-modal-address{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }

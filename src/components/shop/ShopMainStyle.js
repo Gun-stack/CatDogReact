@@ -12,9 +12,9 @@ function ShopMainStyle() {
 
     const [galleryList, setGalleryList] = useState([]);
     const [offset, setOffset] = useState(0);
-    
-    const PlusOffset = () => {    
-        setOffset(offset+12);
+
+    const PlusOffset = () => {
+        setOffset(offset + 12);
         console.log(offset);
     }
     const [hasMore, setHasMore] = useState(true);
@@ -48,11 +48,12 @@ function ShopMainStyle() {
 
 
         axios.get('http://localhost:8090/desgalleryshop', {
-        params: {
-            num : shopInfo.num,
-            offset: offset, // 필요한 페이지 번호
-            limit: 12, // 페이지당 아이템 개수
-          },})
+            params: {
+                num: shopInfo.num,
+                offset: offset, // 필요한 페이지 번호
+                limit: 12, // 페이지당 아이템 개수
+            },
+        })
             .then((res) => {
                 console.log(res.data);
                 setGalleryList([...galleryList, ...res.data]);
@@ -76,14 +77,14 @@ function ShopMainStyle() {
                         <div className="st-gallery-img" key={index} >
                             <Link to={"/gallery/des/" + gallery.num}><img src={`http://localhost:8090/desgalview/${gallery.num}`} alt="" className="hover-img" /></Link>
                             <div className="img-comment-hover">
-                                <span className="img-hover-icon"><i className="fas fa-heart" ></i>{gallery.likeCnt}</span>
+                                <span className="img-hover-icon"><i className="fas fa-heart hover-icon" ></i><span className='hover-text'>{gallery.likeCnt}</span></span>
                             </div>
                         </div>
                     ))}
-            </div>
-                {hasMore?
+                </div>
+                {hasMore ?
                     <div className="main-btn main-sm-btn" onClick={PlusOffset}><span className="btn-text">더보기</span></div>
-                    :<div className="main-btn main-sm-btn"><span className="btn-text">마지막 페이지 입니다.</span></div>
+                    : <div className="main-btn main-sm-btn"><span className="btn-text">마지막 페이지 입니다.</span></div>
                 }
 
             </section>

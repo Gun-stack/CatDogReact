@@ -101,8 +101,7 @@ function DesResrevationDate(props) {
 
 
     return (
-        <div>
-            <hr className="divide-line" />
+        <>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DateCalendar
                     showDaysOutsideCurrentMonth
@@ -110,21 +109,23 @@ function DesResrevationDate(props) {
                     onChange={onChangeDate} />
             </LocalizationProvider>
             {/* <input type="date" placeholder=" 날짜를 선택해주세요." onChange={onChangeDate} /> */}
-            <span className="form-text" style={{ cursor: 'pointer' }} >{selectDate}</span>
+            <span className="form-text date-center" style={{ cursor: 'pointer' }} >{selectDate}</span>
             <hr className="divide-line" />
-            {loading ? <Loding /> : <div>
+            {loading ? <Loding /> : <>
                 {resList && availableTimes.map(time => (
                     <div key={time}>
                         {isReserved(sqlDate, time) ? (
-                            <div className={`reser-time-container btn-gray`}>
+                            <div className='resv-link'>
+                            <div className="reser-time-container btn-gray">
                                 <div className="reser-time">
                                     <span className="reser-time-text">{time}</span>
                                 </div>
                             </div>
+                            </div>
                         ) : (
                             <>
                                 {shopInfo !== null ? (
-                                    <Link to={`/shop/${shopInfo.num}/reservation/${desInfo.num}/form`} state={{ data1: time, data2: sqlDate }}>
+                                    <Link className='resv-link' to={`/shop/${shopInfo.num}/reservation/${desInfo.num}/form`} state={{ data1: time, data2: sqlDate }}>
                                         <div className="reser-time-container">
                                             <div className="reser-time">
                                                 <span className="reser-time-text">{time}</span>
@@ -141,9 +142,9 @@ function DesResrevationDate(props) {
                         <hr className="divide-line" key={`hr-${time}`} />
                     </div>
                 ))}
-            </div>
+            </>
             }
-        </div>
+        </>
     );
 }
 

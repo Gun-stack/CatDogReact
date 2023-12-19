@@ -142,7 +142,7 @@ function ShopReservationForm(props) {
         <div>
             <div>
                 <hr className="divide-line" />
-                <span className="form-text" >{sqlDate} {selectDay}</span>
+                <span className="form-text date-center" >{sqlDate} {selectDay}</span>
                 <hr className="divide-line" />
                 <div className="reser-time-container magin-t-1">
                     <div className="reser-time">

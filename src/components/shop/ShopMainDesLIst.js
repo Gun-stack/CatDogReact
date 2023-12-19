@@ -25,8 +25,11 @@ function ShopMainDesLIst() {
 
 
     const handleEditClick = (desId) => {
+        Swal.fire({
+            title:'직책 수정하시겠습니까 ?',
+            confirmButtonText:'승인'
+        })
         setEditableDesId(desId);
-        // Optionally, initialize editedPosition with the current des.position or other default value
     };
 
     const handleDeleteClick = async (desId) => {
@@ -53,8 +56,6 @@ function ShopMainDesLIst() {
             })
 
         setEditableDesId("");
-
-        // Optionally, initialize editedPosition with the current des.position or other default value
     };
 
     const handleSaveClick = (async (desId) => {
@@ -77,16 +78,11 @@ function ShopMainDesLIst() {
                     navigate(0);
                 });
         }
-
-
-        // Implement logic to save the editedPosition for the specific stylist
-
     });
 
     const handleCancelClick = (desId) => {
         setEditableDesId(null);
         setEditedPosition("");
-        // Optionally, reset editedPosition to the original value
     };
 
 
@@ -213,15 +209,13 @@ function ShopMainDesLIst() {
     return (
         <div>
 
-            {shopInfo.id === user.id &&
-                <div>
 
-                    <div action="" className="shop-form-container">
-                        <div className="input-img-click sm-input-img">
-                            <p onClick={() => handleBtnClick(user.id)}>스타일리스트 등록하기 <i className="fas fa-plus-circle"></i></p>
-                        </div>
-                    </div>
-                    <hr className="divide-line" />
+            {shopInfo.id===user.id&&
+            <div>
+                
+            <div action="" className="shop-form-container">
+                <div className="input-img-click sm-input-img">
+                    <p onClick={() => handleBtnClick(user.id)} className='des-reg-click'>디자이너 등록하기 <i className="fas fa-plus-circle"></i></p>
 
                 </div>
             }
