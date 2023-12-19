@@ -8,19 +8,9 @@ function ShopReg() {
     const params = useParams();
     const user = useSelector((state) => state.user);
     const [shopList, setShopList] = useState([]);
-    const navigate = useNavigate();
 
-    const dispatch = useDispatch();
-    const shops = useSelector((state) => state.shopList);
 
-    useEffect(() => {
-        console.log(shops);
-        axios.get(`http://localhost:8090/shoplistall`)
-        .then((res) => {
-            console.log(res);
-            dispatch({type:'SET_SHOP_LIST',payload:res.data});
-        })
-    },[]);
+
 
     useEffect(() => {
         // if (user.roles!=="ROLE_SHOP"){

@@ -55,16 +55,17 @@ function ShopMainReview(shopInfo) {
                         <h3 className="stylelist-nam">디자이너 : {review.desNickname}</h3>
                         <div className="review-text">
                             <p>{review.content}</p>
+                            
                             <span className="review-stars">
-                                <span className="review-stars-point">{review.star}</span>
-                                {[...Array(Number(review.star))].map((_, index) => (
-                                    <i key={index} className="fas fa-star review-star"></i>
-                                    ))}
-                                {[...Array(5 - Number(review.star))].map((_, index) => (
-                                    <i key={index + Number(review.star)} className="far fa-star review-star"></i>
-                                    ))}
+
+                                <span className="review-stars-point">
+                                    <StarRating rating={review.star}/> 
+                                    </span>
+                               
                             </span>
+
                         </div>
+
                     </div>
                         {review.afterImg&&
                     <div className="review-img-container">

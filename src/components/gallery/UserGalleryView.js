@@ -120,7 +120,7 @@ function UserGalleryView() {
                         </div>
 
                         <div className="view-img-container">
-                            <img src={`http://localhost:8090/usergalview/${params.usergalnum}`} alt="유저갤러리 사진" className="view-img" />
+                            <img src={`http://localhost:8090/usergalview/${params.usergalnum}`}  onDoubleClick={likeClick} alt="유저갤러리 사진" className="view-img" />
                         </div>
                         <div className="view-img-icons magin-l-1">
                             <span onClick={likeClick} >{like === true ? <i className="fa-solid fa-heart hover-icon"></i> : <i className="fa-regular fa-heart hover-icon"></i>} {gallery.likeCnt} </span>

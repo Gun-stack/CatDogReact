@@ -19,6 +19,7 @@ import SwalCustomAlert from '../Alerts/SwalCustomAlert';
 
 
 function Around() {
+    const user = useSelector((state) => state.user);
     const dispatch = useDispatch();
     const shops = useSelector((state) => state.shopList);
 
@@ -179,7 +180,9 @@ function Around() {
                                 {/* 거리순 */}
                                 <li className='main-nav-list-text'><Link to="distance">가까운순</Link></li>
                                 {/* 샵등록 */}
+                                {user.roles === 'ROLE_DES' || user.roles === 'ROLE_SHOP' &&
                                 <li className='main-nav-list-text'><Link to="/usermy/shopreg">샵등록</Link></li>
+                                }
 
                             </ul>
                         </nav>

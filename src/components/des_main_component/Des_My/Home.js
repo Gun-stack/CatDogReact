@@ -31,6 +31,7 @@ import DesReservationDate from './DesResrevationDate';
 function Home() {
     const dispatch = useDispatch();
     const params = useParams();
+
     const user = useSelector((state) => state.user);
     const [des, setDes] = useState({});
     const [shop, setShop] = useState({});
@@ -38,9 +39,14 @@ function Home() {
     const isActive = (path) => {
         return location.pathname === path;
     };
+    const [editable, setEditable] = useState(false);
+
+
+    
 
 
     useEffect(() => {
+        console.log("params : " + JSON.stringify(params));
         axios.get(`http://localhost:8090/shopdesinfobynum?desNum=${params.desnum}`)
             .then((res) => {
                 setShop(res.data.shop);
@@ -50,6 +56,40 @@ function Home() {
                 console.log(res.data);
             })
     }, [des.num]);
+
+    const onEditable = () => {
+        setEditable(!editable);
+        console.log(editable);
+    }
+    const onChageInfo = (e) => {
+        setDes({
+            ...des,
+            info: e.target.value
+        })
+    }
+    const onChangeWorkTime = (e) => {
+        setDes({
+            ...des,
+            workTime: e.target.value
+        })
+    }
+
+    const onSubmint = () => {
+        const formData = new FormData();
+        formData.append("num", des.num);
+        formData.append("info", des.info);
+        formData.append("workTime", des.workTime);
+
+        axios.post('http://localhost:8090/modidesinfo', formData)
+            .then((res) => {
+                console.log(res.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }
+
+
 
 
 
@@ -95,33 +135,46 @@ function Home() {
                                         <div className="st-profile-shop">
                                         </div>
                                     )
-                                    }
+                                }
+                                <StarRating rating={des.star} />
 
+                                    <div className="st-profile-info">
+                                        {des.workTime}
+                                    </div>
                                     <div className="st-profile-info">
                                         {des.info}
                                     </div>
 
-                                    <StarRating rating={des.star} />
 
                                 </div>
                             </div>
+
                             <div className="st-button-container">
+
+
                                 {des.id === user.id &&
-                                    <>
-                                        <a href="#"><button className="st-button">편집<i className="fas fa-pen btn-icon"></i></button></a>
-                                    </>
+                                    <button className="st-button"onClick={onEditable} >편집<i className="fas fa-pen btn-icon"></i></button>
                                 }
+
                                 {shop !== null ? (
                                     <Link to={`/des/${des.num}/reservation`}>
                                         <button className="st-button">예약하기<i className="far fa-calendar-alt btn-icon"></i></button>
                                     </Link>
                                 ) : (
-                                    <div className="st-profile-shop">
-                                    </div>)
+                                    <div className="st-profile-shop"></div>)
                                 }
 
-                            </div>
+                                {editable &&
+                                <div>
+                                <input type='text' placeholder='디자이너 정보 및 소개글을 입력하세요' onChange={onChageInfo} name='info' className='info-input' />
+                                <input type='text' placeholder='근무시간을 입력해주세요 ' name='workTime' onChange={onChangeWorkTime} className='info-input' />
+                                <button className="st-button"onClick={onSubmint} >수정하기<i className="fas fa-pen btn-icon"></i></button>
+                                </div>
+                                }
 
+
+
+                            </div>
                         </div>
                     </div>
                     {/* <!-- 스타일 리스트 정보 메뉴 --> */}
@@ -142,7 +195,8 @@ function Home() {
                     </nav>
                     <hr className="divide-line" />
                     <Routes>
-                        <Route path="home" element={<DesHome desInfo={des} ShopInfo={shop} />} />
+                        <Route path="/" element={<DesHome desInfo={des} />} />
+                        <Route path="/home" element={<DesHome desInfo={des}  />} />
                         <Route path="style" element={<DesStyle desInfo={des} />} />
                         <Route path="review" element={<DesReview desInfo={des} />} />
                         <Route path='/:desgalnum' element={<DesGalleryView />} />

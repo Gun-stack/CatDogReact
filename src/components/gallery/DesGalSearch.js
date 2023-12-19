@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 
 
 
-function DesGal() {
+function DesGalSearch() {
     const [galleryList, setGalleryList] = useState([
     ]);
     const [page, setPage] = useState(0);
@@ -27,11 +27,14 @@ function DesGal() {
 
 
 
+
+
     useEffect(() => {
-        axios.get('http://localhost:8090/desgallery', {
+        axios.get('http://localhost:8090/desgallerysearch', {
             params: {
                 page: page, // 필요한 페이지 번호
                 size: 12, // 페이지당 아이템 개수
+                search : search
             },
         })
             .then((res) => {
@@ -55,9 +58,10 @@ function DesGal() {
                 <div className="search-box">
                     <input type="text"  onChange={onChangeSearch} className="search-txt" placeholder="태그로 검색을 해보자" />
 
-                    <Link to={`/gallery/des/search/${search}`}  className="search-btn" >
+                    <Link to={`/gallery/des/${search}`}  className="search-btn" >
                         <i className="fas fa-search"></i>
                     </Link>
+
                 </div>
 
 
@@ -93,4 +97,4 @@ function DesGal() {
     );
 }
 
-export default DesGal;
+export default DesGalSearch;

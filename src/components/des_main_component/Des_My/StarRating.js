@@ -18,8 +18,8 @@ const StarRating = ({ rating }) => {
 
   return (
     <div className="review-stars">
-      <span className="review-stars-point">별점</span>
       {renderStars()}
+      <span className="review-stars-point"> {rating} </span>  
     </div>
   );
 };

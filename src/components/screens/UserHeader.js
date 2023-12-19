@@ -1,15 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from "react-router-dom";
 import { setToken, logoutStore } from "../../actions";
 import Swal from "sweetalert2";
 import { persistor } from "../../App"
+import axios from 'axios';
+
 
 
 
 
 
 function UserHeader() {
+    const user = useSelector((state) => state.user);
+    const des = useSelector((state) => state.des);
 
     const navigate = useNavigate();
 
@@ -36,6 +40,16 @@ function UserHeader() {
             }
         })
     }
+    useEffect(() => {
+        if(user.roles ==='ROLE_DES'||user.roles ==='ROLE_SHOP'){
+           axios.get(`http://localhost:8090/desinfobyid?desId=${user.id}`)
+              .then((res)=>{
+                console.log("header"+ JSON.stringify(res.data.des.num));
+                dispatch({type:'SET_DES',payload:res.data.des});
+              }) 
+        }
+    }, [])
+
 
     {/* User 헤더 네비 */ }
     const [isNavVisible, setIsNavVisible] = useState(false);
@@ -59,7 +73,9 @@ function UserHeader() {
                 </div>
                 <div className="icon-container">
 
-
+                   {user.roles === 'ROLE_DES' || user.roles === 'ROLE_SHOP' &&
+                   <Link to={`/des/${des.num}`} className="header-btn header-btn-text">디자이너</Link>
+                   }
 
                     {isLoggedIn ?
                         <button className="header-btn header-btn-text" onClick={onLogout}>로그아웃</button>

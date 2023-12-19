@@ -84,7 +84,6 @@ function DesResrevationDate(props) {
 
     return (
         <div>
-            <hr className="divide-line" />
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DateCalendar
                     showDaysOutsideCurrentMonth
