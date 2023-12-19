@@ -1,4 +1,4 @@
-import { Link, Route, Routes, useLocation } from "react-router-dom";
+import { Link, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import Footer from "../screens/Footer";
 import Header from "../screens/Header";
 
@@ -16,6 +16,7 @@ import axios from "axios";
 
 
 function Around() {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const shops = useSelector((state) => state.shopList);
 
@@ -33,12 +34,12 @@ function Around() {
 
     const shopPositions = shops.map((shop) => ({
         name: shop.name,
+        num: shop.num,
+        addressRoad: shop.addressRoad,
         lat: shop.lat,
         lng: shop.lon,
+        profImg: shop.profImg,
     }));
-    console.log(shopPositions);
-
-
 
     //위치동의 하기전에 기본위치
     const [state, setState] = useState({
@@ -51,17 +52,30 @@ function Around() {
         isPanto: false,
     })
 
-    function mapClickModal() {
-        console.log(shopPositions);
+    function mapClickModal(shop) {
+        console.log("샵 넘버 :"+shop.profImg);
         Swal.fire({
-            html: ` <div class="sweet-modal-title">${shopPositions[0].name}<span class="sweet-modal-sub-text">${shopPositions[0].dist}</span>
-            </div><span class="sweet-modal-text">${shopPositions.address}</span><br/>`,
+            html: `
+            <div class='map-modal-container'>
+            <img class="nearby-shop-img" name="image" alt='' src='http://localhost:8090/shopimg/${shop.profImg}'/>
+            <div class='map-modal-address'>
+            <div class="sweet-modal-title">${shop.name}</div>
+            <span class="sweet-modal-text">${shop.addressRoad}</span><br/>
+            </div>
+            </div>
+            `,            
             confirmButtonColor: '#F9950F',
             confirmButtonText: '바로가기',
             showCancelButton: true,
             cancelButtonText: '취소',
-        })
+            reverseButtons: true,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                navigate("/shop/" + shop.num);
+            }
+        });
     }
+    
 
     function updateCurrentLocation() {
         if (navigator.geolocation) {
@@ -128,11 +142,11 @@ function Around() {
                                 )}
 
                                 {/* 샵 마커 */}
-                                {shopPositions.map((position) => (
-                                    <MapMarker key={`${position.lat},${position.lng}`}
-                                        position={position}
+                                {shopPositions.map((shop) => (
+                                    <MapMarker key={`${shop.lat},${shop.lng}`}
+                                        position={{ lat: shop.lat, lng: shop.lng }}
                                         clickable={true}
-                                        onClick={() => mapClickModal()}
+                                        onClick={() => mapClickModal(shop)}
                                         image={{
                                             src: markerImageSrc,
                                             size: iconSize

@@ -32,6 +32,7 @@
 }
 .sd-img{
     height: 260px;
+    object-fit: cover;
 }
 
 .img-re{
@@ -44,6 +45,11 @@
 
     border: 2px solid wheat;
     border-radius: 8px;
+}
+
+.des-reg-click:hover{
+    cursor: pointer;
+    color: var(--btn-submit);
 }
 
 .img-ab-1{
@@ -243,7 +249,7 @@
 }
 
 .reser-time-container{
-    width: 100%;
+    width: 60%;
     height: 5rem;
     
     display: flex;
@@ -252,6 +258,11 @@
 
     border-radius: 8px;
     background-color: var(--btn-submit);
+}
+
+.resv-link{
+    display: flex;
+    justify-content: center;
 }
 
 .reser-time-sm{
@@ -277,6 +288,8 @@
     font-family: 'Pretendard-Regular';
     color: white;
 }
+
+
 .btn-gray{
     background-color: var( --btn-disable);
 }

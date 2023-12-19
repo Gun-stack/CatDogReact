@@ -71,7 +71,6 @@ function ShopMainHome() {
                         '취소',
                         true,
                     )
-
                     if (result.isConfirmed) {
                         setLoading(true);
                         try {
@@ -88,9 +87,8 @@ function ShopMainHome() {
                             <Server500Err_Alert />
                         } finally {
                             setLoading(false);
-                            window.location.reload();
                         }
-                        console.log('입력한값:', result.value);
+                    window.location.reload();
                     }
                     break;
 
@@ -320,8 +318,10 @@ function ShopMainHome() {
                                     <div className="st-gallery-img" key={index} >
                                         <Link to={"/gallery/des/" + gallery.num}><img src={`http://localhost:8090/desgalview/${gallery.num}`} alt="" className="hover-img" /></Link>
                                         <div className="img-comment-hover">
-                                            <span className="img-hover-icon"><i className="fas fa-heart" ></i>{gallery.likeCnt}</span>
-                                            {/* <span className="img-hover-icon"><i className="fas fa-comment"></i>{gallery.galComment}</span> */}
+                                        <span className="img-hover-icon">
+                                            <i className="fas fa-heart hover-icon" ></i>
+                                            <span className='hover-text'>{gallery.likeCnt}</span>
+                                        </span>
                                         </div>
                                     </div>
                                 ))}
