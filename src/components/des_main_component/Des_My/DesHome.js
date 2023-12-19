@@ -35,15 +35,6 @@ function DesHome() {
 
 
 
-function DesHome(props) {
-    const navigate = useNavigate();
-    const des = props.desInfo;
-    useEffect(() => {
-        console.log(props);
-        // navigate(0);
-    }, []    );
-    
-   
     return (
         <>
 
@@ -79,6 +70,8 @@ function DesHome(props) {
 
         </>
     );
+
+
 }
 
 export default DesHome;

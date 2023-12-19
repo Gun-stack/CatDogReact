@@ -208,25 +208,22 @@ function ShopMainDesLIst() {
 
     return (
         <div>
-
-
             {shopInfo.id===user.id&&
             <div>
-                
             <div action="" className="shop-form-container">
                 <div className="input-img-click sm-input-img">
                     <p onClick={() => handleBtnClick(user.id)} className='des-reg-click'>디자이너 등록하기 <i className="fas fa-plus-circle"></i></p>
-
                 </div>
+            </div>
+            </div>
             }
 
 
 
 
-            {desList.map((des) => (
-
-
+         {desList.map((des) => (
                 <div className="stylelist-content" key={des.num} >
+
                     <div className="st-profile-container">
                         <div className="st-profile-img">
                             <img src={`http://localhost:8090/desimg/${des.num}`} alt="프로필 이미지" className="st-profile-img" />
@@ -240,15 +237,17 @@ function ShopMainDesLIst() {
                                         value={editedPosition}
                                         onChange={(e) => setEditedPosition(e.target.value)}
                                     />
+
                                 ) : (
                                     `${des.position}`
                                 )}
 
-                            </div>
+                        </div>
                             <div className="st-profile-name">{des.desNickname}</div>
                             <div className="st-profile-shop">{shopInfo.name}</div>
                             <div className="st-profile-info">{des.info}</div>
                         </div>
+                                    
                     </div>
 
                     <div className="st-button-container">
@@ -267,7 +266,6 @@ function ShopMainDesLIst() {
                                 <button className="st-button" onClick={handleCancelClick}>
                                     취소<i className="fas fa-times btn-icon"></i>
                                 </button>
-
                             </>
 
                         ) : (
@@ -276,16 +274,20 @@ function ShopMainDesLIst() {
                                 편집<i className="fas fa-pen btn-icon"></i>
                             </button>
                         )}
-                        <Link to={`/shop/${shopInfo.num}/reservation/${des.num}`} ><button className="st-button">예약하기<i className="far fa-calendar-alt btn-icon"></i></button></Link>
-                    </div>
-                </div>
-            ))}
+
+                        <Link to={`/shop/${shopInfo.num}/reservation/${des.num}`}><button className="st-button">예약하기<i className="far fa-calendar-alt btn-icon"></i></button></Link>   
+                    </div>      
+                </div>  
+                    )   )  } 
+
 
             <hr className="divide-line" />
 
 
         </div>
     );
-
 }
+
+
 export default ShopMainDesLIst;
+

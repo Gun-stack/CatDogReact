@@ -34,14 +34,12 @@ function ShopMain() {
 
 
     useEffect(() => {
-        console.log(shopInfo.bgImg);
-        console.log(images);
-        console.log("Num : " + params.shopnum);
         axios.get(`http://localhost:8090/shopinfobynum?num=${params.shopnum}`)
             .then((res) => {
                 dispatch({ type: 'SET_SHOP', payload: res.data });
             })
-    }, [params.shopnum, images]);
+            
+    }, [params.shopnum,images]);
 
 
     return (

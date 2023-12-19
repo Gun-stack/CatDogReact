@@ -41,7 +41,7 @@ function Popular() {
                                 <h3 className="shop-dist">
                                     <DistanceCalculator lat1={shop.lat} lon1={shop.lon} lat2={coord.latitude} lon2={coord.longitude} />
                                 </h3>
-                                <StarRating rating={shoplist.star} /> 
+                                <StarRating rating={shop.star} /> 
                                 <div className="shop-adderss"  >
                                     <p className="shop-adderss-text" name="address" >
                                         {shop.addressRoad}

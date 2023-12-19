@@ -12,6 +12,8 @@ import Swal from "sweetalert2";
 import Error404 from "../error/Error404";
 import { useDispatch, useSelector } from "react-redux";
 
+
+
 import axios from 'axios';
 import SwalCustomAlert from '../Alerts/SwalCustomAlert';
 
@@ -20,7 +22,6 @@ import SwalCustomAlert from '../Alerts/SwalCustomAlert';
 
 function Around() {
     const user = useSelector((state) => state.user);
-    const navigate = useNavigate();
     const dispatch = useDispatch();
     const shops = useSelector((state) => state.shopList);
 
@@ -80,7 +81,8 @@ function Around() {
     }, [])
 
 
-    function mapClickModal() {
+    function mapClickModal(shop) {
+        
         console.log(shopPositions);
 
         Swal.fire({
@@ -195,8 +197,10 @@ function Around() {
                                 {/* 거리순 */}
                                 <li className='main-nav-list-text'><Link to="distance">가까운순</Link></li>
                                 {/* 샵등록 */}
-                                {user.roles === 'ROLE_DES' || user.roles === 'ROLE_SHOP' &&
+                                {user.roles === 'ROLE_DES' || user.roles === 'ROLE_SHOP' ?
+                                
                                 <li className='main-nav-list-text'><Link to="/usermy/shopreg">샵등록</Link></li>
+                                : <></>
                                 }
 
                             </ul>

@@ -11,6 +11,7 @@ import SwalCustomAlert from '../Alerts/SwalCustomAlert';
 
 
 
+
 function ShopMainHome() {
     const shopInfo = useSelector((state) => state.shop);
     const [loading, setLoading] = useState(false);
@@ -90,7 +91,7 @@ function ShopMainHome() {
                 case 'titleimg':
                     result = await SwalCustomAlert(
                         'agree',
-                        '타이틀에 들어갈 사진을 올리시겠습니까?',
+                        '배경 사진을 올리시겠습니까?',
                         '#F9950F',
                         '등록',
                         true,
@@ -105,13 +106,15 @@ function ShopMainHome() {
                                 formData.append("file", image.file);
                             }
                             formData.append('shopNum', shopInfo.num); // 미용실 번호 추가
-                            const res = await axios.post('http://localhost:8090/regshopbgimg', formData
+                            const res =  axios.post('http://localhost:8090/regshopbgimg', formData
                             );
                             console.log(res);
+                            navigate(`/shop/${shopInfo.num}`);
                         } catch (error) {
                             console.error(error);
                             <Server500Err_Alert />
                         } finally {
+                            
                             setLoading(false);
                         }
                     window.location.reload();
