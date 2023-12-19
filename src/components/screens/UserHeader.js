@@ -11,7 +11,6 @@ import { persistor } from "../../App"
 
 function UserHeader() {
 
-
     const navigate = useNavigate();
 
     const onLogout = () => {

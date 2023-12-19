@@ -85,7 +85,7 @@ function DesGalleryView() {
                         </div>
                         <div className="view-img-icons magin-l-1">
 
-                            <span onClick={likeClick} >{ like === true ? <i className="fa-solid fa-heart"></i> :<i className="fa-regular fa-heart"></i> } {gallery.likeCnt}</span>
+                            <span onClick={likeClick} >{ like === true ? <i className="fa-solid fa-heart hover-icon"></i> :<i className="fa-regular fa-heart hover-icon"></i> } {gallery.likeCnt}</span>
                             {/* <span><i className="fa-regular fa-comment"></i>{gallery.galComment}</span> */}
 
                             <div className="view-comment">

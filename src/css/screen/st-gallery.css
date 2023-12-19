@@ -33,10 +33,13 @@
 
 .img-comment-hover{
     position: absolute;
-    top: 50%;
-    left: 20%;
+    top: 45%;
+    left: 40%;
     opacity: 0;
     z-index: 10;
+}
+.left020{
+    left: 20%;
 }
 .hover-img:hover{
     -webkit-filter:blur(1px)  grayscale(50%);
@@ -47,12 +50,24 @@
     opacity: 1;
 }
 
-.img-hover-ico100{
-    color: rgb(82, 82, 82);
+.img-hover-icon{
+    padding: .5rem;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.192);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.img-hover-icon>i{
-    color: rgb(82, 82, 82);
+.hover-text{
+    margin: 0 .5rem;
+}
+
+.hover-icon{
+    color: rgba(255, 0, 0, 0.527);
+}
+.hover-icon-comm{
+    color: rgb(255, 255, 255);
 }
 
 .st-gallery-view-img{
@@ -119,4 +134,7 @@
     margin-left: 5%;
 }
 
+.st-gallery-view{
+    width: inherit;
+}
 
