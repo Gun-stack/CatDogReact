@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Loding from '../../tools/Loding';
 
@@ -14,6 +14,31 @@ import Swal from 'sweetalert2';
 
 
 function UserModi_Nickname() {
+
+
+    const token = useSelector(state => state.token);
+    useEffect(() => {
+
+        // console.log("로그인 후 토큰 값 : " + token);
+        axios.get('http://localhost:8090/user', {
+            headers: {
+                Authorization: token,
+            }
+        })
+            .then(res => {
+                console.log("Res : " + res.data);
+            })
+            .catch(err => {
+                // console.log("Err : " + err);
+                SwalCustomAlert(
+                    'warning',
+                    "로그인 이후 사용 가능합니다."
+                );
+                navigate('/userlogin');
+            })
+    }, [])
+
+
     const dispath = useDispatch();
 
 

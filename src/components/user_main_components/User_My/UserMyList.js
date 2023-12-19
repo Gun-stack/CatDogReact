@@ -1,18 +1,37 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import SwalCustomAlert from '../../Alerts/SwalCustomAlert';
+
 
 function UserMylist() {
 
     const [showSection, setShowSection] = useState(true);
     const user = useSelector((state) => state.user);
 
-
-
+    const token = useSelector(state => state.token);
+    const navigate = useNavigate();
     useEffect(() => {
-        console.log(user);
-        setShowSection(true);
-    }, [user]);
+        // console.log("로그인 후 토큰 값 : " + token);
+        axios.get('http://localhost:8090/user', {
+            headers: {
+                Authorization: token,
+            }
+        })
+        .then(res => {
+            console.log("Res : " + res.data);
+            setShowSection(true); // 비동기 작업이 완료되면 showSection을 true로 설정
+        })
+        .catch(err => {
+            console.log("Err : " + err);
+            SwalCustomAlert(
+                'warning', 
+                "로그인 이후 사용 가능합니다."
+            );
+            navigate('/userlogin');
+        });
+    }, [user]); 
 
     return (
         <>

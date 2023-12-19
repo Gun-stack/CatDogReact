@@ -51,8 +51,8 @@ function UserMy() {
         console.log(user);
         console.log(desInfo);
         if (!isLoggedIn) {
-            alert('로그인이 필요한 서비스입니다.');
-            navigate('/main');
+            // alert('로그인이 필요한 서비스입니다.');
+            // navigate('/main');
         }
         if(user.roles === "ROLE_DES" || user.roles === "ROLE_SHOP"){
             axios.get(`http://localhost:8090/desinfobyid?desId=${user.id}`)

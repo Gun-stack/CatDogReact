@@ -1,8 +1,9 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import axios from "axios";
 import { calculateDistance } from '../tools/DistanceCalculator';
+import SwalCustomAlert from '../Alerts/SwalCustomAlert';
 
 
 
@@ -14,8 +15,29 @@ function Distance() {
     const dispatch = useDispatch();
     const shops = useSelector((state) => state.shopList);
 
+
+    const token = useSelector(state => state.token);
+    const navigate = useNavigate();
     useEffect(() => {
-        axios.get(`http://localhost:8090/shoplistall`)
+        
+        // console.log("로그인 후 토큰 값 : " + token);
+        axios.get('http://localhost:8090/user', {
+            headers: {
+                Authorization: token,
+            }
+        })
+            .then(res => {
+                console.log("Res : " + res.data);
+            })
+            .catch(err => {
+                // console.log("Err : " + err);
+                SwalCustomAlert(
+                    'warning', 
+                    "로그인 이후 사용 가능합니다."
+                    );
+                    navigate('/userlogin');
+            })
+            axios.get(`http://localhost:8090/shoplistall`)
             .then((res) => {
                 const fetchedShops = res.data;
                 const sortedByDistance = fetchedShops.map(shop => {
@@ -28,6 +50,23 @@ function Distance() {
                 // console.log(sortedShops);
             })
     }, [dispatch]);
+
+
+
+    // useEffect(() => {
+    //     axios.get(`http://localhost:8090/shoplistall`)
+    //         .then((res) => {
+    //             const fetchedShops = res.data;
+    //             const sortedByDistance = fetchedShops.map(shop => {
+    //                 const distance = calculateDistance(coord.latitude, coord.longitude, shop.lat, shop.lon,);
+    //                 return { ...shop, distance };
+    //             }).sort((a, b) => a.distance - b.distance);
+
+    //             dispatch({ type: 'SET_SHOP_LIST', payload: sortedByDistance });
+    //             setSortedShops(sortedByDistance);
+    //             // console.log(sortedShops);
+    //         })
+    // }, [dispatch]);
 
 
 

@@ -1,4 +1,4 @@
-import { Link, Route, Routes, useLocation } from "react-router-dom";
+import { Link, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import Footer from "../screens/Footer";
 import Header from "../screens/Header";
 
@@ -10,7 +10,9 @@ import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import useKakaoLoader from './useKakaoLoader';
 import Swal from "sweetalert2";
 import Error404 from "../error/Error404";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import axios from 'axios';
+import SwalCustomAlert from '../Alerts/SwalCustomAlert';
 
 
 
@@ -46,6 +48,30 @@ function Around() {
         isLoading: true,
         isPanto: false,
     })
+
+    const token = useSelector(state => state.token);
+    const navigate = useNavigate();
+    useEffect(() => {
+        
+        // console.log("로그인 후 토큰 값 : " + token);
+        axios.get('http://localhost:8090/user', {
+            headers: {
+                Authorization: token,
+            }
+        })
+            .then(res => {
+                console.log("Res : " + res.data);
+            })
+            .catch(err => {
+                // console.log("Err : " + err);
+                SwalCustomAlert(
+                    'warning', 
+                    "로그인 이후 사용 가능합니다."
+                    );
+                    navigate('/userlogin');
+            })
+    }, [])
+
 
     function mapClickModal() {
         const shoplist = [

@@ -1,10 +1,12 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import React from "react";
 import { useState } from "react";
 import ReactModal from 'react-modal';
 import UserModi_MemberWithDraw from "./UserModi_MemberWithDraw";
 import { useSelector } from 'react-redux';
 import { useEffect } from "react";
+import axios from 'axios';
+import SwalCustomAlert from '../../Alerts/SwalCustomAlert';
 
 function UserModi() {
     const user = useSelector((state) => state.user);
@@ -41,6 +43,30 @@ function UserModi() {
             boxShadow: "0px 2px 2px rgba(0, 0, 0, 0.25)",
         },
     };
+
+
+    const token = useSelector(state => state.token);
+    const navigate = useNavigate();
+    useEffect(() => {
+
+        // console.log("로그인 후 토큰 값 : " + token);
+        axios.get('http://localhost:8090/user', {
+            headers: {
+                Authorization: token,
+            }
+        })
+            .then(res => {
+                console.log("Res : " + res.data);
+            })
+            .catch(err => {
+                // console.log("Err : " + err);
+                SwalCustomAlert(
+                    'warning',
+                    "로그인 이후 사용 가능합니다."
+                );
+                navigate('/userlogin');
+            })
+    }, [])
 
     return (
         <>
@@ -86,7 +112,7 @@ function UserModi() {
                                             <span className="tx-orange f-w-600">전 화 번 호</span>  : <span className="f-w-600">{user.tel}</span> <br />
                                         </p>
                                         <img src="/img/logo/pet_defult_img.png" alt="기본이미지" className="id-card-img" />
-                                
+
                                     </div>
                                 }
                             </div>
