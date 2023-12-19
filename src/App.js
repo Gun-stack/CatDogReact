@@ -1,3 +1,4 @@
+
 import './css/style.css';
 import '@fortawesome/fontawesome-free/css/all.min.css'
 import { Route, Routes } from 'react-router-dom';
@@ -29,6 +30,7 @@ import ShopReg from './components/des_main_component/Des_My/ShopReg';
 import DistanceCalculator from './components/tools/DistanceCalculator';
 import { useEffect } from 'react';
 import { logoutStore } from './actions';
+import WebSocketComponent from './components/tools/WebSocketComponent';
 
 
 
@@ -40,10 +42,10 @@ function App() {
 
 
   return (
-  <>
-    <Provider store={store}>
+    <>
+   
+   <Provider store={store}>
       <PersistGate loading={<Loding/>} persistor={persistor}>
-
     <Routes>
       {/** Index (리액트 서버 틀자마자 바로 나오는것)*/}
       <Route path='/' element={<Index/>}/>
@@ -77,7 +79,6 @@ function App() {
 
       </PersistGate>
     </Provider>
-
   </>
   );
 }

@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import SwalCustomAlert from '../../Alerts/SwalCustomAlert';
+import DatalistInput from 'react-datalist-input';
+// import 'react-datalist-input/dist/styles.css';
 
 
 
@@ -172,6 +174,42 @@ function PetRegForm() {
                             className="input-text boader-none"  onChange={change} />
                         <hr className="gray-line" />
 
+                        <DatalistInput
+                            className='input-text boader-none'
+                            
+                            placeholder="반려동물 품종"
+                            onSelect={(item) => console.log(item.value)}
+                            name="breed" id="breed" onChange={change}
+                            items={[
+                                { id: '꼬똥 드 툴레아', value: '꼬똥 드 툴레아' },
+                                { id: '골든리트리버', value: '골든리트리버' },
+                                { id: '닥스훈트', value: '닥스훈트' },
+                                { id: '도베르만', value: '도베르만' },
+                                { id: '리트리버', value: '리트리버' },
+                                { id: '말티즈', value: '말티즈' },
+                                { id: '말티푸', value: '말티푸' },
+                                { id: '불독', value: '불독' },
+                                { id: '비숑', value: '비숑' },
+                                { id: '비글', value: '비글' },
+                                { id: '보스턴 테리어', value: '보스턴 테리어' },
+                                { id: '사모예드', value: '사모예드' },
+                                { id: '셰퍼드', value: '셰퍼드' },
+                                { id: '스코티시테리어', value: '스코티시테리어' },
+                                { id: '시베리안 허스키', value: '시베리안 허스키' },
+                                { id: '시츄', value: '시츄' },
+                                { id: '아키타', value: '아키타' },
+                                { id: '잭러셀테리어', value: '잭러셀테리어' },
+                                { id: '키스혼드', value: '키스혼드' },
+                                { id: '푸들', value: '푸들' },
+                                { id: '프렌치 불도그', value: '프렌치 불도그' },
+                                { id: '헤르더', value: '헤르더' },
+                                { id: '요크셔테리어', value: '요크셔테리어' },
+                              ]}/>
+    <hr className="gray-line" />
+
+
+
+
                         {/* 반려동물 종류 gender */}
                         <div className="radio-container">
                             <label htmlFor="gender" className="radio-text">성별</label>
@@ -195,6 +233,7 @@ function PetRegForm() {
                         <hr className="gray-line" />
                     </div>
 
+                   
                     {/* 버튼 컨테이너  */}
                     <div className="button-container">
                         <button id="submit-btn" type="submit" className="main-btn btn-text magin-t-1" onClick={onSubmit}>

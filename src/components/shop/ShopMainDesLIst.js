@@ -188,12 +188,19 @@ function ShopMainDesLIst() {
 
     return (
         <div>
+
+            {shopInfo.id===user.id&&
+            <div>
+                
             <div action="" className="shop-form-container">
                 <div className="input-img-click sm-input-img">
                     <p onClick={() => handleBtnClick(user.id)}>스타일리스트 등록하기 <i className="fas fa-plus-circle"></i></p>
                 </div>
             </div>
             <hr className="divide-line" />
+           
+            </div>
+            }
 
 
 
@@ -218,12 +225,14 @@ function ShopMainDesLIst() {
                                 ) : (
                                     `${des.position}`
                                 )}
+                                
                             </div>
                             <div className="st-profile-name">{des.desNickname}</div>
                             <div className="st-profile-shop">{shopInfo.name}</div>
                             <div className="st-profile-info">{des.info}</div>
                         </div>
                     </div>
+
                     <div className="st-button-container">
 
                         {shopInfo.sid === des.sid && user.roles === "ROLE_SHOP" && (

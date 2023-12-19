@@ -33,10 +33,11 @@ function UserLogin() {
         setLoading(true);
         try {
             const res = await axios.post('http://localhost:8090/login', user);
+            console.log(res);
             const token = res.headers.authorization;
             const user1 = res.data;
             // console.log("res : " + JSON.stringify(res.data));
-            // console.log(token);
+            console.log(token);
             dispatch(setToken(token));
             dispatch(setUserStore(user1));
             dispatch(loginStore());

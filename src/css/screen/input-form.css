@@ -252,3 +252,57 @@ input[type='date']::before {
     font-weight: 600;
     color: var(--btn-submit);
 }
+
+.react-datalist-input__textbox {
+    width: 25rem;
+    font-size: 1rem;
+    font-family: 'pretendard-regular';
+    line-height: 1.25rem;
+    margin: 0rem;
+    color: #303438;
+    background: none;
+    border: none;
+    outline: none;
+    /* border-bottom: 1px solid rgb(100, 100, 100); */
+  }
+
+
+.react-datalist-input__listbox {
+    height: 20rem;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    width: 25rem;
+    position: absolute;
+    margin: 2px 0 0 0;
+    padding: 0;
+    border: var(--border);
+    border-radius: var(--border-radius);
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+    box-shadow: var(--shadow);
+    z-index: 10;
+}
+.react-datalist-input__container {
+    width: 25rem;
+    position: relative;
+    --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --gray: rgb(200, 200, 200);
+    --padding: 5px;
+    --border-radius: 5px;
+    --border: 1px solid var(--gray);
+  }
+.react-datalist-input__listbox-option {
+    width: 25rem;
+    cursor: pointer;
+    margin: 0;
+    padding: var(--padding);
+  }
+  .react-datalist-input__listbox-option:focus {
+    background-color: var(--gray);
+  }
+  .react-datalist-input__listbox-option:hover {
+    background-color: var(--gray);
+  }
+  

@@ -4,11 +4,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { setToken, logoutStore } from "../../actions";
 import Swal from "sweetalert2";
 import { persistor } from "../../App"
+import WebSocketComponent from '../tools/WebSocketComponent';
 
 
 
 
 function UserHeader() {
+
 
     const navigate = useNavigate();
 
@@ -57,6 +59,9 @@ function UserHeader() {
                     <Link to="/main"><img src="/img/logo/logo_color.png" alt="로고 이미지" className="header-logo" /></Link>
                 </div>
                 <div className="icon-container">
+
+
+                    <WebSocketComponent />
 
                     {isLoggedIn ?
                         <button className="header-btn header-btn-text" onClick={onLogout}>로그아웃</button>
