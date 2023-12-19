@@ -6,6 +6,8 @@ import { Link, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { useSelector ,useDispatch } from 'react-redux';
 import { PetStore } from '../../../actions';
+import { useNavigate } from 'react-router';
+import SwalCustomAlert from '../../Alerts/SwalCustomAlert';
 
 function ReservationCheck() {
     const params = useParams();
@@ -18,6 +20,8 @@ function ReservationCheck() {
     const [pet,setPet] = useState([]);
     const [resv,setResv] = useState([]);
     const [des,setDes] = useState([]);
+    const navigate = useNavigate();
+    const token = useSelector(state => state.token);
 
     
 
@@ -50,6 +54,27 @@ function ReservationCheck() {
         
         console.log(user.id);
         console.log(params.num);
+
+
+         // console.log("로그인 후 토큰 값 : " + token);
+         axios.get('http://localhost:8090/user', {
+            headers: {
+                Authorization: token,
+            }
+        })
+            .then(res => {
+                console.log("Res : " + res.data);
+            })
+            .catch(err => {
+                // console.log("Err : " + err);
+                SwalCustomAlert(
+                    'warning',
+                    "로그인 이후 사용 가능합니다."
+                );
+                navigate('/userlogin');
+            })
+
+
         // console.log(resv);
         axios.get(`http://localhost:8090/reservedetail?num=${params.num}`)    
         .then((res) => {

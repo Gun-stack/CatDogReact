@@ -34,7 +34,8 @@ const DistanceCalculator = ({ lat1, lon1, lat2, lon2 }) => {
 
   return (
     <div>
-      <p>{distance.toFixed(2)} km</p>
+
+      <p> {distance.toFixed(2)<1?`${distance.toFixed(2)*1000} m`:`${distance.toFixed(2)} km`} </p>
     </div>
   );
 };

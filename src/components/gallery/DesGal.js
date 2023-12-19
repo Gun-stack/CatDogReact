@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 
 
@@ -9,6 +10,7 @@ function DesGal() {
     const [galleryList, setGalleryList] = useState([
     ]);
     const [page, setPage] = useState(0);
+    const user = useSelector((state) => state.user);
 
     const PlusPage = () => {
         setPage(page + 1);
@@ -42,7 +44,9 @@ function DesGal() {
 
     return (
         <section className="st-gallery-section">
+                { user.roles === 'ROLE_DES' || user.roles === 'ROLE_SHOP' &&
             <Link to='/gallery/des/galleryregform'> <button className='info-input-btn'>사진 올리기</button></Link>
+                }  
             <div className="st-gallery-grid">
 
                 {galleryList.map((gallery, index) => (

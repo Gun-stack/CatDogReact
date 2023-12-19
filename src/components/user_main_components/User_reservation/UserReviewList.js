@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router';
+import SwalCustomAlert from '../../Alerts/SwalCustomAlert';
 
 
 function UserReviewList() {
@@ -10,11 +12,32 @@ function UserReviewList() {
     const user = useSelector((state) => state.user);
     const reservationList = useSelector((state) => state.resvList) ;
     const resvList = reservationList.filter((resv) => resv.status === "완료" );
+    const token = useSelector(state => state.token);
+    const navigate = useNavigate();
     
 
 
     useEffect(() => {
         console.log(reservationList)    
+
+        // console.log("로그인 후 토큰 값 : " + token);
+        axios.get('http://localhost:8090/user', {
+            headers: {
+                Authorization: token,
+            }
+        })
+            .then(res => {
+                console.log("Res : " + res.data);
+            })
+            .catch(err => {
+                // console.log("Err : " + err);
+                SwalCustomAlert(
+                    'warning',
+                    "로그인 이후 사용 가능합니다."
+                );
+                navigate('/userlogin');
+            })
+
         axios.get(`http://localhost:8090/resinfobyuserid?userId=${user.id}`)
             .then((res) => {
                 if (res.data !== undefined) {

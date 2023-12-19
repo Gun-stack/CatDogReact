@@ -10,7 +10,7 @@ import Server500Err_Alert from '../../Alerts/Server500Err_Alert';
 
 
 function PetModi() {
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
     //가져온 펫넘버
     const params = useParams();
     // 펫정보 추가
@@ -50,8 +50,31 @@ function PetModi() {
         }
         const imageSrc = URL.createObjectURL(e.target.files[0]);
         imgBoxRef.current.src = imageSrc;
+        
     };
+    const token = useSelector(state => state.token);
     useEffect(() => {
+
+
+        // console.log("로그인 후 토큰 값 : " + token);
+        axios.get('http://localhost:8090/user', {
+            headers: {
+                Authorization: token,
+            }
+        })
+            .then(res => {
+                console.log("Res : " + res.data);
+            })
+            .catch(err => {
+                // console.log("Err : " + err);
+                SwalCustomAlert(
+                    'warning',
+                    "로그인 이후 사용 가능합니다."
+                );
+                navigate('/userlogin');
+            })
+
+
         // console.log(params.num);
         setNewPet({
             num: pet.num,

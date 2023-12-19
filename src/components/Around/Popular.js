@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import axios from "axios";
 import DistanceCalculator from '../tools/DistanceCalculator';
+import StarRating from '../des_main_component/Des_My/StarRating';
 
 
 
@@ -40,6 +41,7 @@ function Popular() {
                                 <h3 className="shop-dist">
                                     <DistanceCalculator lat1={shop.lat} lon1={shop.lon} lat2={coord.latitude} lon2={coord.longitude} />
                                 </h3>
+                                <StarRating rating={shoplist.star} /> 
                                 <div className="shop-adderss"  >
                                     <p className="shop-adderss-text" name="address" >
                                         {shop.addressRoad}
