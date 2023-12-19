@@ -19,6 +19,8 @@ function UserGalleryView() {
     const [isPost, setIsPost] = useState(false);
     const formData = new FormData();
 
+ 
+
     function goBack(e) {
         e.preventDefault();
         navigate(-1);
@@ -47,6 +49,7 @@ function UserGalleryView() {
             })
     }
 
+
     const deleteComment = (e) => {
         let commentNum = e.currentTarget.value;
         console.log(commentNum);
@@ -55,6 +58,7 @@ function UserGalleryView() {
             return;
         }
         axios.post(`http://localhost:8090/usergallerycommentdelete?commentNum=${commentNum}`)
+
             .then((res) => {
                 console.log(res.data);
                 setIsPost(!isPost);
@@ -81,14 +85,13 @@ function UserGalleryView() {
             })
     }
 
-
-    const onChageComment = (e) => {
-        setComment(e.currentTarget.value);
-        console.log(comment);
+    const onChageComment = (e) => { 
+        setComment(e.target.value);
     }
 
     useEffect(() => {
         console.log(params);
+
         axios.get(`http://localhost:8090/usergallerydetail?galNum=${params.usergalnum}&userNum=${user.num}`)
             .then((res) => {
                 console.log(res.data);
@@ -126,16 +129,16 @@ function UserGalleryView() {
 
 
                             <div>
-                                {commentList.map((comments, index) => (
-                                    <div key={index} className="view-comment">
+                                {commentList.map((comments,num) => (
+                                    <div key={num} className="view-comment">
                                         <div>
                                             <span className="view-comment-nickname"> {comments.userNickname} </span>
                                             <span className="view-comment-text"> {comments.content} </span>
                                         </div>
                                         <div>
                                             <span className="view-comment-text tx-gray"> ({comments.date}) </span>
-
                                             {comments.userId === user.id && <button value={comments.num} onClick={deleteComment} className='view-comment-more'><i class="fas fa-times"></i></button>}
+
                                         </div>
                                     </div>
                                 ))}
