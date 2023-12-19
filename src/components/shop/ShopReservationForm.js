@@ -39,7 +39,7 @@ function ShopReservationForm(props) {
         shopName: shopInfo.name,
         time: time,
         date: sqlDate,
-        petName: '',
+        petName: "",
         status: '예약',
         isReview: 0,
         refText: '',
@@ -81,20 +81,31 @@ function ShopReservationForm(props) {
     }
         , []);
 
-    const onSubmit = async () => {
-        try {
-
-            // axios.post
-            await axios.post('http://localhost:8090/makereservation', resvInfo);
+    const onSubmit = async (e) => {
+        e.preventDefault();
+        console.log("PetName1 : " + resvInfo.petName);
+        if(!(resvInfo.petName.trim() === "" || resvInfo.petName === null)){
+            try {
+                // axios.post
+                await axios.post('http://localhost:8090/makereservation', resvInfo);
+                SwalCustomAlert(
+                    '<img src="/img/logo/modal_success_logo.png"/>',
+                    '<span class="sweet-modal-title">예약이 완료 되었습니다</span>',
+                );
+                goBack();
+            } catch (err) {
+                console.log(err);
+                Server500Err_Alert();
+            }
+        } else{
             SwalCustomAlert(
-                '<img src="/img/logo/modal_success_logo.png"/>',
-                '<span class="sweet-modal-title">예약이 완료 되었습니다</span>',
+                'fail',
+                '펫을 선택해 주세요.',
             );
-            goBack();
-        } catch (err) {
-            console.log(err);
-            Server500Err_Alert();
+            return false;
         }
+
+        
     };
 
 

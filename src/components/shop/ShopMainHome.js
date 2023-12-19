@@ -212,52 +212,60 @@ function ShopMainHome() {
 
                 <>
 
+                    {shopInfo.id === user.id &&
+                        <>
+                            <ImageUploading multiple value={images} onChange={onChange} maxNumber={maxNumber} dataURLKey="data_url">
+                                {({ imageList, onImageUpload, onImageRemoveAll, onImageUpdate, onImageRemove, isDragging, dragProps, }) => (
 
-                    <ImageUploading multiple value={images} onChange={onChange} maxNumber={maxNumber} dataURLKey="data_url">
-                        {({ imageList, onImageUpload, onImageRemoveAll, onImageUpdate, onImageRemove, isDragging, dragProps, }) => (
+                                    <div className="upload__image-wrapper">
 
-                            <div className="upload__image-wrapper">
-                                <div className="shop-title-text sm-text magin-t-1"> 매장 사진 올리기 <i className="fas fa-photo-video btn-icon"></i></div>
-                                <div className="shop-title-text sm-text magin-t-1 tx-gray f-size-14px"> 높이 260px 이상의 사진은 깨질수있습니다!</div>
+                                        <div className="shop-title-text sm-text magin-t-1"> 매장 사진 올리기 <i className="fas fa-photo-video btn-icon"></i></div>
+                                        <div className="shop-title-text sm-text magin-t-1 tx-gray f-size-14px"> 높이 260px 이상의 사진은 깨질수있습니다!</div>
 
-                                <div className="shop-form-container">
-                                    <div className="input-img-click sm-input-img">
+                                        <div className="shop-form-container">
+                                            <div className="input-img-click sm-input-img">
 
-                                        <button className='info-input-btn' style={isDragging ? { color: 'red' } : undefined} onClick={onImageUpload} {...dragProps} >
-                                            매장사진 추가<i className="far fa-plus-square tx-white"></i>
-                                        </button>
-                                        <button className='info-input-btn' onClick={onImageRemoveAll}> 매장 사진 지우기
-                                        </button>
+                                                <button className='info-input-btn' style={isDragging ? { color: 'red' } : undefined} onClick={onImageUpload} {...dragProps} >
+                                                    매장사진 추가<i className="far fa-plus-square tx-white"></i>
+                                                </button>
+                                                <button className='info-input-btn' onClick={onImageRemoveAll}> 매장 사진 지우기
+                                                </button>
 
-                                    </div>
-                                </div>
-                                <div className="shop-form-container fl-di-column">
-                                    {imageList.map((image, index) => (
-                                        <div key={index} className="image-item img-re">
-                                            <img src={image['data_url']} alt="슬라이드에 들어갈 이미지" className='slide-input-img' />
-                                            <div className="image-item__btn-wrapper img-ab-1">
-                                                <button className='img-in-btn' onClick={() => onImageUpdate(index)}>수정</button>
-                                                <button className='img-in-btn' onClick={() => onImageRemove(index)}><i className="fas fa-times tx-white"></i></button>
                                             </div>
                                         </div>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
-                    </ImageUploading>
+                                        <div className="shop-form-container fl-di-column">
+                                            {imageList.map((image, index) => (
+                                                <div key={index} className="image-item img-re">
+                                                    <img src={image['data_url']} alt="슬라이드에 들어갈 이미지" className='slide-input-img' />
+                                                    <div className="image-item__btn-wrapper img-ab-1">
+                                                        <button className='img-in-btn' onClick={() => onImageUpdate(index)}>수정</button>
+                                                        <button className='img-in-btn' onClick={() => onImageRemove(index)}><i className="fas fa-times tx-white"></i></button>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
 
-                    <button className='info-input-btn' value='titleimg' onClick={handleBtnClick}>매장그림 올리기<i className="far fa-plus-square tx-white"></i>
-                    </button>
+                                )}
+                            </ImageUploading>
 
+                            <button className='info-input-btn' value='titleimg' onClick={handleBtnClick}>매장그림 올리기<i className="far fa-plus-square tx-white"></i>
+                            </button>
+                        </>
+                    }
                     <div className="shop-title-text sm-text magin-t-1">공지사항 <i className="fas fa-check btn-icon"></i>
+                    {shopInfo.id === user.id &&
                         <button className='info-input-btn' value='notice' onClick={handleBtnClick}>공지사항 입력 <i className="far fa-plus-square tx-white"></i></button>
+                    }
                     </div>
 
                     <div className="shop-form-container">
                         <div className="input-img-click sm-input-img">{shopInfo.notice}</div>
                     </div>
                     <div className="shop-title-text sm-text">영업시간<i className="fas fa-clock btn-icon"></i>
+                    {shopInfo.id === user.id &&
                         <button className='info-input-btn' value='worktime' onClick={handleBtnClick}>영업시간 입력 <i className="far fa-plus-square tx-white"></i></button>
+                    }
                     </div>
 
                     <div className="shop-form-container">
@@ -294,10 +302,9 @@ function ShopMainHome() {
                     <hr className="divide-line" />
 
                     <div className="shop-title-text sm-text ma-top2rem">매장정보<i className="fas fa-info-circle btn-icon"></i>
-
+                    {shopInfo.id === user.id &&
                         <button className='info-input-btn' value='shopinfo' onClick={handleBtnClick}>매장정보 입력 <i className="far fa-plus-square tx-white"></i></button>
-
-
+                    }
                     </div>
                     <div className="shop-form-container">
                         <p className="input-img-click sm-input-img">{shopInfo.info} </p>

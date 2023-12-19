@@ -10,14 +10,17 @@ function DesReg() {
     const [des, setDes] = useState({});
     const [shop, setShop] = useState({});
 
-    
-    
+
+
     useEffect(() => {
         axios.get(`http://localhost:8090/desinfobyid?desId=${user.id}`)
             .then((res) => {
                 console.log(res.data);
                 setDes(res.data.des);
-                setShop(res.data.shop);
+                if (res.data.shop != null) {
+                    setShop(res.data.shop);
+                    console.log("Data : " + res.data.shop.name);
+                }
             })
             .catch((err) => {
                 console.log(err);
@@ -43,20 +46,25 @@ function DesReg() {
                         </ul>
 
                         {/* <!-- 디자이너 프로필 --> */}
-                        <div className="stylelist-content"> 
+                        <div className="stylelist-content">
                             <div className="st-profile-container">
 
                                 <div className="st-profile-img">
-                                    {des.num &&<img src={`http://localhost:8090/desimg/${des.num}`} alt="디자이너 이미지" className="st-profile-img" />}
+                                    {des.num && <img src={`http://localhost:8090/desimg/${des.num}`} alt="디자이너 이미지" className="st-profile-img" />}
                                 </div>
 
                                 <div className="st-profile-context">
                                     <div className="st-profile-name">
-                                        {des.position} {des.desNickname} 
+                                        {des.position} {des.desNickname}
                                     </div>
-                                    <div className="st-profile-shop">
-                                        {shop.name}
-                                    </div>
+                                    {shop !== null ? (
+                                        <div className="st-profile-shop">
+                                            {shop.name}
+                                        </div>
+                                    ) : (
+                                        <div className="st-profile-shop">
+                                        </div>)
+                                    }
                                     <div className="st-profile-info">
                                         {des.info}
 
