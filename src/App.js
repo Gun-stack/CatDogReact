@@ -30,7 +30,6 @@ import ShopReg from './components/des_main_component/Des_My/ShopReg';
 import DistanceCalculator from './components/tools/DistanceCalculator';
 import { useEffect } from 'react';
 import { logoutStore } from './actions';
-import WebSocketComponent from './components/tools/WebSocketComponent';
 
 
 

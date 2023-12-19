@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux';
 
 import Server500Err_Alert from '../../Alerts/Server500Err_Alert';
 import SwalCustomAlert from '../../Alerts/SwalCustomAlert';
+import Swal from 'sweetalert2';
 
 
 
@@ -16,9 +17,10 @@ function UserModi_Nickname() {
     const dispath = useDispatch();
 
 
-    const [userNickname, setUserNickname] = useState('보호자 닉네임');
+    const [userNickname, setUserNickname] = useState("");
     const [loading, setLoading] = useState(false);
     const user = useSelector((state) => state.user);
+    const [check, setCheck] = useState(false);
 
 
     //뒤로가기
@@ -30,48 +32,56 @@ function UserModi_Nickname() {
     }
 
     const onChangeNick = (e) => {
-        setUserNickname(e.target.value);
-        console.log("UserNickname : " + userNickname);
+        const updatedNickname = e.target.value;
+        setUserNickname(updatedNickname);
+        console.log("UserNickname : " + updatedNickname);
     }
 
     const checkNickname = async (e) => {
         e.preventDefault();
+        console.log("중복확인 닉네임 :" + userNickname);
 
-        if (userNickname === '' && userNickname.trim() === '') {
+        if (userNickname.trim() === "" || userNickname === null) {
             SwalCustomAlert(
-                '닉네임을 입력해주세요',
-            )
+                'fail',
+                '닉네임을 입력해주세요.',
+            );
         } else {
             //닉네임 정규식 에서 틀린지 조건체크
             const nicknameRegExp = /^[가-힣a-zA-Z0-9]{2,10}$/;
             if (!nicknameRegExp.test(userNickname)) {
+                Swal.fire({
+                    icon: 'warning',
+                    html: "<div><p style='text-align:center;'>닉네임은 한글,영문 대소문자와<br/> 숫자 2~10자리로 입력해주세요<p></div>",
+                    confirmButtonColor: '#F9950F',
+                    confirmButtonText: '확인',
+                });
                 SwalCustomAlert(
-                    '닉네임은 한글 영문 대소문자와 숫자 4~12자리로 입력해주세요.',
-                )
+                    'warning', 
+                    "닉네임은 한글, 영문 대소문자와 숫자 <br/>2~10자리로 입력해주세요"
+                    );
                 return false;
             }
-
             try {
-                const res = await axios.get(`http://localhost:8090/checkusernickname?nickname=${userNickname}`)
+                const res = await axios.get(`http://localhost:8090/checkusernickname?nickname=${userNickname}`);
                 if (res.data === "success") {
-                    //닉네임 중복이 아니고 조건에 부합에 사용 가능하다면
+                    // 닉네임 중복이 아니고 조건에 부합하면
                     SwalCustomAlert(
                         'success',
                         '사용 할 수 있는 닉네임 입니다.',
                     );
+                    setCheck(true); 
                 } else {
-                    // 중복 됐다면
+                    // 중복됐다면
                     SwalCustomAlert(
                         'fail',
                         '중복되는 닉네임 입니다.',
                     );
                 }
             } catch (error) {
-                //500 error 체크
+                // 500 error 처리
                 console.error('서버통신에 실패했습니다', error);
-                <Server500Err_Alert />
-            } finally {
-                console.log('닉네임 확인 완료');
+                <Server500Err_Alert />;
             }
         }
     };
@@ -79,23 +89,31 @@ function UserModi_Nickname() {
     const onSubmit = async (e) => {
 
         e.preventDefault();
-        setLoading(true); // 로딩 시작
 
-        try {
-            const res = await axios.post('http://localhost:8090/modinickname', { num: user.num, nickname: userNickname });
-            dispath({ type: 'SET_USER', payload: res.data });
+        if (check) {
+            try {
+                const res = await axios.post('http://localhost:8090/modinickname', { num: user.num, nickname: userNickname });
+                dispath({ type: 'SET_USER', payload: res.data });
+                SwalCustomAlert(
+                    'success',
+                    '닉네임이 변경되었습니다!',
+                );
+            } catch (error) {
+                //500 error 처리
+                console.error('서버통신에 실패했습니다', error);
+                <Server500Err_Alert />
+            } finally {
+                navigate("/usermy/usermodi");
+                setLoading(false); // 로딩 종료
+            }
+        } else {
             SwalCustomAlert(
-                'success',
-                '닉네임이 변경되었습니다!',
+                'fail',
+                '중복체크를 완료해주세요.',
             );
-        } catch (error) {
-            //500 error 처리
-            console.error('서버통신에 실패했습니다', error);
-            <Server500Err_Alert />
-        } finally {
-            navigate("/usermy/usermodi");
-            setLoading(false); // 로딩 종료
+            return false;
         }
+
     };
 
 
