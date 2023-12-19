@@ -106,7 +106,7 @@ function DesReservationForm(props) {
                 <span className="form-text" >{sqlDate} {selectDay}</span>
                 <hr className="divide-line" />
                 <div className="reser-time-container magin-t-1">
-                    <div className="reser-time">
+                    <div className="reser-time date-center">
                         <span className="reser-time-text"onClick={goBack}>{time}</span>
                     </div>
                 </div>
