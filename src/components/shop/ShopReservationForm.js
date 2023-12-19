@@ -66,7 +66,30 @@ function ShopReservationForm(props) {
         navigate(-1);
     }
 
+
+
+    const token = useSelector(state => state.token);
+    
     useEffect(() => {
+         // console.log("로그인 후 토큰 값 : " + token);
+         axios.get('http://localhost:8090/user', {
+            headers: {
+                Authorization: token,
+            }
+        })
+            .then(res => {
+                console.log("Res : " + res.data);
+            })
+            .catch(err => {
+                // console.log("Err : " + err);
+                SwalCustomAlert(
+                    'warning',
+                    "로그인 이후 사용 가능합니다."
+                );
+                navigate('/userlogin');
+            })
+
+
         console.log(shopInfo);
         axios.get(`http://localhost:8090/petinfo?userId=${user.id}`)
             .then((res) => {
@@ -119,7 +142,7 @@ function ShopReservationForm(props) {
         <div>
             <div>
                 <hr className="divide-line" />
-                <span className="form-text" >{sqlDate} {selectDay}</span>
+                <span className="form-text date-center" >{sqlDate} {selectDay}</span>
                 <hr className="divide-line" />
                 <div className="reser-time-container magin-t-1">
                     <div className="reser-time">

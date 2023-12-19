@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Loding from '../tools/Loding';
 import { useSelector } from 'react-redux';
@@ -29,7 +29,33 @@ function ShopMainHome() {
     const [galleryList, setGalleryList] = useState([
     ]);
 
+
+    const token = useSelector(state => state.token);
+    const navigate = useNavigate();
+
+
     useEffect(() => {
+
+
+        // console.log("로그인 후 토큰 값 : " + token);
+        axios.get('http://localhost:8090/user', {
+            headers: {
+                Authorization: token,
+            }
+        })
+            .then(res => {
+                console.log("Res : " + res.data);
+            })
+            .catch(err => {
+                // console.log("Err : " + err);
+                SwalCustomAlert(
+                    'warning',
+                    "로그인 이후 사용 가능합니다."
+                );
+                navigate('/userlogin');
+            })
+
+
         axios.get('http://localhost:8090/desgalleryshop', {
             params: {
                 num: shopInfo.num,
@@ -71,7 +97,6 @@ function ShopMainHome() {
                         '취소',
                         true,
                     )
-
                     if (result.isConfirmed) {
                         setLoading(true);
                         try {
@@ -88,9 +113,8 @@ function ShopMainHome() {
                             <Server500Err_Alert />
                         } finally {
                             setLoading(false);
-                            window.location.reload();
                         }
-                        console.log('입력한값:', result.value);
+                    window.location.reload();
                     }
                     break;
 
@@ -320,8 +344,10 @@ function ShopMainHome() {
                                     <div className="st-gallery-img" key={index} >
                                         <Link to={"/gallery/des/" + gallery.num}><img src={`http://localhost:8090/desgalview/${gallery.num}`} alt="" className="hover-img" /></Link>
                                         <div className="img-comment-hover">
-                                            <span className="img-hover-icon"><i className="fas fa-heart" ></i>{gallery.likeCnt}</span>
-                                            {/* <span className="img-hover-icon"><i className="fas fa-comment"></i>{gallery.galComment}</span> */}
+                                        <span className="img-hover-icon">
+                                            <i className="fas fa-heart hover-icon" ></i>
+                                            <span className='hover-text'>{gallery.likeCnt}</span>
+                                        </span>
                                         </div>
                                     </div>
                                 ))}

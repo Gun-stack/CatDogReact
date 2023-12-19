@@ -26,25 +26,25 @@ function Popular() {
 
     return (
         <ul className="shop-list-ul">
-            {shops.map((shoplist) => (
-                <li className="shpo-list-li" key={shoplist.num}>
+            {shops.map((shop) => (
+                <li className="shpo-list-li" key={shop.num}>
                     <hr className="divide-line" />
                     <div className="nearby-shop-container">
                         <div className="nearby-shop-address-container">
                             <div className="nearby-shop-img-container">
-                                <Link to={"/shop/" + shoplist.num}><img className="nearby-shop-img" name="image" alt='' src={`http://localhost:8090/shopimg/${shoplist.profImg}`}></img></Link>
+                                <Link to={"/shop/" + shop.num}><img className="nearby-shop-img" name="image" alt='' src={`http://localhost:8090/shopimg/${shop.profImg}`}></img></Link>
                             </div>
 
                             {/* // 제목을 누르면 지도에서 마커 찍어주기?? */}
                             <div className="shop-text-container">
-                                <Link to={"/shop/" + shoplist.num}><h3 className="shop-name" name="shopname">{shoplist.name}</h3></Link>
+                                <Link to={"/shop/" + shop.num}><h3 className="shop-name" name="shopname">{shop.name}</h3></Link>
                                 <h3 className="shop-dist">
-                                    <DistanceCalculator lat1={shoplist.lat} lon1={shoplist.lon} lat2={coord.latitude} lon2={coord.longitude} />
+                                    <DistanceCalculator lat1={shop.lat} lon1={shop.lon} lat2={coord.latitude} lon2={coord.longitude} />
                                 </h3>
                                 <StarRating rating={shoplist.star} /> 
                                 <div className="shop-adderss"  >
                                     <p className="shop-adderss-text" name="address" >
-                                        {shoplist.addressRoad}
+                                        {shop.addressRoad}
                                     </p>
                                 </div>
                             </div>
@@ -53,7 +53,7 @@ function Popular() {
 
                     </div>
                     <div className="st-button-container">
-                    <Link to={`/shop/${shoplist.num}`}> <button className="tx-end st-button ">바로가기</button></Link>
+                    <Link to={`/shop/${shop.num}`}> <button className="tx-end st-button ">바로가기</button></Link>
                     </div>
                 </li>
             ))}

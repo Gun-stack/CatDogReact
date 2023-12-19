@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import SwalCustomAlert from '../Alerts/SwalCustomAlert';
 
 
 
@@ -27,7 +28,29 @@ function DesGal() {
 
 
 
+    const token = useSelector(state => state.token);
+    const navigate = useNavigate();
+
     useEffect(() => {
+
+        // console.log("로그인 후 토큰 값 : " + token);
+        axios.get('http://localhost:8090/user', {
+            headers: {
+                Authorization: token,
+            }
+        })
+            .then(res => {
+                console.log("Res : " + res.data);
+            })
+            .catch(err => {
+                // console.log("Err : " + err);
+                SwalCustomAlert(
+                    'warning',
+                    "로그인 이후 사용 가능합니다."
+                );
+                navigate('/userlogin');
+            })
+
         axios.get('http://localhost:8090/desgallery', {
             params: {
                 page: page, // 필요한 페이지 번호
@@ -78,7 +101,7 @@ function DesGal() {
                                 <i className="fas fa-heart hover-icon" ></i>
                                 <span className='hover-text'>{gallery.likeCnt}</span>
                             </span>
-                            
+
                         </div>
                     </div>
                 ))}

@@ -9,6 +9,7 @@ import { Link, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import Loding from "../../tools/Loding";
 import { useNavigate } from 'react-router';
+import SwalCustomAlert from '../../Alerts/SwalCustomAlert';
 
 
 function DesResrevationDate(props) {
@@ -50,9 +51,26 @@ function DesResrevationDate(props) {
 
 
 
-
-
+    const token = useSelector(state => state.token);
     useEffect(() => {
+
+        // console.log("로그인 후 토큰 값 : " + token);
+        axios.get('http://localhost:8090/user', {
+            headers: {
+                Authorization: token,
+            }
+        })
+            .then(res => {
+                console.log("Res : " + res.data);
+            })
+            .catch(err => {
+                // console.log("Err : " + err);
+                SwalCustomAlert(
+                    'warning',
+                    "로그인 이후 사용 가능합니다."
+                );
+                navigate('/userlogin');
+            })
 
         setLoading(true);
         console.log(resList);
@@ -83,7 +101,7 @@ function DesResrevationDate(props) {
 
 
     return (
-        <div>
+        <>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DateCalendar
                     showDaysOutsideCurrentMonth
@@ -91,21 +109,23 @@ function DesResrevationDate(props) {
                     onChange={onChangeDate} />
             </LocalizationProvider>
             {/* <input type="date" placeholder=" 날짜를 선택해주세요." onChange={onChangeDate} /> */}
-            <span className="form-text" style={{ cursor: 'pointer' }} >{selectDate}</span>
+            <span className="form-text date-center" style={{ cursor: 'pointer' }} >{selectDate}</span>
             <hr className="divide-line" />
-            {loading ? <Loding /> : <div>
+            {loading ? <Loding /> : <>
                 {resList && availableTimes.map(time => (
                     <div key={time}>
                         {isReserved(sqlDate, time) ? (
-                            <div className={`reser-time-container btn-gray`}>
+                            <div className='resv-link'>
+                            <div className="reser-time-container btn-gray">
                                 <div className="reser-time">
                                     <span className="reser-time-text">{time}</span>
                                 </div>
                             </div>
+                            </div>
                         ) : (
                             <>
                                 {shopInfo !== null ? (
-                                    <Link to={`/shop/${shopInfo.num}/reservation/${desInfo.num}/form`} state={{ data1: time, data2: sqlDate }}>
+                                    <Link className='resv-link' to={`/shop/${shopInfo.num}/reservation/${desInfo.num}/form`} state={{ data1: time, data2: sqlDate }}>
                                         <div className="reser-time-container">
                                             <div className="reser-time">
                                                 <span className="reser-time-text">{time}</span>
@@ -122,9 +142,9 @@ function DesResrevationDate(props) {
                         <hr className="divide-line" key={`hr-${time}`} />
                     </div>
                 ))}
-            </div>
+            </>
             }
-        </div>
+        </>
     );
 }
 

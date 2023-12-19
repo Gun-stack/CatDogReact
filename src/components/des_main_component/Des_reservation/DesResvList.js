@@ -8,6 +8,7 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
+import SwalCustomAlert from '../../Alerts/SwalCustomAlert';
 
 
 
@@ -42,7 +43,32 @@ function DesResvList() {
 
     const resList = useSelector(state => state.resvList);
 
+
+    const token = useSelector(state => state.token);
+
+
     useEffect(() => {
+
+
+        // console.log("로그인 후 토큰 값 : " + token);
+        axios.get('http://localhost:8090/user', {
+            headers: {
+                Authorization: token,
+            }
+        })
+            .then(res => {
+                console.log("Res : " + res.data);
+            })
+            .catch(err => {
+                // console.log("Err : " + err);
+                SwalCustomAlert(
+                    'warning',
+                    "로그인 이후 사용 가능합니다."
+                );
+                navigate('/userlogin');
+            })
+
+
         if(user.roles ==null || user.roles==='ROLE_USER' ){
             alert('잘못된 접근입니다.');
             navigate(-1);

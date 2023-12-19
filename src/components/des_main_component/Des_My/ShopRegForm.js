@@ -181,8 +181,30 @@ function ShopRegForm() {
 
     };
 
+
+    const token = useSelector(state => state.token);
     useEffect(() => {
         console.log("UseEffect!!");
+
+        // console.log("로그인 후 토큰 값 : " + token);
+        axios.get('http://localhost:8090/user', {
+            headers: {
+                Authorization: token,
+            }
+        })
+            .then(res => {
+                console.log("Res : " + res.data);
+            })
+            .catch(err => {
+                // console.log("Err : " + err);
+                SwalCustomAlert(
+                    'warning',
+                    "로그인 이후 사용 가능합니다."
+                );
+                navigate('/userlogin');
+            })
+
+
         // Geocoder 초기화 유무
         let isGeocoderInitialized = false;
 

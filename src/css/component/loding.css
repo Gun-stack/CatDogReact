@@ -53,10 +53,13 @@
 }
 .loding-4{
     animation-delay: 1.5s;
-}
+}       
 .loding-5{
     animation-delay: 2s;
 }
 .loding-6{
     animation-delay: 2.5s;
+}
+.loding-7{
+    animation-delay: 3s;
 }
