@@ -80,11 +80,27 @@
     margin: 1rem 0;
 }
 
+.st-gallery-title-container{
+    margin-left: 2rem;
+    margin-right: 2rem;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.search-box{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
 .view-gallery-profile-container{
     display: flex;
     align-items: center;
     margin-bottom: .5rem;
 }
+
 .view-profile-img{
     width: 30px;
     height: 30px;
@@ -141,5 +157,9 @@
 
 .st-gallery-view{
     width: inherit;
+}
+
+.des-star-location{
+    display: flex;
 }
 

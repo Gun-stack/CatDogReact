@@ -72,6 +72,11 @@ function DesGal() {
         setPage(page + 1);
     }
 
+    const [hasMore, setHasMore] = useState(true);
+
+    const [search, setSearch] = useState('');
+
+
     const onChangeSearch = (e) => {
         setSearch(e.target.value);
     }
@@ -127,18 +132,31 @@ function DesGal() {
 
     return (
         <section className="st-gallery-section">
-           <div className="search-box">
-                <input type="text" onChange={onChangeSearch} className="search-txt" placeholder="태그로 검색을 해보자" onKeyPress={searchHandler} />
-                <button className="search-btn" onClick={searchGallery}>
-                    <i className="fas fa-search"></i>
-                </button>
+
+            {/* 검색창 만들기 */}
+            <div className="search-box">
+                <input type="text" onChange={onChangeSearch} className="input-text search-txt" placeholder="태그로 검색을 해보자" />
+
+                <Link to={`/gallery/des/search/${search}`} className="search-btn" >
+                    <i className="fas fa-search tx-orange"></i>
+                </Link>
+
+                {user.roles === 'ROLE_DES' || user.roles === 'ROLE_SHOP' &&
+                    <Link to='/gallery/des/galleryregform'> <button className='info-input-btn'>사진 올리기</button></Link>
+                }
             </div>
 
-            {user.roles === 'ROLE_DES' || user.roles === 'ROLE_SHOP' && (
-                <Link to='/gallery/des/galleryregform'>
-                    <button className='info-input-btn'>사진 올리기</button>
-                </Link>
-            )}
+
+
+            <div className="st-gallery-grid">
+
+
+                {galleryList.map((gallery, index) => (
+                    <div className="st-gallery-img" key={index} >
+                        <Link to={"/gallery/des/" + gallery.num}><img src={`http://localhost:8090/desgalview/${gallery.num}`} alt="" className="hover-img" /></Link>
+
+                        <div className="img-comment-hover">
+
 
         <div className="st-gallery-grid">
                 {galleryList && galleryList.map((gallery, index) => (

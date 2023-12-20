@@ -19,12 +19,29 @@
     font-size: 2rem;
 }
 
-.map-modal-container{
+/* .map-modal-container{
     display: flex;
+} */
+
+.map-modal-img{
+    width: 80%;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
 .map-modal-address{
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+}
+
+.map-modal-title{
+    font-family: 'Pretendard';
+    margin: .5rem;
+    font-weight: 600;
+}
+
+.map-modal-address{
+    font-family: 'Pretendard';    
+
 }
