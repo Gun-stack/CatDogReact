@@ -26,8 +26,8 @@ function ShopMainDesLIst() {
 
     const handleEditClick = (desId) => {
         Swal.fire({
-            title:'직책 수정하시겠습니까 ?',
-            confirmButtonText:'승인'
+            title: '직책 수정하시겠습니까 ?',
+            confirmButtonText: '승인'
         })
         setEditableDesId(desId);
     };
@@ -208,20 +208,20 @@ function ShopMainDesLIst() {
 
     return (
         <div>
-            {shopInfo.id===user.id&&
-            <div>
-            <div action="" className="shop-form-container">
-                <div className="input-img-click sm-input-img">
-                    <p onClick={() => handleBtnClick(user.id)} className='des-reg-click'>디자이너 등록하기 <i className="fas fa-plus-circle"></i></p>
+            {shopInfo.id === user.id &&
+                <div>
+                    <div action="" className="shop-form-container">
+                        <div className="input-img-click sm-input-img">
+                            <p onClick={() => handleBtnClick(user.id)} className='des-reg-click'>디자이너 등록하기 <i className="fas fa-plus-circle"></i></p>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            </div>
             }
 
 
 
 
-         {desList.map((des) => (
+            {desList.map((des) => (
                 <div className="stylelist-content" key={des.num} >
 
                     <div className="st-profile-container">
@@ -230,7 +230,7 @@ function ShopMainDesLIst() {
                         </div>
 
                         <div className="st-profile-context">
-                            <div className="st-profile-name">
+                            <span className="st-profile-name magin-r-1">
                                 {editableDesId === des.num ? (
                                     <input
                                         type="text"
@@ -241,13 +241,14 @@ function ShopMainDesLIst() {
                                 ) : (
                                     `${des.position}`
                                 )}
+                            </span>
 
-                        </div>
-                            <div className="st-profile-name">{des.desNickname}</div>
-                            <div className="st-profile-shop">{shopInfo.name}</div>
+                            <span className="st-profile-name">{des.desNickname}</span>
+                            <br/>
+                            <span className="st-profile-shop">{shopInfo.name}</span>
                             <div className="st-profile-info">{des.info}</div>
                         </div>
-                                    
+
                     </div>
 
                     <div className="st-button-container">
@@ -275,10 +276,10 @@ function ShopMainDesLIst() {
                             </button>
                         )}
 
-                        <Link to={`/shop/${shopInfo.num}/reservation/${des.num}`}><button className="st-button">예약하기<i className="far fa-calendar-alt btn-icon"></i></button></Link>   
-                    </div>      
-                </div>  
-                    )   )  } 
+                        <Link to={`/shop/${shopInfo.num}/reservation/${des.num}`}><button className="st-button">예약하기<i className="far fa-calendar-alt btn-icon"></i></button></Link>
+                    </div>
+                </div>
+            ))}
 
 
             <hr className="divide-line" />

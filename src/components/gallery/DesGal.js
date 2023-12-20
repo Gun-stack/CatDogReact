@@ -19,9 +19,9 @@ function DesGal() {
     }
     const [hasMore, setHasMore] = useState(true);
 
-    const[search,setSearch]=useState('');
+    const [search, setSearch] = useState('');
 
-    const onChangeSearch=(e)=>{
+    const onChangeSearch = (e) => {
         setSearch(e.target.value);
     }
 
@@ -74,20 +74,21 @@ function DesGal() {
 
     return (
         <section className="st-gallery-section">
-                {/* 검색창 만들기 */}
-                <div className="search-box">
-                    <input type="text"  onChange={onChangeSearch} className="search-txt" placeholder="태그로 검색을 해보자" />
+            {/* 검색창 만들기 */}
+            <div className="search-box">
+                <input type="text" onChange={onChangeSearch} className="input-text search-txt" placeholder="태그로 검색을 해보자" />
 
-                    <Link to={`/gallery/des/search/${search}`}  className="search-btn" >
-                        <i className="fas fa-search"></i>
-                    </Link>
-                </div>
+                <Link to={`/gallery/des/search/${search}`} className="search-btn" >
+                    <i className="fas fa-search tx-orange"></i>
+                </Link>
+
+                {user.roles === 'ROLE_DES' || user.roles === 'ROLE_SHOP' &&
+                    <Link to='/gallery/des/galleryregform'> <button className='info-input-btn'>사진 올리기</button></Link>
+                }
+            </div>
 
 
 
-                { user.roles === 'ROLE_DES' || user.roles === 'ROLE_SHOP' &&
-            <Link to='/gallery/des/galleryregform'> <button className='info-input-btn'>사진 올리기</button></Link>
-                }  
             <div className="st-gallery-grid">
 
 

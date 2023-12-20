@@ -32,9 +32,6 @@ function DesHome() {
     }, []);
 
 
-
-
-
     return (
         <>
 
@@ -53,7 +50,6 @@ function DesHome() {
                                             <i className="fas fa-heart hover-icon" ></i>
                                             <span className='hover-text'>{gallery.likeCnt}</span>
                                         </span>
-                                        {/* <span className="img-hover-icon"><i className="fas fa-comment"></i>{gallery.galComment}</span> */}
                                     </div>
                                 </div>
                             ))}

@@ -1,5 +1,15 @@
 /* 화면  550px 이하일때 */
 @media (max-width: 550px) {
+    .header-btn{
+        background-color: var(--btn-nomal);
+        padding: 3px 2.5px;
+        margin: 0 4px;
+        border-radius: .6rem;
+    }    
+    .header-btn-text{
+        color:  #fff;
+        font-size: .7rem;
+    }
     .cd-container{
         width: 100%;
         }
@@ -48,5 +58,8 @@
 
     .st-gallery-grid {
         grid-auto-rows: 150px;
+    }
+    .search-txt{
+        width: 10rem;
     }
 }

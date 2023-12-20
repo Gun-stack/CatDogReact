@@ -142,9 +142,9 @@
 }
 
 
-.st-profile-container{
+/* .st-profile-container{
     display: flex;
-}
+} */
 .st-profile-context{
     margin-left: 1.5rem;
 }
@@ -153,8 +153,12 @@
     font-weight: 600;
 }
 
+.st-profile-shop{
+    color:  var(--btn-submit);
+}
+
 .st-profile-info{
-    margin-top: 1rem;
+    margin: .2rem;
 }
 
 .st-profile-img{
@@ -401,3 +405,7 @@
 /* .photo-shadow{
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 } */
+
+.view-gallery-profile-names{
+    width: 10rem;
+}
