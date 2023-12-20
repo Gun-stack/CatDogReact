@@ -16,25 +16,20 @@ import DesGalSearch from './DesGalSearch';
 
 
 function GalleryList() {
-    const location = useLocation();
 
-    const isActive = (path) => {
-        return location.pathname === path;
-    };
+
 
 
 
     return (
         <div className="web-container">
             <div className="cd-container bg-white">
-
                 <Header />
                 <section className="section-header">
                     <div className="section-header-container">
                         <Link to='/gallery'><span className="section-header-text">갤러리</span></Link>
                     </div>
                 </section>
-
                 <main className="cd-main">
                     <nav className="main-nav">
                         <ul className="main-nav-list">
@@ -46,7 +41,7 @@ function GalleryList() {
                     <Routes >
                         <Route path="/" element={<DesGal />} />
                         <Route path="/des" element={<DesGal />} />
-                        <Route path="/des/search/:search" element={<DesGalSearch />} />
+                        <Route path="/des/search/:search" element={<DesGalSearch/>} />
                         <Route path="/des/galleryregform" element={<GalleryRegForm />} />
                         <Route path="/user/galleryregform" element={<GalleryRegFormUser />} />
 
