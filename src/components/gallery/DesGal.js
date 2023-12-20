@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
@@ -7,111 +7,154 @@ import SwalCustomAlert from '../Alerts/SwalCustomAlert';
 
 
 
+const PAGE_SIZE = 12;
+
+function GalleryItem({ gallery }) {
+
+    return (
+        <div className="st-gallery-img">
+            <Link to={`/gallery/des/${gallery.num}`}>
+                <img src={`http://localhost:8090/desgalview/${gallery.num}`} alt="" className="hover-img" />
+            </Link>
+            <div className="img-comment-hover">
+                <span className="img-hover-icon">
+                    <i className="fas fa-heart hover-icon"></i>
+                    <span className='hover-text'>{gallery.likeCnt}</span>
+                </span>
+            </div>
+        </div>
+    );
+}
+
 function DesGal() {
-    const [galleryList, setGalleryList] = useState([
-    ]);
+    const [galleryList, setGalleryList] = useState([]);
     const [page, setPage] = useState(0);
-    const user = useSelector((state) => state.user);
-
-    const PlusPage = () => {
-        setPage(page + 1);
-        console.log(page);
-    }
     const [hasMore, setHasMore] = useState(true);
-
-    const[search,setSearch]=useState('');
-
-    const onChangeSearch=(e)=>{
-        setSearch(e.target.value);
-    }
-
-
-
-
+    const [search, setSearch] = useState('');
+    const [searchResults, setSearchResults] = useState([]);
+    const [searching, setSearching] = useState(false);
+    const user = useSelector((state) => state.user);
     const token = useSelector(state => state.token);
     const navigate = useNavigate();
+    const { search: tag } = useParams();
+    const [isInitialRender, setIsInitialRender] = useState(true);
+    
 
-    useEffect(() => {
+    const searchHandler = (e) => {
+        if(e.key === 'Enter')
+        {
+            searchGallery();
+        }
+    }
 
-        // console.log("로그인 후 토큰 값 : " + token);
-        axios.get('http://localhost:8090/user', {
-            headers: {
-                Authorization: token,
-            }
-        })
-            .then(res => {
-                console.log("Res : " + res.data);
+
+
+    const searchGallery = () => {
+            axios.get('http://localhost:8090/desgallerysearch', {
+                params: {
+                    search: search,
+                    page: 0,
+                    size: 12,
+                }
             })
-            .catch(err => {
-                // console.log("Err : " + err);
-                SwalCustomAlert(
-                    'warning',
-                    "로그인 이후 사용 가능합니다."
-                );
-                navigate('/userlogin');
-            })
-
-        axios.get('http://localhost:8090/desgallery', {
-            params: {
-                page: page, // 필요한 페이지 번호
-                size: 12, // 페이지당 아이템 개수
-            },
-        })
             .then((res) => {
-                console.log(res.data.content);
-                setGalleryList([...galleryList, ...res.data.content]);
+                searchResults.length = 0;
+                setGalleryList([...res.data.content]);
                 if (res.data.content.length === 0) {
                     setHasMore(false);
                 }
             })
-            .catch((err) => {
-                console.log(err);
-            })
-    }, [page]);
+            .catch((err) => console.log(err))
+    }
 
 
+    const PlusPage = () => {
+        setPage(page + 1);
+    }
+
+    const onChangeSearch = (e) => {
+        setSearch(e.target.value);
+    }
+
+    const initialGet = () => {
+        axios.get('http://localhost:8090/desgallery', {
+            params: { page, size: PAGE_SIZE }
+        })
+        .then((res) => {
+            setGalleryList(prevList => [...prevList, ...res.data.content]);
+            if (res.data.content.length === 0) {
+                setHasMore(false);
+            }
+        })
+        .catch((err) => console.log(err));
+    }
+
+
+    useEffect(() => {
+
+        if (isInitialRender) {
+            setIsInitialRender(false);
+            return;
+        }
+
+        setSearch(tag);
+
+        axios.get('http://localhost:8090/user', {
+            headers: { Authorization: token }
+        })
+        .then(res => console.log("Res: " + JSON.stringify(res.data)))
+        .catch(err => {
+            SwalCustomAlert(
+                'warning',
+                '로그인 이후 사용 가능합니다.'
+            );
+            navigate('/userlogin');
+        });
+
+
+        
+        if (search) {
+            searchGallery();
+            setSearching(true);
+        } else { 
+            initialGet();
+        }
+    }, [page,tag,isInitialRender]);
+
+
+    
 
 
     return (
         <section className="st-gallery-section">
-                {/* 검색창 만들기 */}
-                <div className="search-box">
-                    <input type="text"  onChange={onChangeSearch} className="search-txt" placeholder="태그로 검색을 해보자" />
+           <div className="search-box">
+                <input type="text" onChange={onChangeSearch} className="search-txt" placeholder="태그로 검색을 해보자" onKeyPress={searchHandler} />
+                <button className="search-btn" onClick={searchGallery}>
+                    <i className="fas fa-search"></i>
+                </button>
+            </div>
 
-                    <Link to={`/gallery/des/search/${search}`}  className="search-btn" >
-                        <i className="fas fa-search"></i>
-                    </Link>
-                </div>
+            {user.roles === 'ROLE_DES' || user.roles === 'ROLE_SHOP' && (
+                <Link to='/gallery/des/galleryregform'>
+                    <button className='info-input-btn'>사진 올리기</button>
+                </Link>
+            )}
 
-
-
-                { user.roles === 'ROLE_DES' || user.roles === 'ROLE_SHOP' &&
-            <Link to='/gallery/des/galleryregform'> <button className='info-input-btn'>사진 올리기</button></Link>
-                }  
-            <div className="st-gallery-grid">
-
-
-                {galleryList.map((gallery, index) => (
-                    <div className="st-gallery-img" key={index} >
-                        <Link to={"/gallery/des/" + gallery.num}><img src={`http://localhost:8090/desgalview/${gallery.num}`} alt="" className="hover-img" /></Link>
-
-                        <div className="img-comment-hover">
-
-                            <span className="img-hover-icon">
-                                <i className="fas fa-heart hover-icon" ></i>
-                                <span className='hover-text'>{gallery.likeCnt}</span>
-                            </span>
-
-                        </div>
-                    </div>
+        <div className="st-gallery-grid">
+                {galleryList && galleryList.map((gallery, index) => (
+                    <GalleryItem key={index} gallery={gallery} />
                 ))}
             </div>
-            {hasMore ?
-                <div className="main-btn main-sm-btn" onClick={PlusPage}><span className="btn-text">더보기</span></div>
-                : <div className="main-btn main-sm-btn"><span className="btn-text">마지막 페이지 입니다.</span></div>
-            }
 
-
+            {hasMore ? (
+                <div className="main-btn main-sm-btn" onClick={PlusPage}>
+                    <span className="btn-text">더보기</span>
+                </div>
+            ) : (
+                <div className="main-btn main-sm-btn">
+                    <span className="btn-text">마지막 페이지 입니다.</span>
+                </div>
+            )}
         </section>
     );
 }
