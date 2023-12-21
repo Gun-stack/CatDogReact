@@ -5,6 +5,16 @@
     z-index: 100;
 }
 
+.goback-btn{
+    cursor: pointer;
+    color: coral;
+}
+
+.goback-btn:hover{
+    color: rgb(255, 183, 0);
+    transition: color .2s ease-in-out;
+}
+
 .header-logo{
     width: 135px;
 }

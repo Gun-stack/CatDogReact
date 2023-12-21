@@ -89,9 +89,8 @@ function DesResrevationDate(props) {
         const reserved = resList.find(res => res.date === date && res.time === time);
         return reserved;
     };
-    // 
-    const availableTimes = ['10:00', '12:00', '14:00', '16:00'];
 
+    const availableTimes = ['10:00', '12:00', '14:00', '16:00'];
 
     return (
         <>

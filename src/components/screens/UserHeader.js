@@ -7,10 +7,6 @@ import { persistor } from "../../App"
 import axios from 'axios';
 
 
-
-
-
-
 function UserHeader() {
     const user = useSelector((state) => state.user);
     const des = useSelector((state) => state.des);
@@ -73,7 +69,7 @@ function UserHeader() {
         <header className="cd-header" onMouseLeave={hideNav}>
             <div className="logo-icon-container">
                 <div className="header-logo">
-                <span onClick={goBack} ><i className="fa-solid fa-sharp fa-chevron-left fa-beat fa-lg"></i></span>
+                <span onClick={goBack} ><i className="fa-solid fa-sharp fa-chevron-left fa-beat fa-lg goback-btn"></i></span>
                     <Link to="/main"><img src="/img/logo/logo_color.png" alt="로고 이미지" className="header-logo" /></Link>
                 </div>
                 <div className="icon-container">

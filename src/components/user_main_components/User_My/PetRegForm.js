@@ -75,7 +75,7 @@ function PetRegForm() {
             SwalCustomAlert(
                 'notice',
                 '반려동물 이름을 입력해주세요!',
-            );  
+            );
             return;
         } if (!pet.dogOrCat) {
             SwalCustomAlert(
@@ -157,108 +157,115 @@ function PetRegForm() {
                     <div className="input-container">
 
                         <div className="filebox">
-
                             <img src="/img/logo/pet_defult_img.png" accept="image/*" alt='반려동물 기본이미지'
                                 className="input-box-style input-d-img" placeholder='사진을 올려주세요' ref={imgBoxRef} />
                             <label htmlFor="petImgFile">사진 올리기</label>
                             <input type="file" id="petImgFile" name='file' accept="image/*" onChange={fileChange} />
                         </div>
 
-                        <hr className="gray-line" />
+
 
                         {/* 반려동물 이름  */}
-                        <input type="text" id="name" name="name" placeholder="반려동물 이름"
-                            className="input-text boader-none" onChange={change} />
+                        <div className='input-for-label'>
+                            <label htmlFor="name" className="label-text">반려동물 이름</label>
+                            <input type="text" id="name" name="name" placeholder="반려동물 이름을 입력해주세요"
+                                className="input-text" onChange={change} />
+                        </div>
 
-                        <hr className="gray-line" />
 
                         {/* 개인지 고양이인지  */}
                         <div className="radio-container">
                             <label htmlFor="dogOrCat" className="radio-text">반려동물 종류</label>
                             <div className="radio-box">
-                                <span> <input type="radio" id="dogOrCat" name="dogOrCat" value={true}
+                                <span className='radio-center'> <input type="radio" id="dogOrCat" name="dogOrCat" value={true}
                                     onChange={change} />댕댕이</span>
-                                <span> <input type="radio" id="dogOrCat" name="dogOrCat" value={false} onChange={change} />냥냥이</span>
+                                <span className='radio-center'> <input type="radio" id="dogOrCat" name="dogOrCat" value={false} onChange={change} />냥냥이</span>
                             </div>
                         </div>
 
-                        <hr className="gray-line" />
 
                         {/* 반려동물 나이 Age */}
-                        <input type="number" id="age" name="age" placeholder="나이"
-                            className="input-text boader-none"  min="0" onChange={change}/>
-                        <hr className="gray-line" />
+                        <div className='input-for-label'>
+                            <label htmlFor="age" className="label-text magin-t-05">반려동물 나이</label>
+                            <input type="number" id="age" name="age" placeholder="나이를 입력하세요(숫자 만 입력)"
+                                className="input-text" min="0" onChange={change} />
+                        </div>
+
 
                         {/* 반려동물 나이  weight*/}
-                        <input type="number" id="weight" name="weight" placeholder="몸무게 (kg)"
-                            className="input-text boader-none" min="0" onChange={change}/>
-                        <hr className="gray-line" />
+                        <div className='input-for-label'>
+                            <label htmlFor="weight" className="label-text magin-t-05">반려동물 몸무게</label>
+                            <input type="number" id="weight" name="weight" placeholder="몸무게 (kg) 를 입력해주세요(숫자만 입력가능)"
+                                className="input-text" min="0" onChange={change} />
+                        </div>
+
 
                         {/* 반려동물 종류 Breed */}
-                        <input type="text" id="breed" name="breed" placeholder="반려동물 품종"
-                            className="input-text boader-none"  onChange={change} />
-                        <hr className="gray-line" />
+                        <div className='input-for-label'>
+                            <label htmlFor="breed" className="label-text magin-t-05">반려동물 품종</label>
+                            <input type="text" id="breed" name="breed" placeholder="반려동물 품종 을 입력해주세요!"
+                                className="input-text" onChange={change} />
+                        </div>
 
-                        <DatalistInput
-                            className='input-text boader-none'
-                            
-                            placeholder="반려동물 품종"
-                            onSelect={(item) => console.log(item.value)}
-                            name="breed" id="breed" onChange={change}
-                            items={[
-                                { id: '꼬똥 드 툴레아', value: '꼬똥 드 툴레아' },
-                                { id: '골든리트리버', value: '골든리트리버' },
-                                { id: '닥스훈트', value: '닥스훈트' },
-                                { id: '도베르만', value: '도베르만' },
-                                { id: '리트리버', value: '리트리버' },
-                                { id: '말티즈', value: '말티즈' },
-                                { id: '말티푸', value: '말티푸' },
-                                { id: '불독', value: '불독' },
-                                { id: '비숑', value: '비숑' },
-                                { id: '비글', value: '비글' },
-                                { id: '보스턴 테리어', value: '보스턴 테리어' },
-                                { id: '사모예드', value: '사모예드' },
-                                { id: '셰퍼드', value: '셰퍼드' },
-                                { id: '스코티시테리어', value: '스코티시테리어' },
-                                { id: '시베리안 허스키', value: '시베리안 허스키' },
-                                { id: '시츄', value: '시츄' },
-                                { id: '아키타', value: '아키타' },
-                                { id: '잭러셀테리어', value: '잭러셀테리어' },
-                                { id: '키스혼드', value: '키스혼드' },
-                                { id: '푸들', value: '푸들' },
-                                { id: '프렌치 불도그', value: '프렌치 불도그' },
-                                { id: '헤르더', value: '헤르더' },
-                                { id: '요크셔테리어', value: '요크셔테리어' },
-                              ]}/>
-    <hr className="gray-line" />
+                        {/* <div className='input-for-label'>
+                            <label htmlFor="breed" className="label-text magin-t-05">반려동물 품종</label>
 
+                            <DatalistInput
+                                className='input-text'
 
-
+                                placeholder="반려동물 품종"
+                                onSelect={(item) => console.log(item.value)}
+                                name="breed" id="breed" onChange={change}
+                                items={[
+                                    { id: '꼬똥 드 툴레아', value: '꼬똥 드 툴레아' },
+                                    { id: '골든리트리버', value: '골든리트리버' },
+                                    { id: '닥스훈트', value: '닥스훈트' },
+                                    { id: '도베르만', value: '도베르만' },
+                                    { id: '리트리버', value: '리트리버' },
+                                    { id: '말티즈', value: '말티즈' },
+                                    { id: '말티푸', value: '말티푸' },
+                                    { id: '불독', value: '불독' },
+                                    { id: '비숑 프리제', value: '비숑 프리제' },
+                                    { id: '비글', value: '비글' },
+                                    { id: '보스턴 테리어', value: '보스턴 테리어' },
+                                    { id: '사모예드', value: '사모예드' },
+                                    { id: '셰퍼드', value: '셰퍼드' },
+                                    { id: '스코티시 테리어', value: '스코티시 테리어' },
+                                    { id: '시베리안 허스키', value: '시베리안 허스키' },
+                                    { id: '시츄', value: '시츄' },
+                                    { id: '아키타', value: '아키타' },
+                                    { id: '잭러셀테리어', value: '잭러셀테리어' },
+                                    { id: '키스혼드', value: '키스혼드' },
+                                    { id: '푸들', value: '푸들' },
+                                    { id: '프렌치 불도그', value: '프렌치 불도그' },
+                                    { id: '헤르더', value: '헤르더' },
+                                    { id: '요크셔테리어', value: '요크셔테리어' },
+                                ]} />
+                        </div> */}
 
                         {/* 반려동물 종류 gender */}
                         <div className="radio-container">
                             <label htmlFor="gender" className="radio-text">성별</label>
                             <div className="radio-box">
-                                <span> <input type="radio" id="gender" name="gender" value={true}
+                                <span className='radio-center'> <input type="radio" id="gender" name="gender" value={true}
                                     onChange={change} />남아</span>
-                                <span> <input type="radio" id="gender" name="gender"
+                                <span className='radio-center'> <input type="radio" id="gender" name="gender"
                                     value={false} onChange={change} />여아</span>
                             </div>
                         </div>
-                        <hr className="gray-line" />
 
                         {/* 반려동물 중성화 여부 neuter */}
                         <div className="radio-container">
                             <label htmlFor="neuter" className="radio-text">중성화 여부</label>
                             <div className="radio-box">
-                                <span> <input type="radio" id="neuter" name="neuter" value={true} onChange={change} />예</span>
-                                <span> <input type="radio" id="neuter" name="neuter" value={false} onChange={change} />아니요</span>
+                                <span className='radio-center'> <input type="radio" id="neuter" name="neuter" value={true} onChange={change} />예</span>
+                                <span className='radio-center'> <input type="radio" id="neuter" name="neuter" value={false} onChange={change} />아니요</span>
                             </div>
                         </div>
-                        <hr className="gray-line" />
+
                     </div>
 
-                   
+
                     {/* 버튼 컨테이너  */}
                     <div className="button-container">
                         <button id="submit-btn" type="submit" className="main-btn btn-text magin-t-1" onClick={onSubmit}>

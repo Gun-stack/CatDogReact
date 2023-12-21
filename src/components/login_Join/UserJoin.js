@@ -6,21 +6,27 @@ import axios from "axios";
 import Loding from "../tools/Loding";
 import Server500Err_Alert from "../Alerts/Server500Err_Alert";
 import SwalCustomAlert from "../Alerts/SwalCustomAlert";
-import { useSelector } from 'react-redux';
-import {url} from'../../config';
+
+import { url } from "../../config"
+import { useLocation } from 'react-router';
 
 
 function UserJoin() {
-    const user = useSelector((state) => state.user);
+
     const [id, setId] = useState('');
     const [username, setUserName] = useState('');
     const [nickname, setNickname] = useState('');
     const [tel, setTel] = useState('');
     const [email, setEmail] = useState('');
+    const { state } = useLocation();
+
     //패스워드 관련
     const [password, setPassword] = useState('');
     const [passMessage, setPassMessage] = useState('비밀번호를 입력하세요');
     const [passwordCheck, setPasswordCheck] = useState('');
+
+    const userinfo = state ? JSON.parse(state) : {};
+
     const changePass = (e) => {
         setPassword(e.target.value);
     }
@@ -30,6 +36,8 @@ function UserJoin() {
     const [code, setCode] = useState('');
 
 
+    
+
     useEffect(() => {
         if (password && passwordCheck) {
             if (password !== passwordCheck) {
@@ -38,7 +46,8 @@ function UserJoin() {
                 setPassMessage('비밀번호가 일치합니다.');
             }
         }
-    }, [password, passwordCheck]);
+        console.log("Provider_Id : " +userinfo.providerId);
+    }, [password, passwordCheck, userinfo.id]);
 
     function changePassCheck(e) {
         setPasswordCheck(e.target.value);
@@ -74,7 +83,9 @@ function UserJoin() {
             nickname: nickname,
             tel: tel,
             email: email,
-            roles: 'ROLE_USER'
+            roles: 'ROLE_USER',
+            provider : userinfo ? userinfo.provider : "",
+            providerId : userinfo ? userinfo.providerId : "",
         }
         console.log(joinInfo);
         try {
@@ -107,7 +118,7 @@ function UserJoin() {
     //아이디 중복체크 여부 
     const checkId = (e) => {
         e.preventDefault();
-        if (id === '') {
+        if (userinfo ? userinfo.id === "" : id === '') {
             SwalCustomAlert(
                 'notice',
                 '아이디를 입력해주세요',
@@ -148,7 +159,7 @@ function UserJoin() {
     //닉네임 중복체크 여부
     const checkNickname = (e) => {
         e.preventDefault();
-        if (nickname === '') {
+        if (userinfo ? userinfo.nickname === "" : nickname === '') {
             SwalCustomAlert(
                 'notice',
                 '닉네임을 입력해주세요',
@@ -211,6 +222,7 @@ function UserJoin() {
     const onChangeCode = (e) => {
         setCode(e.target.value);
         console.log(code);
+
     }
     const checkCode = (e) => {
         if (code == emailCode) {
@@ -234,6 +246,7 @@ function UserJoin() {
         const { value, name } = e.target;
         if (name === 'id') {
             setId(value);
+            console.log("Id : " + value);
 
         } else if (name === 'password') {
             setPassword(value);
@@ -307,15 +320,12 @@ function UserJoin() {
                                          */}
 
                                             {/** 이름 */}
-                                         
-                                                <input type="text" id="username" name="username" placeholder="이름"
+                                            <input type="text" id="username" name="username" placeholder="이름"
                                                 className="input-text" onChange={onChange} />
-                                            
-                                            
 
                                             {/** 아이디 - 중복체크 */}
                                             <div className="duplication-check">
-                                                <input type="text" id="id" name="id" placeholder="아이디"
+                                                <input type="text" id="id" name="id" placeholder="아이디" defaultValue={userinfo ? userinfo.id : ""}
                                                     className="input-text" onChange={onChange} />
                                                 <button className="duplication-btn small-btn" onClick={checkId} >중복확인</button>
                                             </div>
@@ -323,7 +333,7 @@ function UserJoin() {
                                             {/** 닉네임 - 중복체크 */}
                                             <div className="duplication-check">
                                                 <input type="text" id="nickname" name="nickname" placeholder="닉네임"
-                                                    className="input-text" onChange={onChange} />
+                                                    className="input-text" onChange={onChange} defaultValue={userinfo ? userinfo.nickname : ""} />
 
                                                 <button className="duplication-btn small-btn"
                                                     onClick={checkNickname} >중복확인</button>
@@ -346,9 +356,9 @@ function UserJoin() {
 
                                             <div className="duplication-check">
                                                 <input type='text' id='email' name='email' placeholder='이메일'
-                                                    className='input-text' onChange={onChange} />
-                                                    <button className="duplication-btn small-btn"
-                                                        onClick={checkEmail} >이메일 인증하기</button>
+                                                    className='input-text' onChange={onChange} defaultValue={userinfo ? userinfo.email : ""} />
+                                                <button className="duplication-btn small-btn"
+                                                    onClick={checkEmail} >이메일 인증하기</button>
                                             </div>
                                             {emailCode&&
                                                 <div className="duplication-check">
