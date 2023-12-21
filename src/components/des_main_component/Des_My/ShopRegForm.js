@@ -337,10 +337,8 @@ function ShopRegForm() {
                                         <input type="file" id="shopImgFile" accept="image/*" onChange={fileChange} />
                                     </div>
 
-                                    <div className="address-container">
 
 
-                                        {/* 샵 이름 */}
                                         <div className='input-for-label'>
                                             <label htmlFor="name" className="label-text magin-t-05">샵 이름</label>
                                             <input type="text" id="name" name="name" placeholder="샵 이름을 입력해주세요"
