@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router';
 import {useDispatch, useSelector} from 'react-redux';
 import axios from 'axios';
 import { setToken, loginStore } from '../actions';
+import {url} from'../config';
 
 
 
@@ -12,7 +13,6 @@ const Oauth = () => {
     const navigate = useNavigate();
     const authentication = useSelector((state) => state.token);
     const to = token; // 실제 토큰 값으로 대체
-
     const axiosConfig = {
         headers: {
           'Authorization':  to
@@ -23,7 +23,7 @@ const Oauth = () => {
     useEffect(()=> {
         // console.log("token:"+token);
         dispatch(setToken(token));
-        axios.get(`http://localhost:8090/user`, axiosConfig)
+        axios.get(`${url}/user`, axiosConfig)
         .then((res)=>{
             // console.log(res);
             // console.log(res.data);

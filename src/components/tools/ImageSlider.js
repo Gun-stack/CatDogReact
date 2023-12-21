@@ -2,10 +2,11 @@ import React from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import {url} from'../../config';
 
 const ImageSlider = ({ images }) => {
 
-  const baseUrl = 'http://localhost:8090/shopimg/';
+  const baseUrl = `${url}/shopimg/`;
   
   const settings = {
       dots: true,

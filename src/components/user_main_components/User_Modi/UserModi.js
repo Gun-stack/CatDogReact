@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from "react";
 import axios from 'axios';
 import SwalCustomAlert from '../../Alerts/SwalCustomAlert';
-
+import {url} from'../../../config';
 function UserModi() {
     const user = useSelector((state) => state.user);
 
@@ -56,10 +56,11 @@ function UserModi() {
 
     const token = useSelector(state => state.token);
     const navigate = useNavigate();
+    
     useEffect(() => {
 
         // console.log("로그인 후 토큰 값 : " + token);
-        axios.get('http://localhost:8090/user', {
+        axios.get(`${url}/user`, {
             headers: {
                 Authorization: token,
             }

@@ -5,7 +5,7 @@ import Loding from '../../tools/Loding';
 import {useSelector} from 'react-redux';
 import SwalCustomAlert from '../../Alerts/SwalCustomAlert';
 import Server500Err_Alert from '../../Alerts/Server500Err_Alert';
-
+import {url} from'../../../config';
 
 function UserModi_Password() {
     const [password, setPassword] = useState('');
@@ -30,7 +30,7 @@ function UserModi_Password() {
     useEffect(() => {
 
         // console.log("로그인 후 토큰 값 : " + token);
-        axios.get('http://localhost:8090/user', {
+        axios.get(`${url}/user`, {
             headers: {
                 Authorization: token,
             }
@@ -81,7 +81,7 @@ function UserModi_Password() {
             setPassMessage('비밀번호가 일치합니다.');
         }
         try {
-            const res = await axios.post('http://localhost:8090/modipassword', { num: user.num, password : password });
+            const res = await axios.post(`${url}/modipassword`, { num: user.num, password : password });
             if (res.data === "success") {
                 SwalCustomAlert(
                     'success',

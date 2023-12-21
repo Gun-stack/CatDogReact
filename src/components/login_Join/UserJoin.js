@@ -7,7 +7,7 @@ import Loding from "../tools/Loding";
 import Server500Err_Alert from "../Alerts/Server500Err_Alert";
 import SwalCustomAlert from "../Alerts/SwalCustomAlert";
 import { useSelector } from 'react-redux';
-
+import {url} from'../../config';
 
 
 function UserJoin() {
@@ -80,7 +80,7 @@ function UserJoin() {
         }
         console.log(joinInfo);
         try {
-            axios.post('http://localhost:8090/userjoin', joinInfo)
+            axios.post(`${url}/userjoin`, joinInfo)
                 .then((res) => {
                     if (res.data === "joinsuccess") {
                         SwalCustomAlert(
@@ -125,7 +125,7 @@ function UserJoin() {
                 return false;
             }
             // db 조회
-            axios.get(`http://localhost:8090/checkuserid?id=${id}`)
+            axios.get(`${url}/checkuserid?id=${id}`)
                 .then(res => {
                     console.log("res.data : " + res.data);
                     if (res.data === "success") {
@@ -167,7 +167,7 @@ function UserJoin() {
                 return false;
             }
 
-            axios.get(`http://localhost:8090/checkusernickname?nickname=${nickname}`)
+            axios.get(`${url}/checkusernickname?nickname=${nickname}`)
                 .then(res => {
                     if (res.data === "success") {
                         SwalCustomAlert(

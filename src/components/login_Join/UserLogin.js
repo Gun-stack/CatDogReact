@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setToken, setUserStore, loginStore, setAutoLogin } from "../../actions"; // 액션 생성자 가져오기
 import Loding from "../tools/Loding";
+import {url} from'../../config';
 
 
 
@@ -32,7 +33,7 @@ function UserLogin() {
     const login = async () => {
         setLoading(true);
         try {
-            const res = await axios.post('http://localhost:8090/login', user);
+            const res = await axios.post(`${url}/login`, user);
             console.log(res);
             const token = res.headers.authorization;
             const user1 = res.data;
@@ -113,7 +114,7 @@ function UserLogin() {
                                         {/** 카카오 로그인 */}
                                         <div className="main-btn kakao-login-btn"><i className="fas fa-comment" >
                                         </i>
-                                            <Link to="http://localhost:8090/oauth2/authorization/kakao">카카오 로그인</Link>
+                                            <Link to={`${url}/oauth2/authorization/kakao`}>카카오 로그인</Link>
                                         </div>
 
 

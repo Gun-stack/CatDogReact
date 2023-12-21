@@ -2,6 +2,8 @@ import Footer from "../screens/Footer";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
+import {url} from'../../config';
+
 
 
 

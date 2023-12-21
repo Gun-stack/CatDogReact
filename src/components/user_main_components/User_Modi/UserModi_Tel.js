@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 
 import SwalCustomAlert from '../../Alerts/SwalCustomAlert';
 import Server500Err_Alert from '../../Alerts/Server500Err_Alert';
-
+import {url} from'../../../config';
 
 function UserModi_Tel() {
 
@@ -17,7 +17,7 @@ function UserModi_Tel() {
     useEffect(() => {
 
         // console.log("로그인 후 토큰 값 : " + token);
-        axios.get('http://localhost:8090/user', {
+        axios.get(`${url}/user`, {
             headers: {
                 Authorization: token,
             }
@@ -56,7 +56,7 @@ function UserModi_Tel() {
         setLoading(true); // 로딩 시작
 
         try {
-            const res = await axios.post('http://localhost:8090/moditel', { num: user.num, userTel: userTel });
+            const res = await axios.post(`${url}/moditel`, { num: user.num, userTel: userTel });
             
             dispatch({ type: 'SET_USER', payload: res.data });
             SwalCustomAlert(
