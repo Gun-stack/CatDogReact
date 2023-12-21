@@ -6,6 +6,7 @@ import useKakaoLoader from "../../Around/useKakaoLoader";
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from "react-router";
 import { useNavigate } from "react-router-dom";
+import { url } from "../../../config";
 
 
 function ShopModiForm() {
@@ -122,7 +123,7 @@ function ShopModiForm() {
             if (result.isConfirmed === true) {
                 console.log(formData.get("latitude"));
                 console.log(formData.get("longitude"));
-                axios.post('http://localhost:8090/shopmodi', formData)
+                axios.post(`${url}/shopmodi`, formData)
                     .then((res) => {
                         console.log(res);
                         console.log("res data : " + res.data);
@@ -208,7 +209,7 @@ function ShopModiForm() {
 
     useEffect(() => {
 
-        axios.get(`http://localhost:8090/shopinfobynum?num=${params.shopnum}`)
+        axios.get(`${url}/shopinfobynum?num=${params.shopnum}`)
 
             .then((res) => {
                 // console.log(res);
@@ -304,7 +305,7 @@ function ShopModiForm() {
 
                                     {/* 샵 사진 올리기 */}
                                     <div className="filebox">
-                                        <img src={`http://localhost:8090/shopimg/${selectShop.profImg}`} accept="image/*" alt='샵 기본이미지'
+                                        <img src={`${url}/shopimg/${selectShop.profImg}`} accept="image/*" alt='샵 기본이미지'
                                             className="input-img" placeholder='사진을 올려주세요' ref={imgBoxRef} />
                                         <label htmlFor="shopImgFile">샵 사진 올리기</label>
                                         <input type="file" id="shopImgFile" accept="image/*" onChange={fileChange} />

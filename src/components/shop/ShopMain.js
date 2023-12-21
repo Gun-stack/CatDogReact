@@ -14,6 +14,7 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import ImageSlider from '../tools/ImageSlider';
+import {url} from '../../config';
 
 
 
@@ -32,7 +33,7 @@ function ShopMain() {
 
 
     useEffect(() => {
-        axios.get(`http://localhost:8090/shopinfobynum?num=${params.shopnum}`)
+        axios.get(`${url}/shopinfobynum?num=${params.shopnum}`)
             .then((res) => {
                 dispatch({ type: 'SET_SHOP', payload: res.data });
                 console.log(res.data.bgImg);

@@ -3,10 +3,11 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import Swal from 'sweetalert2';
+
 import SwalCustomAlert from '../../Alerts/SwalCustomAlert';
 import Server500Err_Alert from '../../Alerts/Server500Err_Alert';
 import { useNavigate } from "react-router";
+import { url } from '../../../config';
 
 
 
@@ -68,7 +69,7 @@ function DesReservationForm(props) {
         console.log(shopInfo);
 
         // console.log("로그인 후 토큰 값 : " + token);
-        axios.get('http://localhost:8090/user', {
+        axios.get(`${url}/user`, {
             headers: {
                 Authorization: token,
             }
