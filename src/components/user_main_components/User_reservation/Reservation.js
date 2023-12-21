@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector  } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { useState } from 'react';
 import SwalCustomAlert from '../../Alerts/SwalCustomAlert';
+import { url } from '../../../config';
 
 
 function Reservation() {
-    const dispatch = useDispatch();
     const user = useSelector((state) => state.user);
 
     // const reservationList = useSelector((state) => state.resvList);
@@ -23,7 +23,7 @@ function Reservation() {
     useEffect(() => {
 
         // console.log("로그인 후 토큰 값 : " + token);
-        axios.get('http://localhost:8090/user', {
+        axios.get(`${url}/user`, {
             headers: {
                 Authorization: token,
             }
@@ -41,7 +41,7 @@ function Reservation() {
             })
 
 
-        axios.get(`http://localhost:8090/resinfobyuserid?userId=${user.id}`)
+        axios.get(`${url}/resinfobyuserid?userId=${user.id}`)
             .then((res) => {
                 if (res.data !== undefined) {
                     // dispatch({ type: 'SET_RES_LIST', payload: res.data });

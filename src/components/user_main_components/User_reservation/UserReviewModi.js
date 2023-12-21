@@ -4,6 +4,7 @@ import Loding from "../../tools/Loding";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useSelector,useDispatch } from "react-redux";
+import { url } from "../../../config";
 
 
 
@@ -27,7 +28,7 @@ function UserReviewModi() {
         navigate(-1);
     }
     const [rating, setRating] = useState(oldReview.star);
-    const [image, setImage] = useState(`http://localhost:8090/reviewimg/${oldReview.afterImg}`);
+    const [image, setImage] = useState(`${url}/reviewimg/${oldReview.afterImg}`);
     const imgBoxRef = useRef();
     const [loading, setLoading] = useState(false);
 
@@ -92,7 +93,7 @@ function UserReviewModi() {
         formData.append('resNum', oldReview.resNum); // 예약번호 추가
         formData.append('petName', oldReview.petName); // 반려동물 이름 추가
         try{
-            const res = await axios.post('http://localhost:8090/reviewmodi',formData)
+            const res = await axios.post(`${url}/reviewmodi`,formData)
             if (res.data === true) {
                 Swal.fire({
                     icon: 'success',

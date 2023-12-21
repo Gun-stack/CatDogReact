@@ -34,6 +34,7 @@ import DesResvList from "../../des_main_component/Des_reservation/DesResvList";
 import DesModi from "../../des_main_component/Des_Modi/Des_Modi";
 import ShopModiForm from '../../des_main_component/Des_My/ShopModiForm';
 import DesResvDetail from '../../des_main_component/Des_reservation/DesResvDetail';
+import { url } from "../../../config";
 
 
 
@@ -55,7 +56,7 @@ function UserMy() {
             // navigate('/main');
         }
         if(user.roles === "ROLE_DES" || user.roles === "ROLE_SHOP"){
-            axios.get(`http://localhost:8090/desinfobyid?desId=${user.id}`)
+            axios.get(`${url}/desinfobyid?desId=${user.id}`)
             .then((res) => {
                 console.log("DESINFO : "+ JSON.stringify(res.data.des));
                 dispatch({ type: 'SET_DES', payload: res.data.des })
