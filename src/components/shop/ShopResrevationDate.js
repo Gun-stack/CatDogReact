@@ -1,15 +1,13 @@
 import { DateCalendar, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { render } from '@testing-library/react';
 import axios from 'axios';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import Loding from "../../components/tools/Loding";
+import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router';
 import SwalCustomAlert from '../Alerts/SwalCustomAlert';
+import { url } from '../../config';
 
 
 function ShopResrevationDate(props) {
@@ -20,7 +18,6 @@ function ShopResrevationDate(props) {
     const [selectDate, setSelectDate] = useState(new Date().toLocaleDateString());
     const [sqlDate, setSqlDate] = useState(new Date().getFullYear() + '-' + (new Date().getMonth() + 1).toString().padStart(2, '0') + '-' + new Date().getDate().toString().padStart(2, '0'));
     const [resList, setResList] = useState([]);
-    const [loading, setLoading] = useState(false);
 
     const onChangeDate = (newValue) => {
         //toISOString: UTF 시간 기준이라 우리나라 시간으로 만들려면 9시간 빼야합니다
@@ -47,19 +44,11 @@ function ShopResrevationDate(props) {
         return date.isBefore(new Date(), "day");
     };
 
-
-    
-    
-    
     const token = useSelector(state => state.token);
 
-
-    
-     useEffect(() =>  {
-
-
+    useEffect(() => {
         // console.log("로그인 후 토큰 값 : " + token);
-        axios.get('http://localhost:8090/user', {
+        axios.get(`${url}/user`, {
             headers: {
                 Authorization: token,
             }
@@ -75,11 +64,8 @@ function ShopResrevationDate(props) {
                 );
                 navigate('/userlogin');
             })
-        
-
-        setLoading(true);
         console.log(resList);
-        axios.get(`http://localhost:8090/resinfobydesnum?desNum=${desInfo.num}&date=${sqlDate}`)
+        axios.get(`${url}/resinfobydesnum?desNum=${desInfo.num}&date=${sqlDate}`)
             .then((res) => {
                 setResList(res.data);
                 setSelectDate(new Date().toLocaleDateString());
@@ -87,9 +73,6 @@ function ShopResrevationDate(props) {
             )
             .catch((err) => {
                 console.log(err);
-            })
-            .finally(() => {
-                setLoading(false);
             })
 
     }, [sqlDate, desInfo.num])
@@ -117,28 +100,28 @@ function ShopResrevationDate(props) {
             {/* <input type="date" placeholder=" 날짜를 선택해주세요." onChange={onChangeDate} /> */}
             <span className="form-text date-center" style={{ cursor: 'pointer' }} >{selectDate}</span>
             <hr className="divide-line" />
-                {resList && availableTimes.map(time => (
-                    <div key={time}>
-                        {isReserved(sqlDate, time) ? (
-                            <div className='resv-link'>
-                                <div className={`reser-time-container btn-gray`}>
-                                    <div className="reser-time">
-                                        <span className="reser-time-text">{time}</span>
-                                    </div>
+            {resList && availableTimes.map(time => (
+                <div key={time}>
+                    {isReserved(sqlDate, time) ? (
+                        <div className='resv-link'>
+                            <div className={`reser-time-container btn-gray`}>
+                                <div className="reser-time">
+                                    <span className="reser-time-text">{time}</span>
                                 </div>
                             </div>
-                        ) : (
-                            <Link to={`/shop/${shopInfo.num}/reservation/${desInfo.num}/form`} className='resv-link' state={{ data1: time, data2: sqlDate }}>
-                                <div className="reser-time-container">
-                                    <div className="reser-time">
-                                        <span className="reser-time-text">{time}</span>
-                                    </div>
+                        </div>
+                    ) : (
+                        <Link to={`/shop/${shopInfo.num}/reservation/${desInfo.num}/form`} className='resv-link' state={{ data1: time, data2: sqlDate }}>
+                            <div className="reser-time-container">
+                                <div className="reser-time">
+                                    <span className="reser-time-text">{time}</span>
                                 </div>
-                            </Link>
-                        )}
-                        <hr className="divide-line" key={`hr-${time}`} />
-                    </div>
-                ))}
+                            </div>
+                        </Link>
+                    )}
+                    <hr className="divide-line" key={`hr-${time}`} />
+                </div>
+            ))}
         </div>
     );
 }

@@ -9,6 +9,7 @@ import useKakaoLoader from "../../Around/useKakaoLoader";
 import { useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import $ from 'jquery';
+import { url } from "../../../config";
 
 
 function ShopRegForm() {
@@ -101,7 +102,7 @@ function ShopRegForm() {
 
 
 
-            axios.post('http://localhost:8090/shopreg', formData)
+            axios.post(`${url}/shopreg`, formData)
                 .then((res) => {
                     console.log(res);
                     console.log(res.data);
@@ -187,7 +188,7 @@ function ShopRegForm() {
         console.log("UseEffect!!");
 
         // console.log("로그인 후 토큰 값 : " + token);
-        axios.get('http://localhost:8090/user', {
+        axios.get(`${url}/user`, {
             headers: {
                 Authorization: token,
             }

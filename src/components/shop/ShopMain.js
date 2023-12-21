@@ -17,6 +17,7 @@ import ImageSlider from '../tools/ImageSlider';
 import {url} from '../../config';
 
 
+
 function ShopMain() {
     const dispatch = useDispatch();
     const location = useLocation();

@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { useState } from "react";
 import SwalCustomAlert from '../../Alerts/SwalCustomAlert';
+import { url } from "../../../config";
 
 
 function DesReg() {
@@ -20,7 +21,7 @@ function DesReg() {
     useEffect(() => {
 
         // console.log("로그인 후 토큰 값 : " + token);
-        axios.get('http://localhost:8090/user', {
+        axios.get(`${url}/user`, {
             headers: {
                 Authorization: token,
             }
@@ -38,7 +39,7 @@ function DesReg() {
             })
 
 
-        axios.get(`http://localhost:8090/desinfobyid?desId=${user.id}`)
+        axios.get(`${url}/desinfobyid?desId=${user.id}`)
             .then((res) => {
                 console.log(res.data);
                 setDes(res.data.des);
@@ -75,7 +76,7 @@ function DesReg() {
                             <div className="st-profile-container">
 
                                 <div className="st-profile-img">
-                                    {des.num && <img src={`http://localhost:8090/desimg/${des.num}`} alt="디자이너 이미지" className="st-profile-img" />}
+                                    {des.num && <img src={`${url}/desimg/${des.num}`} alt="디자이너 이미지" className="st-profile-img" />}
                                 </div>
 
                                 <div className="st-profile-context">

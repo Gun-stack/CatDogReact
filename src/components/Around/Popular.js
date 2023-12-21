@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import axios from "axios";
 import DistanceCalculator from '../tools/DistanceCalculator';
 import StarRating from '../des_main_component/Des_My/StarRating';
+import { url } from "../../config";
 
 
 
@@ -16,7 +17,7 @@ function Popular() {
 
     useEffect(() => {
         // console.log(shops);
-        axios.get(`http://localhost:8090/shoplistall`)
+        axios.get(`${url}/shoplistall`)
             .then((res) => {
                 // console.log(res);
                 
@@ -36,7 +37,7 @@ function Popular() {
                     <div className="nearby-shop-container">
                         <div className="nearby-shop-address-container">
                             <div className="nearby-shop-img-container">
-                                <Link to={"/shop/" + shop.num}><img className="nearby-shop-img" name="image" alt='' src={`http://localhost:8090/shopimg/${shop.profImg}`}></img></Link>
+                                <Link to={"/shop/" + shop.num}><img className="nearby-shop-img" name="image" alt='' src={`${url}/shopimg/${shop.profImg}`}></img></Link>
                             </div>
 
                             {/* // 제목을 누르면 지도에서 마커 찍어주기?? */}

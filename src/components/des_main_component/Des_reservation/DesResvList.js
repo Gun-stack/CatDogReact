@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import SwalCustomAlert from '../../Alerts/SwalCustomAlert';
+import { url } from '../../../config';
 
 
 
@@ -20,7 +21,7 @@ function DesResvList() {
     const desInfo = useSelector((state) => state.des);
     const [sqlDate, setSqlDate] = useState(new Date().getFullYear() + '-' + (new Date().getMonth() + 1).toString().padStart(2, '0') + '-' + new Date().getDate().toString().padStart(2, '0'));
     const [selectDate, setSelectDate] = useState(new Date().toLocaleDateString('ko-KR').slice(0, 12));
-    
+
 
 
     const onChangeDate = (newValue) => {
@@ -48,10 +49,8 @@ function DesResvList() {
 
 
     useEffect(() => {
-
-
         // console.log("로그인 후 토큰 값 : " + token);
-        axios.get('http://localhost:8090/user', {
+        axios.get(`${url}/user`, {
             headers: {
                 Authorization: token,
             }
@@ -67,24 +66,21 @@ function DesResvList() {
                 );
                 navigate('/userlogin');
             })
-
-
-        if(user.roles ==null || user.roles==='ROLE_USER' ){
+        if (user.roles == null || user.roles === 'ROLE_USER') {
             alert('잘못된 접근입니다.');
             navigate(-1);
         }
-        
-        axios.get(`http://localhost:8090/resinfobydesnum?desNum=${desInfo.num}&date=${sqlDate}`)
+
+        axios.get(`${url}/resinfobydesnum?desNum=${desInfo.num}&date=${sqlDate}`)
             .then((res) => {
                 dispatch({ type: 'SET_RESV_LIST', payload: res.data })
-             }
+            }
             )
             .catch((err) => {
                 console.log(err);
             })
-            console.log(resList);
-    }
-        , [sqlDate]);
+        console.log(resList);
+    }, [sqlDate]);
 
 
 
@@ -108,43 +104,43 @@ function DesResvList() {
 
         {availableTimes.map(time => (
             <section key={time} className='reser-time-section'>
-                {isReserved(sqlDate,time) && isReserved(sqlDate,time).status == "예약"  ? 
-                 (
-                    <>
-                    <Link to={`/usermy/deservedetail/${isReserved(sqlDate,time).num}`} state={{ data1: time, data2: sqlDate }}>
-                        <div className="reser-time-container reser-time-sm">
-                            <div className="reser-time">
-                                <span className="reser-time-text">{time} 예약됨</span>
-                            </div>
-                        </div>
-                    </Link>
-                        <p>
-                            <br />
-                            <span className='f-w-600'>반려동물 이름 : {isReserved(sqlDate,time).petName}</span>
-                            <br />
-                            <span className='magin-t-1 f-size-14px'>주의사항  : {isReserved(sqlDate,time).notice} </span>
-                            <br />
-                        </p>
-                    </>
-                )
-                : isReserved(sqlDate,time) === undefined  ?
+                {isReserved(sqlDate, time) && isReserved(sqlDate, time).status == "예약" ?
+                    (
+                        <>
+                            <Link to={`/usermy/deservedetail/${isReserved(sqlDate, time).num}`} state={{ data1: time, data2: sqlDate }}>
+                                <div className="reser-time-container reser-time-sm">
+                                    <div className="reser-time">
+                                        <span className="reser-time-text">{time} 예약됨</span>
+                                    </div>
+                                </div>
+                            </Link>
+                            <p>
+                                <br />
+                                <span className='f-w-600'>반려동물 이름 : {isReserved(sqlDate, time).petName}</span>
+                                <br />
+                                <span className='magin-t-1 f-size-14px'>주의사항  : {isReserved(sqlDate, time).notice} </span>
+                                <br />
+                            </p>
+                        </>
+                    )
+                    : isReserved(sqlDate, time) === undefined ?
 
-                (
-                    <div className={`reser-time-container btn-gray`}>
-                        <div className="reser-time">
-                            <span className="reser-time-text">{time} 예약안됨</span>
-                        </div>
-                    </div>
-                ) 
+                        (
+                            <div className={`reser-time-container btn-gray`}>
+                                <div className="reser-time">
+                                    <span className="reser-time-text">{time} 예약안됨</span>
+                                </div>
+                            </div>
+                        )
                         :
-                (
-                    <div className={`reser-time-container btn-gray`}>
-                        <div className="reser-time">
-                            <span className="reser-time-text">{time} 시술완료</span>
-                        </div>
-                    </div>
-                ) 
-               }
+                        (
+                            <div className={`reser-time-container btn-gray`}>
+                                <div className="reser-time">
+                                    <span className="reser-time-text">{time} 시술완료</span>
+                                </div>
+                            </div>
+                        )
+                }
                 <hr className="divide-line magin-t-1" key={`hr-${time}`} />
             </section>
         ))}

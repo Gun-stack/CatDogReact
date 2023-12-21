@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Route, Routes, useParams } from 'react-router-dom';
 import ShopResrevationDate from './ShopResrevationDate';
 import ShopReservationForm from './ShopReservationForm';
 import Error404 from '../error/Error404';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
+import { url } from '../../config';
 
 
 
@@ -18,7 +19,7 @@ function ShopReservation(props) {
     //디자이너 넘버로 디자이너 정보 찾아오기
     useEffect(() => {
         console.log(shopInfo);
-        axios.get(`http://localhost:8090/desinfobynum?desNum=${params.desnum}`)
+        axios.get(`${url}/desinfobynum?desNum=${params.desnum}`)
         .then((res) => {
             // console.log("resdata: "+ res.data);
             dispatch({type:'SET_DES', payload:res.data})
@@ -30,10 +31,6 @@ function ShopReservation(props) {
         })
     
     },[]);
-    
-
-
-
 
 
     return (
@@ -44,7 +41,7 @@ function ShopReservation(props) {
                 <div className="st-profile-container">
 
                     <div className="st-profile-img-container">
-                        <img src={`http://localhost:8090/desimg/${desInfo.num}`} alt="프로필 이미지" className="st-profile-img" />
+                        <img src={`${url}/desimg/${desInfo.num}`} alt="프로필 이미지" className="st-profile-img" />
                     </div>
 
                     <div className="st-profile-context">

@@ -20,6 +20,7 @@ import { useNavigate } from 'react-router';
 import DesReservationDate from './DesResrevationDate';
 import SwalCustomAlert from '../../Alerts/SwalCustomAlert';
 import Server500Err_Alert from '../../Alerts/Server500Err_Alert';
+import { url } from '../../../config';
 
 
 
@@ -47,7 +48,7 @@ function Home() {
 
     useEffect(() => {
         // console.log("로그인 후 토큰 값 : " + token);
-        axios.get('http://localhost:8090/user', {
+        axios.get(`${url}/user`, {
             headers: {
                 Authorization: token,
             }
@@ -64,7 +65,7 @@ function Home() {
                 navigate('/userlogin');
             })
 
-        axios.get(`http://localhost:8090/shopdesinfobynum?desNum=${params.desnum}`)
+        axios.get(`${url}/shopdesinfobynum?desNum=${params.desnum}`)
             .then((res) => {
                 setShop(res.data.shop);
                 setDes(res.data.des);
@@ -107,7 +108,7 @@ function Home() {
             formData.append("info", des.info);
             formData.append("workTime", des.workTime);
 
-            const response = await axios.post('http://localhost:8090/modidesinfo', formData);
+            const response = await axios.post(`${url}/modidesinfo`, formData);
             console.log(response.data);
 
         } catch (err) {
@@ -142,7 +143,7 @@ function Home() {
                         <div className="shome-profile-container">
                             <div className="des-star-location">
                                 <div className="st-profile-img">
-                                    {des.num && <img src={`http://localhost:8090/desimg/${des.num}`} alt="프로필 이미지" className="st-profile-img" />}
+                                    {des.num && <img src={`${url}/desimg/${des.num}`} alt="프로필 이미지" className="st-profile-img" />}
                                 </div>
 
                                 <div className="st-profile-context">

@@ -5,6 +5,7 @@ import axios from 'axios';
 import StarRating  from './StarRating';
 import SwalCustomAlert from '../../Alerts/SwalCustomAlert';
 import { useSelector } from 'react-redux';
+import { url } from '../../../config';
 
 
 function DesReview(props) {
@@ -25,7 +26,7 @@ function DesReview(props) {
     useEffect(() => {
 
         // console.log("로그인 후 토큰 값 : " + token);
-        axios.get('http://localhost:8090/user', {
+        axios.get(`${url}/user`, {
             headers: {
                 Authorization: token,
             }

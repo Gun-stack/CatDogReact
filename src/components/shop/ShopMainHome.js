@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import ImageUploading from 'react-images-uploading';
 import Server500Err_Alert from '../Alerts/Server500Err_Alert';
 import SwalCustomAlert from '../Alerts/SwalCustomAlert';
+import { url } from '../../config';
 
 
 
@@ -39,7 +40,7 @@ function ShopMainHome() {
 
 
         // console.log("로그인 후 토큰 값 : " + token);
-        axios.get('http://localhost:8090/user', {
+        axios.get(`${url}/user`, {
             headers: {
                 Authorization: token,
             }
@@ -57,7 +58,7 @@ function ShopMainHome() {
             })
 
 
-        axios.get('http://localhost:8090/desgalleryshop', {
+        axios.get(`${url}/desgalleryshop`, {
             params: {
                 num: shopInfo.num,
                 offset: 0, // 필요한 페이지 번호
@@ -106,7 +107,7 @@ function ShopMainHome() {
                                 formData.append("file", image.file);
                             }
                             formData.append('shopNum', shopInfo.num); // 미용실 번호 추가
-                            const res =  axios.post('http://localhost:8090/regshopbgimg', formData
+                            const res = axios.post(`${url}/regshopbgimg`, formData
                             );
                             console.log(res);
                             navigate(`/shop/${shopInfo.num}`);
@@ -114,10 +115,10 @@ function ShopMainHome() {
                             console.error(error);
                             <Server500Err_Alert />
                         } finally {
-                            
+
                             setLoading(false);
                         }
-                    window.location.reload();
+                        window.location.reload();
                     }
                     break;
 
@@ -141,7 +142,7 @@ function ShopMainHome() {
                             const formData = new FormData();
                             formData.append('shopNum', shopInfo.num);
                             formData.append('notice', result.value);
-                            const res = await axios.post('http://localhost:8090/regshopnotice', formData
+                            const res = await axios.post(`${url}/regshopnotice`, formData
                             );
                             console.log(res);
                         } catch (error) {
@@ -175,7 +176,7 @@ function ShopMainHome() {
                             const formData = new FormData();
                             formData.append('shopNum', shopInfo.num);
                             formData.append('worktime', result.value);
-                            const res = await axios.post('http://localhost:8090/regshopworktime', formData);
+                            const res = await axios.post(`${url}/regshopworktime`, formData);
                             console.log(res);
                         } catch (error) {
                             console.error(error);
@@ -207,7 +208,7 @@ function ShopMainHome() {
                             const formData = new FormData();
                             formData.append('shopNum', shopInfo.num);
                             formData.append('info', result.value);
-                            const res = await axios.post('http://localhost:8090/regshopinfo', formData
+                            const res = await axios.post(`${url}/regshopinfo`, formData
                             );
                             console.log(res);
                         } catch (error) {
@@ -281,18 +282,18 @@ function ShopMainHome() {
                         </>
                     }
                     <div className="shop-title-text sm-text magin-t-1">공지사항 <i className="fas fa-check btn-icon"></i>
-                    {shopInfo.id === user.id &&
-                        <button className='info-input-btn' value='notice' onClick={handleBtnClick}>공지사항 입력 <i className="far fa-plus-square tx-white"></i></button>
-                    }
+                        {shopInfo.id === user.id &&
+                            <button className='info-input-btn' value='notice' onClick={handleBtnClick}>공지사항 입력 <i className="far fa-plus-square tx-white"></i></button>
+                        }
                     </div>
 
                     <div className="shop-form-container">
                         <div className="input-img-click sm-input-img">{shopInfo.notice}</div>
                     </div>
                     <div className="shop-title-text sm-text">영업시간<i className="fas fa-clock btn-icon"></i>
-                    {shopInfo.id === user.id &&
-                        <button className='info-input-btn' value='worktime' onClick={handleBtnClick}>영업시간 입력 <i className="far fa-plus-square tx-white"></i></button>
-                    }
+                        {shopInfo.id === user.id &&
+                            <button className='info-input-btn' value='worktime' onClick={handleBtnClick}>영업시간 입력 <i className="far fa-plus-square tx-white"></i></button>
+                        }
                     </div>
 
                     <div className="shop-form-container">
@@ -329,9 +330,9 @@ function ShopMainHome() {
                     <hr className="divide-line" />
 
                     <div className="shop-title-text sm-text ma-top2rem">매장정보<i className="fas fa-info-circle btn-icon"></i>
-                    {shopInfo.id === user.id &&
-                        <button className='info-input-btn' value='shopinfo' onClick={handleBtnClick}>매장정보 입력 <i className="far fa-plus-square tx-white"></i></button>
-                    }
+                        {shopInfo.id === user.id &&
+                            <button className='info-input-btn' value='shopinfo' onClick={handleBtnClick}>매장정보 입력 <i className="far fa-plus-square tx-white"></i></button>
+                        }
                     </div>
                     <div className="shop-form-container">
                         <p className="input-img-click sm-input-img">{shopInfo.info} </p>
@@ -345,12 +346,12 @@ function ShopMainHome() {
                             <div className="st-gallery-grid">
                                 {galleryList.map((gallery, index) => (
                                     <div className="st-gallery-img" key={index} >
-                                        <Link to={"/gallery/des/" + gallery.num}><img src={`http://localhost:8090/desgalview/${gallery.num}`} alt="" className="hover-img" /></Link>
+                                        <Link to={"/gallery/des/" + gallery.num}><img src={`${url}/desgalview/${gallery.num}`} alt="" className="hover-img" /></Link>
                                         <div className="img-comment-hover">
-                                        <span className="img-hover-icon">
-                                            <i className="fas fa-heart hover-icon" ></i>
-                                            <span className='hover-text'>{gallery.likeCnt}</span>
-                                        </span>
+                                            <span className="img-hover-icon">
+                                                <i className="fas fa-heart hover-icon" ></i>
+                                                <span className='hover-text'>{gallery.likeCnt}</span>
+                                            </span>
                                         </div>
                                     </div>
                                 ))}

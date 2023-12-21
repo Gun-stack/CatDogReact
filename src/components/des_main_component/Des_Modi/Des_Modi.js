@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import Swal from "sweetalert2";
 import axios from "axios";
 import SwalCustomAlert from '../../Alerts/SwalCustomAlert';
+import { url } from "../../../config";
 
 
 
@@ -14,7 +15,7 @@ function DesModi() {
     useEffect(() => {
 
         // console.log("로그인 후 토큰 값 : " + token);
-        axios.get('http://localhost:8090/user', {
+        axios.get(`${url}/user`, {
             headers: {
                 Authorization: token,
             }
@@ -83,7 +84,7 @@ function DesModi() {
 
 
 
-            axios.post('http://localhost:8090/desreg', formData)
+            axios.post(`${url}/desreg`, formData)
                 .then((res) => {
                     console.log(res);
                     console.log(res.data);

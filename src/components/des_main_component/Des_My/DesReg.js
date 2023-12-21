@@ -6,6 +6,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import SwalCustomAlert from '../../Alerts/SwalCustomAlert';
 import Loding from "../../tools/Loding";
+import { url } from "../../../config";
 
 
 
@@ -17,7 +18,7 @@ function DesReg() {
     useEffect(() => {
 
         // console.log("로그인 후 토큰 값 : " + token);
-        axios.get('http://localhost:8090/user', {
+        axios.get(`${url}/user`, {
             headers: {
                 Authorization: token,
             }
@@ -86,7 +87,7 @@ function DesReg() {
                 console.log("디자이너 이름 : " + des.shopName);
                 console.log("직책 : " + des.shopNumber);
 
-                const res = await axios.post('http://localhost:8090/desreg', formData);
+                const res = await axios.post(`${url}/desreg`, formData);
                 console.log(res);
                 console.log(res.data);
                 dispatch({ type: 'SET_USER', payload: res.data.user });
