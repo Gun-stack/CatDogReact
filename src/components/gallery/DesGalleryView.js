@@ -19,6 +19,7 @@ function DesGalleryView() {
         navigate(-1);
     }
 
+
     const likeClick = () => {
         const fomrData = new FormData();
         fomrData.append("galNum", gallery.num);
@@ -34,20 +35,50 @@ function DesGalleryView() {
                 console.log(err);
             })
 
-
-
-
     }
 
-
-
+    
+    
     const dispatch = useDispatch();
     const galNum = useParams();
-
 
     const [gallery, setGallery] = useState({});
     const [desInfo, setDesInfo] = useState({});
     const [shopInfo, setShopInfo] = useState({});
+    const [date, setDate] = useState('');
+
+
+    
+    // 날짜 포맷팅
+    
+    const formatDate = (originalDateString) => {
+        const dateObject = new Date(originalDateString);
+        const date = new Intl.DateTimeFormat('ko-KR', {
+            year: '2-digit',
+            month: '2-digit',
+            day: '2-digit',
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: false, 
+        }).format(dateObject);
+        setDate(date);
+}
+
+
+
+
+
+    
+    const [tags, setTags] = useState([]);
+
+    const parseTags = (str) => {
+        const tags = str.split(',').map((tag) => tag.trim());
+        setTags(tags);
+    };
+
+    const tagClickHandler = (tag) => {
+        navigate(`/gallery/des/search/${tag}`);
+    };
 
 
     useEffect(() => {
@@ -58,6 +89,12 @@ function DesGalleryView() {
                 setDesInfo(res.data.designer);
                 setLike(res.data.isLike);
                 setShopInfo(res.data.shop);
+
+                parseTags(gallery.tag);
+                formatDate(gallery.date);
+                console.log(tags);
+             
+
             })
             .catch((err) => {
                 console.log(err);
@@ -88,6 +125,11 @@ function DesGalleryView() {
                                     <button className="st-button">예약하기<i className="far fa-calendar-alt btn-icon"></i></button>
                                 </Link>
                             }
+
+                            <div className="view-img-nickname">{desInfo.position} {desInfo.desNickname}</div>
+                            <div className="view-comment">{shopInfo.name}</div>
+                            <div className="view-comment">({date})</div>
+
                         </div>
 
 
@@ -100,10 +142,25 @@ function DesGalleryView() {
 
                             <span onClick={likeClick} >{like === true ? <i className="fa-solid fa-heart hover-icon"></i> : <i className="fa-regular fa-heart hover-icon"></i>} {gallery.likeCnt}</span>
                             {/* <span><i className="fa-regular fa-comment"></i>{gallery.galComment}</span> */}
+                            
+
+
 
                             <div className="view-comment">
                                 {gallery.content}
                             </div>
+
+                            <div className="tag">
+                            
+                            {tags && tags.map((tag, index) => (
+                                <span key={index} className="tag" onClick={() => tagClickHandler(tag)}>
+                                    <span >#{tag} {' '}</span>
+                                </span>
+                            ))}
+
+                            </div>
+
+
                             {/* <button className="view-comment-more">덧글 더보기</button> */}
                         </div>
                     </div>
