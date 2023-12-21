@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { url } from '../../../config';
 
 function DesHome() {
     const shopInfo = useSelector((state) => state.shop);
@@ -15,7 +16,7 @@ function DesHome() {
     ]);
 
     useEffect(() => {
-        axios.get('http://localhost:8090/desgalleryshop', {
+        axios.get(`${url}/desgalleryshop`, {
             params: {
                 num: shopInfo.num,
                 offset: 0, // 필요한 페이지 번호
@@ -44,7 +45,7 @@ function DesHome() {
                         <div className="st-gallery-grid">
                             {galleryList.map((gallery, index) => (
                                 <div className="st-gallery-img" key={index} >
-                                    <Link to={"/gallery/des/" + gallery.num}><img src={`http://localhost:8090/desgalview/${gallery.num}`} alt="" className="hover-img" /></Link>
+                                    <Link to={"/gallery/des/" + gallery.num}><img src={`${url}/desgalview/${gallery.num}`} alt="" className="hover-img" /></Link>
                                     <div className="img-comment-hover">
                                         <span className="img-hover-icon">
                                             <i className="fas fa-heart hover-icon" ></i>

@@ -20,6 +20,9 @@ import { useNavigate } from 'react-router';
 import DesReservationDate from './DesResrevationDate';
 import SwalCustomAlert from '../../Alerts/SwalCustomAlert';
 import Server500Err_Alert from '../../Alerts/Server500Err_Alert';
+import { url } from '../../../config';
+import DesResvList from '../Des_reservation/DesResvList';
+import DesResvDetail from '../Des_reservation/DesResvDetail';
 
 
 
@@ -47,7 +50,7 @@ function Home() {
 
     useEffect(() => {
         // console.log("로그인 후 토큰 값 : " + token);
-        axios.get('http://localhost:8090/user', {
+        axios.get(`${url}/user`, {
             headers: {
                 Authorization: token,
             }
@@ -64,7 +67,7 @@ function Home() {
                 navigate('/userlogin');
             })
 
-        axios.get(`http://localhost:8090/shopdesinfobynum?desNum=${params.desnum}`)
+        axios.get(`${url}/shopdesinfobynum?desNum=${params.desnum}`)
             .then((res) => {
                 setShop(res.data.shop);
                 setDes(res.data.des);
@@ -107,7 +110,7 @@ function Home() {
             formData.append("info", des.info);
             formData.append("workTime", des.workTime);
 
-            const response = await axios.post('http://localhost:8090/modidesinfo', formData);
+            const response = await axios.post(`${url}/modidesinfo`, formData);
             console.log(response.data);
 
         } catch (err) {
@@ -142,7 +145,7 @@ function Home() {
                         <div className="shome-profile-container">
                             <div className="des-star-location">
                                 <div className="st-profile-img">
-                                    {des.num && <img src={`http://localhost:8090/desimg/${des.num}`} alt="프로필 이미지" className="st-profile-img" />}
+                                    {des.num && <img src={`${url}/desimg/${des.num}`} alt="프로필 이미지" className="st-profile-img" />}
                                 </div>
 
                                 <div className="st-profile-context">
@@ -216,6 +219,10 @@ function Home() {
                                 <div className="st-profile-shop">
                                 </div>)
                             }
+                            {user.id === des.id &&
+                                <li className={`main-nav-list-text ${isActive`/des/${des.num}/review` ? 'active' : ''}`}><Link to={`/des/${des.num}/myreservation`}>나의예약확인</Link></li>
+                            }
+
                         </ul>
                     </nav>
                     <hr className="divide-line" />
@@ -226,7 +233,8 @@ function Home() {
                         <Route path="review" element={<DesReview desInfo={des} />} />
                         <Route path='/:desgalnum' element={<DesGalleryView />} />
                         <Route path='reservation' element={<DesReservationDate desInfo={des} shopInfo={shop} />} />
-
+                        <Route path='myreservation' element={<DesResvList desInfo={des} shopInfo={shop}/>} />
+                        <Route path='/detail/:resvnum' element={<DesResvDetail desInfo={des} shopInfo={shop}  />} />
                         <Route path='/*' element={<Error404 />} />
                     </Routes>
 

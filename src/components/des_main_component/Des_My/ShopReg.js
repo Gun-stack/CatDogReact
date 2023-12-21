@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import SwalCustomAlert from '../../Alerts/SwalCustomAlert';
+import { url } from "../../../config";
 
 function ShopReg() {
     const navigate = useNavigate();
@@ -21,7 +22,7 @@ function ShopReg() {
         //     navigate(-1);
         // }
 
-        axios.get('http://localhost:8090/user', {
+        axios.get(`${url}/user`, {
             headers: {
                 Authorization: token,
             }
@@ -51,7 +52,7 @@ function ShopReg() {
 
 
         console.log(params);
-        axios.get(`http://localhost:8090/shoplist?id=${user.id}`)
+        axios.get(`${url}/shoplist?id=${user.id}`)
             .then((res) => {
                 console.log("RES:");
                 res.data.forEach((shop, index) => {
@@ -103,7 +104,7 @@ function ShopReg() {
                                                 {/* 샵 이미지 */}
                                                 <div className="nearby-shop-img-container">
                                                     <div className="nearby-shop-img">
-                                                        <img src={`http://localhost:8090/shopimg/${shop.profImg}`} alt="등록한 샵 사진" className="nearby-shop-img" />
+                                                        <img src={`${url}/shopimg/${shop.profImg}`} alt="등록한 샵 사진" className="nearby-shop-img" />
                                                     </div>
                                                 </div>
 

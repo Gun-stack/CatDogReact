@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { setToken, loginStore } from '../actions';
+import {url} from'../config';
 
 
 
@@ -32,7 +33,6 @@ const Oauth = () => {
       })
     navigate("/main");
   }, [])
-
 }
 
 export default Oauth;

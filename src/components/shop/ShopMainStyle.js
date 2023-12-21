@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import axios from 'axios';
 import SwalCustomAlert from '../Alerts/SwalCustomAlert';
+import { url } from '../../config';
 
 
 function ShopMainStyle() {
@@ -28,8 +29,8 @@ function ShopMainStyle() {
     useEffect(() => {
 
 
-         // console.log("로그인 후 토큰 값 : " + token);
-         axios.get('http://localhost:8090/user', {
+        // console.log("로그인 후 토큰 값 : " + token);
+        axios.get(`${url}/user`, {
             headers: {
                 Authorization: token,
             }
@@ -47,7 +48,7 @@ function ShopMainStyle() {
             })
 
 
-        axios.get('http://localhost:8090/desgalleryshop', {
+        axios.get(`${url}/desgalleryshop`, {
             params: {
                 num: shopInfo.num,
                 offset: offset, // 필요한 페이지 번호
@@ -75,7 +76,7 @@ function ShopMainStyle() {
                 <div className="st-gallery-grid">
                     {galleryList.map((gallery, index) => (
                         <div className="st-gallery-img" key={index} >
-                            <Link to={"/gallery/des/" + gallery.num}><img src={`http://localhost:8090/desgalview/${gallery.num}`} alt="" className="hover-img" /></Link>
+                            <Link to={"/gallery/des/" + gallery.num}><img src={`${url}/desgalview/${gallery.num}`} alt="" className="hover-img" /></Link>
                             <div className="img-comment-hover">
                                 <span className="img-hover-icon"><i className="fas fa-heart hover-icon" ></i><span className='hover-text'>{gallery.likeCnt}</span></span>
                             </div>

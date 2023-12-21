@@ -5,6 +5,7 @@ import axios from 'axios';
 import StarRating  from './StarRating';
 import SwalCustomAlert from '../../Alerts/SwalCustomAlert';
 import { useSelector } from 'react-redux';
+import { url } from '../../../config';
 
 
 function DesReview(props) {
@@ -25,7 +26,7 @@ function DesReview(props) {
     useEffect(() => {
 
         // console.log("로그인 후 토큰 값 : " + token);
-        axios.get('http://localhost:8090/user', {
+        axios.get(`${url}/user`, {
             headers: {
                 Authorization: token,
             }
@@ -42,7 +43,7 @@ function DesReview(props) {
                 navigate('/userlogin');
             })
 
-        axios.get('http://localhost:8090/reviewlistbydes', {params: {
+        axios.get(`${url}/reviewlistbydes`, {params: {
             num: des.num,
             offset: offset, // 필요한 페이지 번호
             limit: 12, // 페이지당 아이템 개수
@@ -82,7 +83,7 @@ function DesReview(props) {
                             </div>
                             <div className="review-img-container">
                                 {review.afterImg&&
-                                <img className="review-img" src={`http://localhost:8090/reviewimg/${review.afterImg}`} alt=''/>
+                                <img className="review-img" src={`${url}/reviewimg/${review.afterImg}`} alt=''/>
                                 }
 
                             </div>

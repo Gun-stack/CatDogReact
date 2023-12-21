@@ -5,6 +5,7 @@ import axios from 'axios';
 import SwalCustomAlert from '../Alerts/SwalCustomAlert';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import {url} from'../../config';
 
 
 
@@ -13,6 +14,7 @@ function UserGalSearch() {
     ]);
     const [page, setPage] = useState(0);
     const [search, setSearch] = useState('');
+    const [search2, setSearch2] = useState('');
     const token = useSelector(state => state.token);
     const navigate = useNavigate();
     const [hasMore, setHasMore] = useState(true);
@@ -34,11 +36,11 @@ function UserGalSearch() {
     }
 
     const searchGallery = () => {
-        setSearch(preSearch);
-
-        axios.get('http://localhost:8090/usergallerysearch', {
+        setSearch2(preSearch);
+    if(search2){
+        axios.get(`${url}/usergallerysearch`, {
             params: {
-                search: search,
+                search: search2,
                 page: 0,
                 size: 12,
             }
@@ -50,6 +52,7 @@ function UserGalSearch() {
             }
         })
         .catch((err) => console.log(err))
+    }
 }
 
 
@@ -58,7 +61,7 @@ function UserGalSearch() {
         setSearch(params.search);
         // console.log("로그인 후 토큰 값 : " + token);
 
-        axios.get('http://localhost:8090/user', {
+        axios.get(`${url}/user`, {
             headers: {
                 Authorization: token,
             }
@@ -75,7 +78,7 @@ function UserGalSearch() {
                 navigate('/userlogin');
             })
         if(search){
-         axios.get('http://localhost:8090/usergallerysearch', {
+         axios.get(`${url}/usergallerysearch`, {
             params: {
                 search: search,
                 page: 0,
@@ -105,11 +108,11 @@ function UserGalSearch() {
                 <Link to='/gallery/user/galleryregform'> <button className='info-input-btn'>사진 올리기</button></Link>
             </div>
 
-            {search &&
+            {search  &&
             <div className="st-gallery-grid">
                 {galleryList.map((gallery, index) => (
                     <div className="st-gallery-img" key={index} >
-                        <Link to={"/gallery/user/" + gallery.num}><img src={`http://localhost:8090/usergalview/${gallery.num}`} alt="" className="hover-img" /></Link>
+                        <Link to={"/gallery/user/" + gallery.num}><img src={`${url}/usergalview/${gallery.num}`} alt="" className="hover-img" /></Link>
                         <div className="img-comment-hover left020">
                             <span className="img-hover-icon">
                                 <i className="fas fa-heart hover-icon" ></i><span className='hover-text'>{gallery.likeCnt}</span>

@@ -5,6 +5,7 @@ import axios from 'axios';
 import SwalCustomAlert from '../Alerts/SwalCustomAlert';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import {url} from'../../config';    
 
 
 
@@ -30,7 +31,7 @@ function UserGal() {
     }
 
     const searchGallery = () => {
-        axios.get('http://localhost:8090/usergallerysearch', {
+        axios.get(`${url}/usergallerysearch`, {
             params: {
                 search: search,
                 page: 0,
@@ -51,7 +52,7 @@ const onChangeSearch = (e) => {
 }   
 
 const initialGet = () => {
-    axios.get('http://localhost:8090/usergallery', {
+    axios.get(`${url}/usergallery`, {
         params: { page, size: PAGE_SIZE }
     })
     .then((res) => {
@@ -68,7 +69,7 @@ const initialGet = () => {
     useEffect(() => {
 
         // console.log("로그인 후 토큰 값 : " + token);
-        axios.get('http://localhost:8090/user', {
+        axios.get(`${url}/user`, {
             headers: {
                 Authorization: token,
             }
@@ -102,7 +103,7 @@ const initialGet = () => {
             <div className="st-gallery-grid">
                 {galleryList.map((gallery, index) => (
                     <div className="st-gallery-img" key={index} >
-                        <Link to={"/gallery/user/" + gallery.num}><img src={`http://localhost:8090/usergalview/${gallery.num}`} alt="" className="hover-img" /></Link>
+                        <Link to={"/gallery/user/" + gallery.num}><img src={`${url}/usergalview/${gallery.num}`} alt="" className="hover-img" /></Link>
                         <div className="img-comment-hover left020">
                             <span className="img-hover-icon">
                                 <i className="fas fa-heart hover-icon" ></i><span className='hover-text'>{gallery.likeCnt}</span>

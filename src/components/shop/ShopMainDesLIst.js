@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { useNavigate } from "react-router";
 import SwalCustomAlert from "../Alerts/SwalCustomAlert";
+import {url} from '../../config';
+
 
 
 function ShopMainDesLIst() {
@@ -47,7 +49,7 @@ function ShopMainDesLIst() {
         })
             .then((result) => {
                 if (result.isConfirmed) {
-                    axios.post("http://localhost:8090/shopoutdes", formData)
+                    axios.post(`${url}/shopoutdes`, formData)
                         .then(() => {
                             navigate(0);
                         })
@@ -71,7 +73,7 @@ function ShopMainDesLIst() {
             const formData = new FormData();
             formData.append("num", desId);
             formData.append("position", editedPosition);
-            await axios.post("http://localhost:8090/updateposition", formData)
+            await axios.post(`${url}/updateposition`, formData)
                 .then(() => {
                     setEditableDesId(null);
                     setEditedPosition("");
@@ -92,7 +94,7 @@ function ShopMainDesLIst() {
 
 
         // console.log("로그인 후 토큰 값 : " + token);
-        axios.get('http://localhost:8090/user', {
+        axios.get(`${url}/user`, {
             headers: {
                 Authorization: token,
             }
@@ -110,7 +112,7 @@ function ShopMainDesLIst() {
             })
 
 
-        axios.get(`http://localhost:8090/deslist?sId=${shopInfo.sid}`)
+        axios.get(`${url}/deslist?sId=${shopInfo.sid}`)
             .then((res) => {
                 console.log(res.data);
                 dispatch({ type: 'SET_DES_LIST', payload: res.data });
@@ -126,7 +128,7 @@ function ShopMainDesLIst() {
 
 
     const handleBtnClick = async (id) => {
-        axios.get(`http://localhost:8090/selectdesbyid?desId=${id}`)
+        axios.get(`${url}/selectdesbyid?desId=${id}`)
             .then(async (res) => {
                 if (shopInfo.sid === res.data.sid && user.roles === "ROLE_SHOP") {
                     await Swal.fire({
@@ -149,12 +151,12 @@ function ShopMainDesLIst() {
                             if (result.isConfirmed) {
                                 console.log("2번 모달!!");
                                 const desId = result.value;
-                                axios.get(`http://localhost:8090/selectdesbyid?desId=${desId}`)
+                                axios.get(`${url}/selectdesbyid?desId=${desId}`)
                                     .then(async (res) => {
                                         await Swal.fire({
                                             title: res.data.name,
                                             text: res.data.desNickname,
-                                            imageUrl: `http://localhost:8090/desimg/${res.data.num}`,
+                                            imageUrl: `${url}/desimg/${res.data.num}`,
                                             imageWidth: 280,
                                             imageHeight: 200,
                                             showCancelButton: true,
@@ -171,7 +173,7 @@ function ShopMainDesLIst() {
                                                     // formData.append("sid", shopInfo.sid);
                                                     res.data.sid = shopInfo.sid;
                                                     console.log("sid" + shopInfo.sid);
-                                                    axios.post('http://localhost:8090/shopdesreg', res.data)
+                                                    axios.post(`${url}/shopdesreg`, res.data)
                                                         .then(async (res) => {
                                                             await Swal.fire({
                                                                 html: '<img src="/img/logo/modal_success_logo.png"/></span>',
@@ -226,7 +228,7 @@ function ShopMainDesLIst() {
 
                     <div className="st-profile-container">
                         <div className="st-profile-img">
-                            <img src={`http://localhost:8090/desimg/${des.num}`} alt="프로필 이미지" className="st-profile-img" />
+                            <img src={`${url}/desimg/${des.num}`} alt="프로필 이미지" className="st-profile-img" />
                         </div>
 
                         <div className="st-profile-context">
@@ -237,14 +239,11 @@ function ShopMainDesLIst() {
                                         value={editedPosition}
                                         onChange={(e) => setEditedPosition(e.target.value)}
                                     />
-
                                 ) : (
-                                    `${des.position}`
+                                    <Link to={`/des/${des.num}`}>{des.position}</Link>
                                 )}
                             </span>
-
-
-                            <span className="st-profile-name">{des.desNickname}</span>
+                            <span  className="st-profile-name"><Link to={`/des/${des.num}`}>{des.desNickname}</Link></span>
                             <br/>
                             <span className="st-profile-shop">{shopInfo.name}</span>
 

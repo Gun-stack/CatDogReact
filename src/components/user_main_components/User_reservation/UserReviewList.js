@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import SwalCustomAlert from '../../Alerts/SwalCustomAlert';
+import { url } from '../../../config';
 
 
 function UserReviewList() {
@@ -21,7 +22,7 @@ function UserReviewList() {
         console.log(reservationList)    
 
         // console.log("로그인 후 토큰 값 : " + token);
-        axios.get('http://localhost:8090/user', {
+        axios.get(`${url}/user`, {
             headers: {
                 Authorization: token,
             }
@@ -38,7 +39,7 @@ function UserReviewList() {
                 navigate('/userlogin');
             })
 
-        axios.get(`http://localhost:8090/resinfobyuserid?userId=${user.id}`)
+        axios.get(`${url}/resinfobyuserid?userId=${user.id}`)
             .then((res) => {
                 if (res.data !== undefined) {
                     dispatch({ type: 'SET_RESV_LIST', payload: res.data }); 

@@ -6,6 +6,7 @@ import { Link, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { useSelector ,useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
+import { url } from '../../../config';
 
 
 
@@ -58,7 +59,7 @@ function DesResvDetail() {
                         formData.append('file', result1.value);
                         formData.append('text', result2.value);
                         formData.append('num', resv.num);
-                        axios.post(`http://localhost:8090/completereserve`, formData)
+                        axios.post(`${url}/completereserve`, formData)
                             .then((res) => {
                                 console.log(res);
                                 Swal.fire('업로드 완료', '', 'success');
@@ -80,13 +81,11 @@ function DesResvDetail() {
 
 //  유저의 펫 정보 리스트를 가져옴 
     useEffect(() => {
-
-        axios.get(`http://localhost:8090/reservedetail?num=${params.resvnum}`)
+        axios.get(`${url}/reservedetail?num=${params.resvnum}`)
         .then((res) => {
             console.log(res.data);
                 setResv(res.data.resv);
                 setPet1(res.data.pet);
-                setUser(res.data.user);
             }
         )
         .catch((err) => {

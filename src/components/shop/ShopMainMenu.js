@@ -4,6 +4,8 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import SwalCustomAlert from '../Alerts/SwalCustomAlert';
+import {url} from '../../config';
+
 function ShopMainMenu() {
 
 
@@ -12,7 +14,7 @@ function ShopMainMenu() {
     useEffect(() => {
 
         // console.log("로그인 후 토큰 값 : " + token);
-        axios.get('http://localhost:8090/user', {
+        axios.get(`${url}/user`, {
             headers: {
                 Authorization: token,
             }

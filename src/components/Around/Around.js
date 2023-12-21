@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import axios from 'axios';
 import SwalCustomAlert from '../Alerts/SwalCustomAlert';
+import { url } from "../../config";
 
 
 
@@ -26,7 +27,7 @@ function Around() {
     const shops = useSelector((state) => state.shopList);
 
     useEffect(() => {
-        axios.get(`http://localhost:8090/shoplistall`)
+        axios.get(`${url}/shoplistall`)
             .then((res) => {
                 const sortedByStar = res.data.sort((a, b) => b.star - a.star);
                 dispatch({ type: 'SET_SHOP_LIST', payload: sortedByStar});
@@ -63,7 +64,7 @@ function Around() {
     useEffect(() => {
         
         // console.log("로그인 후 토큰 값 : " + token);
-        axios.get('http://localhost:8090/user', {
+        axios.get(`${url}/user`, {
             headers: {
                 Authorization: token,
             }
@@ -90,7 +91,7 @@ function Around() {
             html: `
             <div class='map-modal-container'>
 
-                <img class="map-modal-img" name="image" alt='샵 이미지' src='http://localhost:8090/shopimg/${shop.profImg}'/>
+                <img class="map-modal-img" name="image" alt='샵 이미지' src='${url}/shopimg/${shop.profImg}'/>
                 
                 <div class='map-modal-address'>
                     <div class="map-modal-title">${shop.name}</div>

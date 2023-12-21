@@ -2,13 +2,36 @@ import React from 'react';
 import Footer from '../screens/Footer';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-
+import {url} from'../../config';
+import axios from 'axios';
 
 function FindPassword() {
     const [email, setEmail] = useState('');
-    const onChange = (e) => {
+    const [id, setId] = useState('');
+
+    const onChangeEmail = (e) => {
         setEmail(e.target.value);
     }
+    const onChangeId = (e) => {
+        setId(e.target.value);
+    }
+
+    const sendPassword = () => {
+        axios.get(`${url}/findpassword?email=${email}&id=${id}`)
+        .then(res => {
+            console.log(res.data);
+            alert('임시 비밀번호가 발송되었습니다.');
+            window.location.href = '/login';
+        }
+        )
+        .catch(err => {
+            console.log(err);
+        })
+    }
+
+
+
+
 
     return (
         <div>
@@ -23,10 +46,10 @@ function FindPassword() {
                     </Link>
 
                         <section className="form-section">
-                            <form action="#" method="post" className="form-css">
                                 <div className="form-container">
                                     <div className="input-container">
-                                        <input type="text" id="email" name="email" placeholder="가입한 이메일을 입력하세요" className="input-text" onChange={onChange} />
+                                         <input type="text" id="id" name="id" placeholder="아이디를 입력해주세요" className="input-text" onChange={onChangeId} />
+                                        <input type="text" id="email" name="email" placeholder="가입한 이메일을 입력하세요" className="input-text" onChange={onChangeEmail} />
 
                                         <div className="login-tools">
                                             <span></span>
@@ -38,10 +61,9 @@ function FindPassword() {
                                     </div>
 
                                     <div className="button-container">
-                                        <button type="submit" className="main-btn magin-t-1">비밀번호 찾기</button>
+                                        <button type="submit" onClick={sendPassword} className="main-btn magin-t-1">비밀번호 찾기</button>
                                     </div>
                                 </div>
-                            </form>
                         </section>
                     </main>
                     <Footer />

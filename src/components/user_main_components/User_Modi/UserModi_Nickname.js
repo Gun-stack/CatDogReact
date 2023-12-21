@@ -6,10 +6,12 @@ import Loding from '../../tools/Loding';
 
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
+import {url} from'../../../config';
 
 import Server500Err_Alert from '../../Alerts/Server500Err_Alert';
 import SwalCustomAlert from '../../Alerts/SwalCustomAlert';
 import Swal from 'sweetalert2';
+
 
 
 
@@ -20,7 +22,7 @@ function UserModi_Nickname() {
     useEffect(() => {
 
         // console.log("로그인 후 토큰 값 : " + token);
-        axios.get('http://localhost:8090/user', {
+        axios.get(`${url}/user`, {
             headers: {
                 Authorization: token,
             }
@@ -83,7 +85,7 @@ function UserModi_Nickname() {
             }
             try {
 
-                const res = await axios.get(`http://localhost:8090/checkusernickname?nickname=${userNickname}`);
+                const res = await axios.get(`${url}/checkusernickname?nickname=${userNickname}`);
 
                 if (res.data === "success") {
                     // 닉네임 중복이 아니고 조건에 부합하면
@@ -113,7 +115,7 @@ function UserModi_Nickname() {
 
         if (check) {
             try {
-                const res = await axios.post('http://localhost:8090/modinickname', { num: user.num, nickname: userNickname });
+                const res = await axios.post(`${url}/modinickname`, { num: user.num, nickname: userNickname });
                 dispath({ type: 'SET_USER', payload: res.data });
                 SwalCustomAlert(
                     'success',

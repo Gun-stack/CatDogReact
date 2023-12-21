@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 import SwalCustomAlert from '../../Alerts/SwalCustomAlert';
 import Server500Err_Alert from '../../Alerts/Server500Err_Alert';
+import { url } from '../../../config';
 
 
 function PetModi() {
@@ -57,7 +58,7 @@ function PetModi() {
 
 
         // console.log("로그인 후 토큰 값 : " + token);
-        axios.get('http://localhost:8090/user', {
+        axios.get(`${url}/user`, {
             headers: {
                 Authorization: token,
             }
@@ -147,7 +148,7 @@ function PetModi() {
                 formData.append("neuter", newPet.neuter);
                 formData.append("userNum", user.num);
                 console.log(formData);
-                axios.post('http://localhost:8090/petmodi', formData)
+                axios.post(`${url}/petmodi`, formData)
                     .then((res) => {
                         console.log(res);
                         SwalCustomAlert(
@@ -182,7 +183,7 @@ function PetModi() {
 
                         <div className="filebox">
 
-                            <img src={`http://localhost:8090/petimg/${pet.num}`} width="100px" height="100px" accept="image/*" alt=''
+                            <img src={`${url}/petimg/${pet.num}`} width="100px" height="100px" accept="image/*" alt=''
                                 className="input-box-style" placeholder='사진을 올려주세요' ref={imgBoxRef} />
 
                             <label htmlFor="petImgFile">반려동물 사진 수정하기</label>

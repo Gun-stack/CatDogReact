@@ -3,10 +3,11 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import Swal from 'sweetalert2';
+
 import SwalCustomAlert from '../../Alerts/SwalCustomAlert';
 import Server500Err_Alert from '../../Alerts/Server500Err_Alert';
 import { useNavigate } from "react-router";
+import { url } from '../../../config';
 
 
 
@@ -68,7 +69,7 @@ function DesReservationForm(props) {
         console.log(shopInfo);
 
         // console.log("로그인 후 토큰 값 : " + token);
-        axios.get('http://localhost:8090/user', {
+        axios.get(`${url}/user`, {
             headers: {
                 Authorization: token,
             }
@@ -85,7 +86,7 @@ function DesReservationForm(props) {
                 navigate('/userlogin');
             })
 
-        axios.get(`http://localhost:8090/petinfo?userId=${user.id}`)
+        axios.get(`${url}/petinfo?userId=${user.id}`)
             .then((res) => {
                 console.log(res);
                 dispatch({ type: 'SET_PET_LIST', payload: res.data });
@@ -102,7 +103,7 @@ function DesReservationForm(props) {
         try {
 
             // axios.post
-            await axios.post('http://localhost:8090/makereservation', resvInfo);
+            await axios.post(`${url}/makereservation`, resvInfo);
             SwalCustomAlert(
                 '<img src="/img/logo/modal_success_logo.png"/>',
                 '<span class="sweet-modal-title">예약이 완료 되었습니다</span>',
@@ -152,7 +153,7 @@ function DesReservationForm(props) {
                         <div className='stylelist-content' onClick={() => selectPet(pet)} key={index}>
                             <div className="st-profile-container"  >
                                 <div className="st-profile-img">
-                                    <img src={`http://localhost:8090/petimg/${pet.num}`} alt="등록한 반려동물 사진" className="st-profile-img" />
+                                    <img src={`${url}/petimg/${pet.num}`} alt="등록한 반려동물 사진" className="st-profile-img" />
                                 </div>
                                 <div className="st-profile-context">
                                     <div className="st-profile-name">

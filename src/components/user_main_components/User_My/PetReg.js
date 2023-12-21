@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import SwalCustomAlert from '../../Alerts/SwalCustomAlert';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
+import { url } from '../../../config';
 
 
 
@@ -20,7 +21,7 @@ function PetReg() {
 
 
         // console.log("로그인 후 토큰 값 : " + token);
-        axios.get('http://localhost:8090/user', {
+        axios.get(`${url}/user`, {
             headers: {
                 Authorization: token,
             }
@@ -38,7 +39,7 @@ function PetReg() {
             })
 
 
-        axios.get(`http://localhost:8090/petinfo?userId=${user.id}`)
+        axios.get(`${url}/petinfo?userId=${user.id}`)
             .then((res) => {
                 dispatch({ type: 'SET_PET_LIST', payload: res.data });
                 console.log(res.data);
@@ -79,7 +80,7 @@ function PetReg() {
                         <div className="stylelist-content" key={idx}>
                             <div className="st-profile-container">
                                 <div className="st-profile-img">
-                                    <img src={`http://localhost:8090/petimg/${pet.num}`} alt="등록한 반려동물 사진" className="st-profile-img" />
+                                    <img src={`${url}/petimg/${pet.num}`} alt="등록한 반려동물 사진" className="st-profile-img" />
                                 </div>
                                 <div className="st-profile-context">
                                     <div className="st-profile-name">

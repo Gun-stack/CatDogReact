@@ -4,6 +4,7 @@ import Loding from "../../tools/Loding";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useSelector,useDispatch } from "react-redux";
+import { url } from "../../../config";
 
 
 
@@ -55,7 +56,7 @@ function UserReviewForm() {
     };
 
     useEffect(() => {
-        axios.get(`http://localhost:8090/reservedetail?num=${params.resnum}`)
+        axios.get(`${url}/reservedetail?num=${params.resnum}`)
             .then((res) => {
                 setDes(res.data.des);
                 setShop(res.data.shop);
@@ -87,7 +88,7 @@ function UserReviewForm() {
         formData.append('userNickname', user.nickname); // 유저 닉네임 추가
         formData.append('petName', petInfo.name); // 반려동물 이름 추가
         try{
-            const res = await axios.post('http://localhost:8090/reviewreg',formData)
+            const res = await axios.post(`${url}/reviewreg`,formData)
             if (res.data == true) {
                 Swal.fire({
                     icon: 'success',

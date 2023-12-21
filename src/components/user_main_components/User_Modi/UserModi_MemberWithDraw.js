@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from 'react-redux';
+import {url} from'../../../config';
 
 
 function UserModi_MemberWithDraw() {
@@ -21,7 +22,17 @@ function UserModi_MemberWithDraw() {
         e.preventDefault();
         console.log("user.id : " + user.id);
         console.log("user.password : " + user.password);
-        const res = await axios.post('http://localhost:8090/exit', user, {
+
+        const res = await axios.post(`${url}/exit`, user);
+
+    }
+
+    const kakaoexit = async (e) => {
+        e.preventDefault();
+        console.log("Token : " + token);
+        const ACCESS_TOKEN = token.substring(7);
+        console.log("Token without Bearer: " + ACCESS_TOKEN);
+        await axios.post("https://kapi.kakao.com/v1/user/unlink", {
             headers: {
                 Authorization: token,
             }

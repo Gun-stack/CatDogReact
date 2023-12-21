@@ -7,6 +7,7 @@ import { calculateDistance } from '../tools/DistanceCalculator';
 import SwalCustomAlert from '../Alerts/SwalCustomAlert';
 
 import StarRating from '../des_main_component/Des_My/StarRating';
+import { url } from "../../config";
 
 
 
@@ -25,7 +26,7 @@ function Distance() {
     useEffect(() => {
         
         // console.log("로그인 후 토큰 값 : " + token);
-        axios.get('http://localhost:8090/user', {
+        axios.get(`${url}/user`, {
             headers: {
                 Authorization: token,
             }
@@ -41,7 +42,7 @@ function Distance() {
                     );
                     navigate('/userlogin');
             })
-            axios.get(`http://localhost:8090/shoplistall`)
+            axios.get(`${url}/shoplistall`)
             .then((res) => {
                 const fetchedShops = res.data;
                 const sortedByDistance = fetchedShops.map(shop => {
@@ -58,7 +59,7 @@ function Distance() {
 
 
     // useEffect(() => {
-    //     axios.get(`http://localhost:8090/shoplistall`)
+    //     axios.get(`${url}/shoplistall`)
     //         .then((res) => {
     //             const fetchedShops = res.data;
     //             const sortedByDistance = fetchedShops.map(shop => {
@@ -82,7 +83,7 @@ function Distance() {
                     <div className="nearby-shop-container">
                         <div className="nearby-shop-address-container">
                             <div className="nearby-shop-img-container">
-                                <Link to={"/shop/" + shoplist.num}><img className="nearby-shop-img" name="image" alt='' src={`http://localhost:8090/shopimg/${shoplist.profImg}`}></img></Link>
+                                <Link to={"/shop/" + shoplist.num}><img className="nearby-shop-img" name="image" alt='' src={`${url}/shopimg/${shoplist.profImg}`}></img></Link>
                             </div>
 
                             {/* // 제목을 누르면 지도에서 마커 찍어주기?? */}

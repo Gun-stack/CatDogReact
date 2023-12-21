@@ -44,7 +44,7 @@ function DesGal() {
 
 
     const searchGallery = () => {
-            axios.get('http://localhost:8090/desgallerysearch', {
+            axios.get(`${url}/desgallerysearch`, {
                 params: {
                     search: search,
                     page: 0,

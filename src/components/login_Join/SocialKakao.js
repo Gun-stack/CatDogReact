@@ -2,6 +2,7 @@ import KakaoLogin from "react-kakao-login";
 import axios from "axios";
 import Swal from "sweetalert2";
 import React from 'react'
+import {url} from'../../config';
 
 
 const SocialKakao = () => {
@@ -12,7 +13,7 @@ const SocialKakao = () => {
         const idToken = data.response.access_token  // 엑세스 토큰 백엔드로 전달
         console.log(idToken)
 
-        const res = axios.get('http://localhost:8090/user/kakaoLogin', { idToken })
+        const res = axios.get(`${url}/user/kakaoLogin`, { idToken })
 
         console.log(res)
         if (res.data === 1) {

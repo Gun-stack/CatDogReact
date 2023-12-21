@@ -4,6 +4,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import SwalCustomAlert from '../../Alerts/SwalCustomAlert';
+import { url } from '../../../config';
 
 function DesStyle(props) {
     const des = props.desInfo;
@@ -25,7 +26,7 @@ function DesStyle(props) {
         console.log(page);
 
         // console.log("로그인 후 토큰 값 : " + token);
-        axios.get('http://localhost:8090/user', {
+        axios.get(`${url}/user`, {
             headers: {
                 Authorization: token,
             }
@@ -43,7 +44,7 @@ function DesStyle(props) {
             })
 
 
-        axios.get('http://localhost:8090/desgallerydesigner', {
+        axios.get(`${url}/desgallerydesigner`, {
             params: {
                 num: des.num,
                 offset: page, // 필요한 페이지 번호
@@ -69,7 +70,7 @@ function DesStyle(props) {
                 <div className="st-gallery-grid">
                     {galleryList.map((gallery, index) => (
                         <div className="st-gallery-img" key={index}>
-                            <Link to={`/des/${gallery.num}/` + gallery.num}><img src={`http://localhost:8090/desgalview/${gallery.num}`} alt="" className="hover-img" /></Link>
+                            <Link to={`/des/${gallery.num}/` + gallery.num}><img src={`${url}/desgalview/${gallery.num}`} alt="" className="hover-img" /></Link>
                             <div className="img-comment-hover">
 
                                 <span className="img-hover-icon">
