@@ -27,6 +27,7 @@ import Error404 from './components/error/Error404';
 import Loding from './components/tools/Loding';
 import Oauth from './components/Oauth';
 import ShopReg from './components/des_main_component/Des_My/ShopReg';
+import OauthJoin from './components/OauthJoin';
 
 // import DistanceCalculator from './components/tools/DistanceCalculator';
 // import { useEffect } from 'react';
@@ -53,6 +54,7 @@ function App() {
 
       {/** User관련 라우터 */}
       <Route path='/main' element={<Main/>}/>
+      <Route path='/oauthjoin/:userinfo' element={<OauthJoin/>}/>
       <Route path='/userjoin' element={<UserJoin/>}/>
       <Route path='/userlogin/*' element={<UserLogin/>}/>
       <Route path="/oauth/redirect/:token" element={<Oauth/>} />
