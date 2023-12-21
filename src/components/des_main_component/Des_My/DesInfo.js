@@ -99,8 +99,8 @@ function DesReg() {
                             </div>
 
                             <div className="st-button-container">
-                                <button className="st-button"><Link to={`/des/${des.num}/home`}>갤러리<i className="fa-solid fa-image btn-icon"></i></Link></button>
-                                <button className="st-button"><Link to="/usermy/desmodi">수정하기<i className="far fa-calendar-alt btn-icon"></i></Link></button>
+                            <Link to={`/des/${des.num}/home`}><button className="st-button">갤러리<i className="fa-solid fa-image btn-icon"></i></button></Link>
+                            <Link to="/usermy/desmodi"><button className="st-button">수정하기<i className="far fa-calendar-alt btn-icon"></i></button></Link>
                             </div>
 
                         </div>
