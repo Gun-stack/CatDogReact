@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Route, Routes, useParams } from 'react-router-dom';
+import { Route, Routes, useParams , Link } from 'react-router-dom';
 import ShopResrevationDate from './ShopResrevationDate';
 import ShopReservationForm from './ShopReservationForm';
 import Error404 from '../error/Error404';
@@ -39,14 +39,16 @@ function ShopReservation(props) {
             {/* 스타일리스트 프로필 */}
             <div className="stylelist-content magin-t-1">
                 <div className="st-profile-container">
-
                     <div className="st-profile-img-container">
                         <img src={`${url}/desimg/${desInfo.num}`} alt="프로필 이미지" className="st-profile-img" />
                     </div>
 
                     <div className="st-profile-context">
                         <div className="st-profile-name">
+                            <Link to={`/des/${desInfo.num}`}>
                             {desInfo.position} {desInfo.desNickname}
+                            </Link>
+
                         </div>
 
                         <div className="st-profile-shop">

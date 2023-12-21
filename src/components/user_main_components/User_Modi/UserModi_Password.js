@@ -9,10 +9,12 @@ import {url} from'../../../config';
 
 function UserModi_Password() {
     const [password, setPassword] = useState('');
-    const [passwordCheck, setPasswordCheck] = useState('');
+    const [newpassword, setNewPassword] = useState('');
+    const [newpasswordCheck, setNewPasswordCheck] = useState('');
     const [passMessage, setPassMessage] = useState('비밀번호를 입력하세요');
     const [loading, setLoading] = useState(false);
     const user = useSelector((state) => state.user);
+    const [isPass, setIsPass] = useState(false);
 
     let navigate = useNavigate();
     function goBack(e) {
@@ -28,7 +30,6 @@ function UserModi_Password() {
 
     const token = useSelector(state => state.token);
     useEffect(() => {
-
         // console.log("로그인 후 토큰 값 : " + token);
         axios.get(`${url}/user`, {
             headers: {
@@ -46,14 +47,14 @@ function UserModi_Password() {
                 );
                 navigate('/userlogin');
             })
-            if (password && passwordCheck) {
-                if (password !== passwordCheck) {
+            if (newpassword && newpasswordCheck) {
+                if (newpassword !== newpasswordCheck) {
                     setPassMessage('비밀번호가 일치하지 않습니다.');
                 } else {
                     setPassMessage('비밀번호가 일치합니다.');
                 }
             }
-        }, [password, passwordCheck]);
+        }, [newpassword, newpasswordCheck]);
 
 
 
@@ -68,14 +69,49 @@ function UserModi_Password() {
     // }, [password, passwordCheck]);
 
     function changePassCheck(e) {
-        setPasswordCheck(e.target.value);
+        setNewPasswordCheck(e.target.value);
     }
-    const onSubmit = async (e) => {
+
+    const onSubmitCheck = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        try {
+            const res = await axios.post(`${url}/ispassword`, { id : user.id , password:password},{
+                headers : {
+                    Authorization : token,
+                }
+            });
+
+            console.log(res.data);
+            if (res.data) {
+                setIsPass(true);
+                SwalCustomAlert(
+                    'success',
+                    '비밀번호가 확인 되었습니다.',
+                )
+            } else {
+                console.log(res);
+                SwalCustomAlert(
+                    'fail',
+                    '비밀번호가 일치하지 않습니다.',
+                )
+            }
+        } catch (error) {
+            //500Err 처리
+            console.error('서버통신에 실패했습니다', error);
+            <Server500Err_Alert />
+        } finally {
+            setLoading(false);
+        }
+    }
+
+
+    const onSubmitModi = async (e) => {
 
         console.log("UserNum : " + user.num );
         e.preventDefault();
         setLoading(true);
-        if (password !== passwordCheck) {
+        if (newpassword !== newpasswordCheck) {
             setPassMessage('비밀번호가 일치하지 않습니다.');
         } else {
             setPassMessage('비밀번호가 일치합니다.');
@@ -110,21 +146,38 @@ function UserModi_Password() {
             {loading ? <Loding /> :
                 <section className="form-section magin-t-5">
                     <form className="form-container">
+
+                {isPass ===false ?
                         <div className="input-container magin-t-1">
-                            <input type="password" id="password" name="password" placeholder="비밀번호 입력"
+                                <input type="password" id="password" name="password" placeholder="현재 비밀번호 입력하세요"
+                                    className="input-text" onChange={changePass} />
+                        </div>
+
+                        :<div className="input-container magin-t-1">
+                            <input type="password" id="newpassword" name="newpassword" placeholder="비밀번호 입력"
                                 className="input-text" onChange={changePass} />
 
-
-                            <input type="password" id="passwordCheck" name="passwordCheck" placeholder="비밀번호 확인"
+                            <input type="password" id="newpasswordCheck" name="newpasswordCheck" placeholder="비밀번호 확인"
                                 className="input-text" onChange={changePassCheck} />
                             <span className="notice">{passMessage}</span>
                         </div>
+                }
+
+
+
+
                         <div>
+                        {isPass ===false ?
+                            <button id="submit-btn" type="submit" className="main-btn btn-text magin-t-1"
+                                onClick={onSubmitCheck}
+                            >비밀번호 확인 </button>
+                            :
+                            <button id="submit-btn" type="submit" className="main-btn btn-text magin-t-1"
+                                onClick={onSubmitModi}
+                            >비밀번호 수정 </button>
+                        }
                             <button className="main-btn btn-text magin-t-1"
                                 style={{ backgroundColor: 'rgb(219, 219, 219)' }} onClick={goBack}>취소</button>
-                            <button id="submit-btn" type="submit" className="main-btn btn-text magin-t-1"
-                                onClick={onSubmit}
-                            >비밀번호 수정하기</button>
                         </div>
                     </form>
                 </section>
