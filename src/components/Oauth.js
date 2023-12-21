@@ -30,7 +30,7 @@ const Oauth = () => {
             dispatch({type:"SET_USER", payload:res.data})
             dispatch(loginStore())
         })
-        navigate("/main");
+        navigate("/userjoin");
     }, [])
     
 }

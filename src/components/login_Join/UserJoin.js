@@ -6,6 +6,7 @@ import axios from "axios";
 import Loding from "../tools/Loding";
 import Server500Err_Alert from "../Alerts/Server500Err_Alert";
 import SwalCustomAlert from "../Alerts/SwalCustomAlert";
+import { useSelector } from 'react-redux';
 
 
 
@@ -20,6 +21,8 @@ function UserJoin() {
     const [password, setPassword] = useState('');
     const [passMessage, setPassMessage] = useState('비밀번호를 입력하세요');
     const [passwordCheck, setPasswordCheck] = useState('');
+
+    const user = useSelector((state) => state.user);
 
     const changePass = (e) => {
         setPassword(e.target.value);
@@ -268,8 +271,14 @@ function UserJoin() {
                                          */}
 
                                             {/** 이름 */}
-                                            <input type="text" id="username" name="username" placeholder="이름"
+                                            {user.id ? (
+                                                <input type="text" id="username" name="username" placeholder="이름"
+                                                className="input-text" onChange={onChange} value={user.id} />
+                                            ) : (
+                                                <input type="text" id="username" name="username" placeholder="이름"
                                                 className="input-text" onChange={onChange} />
+                                            )}
+                                            
 
                                             {/** 아이디 - 중복체크 */}
                                             <div className="duplication-check">
