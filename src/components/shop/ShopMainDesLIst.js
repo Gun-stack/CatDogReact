@@ -243,9 +243,11 @@ function ShopMainDesLIst() {
                                 )}
                             </span>
 
+
                             <span className="st-profile-name">{des.desNickname}</span>
                             <br/>
                             <span className="st-profile-shop">{shopInfo.name}</span>
+
                             <div className="st-profile-info">{des.info}</div>
                         </div>
 
@@ -270,10 +272,14 @@ function ShopMainDesLIst() {
                             </>
 
                         ) : (
+                            <>
+                                {shopInfo.sid === des.sid && user.roles === "ROLE_SHOP" && (
 
-                            <button className="st-button" onClick={() => handleEditClick(des.num)}>
-                                편집<i className="fas fa-pen btn-icon"></i>
-                            </button>
+                                    <button className="st-button" onClick={() => handleEditClick(des.num)}>
+                                        편집<i className="fas fa-pen btn-icon"></i>
+                                    </button>
+                                )}
+                            </>
                         )}
 
                         <Link to={`/shop/${shopInfo.num}/reservation/${des.num}`}><button className="st-button">예약하기<i className="far fa-calendar-alt btn-icon"></i></button></Link>
