@@ -277,19 +277,34 @@ function ShopModiForm() {
                             <div className="form-container">
                                 {/* 인풋 모여있는 컨테이너 */}
                                 <div className="input-container">
+                                    {/* 샵 사진 올리기 */}
+                                    <div className="filebox">
+                                        <img src={`${url}/shopimg/${selectShop.profImg}`} accept="image/*" alt='샵 기본이미지'
+                                            className="input-img" placeholder='사진을 올려주세요' ref={imgBoxRef} />
+                                        <label htmlFor="shopImgFile">샵 사진 올리기</label>
+                                        <input type="file" id="shopImgFile" accept="image/*" onChange={fileChange} />
+                                    </div>
 
                                     {/* 샵 이름 */}
-                                    <input type="text" id="name" name="name" placeholder="샵 이름"
-                                        className="input-text"
-                                        value={shop.name} onChange={change} required />
+                                    <div className='input-for-label'>
+                                        <label htmlFor="name" className="label-text">샵 이름</label>
+
+                                        <input type="text" id="name" name="name" placeholder="샵 이름"
+                                            className="input-text"
+                                            value={shop.name} onChange={change} required />
+                                    </div>
 
                                     {/* 사업자 등록번호 */}
-                                    <input type="text" id="SId" name="sId" placeholder="사업자 등록번호"
-                                        className="input-text" value={backsId} onChange={idChange} maxLength={12} required />
-
+                                    <div className='input-for-label'>
+                                        <label htmlFor="sId" className="label-text">사업자 등록번호</label>
+                                        <input type="text" id="SId" name="sId" placeholder="사업자 등록번호"
+                                            className="input-text" value={backsId} onChange={idChange} maxLength={12} required />
+                                    </div>
                                     {/* 주소 검색 */}
-                                    <div className="address-container">
+                                    <div className='input-for-label'>
+                                    <label htmlFor="address_detail" className="label-text">샵 주소</label>
 
+                                    <div className="address-container">
                                         <div className="address-btn-container">
 
                                             <input type="text" value={address} onChange={(e) => setAddress(e.target.value)} className="input-box-style input-text" required />
@@ -302,14 +317,9 @@ function ShopModiForm() {
                                         <input type="hidden" id="latitude" name="lat" placeholder="위도"></input>
                                         <input type="hidden" id="longitude" name="lon" placeholder="경도"></input>
                                     </div>
-
-                                    {/* 샵 사진 올리기 */}
-                                    <div className="filebox">
-                                        <img src={`${url}/shopimg/${selectShop.profImg}`} accept="image/*" alt='샵 기본이미지'
-                                            className="input-img" placeholder='사진을 올려주세요' ref={imgBoxRef} />
-                                        <label htmlFor="shopImgFile">샵 사진 올리기</label>
-                                        <input type="file" id="shopImgFile" accept="image/*" onChange={fileChange} />
                                     </div>
+
+
 
                                 </div>
 

@@ -51,7 +51,7 @@ function PetModi() {
         }
         const imageSrc = URL.createObjectURL(e.target.files[0]);
         imgBoxRef.current.src = imageSrc;
-        
+
     };
     const token = useSelector(state => state.token);
     useEffect(() => {
@@ -183,20 +183,19 @@ function PetModi() {
 
                         <div className="filebox">
 
-                            <img src={`${url}/petimg/${pet.num}`} width="100px" height="100px" accept="image/*" alt=''
+                            <img src={`${url}/petimg/${pet.num}`} accept="image/*" alt=''
                                 className="input-box-style" placeholder='사진을 올려주세요' ref={imgBoxRef} />
 
                             <label htmlFor="petImgFile">반려동물 사진 수정하기</label>
                             <input type="file" id="petImgFile" accept="image/*" onChange={fileChange} />
 
                         </div>
+                        <div className='input-for-label'>
+                            <label htmlFor="name" className="label-text">반려동물 이름</label>
+                            <input type="text" id="name" name="name" placeholder="반려동물 이름"
+                                className="input-text" value={newPet.name} onChange={change} />
+                        </div>
 
-
-                        <hr className="gray-line" />
-
-                        <input type="text" id="name" name="name" placeholder="반려동물 이름"
-                            className="input-text boader-none" value={newPet.name} onChange={change} />
-                        <hr className="gray-line" />
 
                         <div className="radio-container">
                             <label htmlFor="dogOrCat" className="radio-text">반려동물 종류</label>
@@ -205,30 +204,34 @@ function PetModi() {
                                 <span> <input type="radio" id="dogOrCat" name="dogOrCat" value={false} onChange={change} defaultChecked={newPet.dogOrCat === false} />냥냥이</span>
                             </div>
                         </div>
-                        <hr className="gray-line" />
 
-                        <input type="number" min="0" id="age" name="age" placeholder="나이"
-                            className="input-text boader-none" value={newPet.age} onChange={change} />
-                        <hr className="gray-line" />
+                        <div className='input-for-label'>
+                            <label htmlFor="age" className="label-text magin-t-05">반려동물 나이</label>
+                            <input type="number" min="0" id="age" name="age" placeholder="나이"
+                                className="input-text" value={newPet.age} onChange={change} />
+                        </div>
 
-                        <input type="number" min="0" id="weight" name="weight" placeholder="몸무게"
-                            className="input-text boader-none" value={newPet.weight} onChange={change} />
-                        <hr className="gray-line" />
+                        <div className='input-for-label'>
+                            <label htmlFor="weight" className="label-text magin-t-05">반려동물 몸무게</label>
+                            <input type="number" min="0" id="weight" name="weight" placeholder="몸무게"
+                                className="input-text" value={newPet.weight} onChange={change} />
+                        </div>
 
-                        <input type="text" id="breed" name="breed" placeholder="반려동물 품종"
-                            className="input-text boader-none" value={newPet.breed} onChange={change} />
-                        <hr className="gray-line" />
+                        <div className='input-for-label'>
+                            <label htmlFor="breed" className="label-text magin-t-05">반려동물 품종</label>
+                            <input type="text" id="breed" name="breed" placeholder="반려동물 품종"
+                                className="input-text" value={newPet.breed} onChange={change} />
+                        </div>
 
                         <div className="radio-container">
                             <label htmlFor="gender" className="radio-text">성별</label>
-
                             <div className="radio-box">
                                 <span> <input type="radio" id="gender" name="gender" value={true} onChange={change} defaultChecked={newPet.gender === true} />남아</span>
                                 <span> <input type="radio" id="gender" name="gender" value={false} onChange={change} defaultChecked={newPet.gender === false} />여아</span>
                             </div>
 
                         </div>
-                        <hr className="gray-line" />
+
 
                         {/* 중성화여부 */}
                         <div className="radio-container">
@@ -238,11 +241,10 @@ function PetModi() {
                                 <span> <input type="radio" id="neuter" name="neuter" value={false} onChange={change} defaultChecked={newPet.neuter === false} />아니요</span>
                             </div>
                         </div>
-                        <hr className="gray-line" />
+
                     </div>
 
                     <div className="button-container">
-
                         <button id="submit-btn" type="submit" className="main-btn btn-text magin-t-1" onClick={onSubmit}>
                             동물 수정하기
                         </button>

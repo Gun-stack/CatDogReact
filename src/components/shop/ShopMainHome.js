@@ -10,9 +10,6 @@ import SwalCustomAlert from '../Alerts/SwalCustomAlert';
 import { url } from '../../config';
 
 
-
-
-
 function ShopMainHome() {
     const shopInfo = useSelector((state) => state.shop);
     const [loading, setLoading] = useState(false);
@@ -23,23 +20,16 @@ function ShopMainHome() {
     const maxNumber = 69;
 
     const onChange = (imageList, addUpdateIndex) => {
-        // data for submit
         console.log(imageList, addUpdateIndex);
         setImages(imageList);
     };
-    // 스타일 리스트
-    const [galleryList, setGalleryList] = useState([
-    ]);
 
+    const [galleryList, setGalleryList] = useState([]);
 
     const token = useSelector(state => state.token);
     const navigate = useNavigate();
 
-
     useEffect(() => {
-
-
-        // console.log("로그인 후 토큰 값 : " + token);
         axios.get(`${url}/user`, {
             headers: {
                 Authorization: token,
@@ -49,7 +39,6 @@ function ShopMainHome() {
                 console.log("Res : " + res.data);
             })
             .catch(err => {
-                // console.log("Err : " + err);
                 SwalCustomAlert(
                     'warning',
                     "로그인 이후 사용 가능합니다."
@@ -73,14 +62,6 @@ function ShopMainHome() {
                 console.log(err);
             })
     }, []);
-
-    const isOwner = () => {
-        if (user.id === shopInfo.id) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
     const handleBtnClick = async (e) => {
         e.preventDefault();
@@ -106,7 +87,7 @@ function ShopMainHome() {
                             for (let image of images) {
                                 formData.append("file", image.file);
                             }
-                            formData.append('shopNum', shopInfo.num); // 미용실 번호 추가
+                            formData.append('shopNum', shopInfo.num);
                             const res = axios.post(`${url}/regshopbgimg`, formData
                             );
                             console.log(res);
@@ -115,7 +96,6 @@ function ShopMainHome() {
                             console.error(error);
                             <Server500Err_Alert />
                         } finally {
-
                             setLoading(false);
                         }
                         window.location.reload();

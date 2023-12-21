@@ -32,7 +32,6 @@ function DesGal() {
     const [hasMore, setHasMore] = useState(true);
     const [search, setSearch] = useState('');
     const [searchResults, setSearchResults] = useState([]);
-    const [searching, setSearching] = useState(false);
     const user = useSelector((state) => state.user);
     const token = useSelector(state => state.token);
     const navigate = useNavigate();
@@ -60,7 +59,6 @@ function DesGal() {
             })
             .catch((err) => console.log(err))
     }
-
 
     const PlusPage = () => {
         setPage(page + 1);
@@ -102,7 +100,7 @@ function DesGal() {
     return (
         <section className="st-gallery-section">
             <div className="search-box">
-                <input type="text" onChange={onChangeSearch} className="input-text search-txt" placeholder="태그로 검색을 해보자" onKeyPress={searchHandler} />
+                <input type="text" onChange={onChangeSearch} className="input-text search-txt " placeholder="태그로 검색을 해보자" onKeyDown={searchHandler} />
                 <button className="search-btn" onClick={searchGallery}>
                 <i className="fas fa-search tx-orange"></i>
                 </button>
@@ -128,7 +126,6 @@ function DesGal() {
             )}
         </section>
     );
-            
 }
 
 

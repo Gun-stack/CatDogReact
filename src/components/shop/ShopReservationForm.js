@@ -45,8 +45,6 @@ function ShopReservationForm(props) {
         refText: '',
     });
 
-
-
     //선택된pet의 정보를 resvInfo에 넣어준다
 
     const selectPet = (pet) => {
@@ -59,9 +57,6 @@ function ShopReservationForm(props) {
         setSelected(true);
     }
 
-
-
-
     const goBack = () => {
         navigate(-1);
     }
@@ -69,10 +64,10 @@ function ShopReservationForm(props) {
 
 
     const token = useSelector(state => state.token);
-    
+
     useEffect(() => {
-         // console.log("로그인 후 토큰 값 : " + token);
-         axios.get(`${url}/user`, {
+        // console.log("로그인 후 토큰 값 : " + token);
+        axios.get(`${url}/user`, {
             headers: {
                 Authorization: token,
             }
@@ -107,7 +102,7 @@ function ShopReservationForm(props) {
     const onSubmit = async (e) => {
         e.preventDefault();
         console.log("PetName1 : " + resvInfo.petName);
-        if(!(resvInfo.petName.trim() === "" || resvInfo.petName === null)){
+        if (!(resvInfo.petName.trim() === "" || resvInfo.petName === null)) {
             try {
                 // axios.post
                 await axios.post(`${url}/makereservation`, resvInfo);
@@ -120,7 +115,7 @@ function ShopReservationForm(props) {
                 console.log(err);
                 Server500Err_Alert();
             }
-        } else{
+        } else {
             SwalCustomAlert(
                 'fail',
                 '펫을 선택해 주세요.',
@@ -128,7 +123,7 @@ function ShopReservationForm(props) {
             return false;
         }
 
-        
+
     };
 
 
