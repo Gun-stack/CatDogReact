@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import SwalCustomAlert from '../../Alerts/SwalCustomAlert';
 import DatalistInput from 'react-datalist-input';
+import { url } from '../../../config';
 // import 'react-datalist-input/dist/styles.css';
 
 
@@ -17,7 +18,7 @@ function PetRegForm() {
     useEffect(() => {
 
         // console.log("로그인 후 토큰 값 : " + token);
-        axios.get('http://localhost:8090/user', {
+        axios.get(`${url}/user`, {
             headers: {
                 Authorization: token,
             }
@@ -123,7 +124,7 @@ function PetRegForm() {
             formData.append("neuter", pet.neuter);
             formData.append("userNum", user.num);
             console.log(formData);
-            axios.post('http://localhost:8090/petreg', formData)
+            axios.post(`${url}/petreg`, formData)
                 .then((res) => {
                     console.log(res);
                     console.log(res.data);
