@@ -17,11 +17,12 @@ function DesGalSearch() {
         console.log(page);
     }
     const [hasMore, setHasMore] = useState(true);
-
     const[search,setSearch]=useState('');
+    const[preSearch,setPreSearch]=useState('');
 
+    
     const onChangeSearch=(e)=>{
-        setSearch(e.target.value);
+        setPreSearch(e.target.value);
     }
     const params =useParams();
 
@@ -31,9 +32,10 @@ function DesGalSearch() {
             searchGallery();
         }
     }
-    const [searchResults, setSearchResults] = useState([]);
-    const [searching, setSearching] = useState(false);
+
     const searchGallery = () => {
+        setSearch(preSearch);
+        
         axios.get('http://localhost:8090/desgallerysearch', {
             params: {
                 search: search,
@@ -42,7 +44,6 @@ function DesGalSearch() {
             }
         })
         .then((res) => {
-            searchResults.length = 0;
             setGalleryList([...res.data.content]);
             if (res.data.content.length === 0) {
                 setHasMore(false);
@@ -57,7 +58,11 @@ function DesGalSearch() {
 
 
     useEffect(() => {
+        
         setSearch(params.search);
+
+
+        if(search){
         axios.get('http://localhost:8090/desgallerysearch', {
             params: {
                 page: page, // 필요한 페이지 번호
@@ -75,7 +80,8 @@ function DesGalSearch() {
             .catch((err) => {
                 console.log(err);
             })
-    }, [page]);
+        }
+    }, [page, search]);
 
 
 
@@ -83,16 +89,17 @@ function DesGalSearch() {
     return (
         <section className="st-gallery-section">
                 {/* 검색창 만들기 */}
-                <div className="search-box">
-                <input type="text" onChange={onChangeSearch} className="search-txt" placeholder="태그로 검색을 해보자" onKeyPress={searchHandler} />
+            <div className="search-box">
+                <input type="text" onChange={onChangeSearch} className="input-text search-txt" defaultValue={search} placeholder="태그로 검색을 해보자" onKeyPress={searchHandler} />
                 <button className="search-btn" onClick={searchGallery}>
-                    <i className="fas fa-search"></i>
+                    <i className="fas fa-search tx-orange"></i>
                 </button>
+                {user.roles === 'ROLE_DES' || user.roles === 'ROLE_SHOP' &&
+                    <Link to='/gallery/des/galleryregform'> <button className='info-input-btn'>사진 올리기</button></Link>
+                }
             </div>
-
-                { user.roles === 'ROLE_DES' || user.roles === 'ROLE_SHOP' &&
-            <Link to='/gallery/des/galleryregform'> <button className='info-input-btn'>사진 올리기</button></Link>
-                }  
+            
+           {search &&
             <div className="st-gallery-grid">
                 {galleryList.map((gallery, index) => (
                     <div className="st-gallery-img" key={index} >
@@ -107,6 +114,8 @@ function DesGalSearch() {
                     </div>
                 ))}
             </div>
+            }
+
             {hasMore ?
                 <div className="main-btn main-sm-btn" onClick={PlusPage}><span className="btn-text">더보기</span></div>
                 : <div className="main-btn main-sm-btn"><span className="btn-text">마지막 페이지 입니다.</span></div>

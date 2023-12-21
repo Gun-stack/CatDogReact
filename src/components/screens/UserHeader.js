@@ -61,6 +61,9 @@ function UserHeader() {
     const hideNav = () => {
         setIsNavVisible(false);
     };
+    const goBack = () => {
+        navigate(-1);
+    }
 
     const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
     const dispatch = useDispatch();
@@ -69,6 +72,7 @@ function UserHeader() {
         <header className="cd-header" onMouseLeave={hideNav}>
             <div className="logo-icon-container">
                 <div className="header-logo">
+                <span onClick={goBack} ><i class="fa-solid fa-sharp fa-chevron-left fa-beat fa-lg"></i></span>
                     <Link to="/main"><img src="/img/logo/logo_color.png" alt="로고 이미지" className="header-logo" /></Link>
                 </div>
                 <div className="icon-container">

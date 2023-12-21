@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
 import SwalCustomAlert from '../Alerts/SwalCustomAlert';
@@ -8,21 +8,25 @@ import { useSelector } from 'react-redux';
 
 
 
-function UserGal() {
+function UserGalSearch() {
     const [galleryList, setGalleryList] = useState([
     ]);
     const [page, setPage] = useState(0);
     const [search, setSearch] = useState('');
-    const [searchResults, setSearchResults] = useState([]);
-    const [searching, setSearching] = useState(false);
     const token = useSelector(state => state.token);
     const navigate = useNavigate();
     const [hasMore, setHasMore] = useState(true);
-    const PAGE_SIZE = 12;
+    const params = useParams();
     const PlusPage = () => {
         setPage(page + 1);
         console.log(page);
     }
+    const[preSearch,setPreSearch]=useState('');
+
+    
+    const onChangeSearch = (e) => {
+        setPreSearch(e.target.value);
+    }   
 
     const searchHandler = (e) => {
         if(e.key ==='Enter')
@@ -30,6 +34,8 @@ function UserGal() {
     }
 
     const searchGallery = () => {
+        setSearch(preSearch);
+
         axios.get('http://localhost:8090/usergallerysearch', {
             params: {
                 search: search,
@@ -38,7 +44,6 @@ function UserGal() {
             }
         })
         .then((res) => {
-            searchResults.length = 0;
             setGalleryList([...res.data.content]);
             if (res.data.content.length === 0) {
                 setHasMore(false);
@@ -46,28 +51,13 @@ function UserGal() {
         })
         .catch((err) => console.log(err))
 }
-const onChangeSearch = (e) => {
-    setSearch(e.target.value);
-}   
-
-const initialGet = () => {
-    axios.get('http://localhost:8090/usergallery', {
-        params: { page, size: PAGE_SIZE }
-    })
-    .then((res) => {
-        setGalleryList(prevList => [...prevList, ...res.data.content]);
-        if (res.data.content.length === 0) {
-            setHasMore(false);
-        }
-    })
-    .catch((err) => console.log(err));
-}
 
 
 
     useEffect(() => {
-
+        setSearch(params.search);
         // console.log("로그인 후 토큰 값 : " + token);
+
         axios.get('http://localhost:8090/user', {
             headers: {
                 Authorization: token,
@@ -84,21 +74,38 @@ const initialGet = () => {
                 );
                 navigate('/userlogin');
             })
-
-        initialGet();
-    }, [page]);
+        if(search){
+         axios.get('http://localhost:8090/usergallerysearch', {
+            params: {
+                search: search,
+                page: 0,
+                size: 12,
+            }
+        })
+        .then((res) => {
+            setGalleryList([...res.data.content]);
+            if (res.data.content.length === 0) {
+                setHasMore(false);
+            }
+        })
+        .catch((err) => console.log(err))        
+    }
+    }, [page,search]);
 
 
 
     return (
         <section className="st-gallery-section">
+
             <div className="search-box">
-                <input type="text" onChange={onChangeSearch} className="input-text search-txt" placeholder="태그로 검색을 해보자" onKeyPress={searchHandler} />
+                <input type="text" onChange={onChangeSearch} className="input-text search-txt" defaultValue={search} placeholder="태그로 검색을 해보자" onKeyPress={searchHandler} />
                 <button className="search-btn" onClick={searchGallery}>
                 <i className="fas fa-search tx-orange"></i>
                 </button>
                 <Link to='/gallery/user/galleryregform'> <button className='info-input-btn'>사진 올리기</button></Link>
             </div>
+
+            {search &&
             <div className="st-gallery-grid">
                 {galleryList.map((gallery, index) => (
                     <div className="st-gallery-img" key={index} >
@@ -112,6 +119,7 @@ const initialGet = () => {
                     </div>
                 ))}
             </div>
+            }
             {hasMore ?
                 <div className="main-btn main-sm-btn" onClick={PlusPage}><span className="btn-text">더보기</span></div>
                 : <div className="main-btn main-sm-btn"><span className="btn-text">마지막 페이지 입니다.</span></div>
@@ -122,4 +130,4 @@ const initialGet = () => {
     );
 }
 
-export default UserGal;
+export default UserGalSearch;

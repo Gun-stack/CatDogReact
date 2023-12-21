@@ -25,10 +25,8 @@ function ShopMain() {
     };
     const params = useParams();
     const shopInfo = useSelector((state) => state.shop);
-
-
-    const [images,setImage] = useState(shopInfo.bgImg ? shopInfo.bgImg.split(',') : []); 
-    
+    const [images,setImage] = useState([]); 
+        
 
 
 
@@ -37,9 +35,13 @@ function ShopMain() {
         axios.get(`http://localhost:8090/shopinfobynum?num=${params.shopnum}`)
             .then((res) => {
                 dispatch({ type: 'SET_SHOP', payload: res.data });
+                console.log(res.data.bgImg);
+                if(res.data.bgImg){
+                    setImage(res.data.bgImg.split(','));
+                }
+
             })
-            
-    }, [params.shopnum,images]);
+    }, [params.shopnum]);
 
 
     return (
@@ -52,9 +54,11 @@ function ShopMain() {
                     {/* <div className="input-img-click">
                                 이미지를 등록하세요
                             </div> */}
+                    {images &&
                     <div className='slider-container  map-section'>
-                    <ImageSlider images={images}/>
+                        <ImageSlider images={images}/>
                     </div>
+                    }
 
 
                     <section className="shop-main-section bg-white nearby-container">

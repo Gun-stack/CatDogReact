@@ -117,7 +117,6 @@ function ShopResrevationDate(props) {
             {/* <input type="date" placeholder=" 날짜를 선택해주세요." onChange={onChangeDate} /> */}
             <span className="form-text date-center" style={{ cursor: 'pointer' }} >{selectDate}</span>
             <hr className="divide-line" />
-            {loading ? <Loding /> : <>
                 {resList && availableTimes.map(time => (
                     <div key={time}>
                         {isReserved(sqlDate, time) ? (
@@ -140,8 +139,6 @@ function ShopResrevationDate(props) {
                         <hr className="divide-line" key={`hr-${time}`} />
                     </div>
                 ))}
-            </>
-            }
         </div>
     );
 }
