@@ -123,10 +123,10 @@ function DesReg() {
         }
     }
 
-        
-    
-    
-    
+
+
+
+
 
     const [des, setDes] = useState({
         shopName: '',
@@ -169,14 +169,6 @@ function DesReg() {
                                 <div className="form-container">
                                     <div className="input-container">
 
-                                        {/* <!-- 디자이너 닉네임 : des_nickname --> */}
-                                        <input type="text" id="shopName" name="shopName" placeholder="디자이너 이름" className="input-text"
-                                            onChange={change} />
-
-                                        {/* <!-- 디자이너 직책 : position --> */}
-                                        <input type="text" id="shopNumber" name="shopNumber" placeholder="디자이너 직책" className="input-text"
-                                            onChange={change} />
-
                                         {/* <!-- 프로필 사진 사진 올리기 --> */}
                                         <div className="filebox">
                                             <img src="/img/logo/shop_defult_img.png" accept="image/*" alt='프로필 사진'
@@ -184,7 +176,22 @@ function DesReg() {
                                             <label htmlFor="shopImgFile">프로필 사진 올리기</label>
                                             <input type="file" id="shopImgFile" accept="image/*" onChange={fileChange} />
                                         </div>
-                                        <hr className="gray-line" />
+
+                                        {/* <!-- 디자이너 닉네임 : des_nickname --> */}
+                                        <div className='input-for-label'>
+                                            <label htmlFor="shopName" className="label-text">디자이너 이름</label>
+                                            <input type="text" id="shopName" name="shopName" placeholder="디자이너 이름" className="input-text"
+                                                onChange={change} />
+                                        </div>
+
+                                        {/* <!-- 디자이너 직책 : position --> */}
+                                        <div className='input-for-label'>
+                                            <label htmlFor="shopNumber" className="label-text">디자이너 직책</label>
+                                            <input type="text" id="shopNumber" name="shopNumber" placeholder="디자이너 직책" className="input-text"
+                                                onChange={change} />
+                                        </div>
+
+
 
                                     </div>
 

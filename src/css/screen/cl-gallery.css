@@ -33,9 +33,10 @@
 }
 
 .gal-text{
-    width: 80%;
     margin: 0;
     margin-right: .5rem;
+    height: 1.5rem;
+    padding: .1rem;
 }
 
 .add-comment-btn{

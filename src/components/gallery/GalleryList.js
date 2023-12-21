@@ -18,10 +18,6 @@ import {url} from'../../config';
 
 function GalleryList() {
 
-
-
-
-
     return (
         <div className="web-container">
             <div className="cd-container bg-white">

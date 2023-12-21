@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react';
 
 import { useState } from 'react';
-import { Link, Route, Routes, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
-import {url} from'../../config';
-
+import { url } from '../../config';
 
 
 function DesGalleryView() {
@@ -37,9 +36,6 @@ function DesGalleryView() {
 
     }
 
-    
-    
-    const dispatch = useDispatch();
     const galNum = useParams();
 
     const [gallery, setGallery] = useState({});
@@ -48,9 +44,9 @@ function DesGalleryView() {
     const [date, setDate] = useState('');
 
 
-    
+
     // 날짜 포맷팅
-    
+
     const formatDate = (originalDateString) => {
         const dateObject = new Date(originalDateString);
         const date = new Intl.DateTimeFormat('ko-KR', {
@@ -59,16 +55,12 @@ function DesGalleryView() {
             day: '2-digit',
             hour: 'numeric',
             minute: 'numeric',
-            hour12: false, 
+            hour12: false,
         }).format(dateObject);
         setDate(date);
-}
+    }
 
 
-
-
-
-    
     const [tags, setTags] = useState([]);
 
     const parseTags = (str) => {
@@ -93,8 +85,6 @@ function DesGalleryView() {
                 parseTags(gallery.tag);
                 formatDate(gallery.date);
                 console.log(tags);
-             
-
             })
             .catch((err) => {
                 console.log(err);
@@ -125,8 +115,7 @@ function DesGalleryView() {
                                     <button className="st-button">예약하기<i className="far fa-calendar-alt btn-icon"></i></button>
                                 </Link>
                             }
-    
-                            <div className="view-comment">({date})</div>
+
 
                         </div>
 
@@ -138,29 +127,25 @@ function DesGalleryView() {
 
                         <div className="view-img-icons magin-l-1">
 
-                            <span onClick={likeClick} >{like === true ? <i className="fa-solid fa-heart hover-icon"></i> : <i className="fa-regular fa-heart hover-icon"></i>} {gallery.likeCnt}</span>
-                            {/* <span><i className="fa-regular fa-comment"></i>{gallery.galComment}</span> */}
-                            
-
-
+                            <span onClick={likeClick} >
+                                {like === true ? <i className="fa-solid fa-heart hover-icon"></i> : <i className="fa-regular fa-heart hover-icon"></i>} {gallery.likeCnt}  
+                                <span className='gal-date'>{date}</span>
+                            </span>
 
                             <div className="view-comment">
                                 {gallery.content}
                             </div>
 
-                            <div className="tag">
-                            
-                            {tags && tags.map((tag, index) => (
-                                <span key={index} className="tag" onClick={() => tagClickHandler(tag)}>
-                                    <span >#{tag} {' '}</span>
-                                </span>
-                            ))}
-
+                            <div className="tag-container">
+                                {tags && tags.map((tag, index) => (
+                                    <span key={index} onClick={() => tagClickHandler(tag)}>
+                                        <span className="h-tag">#{tag} {' '}</span>
+                                    </span>
+                                ))}
                             </div>
 
-
-                            {/* <button className="view-comment-more">덧글 더보기</button> */}
                         </div>
+
                     </div>
                 </div>
                 <hr className="divide-line" />

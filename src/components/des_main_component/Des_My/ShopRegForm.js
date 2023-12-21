@@ -264,6 +264,7 @@ function ShopRegForm() {
             );
             return;
         }
+
         var data = {
             "b_no": [value + ""] // 사업자번호 "xxxxxxx" 로 조회 시,
         };
@@ -276,32 +277,31 @@ function ShopRegForm() {
                 dataType: "JSON",
                 contentType: "application/json",
                 accept: "application/json",
+
+            }).then((result) => {
+                if (result.data[0].b_stt_cd === "01") {
+                    SwalCustomAlert(
+                        'success',
+                        '인증에 성공하였습니다.',
+                    );
+                    setAuthComplete(true);
+                } else if (result.data[0].b_stt_cd === "02") {
+                    SwalCustomAlert(
+                        'fail',
+                        '휴업한 사업자 번호입니다.',
+                    );
+                } else if (result.data[0].b_stt_cd === "03") {
+                    SwalCustomAlert(
+                        'fail',
+                        '폐업한 사업자 번호입니다.',
+                    );
+                } else {
+                    SwalCustomAlert(
+                        'fail',
+                        '유효하지 않은 사업자 번호입니다.',
+                    );
+                }
             })
-                // console.log(result.data[0].b_stt_cd);
-                .then((result) => {
-                    if (result.data[0].b_stt_cd === "01") {
-                        SwalCustomAlert(
-                            'success',
-                            '인증에 성공하였습니다.',
-                        );
-                        setAuthComplete(true);
-                    } else if (result.data[0].b_stt_cd === "02") {
-                        SwalCustomAlert(
-                            'fail',
-                            '휴업한 사업자 번호입니다.',
-                        );
-                    } else if (result.data[0].b_stt_cd === "03") {
-                        SwalCustomAlert(
-                            'fail',
-                            '폐업한 사업자 번호입니다.',
-                        );
-                    } else {
-                        SwalCustomAlert(
-                            'fail',
-                            '유효하지 않은 사업자 번호입니다.',
-                        );
-                    }
-                })
 
         } catch (error) {
             console.error(error);
@@ -327,45 +327,63 @@ function ShopRegForm() {
                     <section className="form-section">
                         <form action="#" method="post" className="form-css" onSubmit={onSubmit}>
                             <div className="form-container">
-
-                                <div className="address-container">
-
-                                    {/* 샵 이름 */}
-                                    <input type="text" id="name" name="name" placeholder="샵 이름"
-                                        className="input-text" onChange={change} required />
-
-                                    {/* 사업자 등록번호 */}
-                                    <div className="address-container">
-                                        <div className="address-btn-container">
-                                            <input type="text" id="SId" name="sId" placeholder="사업자 등록번호"
-                                                className="input-text" value={backsId} onChange={idChange} maxLength={12} required
-                                                readOnly={authComplete} />
-                                            <button className="address-btn" type='button' onClick={() => callApi(sId)}>
-                                                사업자 조회
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                    {/* 주소 검색 */}
-                                    <div className="address-container">
-                                        <div className="address-btn-container">
-                                            <input type="text" value={address} placeholder="주소를 입력하세요" onChange={(e) => setAddress(e.target.value)} className="input-text" required />
-
-                                            <button className="address-btn" type='button' onClick={handleClick}>
-                                                주소 검색
-                                            </button>
-                                        </div>
-                                        <input type="text" name="address_detail" placeholder="상세주소를 적어주세요" className="input-box-style input-text" onChange={change} />
-                                        <input type="hidden" id="latitude" name="lat" placeholder="위도"></input>
-                                        <input type="hidden" id="longitude" name="lon" placeholder="경도"></input>
-                                    </div>
+                                <div className="input-container">
 
                                     {/* 샵 사진 올리기 */}
                                     <div className="filebox">
                                         <img src="/img/logo/shop_defult_img.png" accept="image/*" alt='샵 기본이미지'
-                                            className="input-img magin-r-1" placeholder='사진을 올려주세요' ref={imgBoxRef} />
+                                            className="input-img" placeholder='사진을 올려주세요' ref={imgBoxRef} />
                                         <label htmlFor="shopImgFile">샵 프로필 사진  올리기</label>
                                         <input type="file" id="shopImgFile" accept="image/*" onChange={fileChange} />
+                                    </div>
+
+                                    <div className="address-container">
+
+
+                                        {/* 샵 이름 */}
+                                        <div className='input-for-label'>
+                                            <label htmlFor="name" className="label-text magin-t-05">샵 이름</label>
+                                            <input type="text" id="name" name="name" placeholder="샵 이름을 입력해주세요"
+                                                className="input-text" onChange={change} required />
+                                         </div>
+
+
+
+
+                                        {/* 사업자 등록번호 */}
+                                        <div className='input-for-label'>
+                                            <label htmlFor="sId" className="label-text magin-t-05">사업자 등록번호</label>
+                                            <div className="address-container">
+                                                <div className="address-btn-container">
+                                                    <input type="text" id="SId" name="sId" placeholder="사업자 등록번호를 정확하게 입력 해주세요"
+                                                        className="input-text" value={backsId} onChange={idChange} maxLength={12} required
+                                                        readOnly={authComplete} />
+                                                    <button className="address-btn" type='button' onClick={() => callApi(sId)}>
+                                                        사업자 조회
+                                                    </button>
+                                                </div>
+                                            </div>
+
+
+
+                                        {/* 주소 검색 */}
+                                        <div className='input-for-label'>
+                                            <label htmlFor="address_detail" className="label-text magin-t-05">주소</label>
+                                            <div className="address-container">
+                                                <div className="address-btn-container">
+                                                    <input type="text" value={address} placeholder="주소검색 버튼을 눌러주세요" onChange={(e) => setAddress(e.target.value)} className="input-text" required />
+
+                                                    <button className="address-btn" type='button' onClick={handleClick}>
+                                                        주소 검색
+                                                    </button>
+                                                </div>
+                                                <input type="text" name="address_detail" placeholder="상세주소를 적어주세요" className="input-box-style input-text" onChange={change} />
+                                                <input type="hidden" id="latitude" name="lat" placeholder="위도"></input>
+                                                <input type="hidden" id="longitude" name="lon" placeholder="경도"></input>
+                                            </div>
+                                        </div>
+
+
                                     </div>
                                 </div>
 
@@ -374,7 +392,6 @@ function ShopRegForm() {
                                     <button id="submit-btn" type="submit" className="main-btn btn-text magin-t-1" onClick={onSubmit}>등록하기</button>
                                     <div className="main-btn magin-t-1 btn-gray btn-text">취소</div>
                                 </div>
-
                             </div>
                         </form>
                     </section>

@@ -10,13 +10,11 @@ import {url} from'../../../config';
 
 import Server500Err_Alert from '../../Alerts/Server500Err_Alert';
 import SwalCustomAlert from '../../Alerts/SwalCustomAlert';
-import Swal from 'sweetalert2';
 
 
 
 
 function UserModi_Nickname() {
-
 
     const token = useSelector(state => state.token);
     useEffect(() => {
