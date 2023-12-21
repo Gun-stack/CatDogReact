@@ -13,7 +13,7 @@ import GalleryRegForm from './GalleryRegForm';
 import GalleryRegFormUser from './GalleryRegFormUser';
 import DesGalSearch from './DesGalSearch';
 import UserGalSearch from './UserGalSearch';
-
+import {url} from'../../config';
 
 
 function GalleryList() {

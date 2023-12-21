@@ -6,7 +6,7 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
-
+import {url} from'../../config';
 
 
 
@@ -25,7 +25,7 @@ function DesGalleryView() {
         fomrData.append("galNum", gallery.num);
         fomrData.append("userNum", user.num);
 
-        axios.post('http://localhost:8090/desgallerylike', fomrData)
+        axios.post(`${url}/desgallerylike`, fomrData)
             .then((res) => {
                 console.log(res.data);
                 setLike(res.data);
@@ -82,7 +82,7 @@ function DesGalleryView() {
 
 
     useEffect(() => {
-        axios.get(`http://localhost:8090/desgallerydetail?galnum=${galNum.desgalnum}&usernum=${user.num}`)
+        axios.get(`${url}/desgallerydetail?galnum=${galNum.desgalnum}&usernum=${user.num}`)
             .then((res) => {
                 console.log(res.data);
                 setGallery(res.data.desGallery);
@@ -112,7 +112,7 @@ function DesGalleryView() {
                                 <div className="view-gallery-profile-container magin-l-1">
 
                                     {desInfo.num &&
-                                        <img src={`http://localhost:8090/desimg/${desInfo.num}`} alt="프로필 이미지" className="view-profile-img" />
+                                        <img src={`${url}/desimg/${desInfo.num}`} alt="프로필 이미지" className="view-profile-img" />
                                     }
                                     <div className="view-gallery-profile-names">
                                         <div className="view-img-nickname">{desInfo.position}</div>
@@ -132,7 +132,7 @@ function DesGalleryView() {
 
 
                         <div className="view-img-container">
-                            <img src={`http://localhost:8090/desgalview/${galNum.desgalnum}`} onDoubleClick={likeClick} alt="스타일리스트 사진" className="view-img" />
+                            <img src={`${url}/desgalview/${galNum.desgalnum}`} onDoubleClick={likeClick} alt="스타일리스트 사진" className="view-img" />
 
                         </div>
 
