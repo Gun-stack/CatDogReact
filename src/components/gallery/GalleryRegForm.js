@@ -60,9 +60,7 @@ function GalleryRegForm() {
         setCurrentTag(tags[index]);
         
         if(currentTag.trim() !== "") {
-        
             setEditTagIndex(index);
-
         }else{
             deleteTag(index);
         }

@@ -125,9 +125,7 @@ function DesGalleryView() {
                                     <button className="st-button">예약하기<i className="far fa-calendar-alt btn-icon"></i></button>
                                 </Link>
                             }
-
-                            <div className="view-img-nickname">{desInfo.position} {desInfo.desNickname}</div>
-                            <div className="view-comment">{shopInfo.name}</div>
+    
                             <div className="view-comment">({date})</div>
 
                         </div>

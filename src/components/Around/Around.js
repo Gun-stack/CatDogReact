@@ -28,7 +28,8 @@ function Around() {
     useEffect(() => {
         axios.get(`http://localhost:8090/shoplistall`)
             .then((res) => {
-                dispatch({ type: 'SET_SHOP_LIST', payload: res.data });
+                const sortedByStar = res.data.sort((a, b) => b.star - a.star);
+                dispatch({ type: 'SET_SHOP_LIST', payload: sortedByStar});
             })
     }, []);
 
@@ -214,6 +215,7 @@ function Around() {
                             <Route path="distance" element={<Distance />} />
                             <Route path='/*' element={<Error404 />} />
                         </Routes>
+
                     </section>
                 </main>
                 <Footer />
