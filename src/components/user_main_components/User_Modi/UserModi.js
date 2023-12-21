@@ -90,9 +90,6 @@ function UserModi() {
             >  <UserModi_MemberWithDraw />
             </ReactModal>
 
-
-
-            {/* <section className="form-section"> */}
             <section className="form-section magin-b-5">
 
                 <div className="usermy-id-card" onClick={handleFlip}>
@@ -111,7 +108,7 @@ function UserModi() {
                                             <span className="tx-orange f-w-600">소셜 로그인</span>  : <span className="f-w-600">카카오</span> <br />
                                             <span className="tx-orange f-w-600">이 메일</span> : <span className="f-w-600">{user.email}</span> <br />
                                         </p>
-                                        <img src="/img/logo/pet_defult_img.png" alt="기본이미지" className="id-card-img" />
+                                        {/* <img src="/img/logo/pet_defult_img.png" alt="기본이미지" className="id-card-img" /> */}
                                     </div>
                                     :
                                     <div className="id-card-content">
@@ -122,7 +119,7 @@ function UserModi() {
                                             <span className="tx-orange f-w-600">이 메일</span>  : <span className="f-w-600">{user.email}</span> <br />
                                             <span className="tx-orange f-w-600">전 화 번 호</span>  : <span className="f-w-600">{user.tel}</span> <br />
                                         </p>
-                                        <img src="/img/logo/pet_defult_img.png" alt="기본이미지" className="id-card-img" />
+                                        {/* <img src="/img/logo/pet_defult_img.png" alt="기본이미지" className="id-card-img" /> */}
 
                                     </div>
                                 }

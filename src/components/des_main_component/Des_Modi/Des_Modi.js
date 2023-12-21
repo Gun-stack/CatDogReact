@@ -59,7 +59,6 @@ function DesModi() {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        // console.log("File info : " + files)
         if (!des.shopName) {
             Swal.fire({
                 html: '<img src="/img/logo/modal_notice_logo.png"/></span>',
@@ -87,15 +86,9 @@ function DesModi() {
 
             formData.append("desNickname", des.shopName);
             formData.append("position", des.shopNumber);
-            // formData.append("address_detail", shop.address_detail);
-            // formData.append("latitude", latitude);
-            // formData.append("longitude", longitude);
             formData.append("id", user.id);
             console.log("디자이너 이름 : " + des.shopName);
             console.log("직책 : " + des.shopNumber);
-
-
-
             axios.post(`${url}/desreg`, formData)
                 .then((res) => {
                     console.log(res);
@@ -154,14 +147,6 @@ function DesModi() {
                             <div className="form-container">
                                 <div className="input-container">
 
-                                    {/* <!-- 디자이너 닉네임 : des_nickname --> */}
-                                    <input type="text" id="shopName" name="shopName" placeholder="디자이너 이름" className="input-text"
-                                        onChange={change} />
-
-                                    {/* <!-- 디자이너 직책 : position --> */}
-                                    <input type="text" id="shopNumber" name="shopNumber" placeholder="디자이너 직책" className="input-text"
-                                        onChange={change} />
-
                                     {/* <!-- 프로필 사진 사진 올리기 --> */}
                                     <div className="filebox">
                                         <img src="/img/logo/shop_defult_img.png" accept="image/*"
@@ -169,7 +154,14 @@ function DesModi() {
                                         <label htmlFor="shopImgFile">프로필 사진 올리기</label>
                                         <input type="file" id="shopImgFile" accept="image/*" onChange={fileChange} />
                                     </div>
-                                    <hr className="gray-line" />
+
+                                    {/* <!-- 디자이너 닉네임 : des_nickname --> */}
+                                    <input type="text" id="shopName" name="shopName" placeholder="디자이너 이름" className="input-text"
+                                        onChange={change} />
+
+                                    {/* <!-- 디자이너 직책 : position --> */}
+                                    <input type="text" id="shopNumber" name="shopNumber" placeholder="디자이너 직책" className="input-text"
+                                        onChange={change} />
 
                                 </div>
                                 {/* <!-- submit 버튼 --> */}

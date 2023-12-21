@@ -63,4 +63,7 @@
         width: 10rem;
         height: 1.1rem;
     }
+    .input-container{
+        width: 90vw;
+    }
 }

@@ -200,6 +200,7 @@ function UserJoin() {
     }
 
     const checkEmail = (e) => {
+        e.preventDefault();
         setLoading(true);
         axios.get(`${url}/verify?email=${email}`)
             .then(res => {
@@ -220,6 +221,7 @@ function UserJoin() {
     }
 
     const onChangeCode = (e) => {
+        e.preventDefault();
         setCode(e.target.value);
         console.log(code);
 
@@ -270,7 +272,6 @@ function UserJoin() {
 
     const handleSubBtnClick = (e) => {
         e.preventDefault();
-
         SwalCustomAlert(
             'agree',
             `<span class="tx-orange">${username}</span> 님 가입 하시겠습니까 ?`,
@@ -353,7 +354,6 @@ function UserJoin() {
                                             <input type="text" id="tel" name="tel" placeholder="전화 번호"
                                                 className="input-text" value={phoneNumber} onChange={telChange} maxLength={13} />
                                             {/* 이메일 */}
-
                                             <div className="duplication-check">
                                                 <input type='text' id='email' name='email' placeholder='이메일'
                                                     className='input-text' onChange={onChange} defaultValue={userinfo ? userinfo.email : ""} />
