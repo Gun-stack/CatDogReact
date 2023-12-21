@@ -62,6 +62,8 @@ function UserLogin() {
     };
 
     useEffect(() => {
+
+        
         // 컴포넌트가 마운트될 때 로컬 스토리지에서 자동 로그인 상태를 확인하여 Redux에 업데이트
         const storedIsAutoLogin = localStorage.getItem("isAutoLogin");
         if (storedIsAutoLogin === "true") {

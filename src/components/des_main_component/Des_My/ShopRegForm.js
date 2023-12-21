@@ -21,7 +21,7 @@ function ShopRegForm() {
     const [geocoder, setGeocoder] = useState(null);
     useKakaoLoader();
     const user = useSelector((state) => state.user);
-    const [sId, setSId] = useState(''); 
+    const [sId, setSId] = useState('');
     const [backsId, setBackSId] = useState('');
     const [authComplete, setAuthComplete] = useState(false); // 인증 완료 여부
 
@@ -194,6 +194,17 @@ function ShopRegForm() {
         })
             .then(res => {
                 console.log("Res : " + res.data);
+                if (res.data.roles === "ROLE_USER") {
+                    SwalCustomAlert(
+                        'warning',
+                        "접근 권한이 없습니다. 디자이너 신청 해 주세요."
+                    ).then(() => {
+                        if (res) {
+                            navigate('/usermy/desreg');
+                            return;
+                        }
+                    })
+                }
             })
             .catch(err => {
                 // console.log("Err : " + err);
@@ -245,7 +256,7 @@ function ShopRegForm() {
     const callApi = async (value) => {
         console.log("Call API!!!");
         console.log("Value : " + value);
-        if(value === "" || value === null){
+        if (value === "" || value === null) {
             SwalCustomAlert(
                 'fail',
                 '사업자 번호를 입력해 주세요',
@@ -253,10 +264,10 @@ function ShopRegForm() {
             return;
         }
         var data = {
-            "b_no": [value+""] // 사업자번호 "xxxxxxx" 로 조회 시,
-           }; 
-           
-           try {
+            "b_no": [value + ""] // 사업자번호 "xxxxxxx" 로 조회 시,
+        };
+
+        try {
             const result = await $.ajax({
                 url: "https://api.odcloud.kr/api/nts-businessman/v1/status?serviceKey=43jTbFaB1Bw0bFtBXRHs2WW0Mk%2Bi71oEulvkm9CIAkn2wvwt88c1lJRBA8eYtIjHXXmVMWEEjI0ZPh%2BEMfCTUg%3D%3D",
                 type: "POST",
@@ -265,31 +276,31 @@ function ShopRegForm() {
                 contentType: "application/json",
                 accept: "application/json",
             })
-            // console.log(result.data[0].b_stt_cd);
-            .then((result) =>{
-                if(result.data[0].b_stt_cd === "01"){
-                    SwalCustomAlert(
-                        'success',
-                        '인증에 성공하였습니다.',
-                    );
-                    setAuthComplete(true);
-                }else if(result.data[0].b_stt_cd === "02"){
-                    SwalCustomAlert(
-                        'fail',
-                        '휴업한 사업자 번호입니다.',
-                    );
-                }else if(result.data[0].b_stt_cd === "03"){
-                    SwalCustomAlert(
-                        'fail',
-                        '폐업한 사업자 번호입니다.',
-                    );
-                }else{
-                    SwalCustomAlert(
-                        'fail',
-                        '유효하지 않은 사업자 번호입니다.',
-                    );
-                }
-            })
+                // console.log(result.data[0].b_stt_cd);
+                .then((result) => {
+                    if (result.data[0].b_stt_cd === "01") {
+                        SwalCustomAlert(
+                            'success',
+                            '인증에 성공하였습니다.',
+                        );
+                        setAuthComplete(true);
+                    } else if (result.data[0].b_stt_cd === "02") {
+                        SwalCustomAlert(
+                            'fail',
+                            '휴업한 사업자 번호입니다.',
+                        );
+                    } else if (result.data[0].b_stt_cd === "03") {
+                        SwalCustomAlert(
+                            'fail',
+                            '폐업한 사업자 번호입니다.',
+                        );
+                    } else {
+                        SwalCustomAlert(
+                            'fail',
+                            '유효하지 않은 사업자 번호입니다.',
+                        );
+                    }
+                })
 
         } catch (error) {
             console.error(error);
@@ -326,9 +337,9 @@ function ShopRegForm() {
                                     <div className="address-container">
                                         <div className="address-btn-container">
                                             <input type="text" id="SId" name="sId" placeholder="사업자 등록번호"
-                                                className="input-text" value={backsId} onChange={idChange} maxLength={12} required 
-                                                    readOnly={authComplete} />
-                                             <button className="address-btn" type='button' onClick={()=>callApi(sId)}>
+                                                className="input-text" value={backsId} onChange={idChange} maxLength={12} required
+                                                readOnly={authComplete} />
+                                            <button className="address-btn" type='button' onClick={() => callApi(sId)}>
                                                 사업자 조회
                                             </button>
                                         </div>
@@ -338,7 +349,7 @@ function ShopRegForm() {
                                     <div className="address-container">
                                         <div className="address-btn-container">
                                             <input type="text" value={address} placeholder="주소를 입력하세요" onChange={(e) => setAddress(e.target.value)} className="input-text" required />
-                                            
+
                                             <button className="address-btn" type='button' onClick={handleClick}>
                                                 주소 검색
                                             </button>

@@ -21,27 +21,13 @@ function UserModi_MemberWithDraw() {
         e.preventDefault();
         console.log("user.id : " + user.id);
         console.log("user.password : " + user.password);
-        const res = await axios.post('http://localhost:8090/exit', user);
+        const res = await axios.post('http://localhost:8090/exit', user, {
+            headers: {
+                Authorization: token,
+            }
+        });
 
     }
-
-    const kakaoexit = async (e) => {
-        e.preventDefault();
-        console.log("Token : " + token);
-        const ACCESS_TOKEN = token.substring(7);
-        console.log("Token without Bearer: " + ACCESS_TOKEN);
-        await axios.post("https://kapi.kakao.com/v1/user/unlink", {
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-                Authorization: "Bearer " + ACCESS_TOKEN,
-            },
-        }
-        );
-
-        console.log("Successfully unlinked from Kakao.");
-
-    };
-
 
     return (<>
         <div className="react-modal-css">
@@ -57,8 +43,6 @@ function UserModi_MemberWithDraw() {
             <button className="main-btn btn-text magin-t-1 btn-gray" onClick={goBack} >취소</button>
             {/* 탈퇴버튼 */}
             <button className="main-btn btn-text magin-t-1 btn-red" onClick={onSubmit}>탈퇴하기</button>
-            {/* {카카오 유저 탈퇴} */}
-            <button className="main-btn kakao-login-btn" onClick={kakaoexit}>카카오 유저 탈퇴하기</button>
         </div>
     </>);
 }

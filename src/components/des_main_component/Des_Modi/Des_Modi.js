@@ -20,7 +20,19 @@ function DesModi() {
             }
         })
             .then(res => {
-                console.log("Res : " + res.data);
+                console.log("Res : " + res.data.roles);
+
+                if (res.data.roles === "ROLE_USER") {
+                    SwalCustomAlert(
+                        'warning',
+                        "접근 권한이 없습니다. 디자이너 신청 해 주세요."
+                    ).then(() => {
+                        if (res) {
+                            navigate('/usermy/desreg');
+                            return;
+                        }
+                    })
+                }
             })
             .catch(err => {
                 // console.log("Err : " + err);
