@@ -239,14 +239,11 @@ function ShopMainDesLIst() {
                                         value={editedPosition}
                                         onChange={(e) => setEditedPosition(e.target.value)}
                                     />
-
                                 ) : (
-                                    `${des.position}`
+                                    <Link to={`/des/${des.num}`}>{des.position}</Link>
                                 )}
                             </span>
-
-
-                            <span className="st-profile-name">{des.desNickname}</span>
+                            <span  className="st-profile-name"><Link to={`/des/${des.num}`}>{des.desNickname}</Link></span>
                             <br/>
                             <span className="st-profile-shop">{shopInfo.name}</span>
 

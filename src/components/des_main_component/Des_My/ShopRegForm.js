@@ -195,6 +195,17 @@ function ShopRegForm() {
         })
             .then(res => {
                 console.log("Res : " + res.data);
+                if (res.data.roles === "ROLE_USER") {
+                    SwalCustomAlert(
+                        'warning',
+                        "접근 권한이 없습니다. 디자이너 신청 해 주세요."
+                    ).then(() => {
+                        if (res) {
+                            navigate('/usermy/desreg');
+                            return;
+                        }
+                    })
+                }
             })
             .catch(err => {
                 // console.log("Err : " + err);
@@ -253,7 +264,8 @@ function ShopRegForm() {
             );
             return;
         }
-        let data = {
+
+        var data = {
             "b_no": [value + ""] // 사업자번호 "xxxxxxx" 로 조회 시,
         };
 
@@ -265,6 +277,7 @@ function ShopRegForm() {
                 dataType: "JSON",
                 contentType: "application/json",
                 accept: "application/json",
+
             }).then((result) => {
                 if (result.data[0].b_stt_cd === "01") {
                     SwalCustomAlert(
@@ -289,6 +302,7 @@ function ShopRegForm() {
                     );
                 }
             })
+
         } catch (error) {
             console.error(error);
         }
@@ -325,12 +339,15 @@ function ShopRegForm() {
 
                                     <div className="address-container">
 
+
                                         {/* 샵 이름 */}
                                         <div className='input-for-label'>
                                             <label htmlFor="name" className="label-text magin-t-05">샵 이름</label>
                                             <input type="text" id="name" name="name" placeholder="샵 이름을 입력해주세요"
                                                 className="input-text" onChange={change} required />
-                                        </div>
+                                         </div>
+
+
 
 
                                         {/* 사업자 등록번호 */}
@@ -346,7 +363,7 @@ function ShopRegForm() {
                                                     </button>
                                                 </div>
                                             </div>
-                                        </div>
+
 
 
                                         {/* 주소 검색 */}

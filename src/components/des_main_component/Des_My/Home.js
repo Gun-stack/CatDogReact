@@ -21,6 +21,8 @@ import DesReservationDate from './DesResrevationDate';
 import SwalCustomAlert from '../../Alerts/SwalCustomAlert';
 import Server500Err_Alert from '../../Alerts/Server500Err_Alert';
 import { url } from '../../../config';
+import DesResvList from '../Des_reservation/DesResvList';
+import DesResvDetail from '../Des_reservation/DesResvDetail';
 
 
 
@@ -217,6 +219,10 @@ function Home() {
                                 <div className="st-profile-shop">
                                 </div>)
                             }
+                            {user.id === des.id &&
+                                <li className={`main-nav-list-text ${isActive`/des/${des.num}/review` ? 'active' : ''}`}><Link to={`/des/${des.num}/myreservation`}>나의예약확인</Link></li>
+                            }
+
                         </ul>
                     </nav>
                     <hr className="divide-line" />
@@ -227,7 +233,8 @@ function Home() {
                         <Route path="review" element={<DesReview desInfo={des} />} />
                         <Route path='/:desgalnum' element={<DesGalleryView />} />
                         <Route path='reservation' element={<DesReservationDate desInfo={des} shopInfo={shop} />} />
-
+                        <Route path='myreservation' element={<DesResvList desInfo={des} shopInfo={shop}/>} />
+                        <Route path='/detail/:resvnum' element={<DesResvDetail desInfo={des} shopInfo={shop}  />} />
                         <Route path='/*' element={<Error404 />} />
                     </Routes>
 

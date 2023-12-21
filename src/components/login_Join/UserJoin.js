@@ -6,27 +6,37 @@ import axios from "axios";
 import Loding from "../tools/Loding";
 import Server500Err_Alert from "../Alerts/Server500Err_Alert";
 import SwalCustomAlert from "../Alerts/SwalCustomAlert";
-import { useSelector } from 'react-redux';
-import {url} from'../../config';
+
+import { url } from "../../config"
+import { useLocation } from 'react-router';
 
 
 function UserJoin() {
+
     const [id, setId] = useState('');
     const [username, setUserName] = useState('');
     const [nickname, setNickname] = useState('');
     const [tel, setTel] = useState('');
     const [email, setEmail] = useState('');
+    const { state } = useLocation();
 
     //패스워드 관련
     const [password, setPassword] = useState('');
     const [passMessage, setPassMessage] = useState('비밀번호를 입력하세요');
     const [passwordCheck, setPasswordCheck] = useState('');
 
-    const user = useSelector((state) => state.user);
+    const userinfo = state ? JSON.parse(state) : {};
 
     const changePass = (e) => {
         setPassword(e.target.value);
     }
+    
+    //이메일 인증관련
+    const [emailCode, setEmailCode] = useState();
+    const [code, setCode] = useState('');
+
+
+    
 
     useEffect(() => {
         if (password && passwordCheck) {
@@ -36,21 +46,19 @@ function UserJoin() {
                 setPassMessage('비밀번호가 일치합니다.');
             }
         }
-    }, [password, passwordCheck]);
+        console.log("Provider_Id : " +userinfo.providerId);
+    }, [password, passwordCheck, userinfo.id]);
 
     function changePassCheck(e) {
         setPasswordCheck(e.target.value);
     }
-
     const [idcheck, setIdCheck] = useState(false);
     const [nicknamecheck, setNicknameCheck] = useState(false);
     const [loading, setLoading] = useState(false);
     const [phoneNumber, setPhoneNumber] = useState('');
-
     const formatPhoneNumber = (input) => {
         // 숫자만 추출
         const cleaned = ('' + input).replace(/\D/g, '');
-
         // 3자리-5자리-4자리 형식으로 포맷팅
         const formatted = cleaned.replace(/^(\d{3})(\d{0,4})(\d{0,4})/, (match, p1, p2, p3) => {
             let result = p1;
@@ -60,7 +68,6 @@ function UserJoin() {
         });
         setPhoneNumber(formatted.substring(0, 14));
     };
-
     const telChange = (e) => {
         setTel(e.target.value.replace(/\D/g, ''));
         formatPhoneNumber(e.target.value);
@@ -76,7 +83,9 @@ function UserJoin() {
             nickname: nickname,
             tel: tel,
             email: email,
-            roles: 'ROLE_USER'
+            roles: 'ROLE_USER',
+            provider : userinfo ? userinfo.provider : "",
+            providerId : userinfo ? userinfo.providerId : "",
         }
         console.log(joinInfo);
         try {
@@ -109,7 +118,7 @@ function UserJoin() {
     //아이디 중복체크 여부 
     const checkId = (e) => {
         e.preventDefault();
-        if (id === '') {
+        if (userinfo ? userinfo.id === "" : id === '') {
             SwalCustomAlert(
                 'notice',
                 '아이디를 입력해주세요',
@@ -150,7 +159,7 @@ function UserJoin() {
     //닉네임 중복체크 여부
     const checkNickname = (e) => {
         e.preventDefault();
-        if (nickname === '') {
+        if (userinfo ? userinfo.nickname === "" : nickname === '') {
             SwalCustomAlert(
                 'notice',
                 '닉네임을 입력해주세요',
@@ -191,31 +200,53 @@ function UserJoin() {
     }
 
     const checkEmail = (e) => {
-        e.preventDefault();
-        if (email === '') {
-            SwalCustomAlert(
-                'notice',
-                '이메일을 입력해주세요',
-            )
-        } else {
-            //이메일 정규식
-            const emailRegExp = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
-            if (!emailRegExp.test(email)) {
+        setLoading(true);
+        axios.get(`${url}/verify?email=${email}`)
+            .then(res => {
+                console.log(res.data);
+                setEmailCode(res.data);
                 SwalCustomAlert(
-                    'notice',
-                    '이메일 형식이 올바르지 않습니다.',
+                    'success',
+                    '인증번호가 전송되었습니다',
                 )
-                return false;
-            }
-            
-
-        }            
+            })
+            .catch(err => {
+                console.error(err);
+                <Server500Err_Alert />
+            })
+            .finally(() => {
+                setLoading(false);
+            })
     }
+
+    const onChangeCode = (e) => {
+        setCode(e.target.value);
+        console.log(code);
+
+    }
+    const checkCode = (e) => {
+        if (code == emailCode) {
+            SwalCustomAlert(
+                'success',
+                '인증되었습니다',
+                )
+                setEmailCode();
+        } else {
+            SwalCustomAlert(
+                'fail',
+                '인증번호가 일치하지 않습니다',
+            )
+        }
+    }
+
+
+
 
     const onChange = (e) => {
         const { value, name } = e.target;
         if (name === 'id') {
             setId(value);
+            console.log("Id : " + value);
 
         } else if (name === 'password') {
             setPassword(value);
@@ -231,7 +262,6 @@ function UserJoin() {
 
         } else if (name === 'tel') {
             setTel(value);
-
         }
         else if (name === 'email') {
             setEmail(value);
@@ -265,7 +295,6 @@ function UserJoin() {
         <>
             {loading ? <Loding /> :
                 <div className="web-container">
-
                     <div className="cd-container bg-white bg-dogs">
                         <main className="cd-main">
                             <Link to="/">
@@ -274,7 +303,6 @@ function UserJoin() {
                                     <span className="main-logo-text">보호자 회원가입</span>
                                 </section>
                             </Link>
-
                             {/**회원가입 폼 */}
                             <section className="form-section">
                                 <form action="#" method="post" className="form-css">
@@ -292,18 +320,12 @@ function UserJoin() {
                                          */}
 
                                             {/** 이름 */}
-                                            {user.id ? (
-                                                <input type="text" id="username" name="username" placeholder="이름"
-                                                className="input-text" onChange={onChange} value={user.id} />
-                                            ) : (
-                                                <input type="text" id="username" name="username" placeholder="이름"
+                                            <input type="text" id="username" name="username" placeholder="이름"
                                                 className="input-text" onChange={onChange} />
-                                            )}
-                                            
 
                                             {/** 아이디 - 중복체크 */}
                                             <div className="duplication-check">
-                                                <input type="text" id="id" name="id" placeholder="아이디"
+                                                <input type="text" id="id" name="id" placeholder="아이디" defaultValue={userinfo ? userinfo.id : ""}
                                                     className="input-text" onChange={onChange} />
                                                 <button className="duplication-btn small-btn" onClick={checkId} >중복확인</button>
                                             </div>
@@ -311,7 +333,7 @@ function UserJoin() {
                                             {/** 닉네임 - 중복체크 */}
                                             <div className="duplication-check">
                                                 <input type="text" id="nickname" name="nickname" placeholder="닉네임"
-                                                    className="input-text" onChange={onChange} />
+                                                    className="input-text" onChange={onChange} defaultValue={userinfo ? userinfo.nickname : ""} />
 
                                                 <button className="duplication-btn small-btn"
                                                     onClick={checkNickname} >중복확인</button>
@@ -331,12 +353,22 @@ function UserJoin() {
                                             <input type="text" id="tel" name="tel" placeholder="전화 번호"
                                                 className="input-text" value={phoneNumber} onChange={telChange} maxLength={13} />
                                             {/* 이메일 */}
+
                                             <div className="duplication-check">
                                                 <input type='text' id='email' name='email' placeholder='이메일'
-                                                    className='input-text' onChange={onChange} />
-                                                    <button className="duplication-btn small-btn"
-                                                        onClick={checkEmail} >이메일 인증하기</button>
+                                                    className='input-text' onChange={onChange} defaultValue={userinfo ? userinfo.email : ""} />
+                                                <button className="duplication-btn small-btn"
+                                                    onClick={checkEmail} >이메일 인증하기</button>
                                             </div>
+                                            {emailCode&&
+                                                <div className="duplication-check">
+                                                    <input type='text' id='code' name='code' placeholder='인증번호'
+                                                    className='input-text' onChange={onChangeCode} />
+                                                    <button className="duplication-btn small-btn"
+                                                    onClick={checkCode} >인증</button>
+                                                    </div>
+                                                }
+
                                             {/** 로그인 비번/아이디찾기 */}
                                             <div className="login-tools">
                                                 <div></div>
@@ -348,7 +380,6 @@ function UserJoin() {
                                             </div>
 
                                         </div>
-
                                         <div className="button-container">
                                             {/** submit */}
                                             <button onClick={handleSubBtnClick} id="submit-btn" type="submit" className="main-btn btn-text magin-t-1">회원 가입</button>
@@ -362,9 +393,7 @@ function UserJoin() {
                                     </div>
                                 </form>
                             </section>
-
                         </main>
-
                         <Footer />
                     </div>
                 </div>

@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import Footer from "./screens/Footer";
 
+
 function Index() {
 
     return (

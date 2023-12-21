@@ -92,6 +92,9 @@ function DesResvList() {
     };
     // 
     const availableTimes = ["10:00", "12:00", "14:00", "16:00"];
+
+
+    
     return (<>
 
         <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -101,7 +104,7 @@ function DesResvList() {
         </LocalizationProvider>
 
         <span className="form-text" style={{ cursor: 'pointer' }} >{selectDate}</span>
-
+        <div>
         {availableTimes.map(time => (
             <section key={time} className='reser-time-section'>
                 {isReserved(sqlDate, time) && isReserved(sqlDate, time).status == "예약" ?
@@ -144,6 +147,8 @@ function DesResvList() {
                 <hr className="divide-line magin-t-1" key={`hr-${time}`} />
             </section>
         ))}
+    </div>
+
 
     </>);
 }

@@ -3,55 +3,35 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 
 import {url} from'../../config';
+import axios from 'axios';
 
 
 
 
 
 function FindId() {
+    const [email, setEmail] = useState('');
 
-
-    const [clPhoneNumber, setClPhoneNumber] = useState('');
-    const [clPassword, setClPassword] = useState('');
+    
+    
 
     const onChange = (e) => {
-        setClPhoneNumber(e.target.value);
-        setClPassword(e.target.value);
+        setEmail(e.target.value);
     }
-    //아이디 찾기 버튼 클릭시 폼으로 서버에 전송
-    const submit = (e) => {
-        e.preventDefault();
-        const findIdInfo = {
-            clPhoneNumber: clPhoneNumber,
-            clPassword: clPassword
-        }
-        console.log(findIdInfo);
-        // axios.post('http://localhost:8090/user/findid',findIdInfo)
-        // .then((res)=>{
-        //     console.log(res);
-        //     console.log(res.data);
-        //     if(res.data === 1){
-        //         Swal.fire({
-        //             icon: 'success',
-        //             title: '아이디 찾기 성공',
-        //             text: '아이디를 확인해주세요.',
-        //             confirmButtonColor: '#F9950F',
-        //             confirmButtonText: '확인',
-        //         });
-        //         history.push('/login');
-        //     }else{
-        //         Swal.fire({
-        //             icon: 'error',
-        //             title: '아이디 찾기 실패',
-        //             text: '다시 시도해주세요.',
-        //             confirmButtonColor: '#F9950F',
-        //             confirmButtonText: '확인',
-        //         });
-        //     }
-        // })
-    }
+    const checkEmail = () => {
+        axios.get(`${url}/findid?email=${email}`)
+        .then(res => {
+            console.log(res.data);
+                
+        })
+        .catch(err => {
+            console.log(err);
+        })
 
 
+
+    }
+    
 
 
 
@@ -67,15 +47,15 @@ function FindId() {
                         <span className="main-logo-text">계정 찾기</span>
                     </section>
                 </Link>
-
                     <section className="form-section">
-                        <form action="#" method="post" className="form-css">
                             <div className="form-container">
                                 <div className="input-container">
-                                    <input type="text" id="clPhoneNumber" name="cl-phone-number" placeholder="핸드폰 번호를 입력하세요"
-                                        className="input-text" onChange={onChange} />
-                                    <input type="password" id="clPassword" name="cl-password" placeholder="비밀번호 를 입력하세요"
-                                        className="input-text" onChange={onChange} />
+
+                                <div className="duplication-check">
+                                    <input type='text' id='email' name='email' placeholder='이메일'className='input-text' onChange={onChange} />
+                                    <button className="duplication-btn small-btn" onClick={checkEmail} >이메일 인증하기</button>
+                                </div>
+
                                     <div className="login-tools">
                                         <span></span>
                                         <div>
@@ -86,11 +66,10 @@ function FindId() {
                                 </div>
 
                                 <div className="button-container">
-                                    <button type="submit" className="main-btn magin-t-1" onClick={submit}><Link to="cl-idresult.html" className="btn-text">아이디 찾기</Link></button>
+                                    <button type="submit" className="main-btn magin-t-1"><Link to="cl-idresult.html" className="btn-text">아이디 찾기</Link></button>
                                 </div>
 
                             </div>
-                        </form>
                     </section>
                 </main>
                 <Footer />

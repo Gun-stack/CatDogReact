@@ -81,13 +81,11 @@ function DesResvDetail() {
 
 //  유저의 펫 정보 리스트를 가져옴 
     useEffect(() => {
-
         axios.get(`${url}/reservedetail?num=${params.resvnum}`)
         .then((res) => {
             console.log(res.data);
                 setResv(res.data.resv);
                 setPet1(res.data.pet);
-                setUser(res.data.user);
             }
         )
         .catch((err) => {
