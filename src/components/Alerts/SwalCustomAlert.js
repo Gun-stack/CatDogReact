@@ -14,7 +14,6 @@ const IMAGE_URLS = {
     modi : '/img/logo/modal_modi_logo.png',
 }
 
-
 function SwalCustomAlert(imageType, titleText, confirmButtonColor = '#F9950F', confirmButtonText = '확인', 
 showCancelButton=false, cancelButtonText='취소', reverseButtons=true) {
     const imageUrl = IMAGE_URLS[imageType] || IMAGE_URLS.notice; // 기본 이미지는 notice로 설정

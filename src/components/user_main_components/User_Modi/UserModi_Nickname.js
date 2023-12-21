@@ -75,12 +75,6 @@ function UserModi_Nickname() {
             //닉네임 정규식 에서 틀린지 조건체크
             const nicknameRegExp = /^[가-힣a-zA-Z0-9]{2,10}$/;
             if (!nicknameRegExp.test(userNickname)) {
-                Swal.fire({
-                    icon: 'warning',
-                    html: "<div><p style='text-align:center;'>닉네임은 한글,영문 대소문자와<br/> 숫자 2~10자리로 입력해주세요<p></div>",
-                    confirmButtonColor: '#F9950F',
-                    confirmButtonText: '확인',
-                });
                 SwalCustomAlert(
                     'warning', 
                     "닉네임은 한글, 영문 대소문자와 숫자 <br/>2~10자리로 입력해주세요"

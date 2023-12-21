@@ -8,19 +8,18 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { Routes, Route, Link } from 'react-router-dom';
-// import DesHome from './DesHome';
+
 import DesStyle from './DesStyle';
 import DesReview from './DesReview';
-// import Error404 from '../../error/Error404';
 import Error404 from '../../error/Error404';
 import { useLocation } from 'react-router';
 import StarRating from './StarRating';
 import DesHome from './DesHome';
 import DesGalleryView from '../../gallery/DesGalleryView';
 import { useNavigate } from 'react-router';
-import DesReservationForm from './DesReservationForm';
 import DesReservationDate from './DesResrevationDate';
 import SwalCustomAlert from '../../Alerts/SwalCustomAlert';
+import Server500Err_Alert from '../../Alerts/Server500Err_Alert';
 
 
 
@@ -41,10 +40,6 @@ function Home() {
         return location.pathname === path;
     };
     const [editable, setEditable] = useState(false);
-
-
-
-
 
 
     const token = useSelector(state => state.token);
@@ -96,19 +91,29 @@ function Home() {
         })
     }
 
-    const onSubmint = () => {
-        const formData = new FormData();
-        formData.append("num", des.num);
-        formData.append("info", des.info);
-        formData.append("workTime", des.workTime);
+    const onSubmit = async (e) => {
+        e.preventDefault();
 
-        axios.post('http://localhost:8090/modidesinfo', formData)
-            .then((res) => {
-                console.log(res.data);
-            })
-            .catch((err) => {
-                console.log(err);
-            })
+        try {
+            await SwalCustomAlert(
+                'success',
+                "디자이너 정보를 수정했습니다!"
+            );
+
+            window.location.reload();
+
+            const formData = new FormData();
+            formData.append("num", des.num);
+            formData.append("info", des.info);
+            formData.append("workTime", des.workTime);
+
+            const response = await axios.post('http://localhost:8090/modidesinfo', formData);
+            console.log(response.data);
+
+        } catch (err) {
+            console.error(err);
+            <Server500Err_Alert />
+        }
     }
 
 
@@ -189,11 +194,11 @@ function Home() {
 
                             {editable &&
                                 <div className='deshome-input-btn-container'>
-                                    <div  className='deshome-input-container'>
-                                    <input className='input-text deshome-input-text' type='text' placeholder='근무시간을 입력해주세요 ' name='workTime' onChange={onChangeWorkTime}  />
-                                    <input className='input-text deshome-input-text' type='text' placeholder='디자이너 정보 및 소개글을 입력하세요' onChange={onChageInfo} name='info' />
+                                    <div className='deshome-input-container'>
+                                        <input className='input-text deshome-input-text' type='text' placeholder='근무시간을 입력해주세요 ' name='workTime' onChange={onChangeWorkTime} />
+                                        <input className='input-text deshome-input-text' type='text' placeholder='디자이너 정보 및 소개글을 입력하세요' onChange={onChageInfo} name='info' />
                                     </div>
-                                    <button className="st-button" onClick={onSubmint} >수정하기<i className="fas fa-pen btn-icon"></i></button>
+                                    <button className="st-button" onClick={onSubmit} >수정하기<i className="fas fa-pen btn-icon"></i></button>
                                 </div>
                             }
 

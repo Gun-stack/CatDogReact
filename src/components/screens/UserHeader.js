@@ -40,6 +40,7 @@ function UserHeader() {
             }
         })
     }
+    
     useEffect(() => {
         if (user.roles === 'ROLE_DES' || user.roles === 'ROLE_SHOP') {
             axios.get(`http://localhost:8090/desinfobyid?desId=${user.id}`)
