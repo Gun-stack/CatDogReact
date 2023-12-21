@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import {url} from'../../config';
 
 
 
@@ -18,6 +19,8 @@ function DesGalSearch() {
     }
     const [hasMore, setHasMore] = useState(true);
     const[search,setSearch]=useState('');
+    const[search2,setSearch2]=useState('');
+
     const[preSearch,setPreSearch]=useState('');
 
     
@@ -32,24 +35,25 @@ function DesGalSearch() {
             searchGallery();
         }
     }
-
+    
     const searchGallery = () => {
-        setSearch(preSearch);
-        
-        axios.get('http://localhost:8090/desgallerysearch', {
+        setSearch2(preSearch);
+        if(search2){
+        axios.get(`${url}/desgallerysearch`, {
             params: {
-                search: search,
+                search: search2,
                 page: 0,
                 size: 12,
             }
         })
-        .then((res) => {
+        .then((res) => {    
             setGalleryList([...res.data.content]);
             if (res.data.content.length === 0) {
                 setHasMore(false);
             }
         })
         .catch((err) => console.log(err))
+    }
 }
 
 
@@ -58,12 +62,10 @@ function DesGalSearch() {
 
 
     useEffect(() => {
-        
         setSearch(params.search);
 
-
         if(search){
-        axios.get('http://localhost:8090/desgallerysearch', {
+        axios.get(`${url}/desgallerysearch`, {
             params: {
                 page: page, // 필요한 페이지 번호
                 size: 12, // 페이지당 아이템 개수
@@ -81,7 +83,7 @@ function DesGalSearch() {
                 console.log(err);
             })
         }
-    }, [page, search]);
+    }, [page,search]);
 
 
 
@@ -103,7 +105,7 @@ function DesGalSearch() {
             <div className="st-gallery-grid">
                 {galleryList.map((gallery, index) => (
                     <div className="st-gallery-img" key={index} >
-                        <Link to={"/gallery/des/" + gallery.num}><img src={`http://localhost:8090/desgalview/${gallery.num}`} alt="" className="hover-img" /></Link>
+                        <Link to={"/gallery/des/" + gallery.num}><img src={`${url}/desgalview/${gallery.num}`} alt="" className="hover-img" /></Link>
                         <div className="img-comment-hover">
                             <span className="img-hover-icon">
                                 <i className="fas fa-heart hover-icon" ></i>

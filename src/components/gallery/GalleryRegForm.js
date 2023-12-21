@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
 import axios from "axios";
 import { useSelector } from 'react-redux';
+import {url} from'../../config';
 
 
 function GalleryRegForm() {
@@ -89,7 +90,7 @@ function GalleryRegForm() {
             formData.append('content', content); // 리뷰 내용 추가
             formData.append('desId', userInfo.id); // 미용사 아이디 추가
             try{
-                const res = axios.post('http://localhost:8090/desgalleryreg',formData)
+                const res = axios.post(`${url}/desgalleryreg`,formData)
                 if (res.data == true) {
                     Swal.fire({
                         title: '겔러리에 등록되었습니다.',
