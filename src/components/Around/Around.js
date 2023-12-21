@@ -28,7 +28,8 @@ function Around() {
     useEffect(() => {
         axios.get(`http://localhost:8090/shoplistall`)
             .then((res) => {
-                dispatch({ type: 'SET_SHOP_LIST', payload: res.data });
+                const sortedByStar = res.data.sort((a, b) => b.star - a.star);
+                dispatch({ type: 'SET_SHOP_LIST', payload: sortedByStar});
             })
     }, []);
 
@@ -88,11 +89,14 @@ function Around() {
         Swal.fire({
             html: `
             <div class='map-modal-container'>
-            <img class="nearby-shop-img" name="image" alt='' src='http://localhost:8090/shopimg/${shop.profImg}'/>
-            <div class='map-modal-address'>
-            <div class="sweet-modal-title">${shop.name}</div>
-            <span class="sweet-modal-text">${shop.addressRoad}</span><br/>
-            </div>
+
+                <img class="map-modal-img" name="image" alt='샵 이미지' src='http://localhost:8090/shopimg/${shop.profImg}'/>
+                
+                <div class='map-modal-address'>
+                    <div class="map-modal-title">${shop.name}</div>
+                    <span class="map-modal-address">${shop.addressRoad}</span><br/>
+                </div>
+
             </div>
             `,            
             confirmButtonColor: '#F9950F',
@@ -211,6 +215,7 @@ function Around() {
                             <Route path="distance" element={<Distance />} />
                             <Route path='/*' element={<Error404 />} />
                         </Routes>
+
                     </section>
                 </main>
                 <Footer />

@@ -8,19 +8,18 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { Routes, Route, Link } from 'react-router-dom';
-// import DesHome from './DesHome';
+
 import DesStyle from './DesStyle';
 import DesReview from './DesReview';
-// import Error404 from '../../error/Error404';
 import Error404 from '../../error/Error404';
 import { useLocation } from 'react-router';
 import StarRating from './StarRating';
 import DesHome from './DesHome';
 import DesGalleryView from '../../gallery/DesGalleryView';
 import { useNavigate } from 'react-router';
-import DesReservationForm from './DesReservationForm';
 import DesReservationDate from './DesResrevationDate';
 import SwalCustomAlert from '../../Alerts/SwalCustomAlert';
+import Server500Err_Alert from '../../Alerts/Server500Err_Alert';
 
 
 
@@ -41,10 +40,6 @@ function Home() {
         return location.pathname === path;
     };
     const [editable, setEditable] = useState(false);
-
-
-    
-
 
 
     const token = useSelector(state => state.token);
@@ -96,19 +91,29 @@ function Home() {
         })
     }
 
-    const onSubmint = () => {
-        const formData = new FormData();
-        formData.append("num", des.num);
-        formData.append("info", des.info);
-        formData.append("workTime", des.workTime);
+    const onSubmit = async (e) => {
+        e.preventDefault();
 
-        axios.post('http://localhost:8090/modidesinfo', formData)
-            .then((res) => {
-                console.log(res.data);
-            })
-            .catch((err) => {
-                console.log(err);
-            })
+        try {
+            await SwalCustomAlert(
+                'success',
+                "디자이너 정보를 수정했습니다!"
+            );
+
+            window.location.reload();
+
+            const formData = new FormData();
+            formData.append("num", des.num);
+            formData.append("info", des.info);
+            formData.append("workTime", des.workTime);
+
+            const response = await axios.post('http://localhost:8090/modidesinfo', formData);
+            console.log(response.data);
+
+        } catch (err) {
+            console.error(err);
+            <Server500Err_Alert />
+        }
     }
 
 
@@ -134,7 +139,7 @@ function Home() {
                     {/* <!-- 스타일리스트 프로필 --> */}
                     <div className="stylelist-content">
 
-                        <div className="st-profile-container">
+                        <div className="shome-profile-container">
                             <div className="des-star-location">
                                 <div className="st-profile-img">
                                     {des.num && <img src={`http://localhost:8090/desimg/${des.num}`} alt="프로필 이미지" className="st-profile-img" />}
@@ -157,8 +162,8 @@ function Home() {
                                         <div className="st-profile-shop">
                                         </div>
                                     )
-                                }
-                                <StarRating rating={des.star} />
+                                    }
+                                    <StarRating rating={des.star} />
 
                                     <div className="st-profile-info">
                                         {des.workTime}
@@ -173,9 +178,8 @@ function Home() {
 
                             <div className="st-button-container">
 
-
                                 {des.id === user.id &&
-                                    <button className="st-button"onClick={onEditable} >편집<i className="fas fa-pen btn-icon"></i></button>
+                                    <button className="st-button" onClick={onEditable} >편집<i className="fas fa-pen btn-icon"></i></button>
                                 }
 
                                 {shop !== null ? (
@@ -186,17 +190,18 @@ function Home() {
                                     <div className="st-profile-shop"></div>)
                                 }
 
-                                {editable &&
-                                <div>
-                                <input type='text' placeholder='디자이너 정보 및 소개글을 입력하세요' onChange={onChageInfo} name='info' className='info-input' />
-                                <input type='text' placeholder='근무시간을 입력해주세요 ' name='workTime' onChange={onChangeWorkTime} className='info-input' />
-                                <button className="st-button"onClick={onSubmint} >수정하기<i className="fas fa-pen btn-icon"></i></button>
-                                </div>
-                                }
-
-
-
                             </div>
+
+                            {editable &&
+                                <div className='deshome-input-btn-container'>
+                                    <div className='deshome-input-container'>
+                                        <input className='input-text deshome-input-text' type='text' placeholder='근무시간을 입력해주세요 ' name='workTime' onChange={onChangeWorkTime} />
+                                        <input className='input-text deshome-input-text' type='text' placeholder='디자이너 정보 및 소개글을 입력하세요' onChange={onChageInfo} name='info' />
+                                    </div>
+                                    <button className="st-button" onClick={onSubmit} >수정하기<i className="fas fa-pen btn-icon"></i></button>
+                                </div>
+                            }
+
                         </div>
                     </div>
                     {/* <!-- 스타일 리스트 정보 메뉴 --> */}
@@ -211,26 +216,19 @@ function Home() {
                                 <div className="st-profile-shop">
                                 </div>)
                             }
-
-
                         </ul>
                     </nav>
                     <hr className="divide-line" />
                     <Routes>
                         <Route path="/" element={<DesHome desInfo={des} />} />
-                        <Route path="/home" element={<DesHome desInfo={des}  />} />
+                        <Route path="/home" element={<DesHome desInfo={des} />} />
                         <Route path="style" element={<DesStyle desInfo={des} />} />
                         <Route path="review" element={<DesReview desInfo={des} />} />
                         <Route path='/:desgalnum' element={<DesGalleryView />} />
                         <Route path='reservation' element={<DesReservationDate desInfo={des} shopInfo={shop} />} />
-                        {/* <Route path='reservation' element={<DesReservationForm desInfo={des} shopInfo={shop} />} /> */}
 
-
-                        {/* <Route path="/reser vation/:desnum/*" element={<DesReservation desInfo={des} />} /> */}
                         <Route path='/*' element={<Error404 />} />
                     </Routes>
-
-
 
                 </main>
                 <Footer />

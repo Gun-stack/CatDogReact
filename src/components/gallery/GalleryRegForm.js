@@ -12,13 +12,17 @@ function GalleryRegForm() {
     const [loading, setLoading] = useState(false);
     const userInfo = useSelector((state) => state.des);
     const [content, setContent] = useState('');
+    const [tags, setTags] = useState([]);
+    const [currentTag, setCurrentTag] = useState('');
+    const [editTagIndex, setEditTagIndex] = useState(-1);
+
 
     const changeContent = (e) => {
         setContent(e.target.value);
     }
 
     
-    let navigate = useNavigate();
+    let navigate = useNavigate();   
     function goBack(e) {
         e.preventDefault();
         navigate(-1);
@@ -30,6 +34,48 @@ function GalleryRegForm() {
         }
     };
 
+    const handleTagChange = (e) => {
+        if (e.key === 'Enter') {
+            addTag(e);
+          } else {
+            setCurrentTag(e.target.value);
+          }
+      };
+    const addTag = (e) => {
+        e.preventDefault();
+        if (currentTag.trim() !== "") {
+          if (editTagIndex === -1) {
+            setTags([...tags, currentTag.trim()]);
+          } else {
+            tags[editTagIndex] = currentTag.trim();
+            setTags([...tags]);
+            setEditTagIndex(-1);
+        }
+        setCurrentTag('');
+        console.log(tags);
+        }
+      };
+    
+      const editTag = (index) => {
+        setCurrentTag(tags[index]);
+        
+        if(currentTag.trim() !== "") {
+            setEditTagIndex(index);
+        }else{
+            deleteTag(index);
+        }
+      };
+    
+      const deleteTag = (index) => {
+        const newTags = [...tags];
+        newTags.splice(index, 1);
+        setTags(newTags);
+      };
+
+
+
+
+
     const onSubmit = (e) => {
         Swal.fire({
             title: '갤러리에 올리시겠습니까?',
@@ -38,6 +84,7 @@ function GalleryRegForm() {
             cancelButtonText: `아니오`,
         }).then((result) => {
             const formData = new FormData();
+            formData.append('tags', tags); // 이미지 파일을 formData에 추가
             formData.append('file', image); // 이미지 파일을 formData에 추가
             formData.append('content', content); // 리뷰 내용 추가
             formData.append('desId', userInfo.id); // 미용사 아이디 추가
@@ -58,6 +105,8 @@ function GalleryRegForm() {
             }
        }
     )}
+
+ 
 
 
     return (<>
@@ -82,6 +131,27 @@ function GalleryRegForm() {
                             onChange={changeContent}
                             />
                     </div>
+
+                    <div className="tag-input-container">
+                        <input
+                        type="text"
+                        placeholder=" # 해시태그를 입력하세요"
+                        value={currentTag}
+                        onChange={handleTagChange}
+                        onKeyPress={handleTagChange}
+                        />
+                        <button onClick={addTag}>추가</button>
+                    </div>
+
+                    <div className="tag-list">
+                        {tags.map((tag, index) => (
+                        <span key={index} className="tag">
+                            <span onClick={() => editTag(index)} >#{tag} {' '}</span>
+                        </span>
+                        ))}
+                    </div>
+                    
+
 
                     <div className="review-btns">
                         <button className="main-btn btn-text review-btn btn-gray" onClick={goBack}>취소</button>

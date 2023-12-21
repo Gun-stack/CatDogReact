@@ -230,7 +230,7 @@ function ShopMainDesLIst() {
                         </div>
 
                         <div className="st-profile-context">
-                            <div className="st-profile-name">
+                            <span className="st-profile-name magin-r-1">
                                 {editableDesId === des.num ? (
                                     <input
                                         type="text"
@@ -241,10 +241,13 @@ function ShopMainDesLIst() {
                                 ) : (
                                     `${des.position}`
                                 )}
+                            </span>
 
-                            </div>
-                            <div className="st-profile-name">{des.desNickname}</div>
-                            <div className="st-profile-shop">{shopInfo.name}</div>
+
+                            <span className="st-profile-name">{des.desNickname}</span>
+                            <br/>
+                            <span className="st-profile-shop">{shopInfo.name}</span>
+
                             <div className="st-profile-info">{des.info}</div>
                         </div>
 

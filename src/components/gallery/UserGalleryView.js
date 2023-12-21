@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
+import {url} from '../../config'
 
 
 
@@ -18,8 +19,8 @@ function UserGalleryView() {
     const user = useSelector((state) => state.user);
     const [isPost, setIsPost] = useState(false);
     const formData = new FormData();
+    const [date, setDate] = useState('');
 
- 
 
     function goBack(e) {
         e.preventDefault();
@@ -38,7 +39,7 @@ function UserGalleryView() {
         formData.append("galNum", gallery.num);
         formData.append("content", comment);
         console.log(formData);
-        axios.post('http://localhost:8090/usergallerycomment', formData)
+        axios.post(`${url}/usergallerycomment`, formData)
             .then((res) => {
                 console.log(res.data);
                 setIsPost(!isPost);
@@ -57,8 +58,7 @@ function UserGalleryView() {
             console.error("댓글 번호가 없습니다.");
             return;
         }
-        axios.post(`http://localhost:8090/usergallerycommentdelete?commentNum=${commentNum}`)
-
+        axios.post(`${url}/usergallerycommentdelete?commentNum=${commentNum}`)
             .then((res) => {
                 console.log(res.data);
                 setIsPost(!isPost);
@@ -74,7 +74,7 @@ function UserGalleryView() {
         fomrData.append("galNum", gallery.num);
         fomrData.append("userNum", user.num);
 
-        axios.post('http://localhost:8090/usergallerylike', fomrData)
+        axios.post(`${url}/usergallerylike`, fomrData)
             .then((res) => {
                 console.log(res.data);
                 setLike(res.data);
@@ -89,16 +89,43 @@ function UserGalleryView() {
         setComment(e.target.value);
     }
 
+    const [tags, setTags] = useState([]);
+
+    const parseTags = (str) => {
+        const tags = str.split(',').map((tag) => tag.trim());
+        setTags(tags);
+    };
+
+    const tagClickHandler = (tag) => {
+        navigate(`/gallery/user/search/${tag}`);    
+    };
+
+    const formatDate = (originalDateString) => {
+        const dateObject = new Date(originalDateString);
+        const date = new Intl.DateTimeFormat('ko-KR', {
+            year: '2-digit',
+            month: '2-digit',
+            day: '2-digit',
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: false, 
+        }).format(dateObject);
+        setDate(date);
+}
+
     useEffect(() => {
+        console.log(`${url}`);
         console.log(params);
 
-        axios.get(`http://localhost:8090/usergallerydetail?galNum=${params.usergalnum}&userNum=${user.num}`)
+        axios.get(`${url}/usergallerydetail?galNum=${params.usergalnum}&userNum=${user.num}`)
             .then((res) => {
                 console.log(res.data);
                 setGallery(res.data.userGallery);
                 setWriter(res.data.writer);
                 setLike(res.data.isLike);
                 setCommentList(res.data.comments);
+                parseTags(gallery.tag);
+                formatDate(gallery.date);
                 console.log(commentList);
             })
             .catch((err) => {
@@ -110,22 +137,31 @@ function UserGalleryView() {
 
     return (
         <div>
-
             <section className="st-gallery-section">
                 <div className="st-gallery-view">
                     <div className="st-gallery-view-img">
                         <div className="view-gallery-profile-container magin-l-1">
-                            <img src={`http://localhost:8090/usergalview/${params.usergalnum}`} alt="프로필 이미지" className="view-profile-img" />
+                            <img src={`${url}/usergalview/${params.usergalnum}`} alt="프로필 이미지" className="view-profile-img" />
                             <div className="view-img-nickname">{writer.nickname} </div>
+                            <div className="view-comment-text tx-gray">({date})</div>
                         </div>
 
                         <div className="view-img-container">
-                            <img src={`http://localhost:8090/usergalview/${params.usergalnum}`}  onDoubleClick={likeClick} alt="유저갤러리 사진" className="view-img" />
+                            <img src={`${url}/usergalview/${params.usergalnum}`}  onDoubleClick={likeClick} alt="유저갤러리 사진" className="view-img" />
                         </div>
                         <div className="view-img-icons magin-l-1">
                             <span onClick={likeClick} >{like === true ? <i className="fa-solid fa-heart hover-icon"></i> : <i className="fa-regular fa-heart hover-icon"></i>} {gallery.likeCnt} </span>
                             <span><i className="fa-regular fa-comment"></i> {gallery.commentCnt} </span>
 
+                            <div >
+                            
+                            {tags && tags.map((tag, index) => (
+                                <span key={index} className="view-comment-more" onClick={() => tagClickHandler(tag)}>
+                                    {`     `}<button  className="view-comment-more">{`    `}# {tag} {`    `}</button>{`    `}
+                                </span>
+                            ))}
+
+                            </div>
 
 
                             <div>
@@ -144,6 +180,7 @@ function UserGalleryView() {
                                 ))}
                             </div>
 
+                            
 
 
                             <div className='gal-comment-container'>
@@ -151,7 +188,10 @@ function UserGalleryView() {
                                 <button className='add-comment-btn' onClick={postComment}>댓글 달기</button>
                             </div>
 
-                            <button className="view-comment-more">덧글 더보기</button>
+
+
+
+                            {/* <button className="view-comment-more">덧글 더보기</button> */}
 
                         </div>
                     </div>

@@ -1,9 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
-import React from "react";
+import React, { useRef } from "react";
 import { useState } from "react";
 import ReactModal from 'react-modal';
 import UserModi_MemberWithDraw from "./UserModi_MemberWithDraw";
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from "react";
 import axios from 'axios';
 import SwalCustomAlert from '../../Alerts/SwalCustomAlert';
@@ -19,6 +19,15 @@ function UserModi() {
 
     const [ismodal, setismodal] = useState(false);
 
+    // useEffect(() => {
+    //     if (user.roles === 'ROLE_DES' || user.roles === 'ROLE_SHOP') {
+    //         axios.get(`http://localhost:8090/desinfobyid?desId=${user.id}`)
+    //             .then((res) => {
+    //                 console.log("header" + JSON.stringify(res.data.des.num));
+    //                 dispatch({ type: 'SET_DES', payload: res.data.des });
+    //             })
+    //     }
+    // }, [])
 
 
     const customModalStyles = ReactModal.Styles = {
@@ -86,9 +95,10 @@ function UserModi() {
             <section className="form-section magin-b-5">
 
                 <div className="usermy-id-card" onClick={handleFlip}>
-                    <div className={`id-cards ${isFlipped ? 'flipped' : ''}`}>
+                    <div className={`id-cards ${isFlipped ? 'flipped' : ''}`} >
 
                         <div className="id-card-front">
+                            <div className="overlay"></div>
                             <span className="id-card-title">유저정보</span>
                             {/* 카카오 가입 유저면 카카오가 보임 */}
                             <div className="id-front-display">
@@ -127,21 +137,25 @@ function UserModi() {
                                 <ShopOwnerPage />
                             )}
                         </div> */}
+
                         {/* 일반유저면 */}
                         <div className="id-card-back">
+                            <div className="overlay"></div>
                             <img src="/img/logo/logo_color.png" alt="로고 이미지" className="id-logo" />
                             <span className="id-card-title tx-white">유저 정보 카드</span>
                         </div>
+
                         {/* 디자이너면 */}
-                        <div className="id-card-back">
+                        {/* <div className="id-des-card-back">
                             <img src="/img/logo/logo_color.png" alt="로고 이미지" className="id-logo" />
-                            <span className="id-card-title tx-white">유저 정보 카드</span>
-                        </div>
+                            <span className="id-card-title tx-white">디자이너 정보 카드</span>
+                        </div> */}
+
                         {/* 샵주라면 */}
-                        <div className="id-card-back">
+                        {/* <div className="id-shop-card-back">
                             <img src="/img/logo/logo_color.png" alt="로고 이미지" className="id-logo" />
-                            <span className="id-card-title tx-white">유저 정보 카드</span>
-                        </div>
+                            <span className="id-card-title tx-white">샵 오너 정보 카드</span>
+                        </div> */}
 
                     </div>
                 </div>

@@ -190,6 +190,27 @@ function UserJoin() {
         }
     }
 
+    const checkEmail = (e) => {
+        e.preventDefault();
+        if (email === '') {
+            SwalCustomAlert(
+                'notice',
+                '이메일을 입력해주세요',
+            )
+        } else {
+            //이메일 정규식
+            const emailRegExp = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
+            if (!emailRegExp.test(email)) {
+                SwalCustomAlert(
+                    'notice',
+                    '이메일 형식이 올바르지 않습니다.',
+                )
+                return false;
+            }
+            
+
+        }            
+    }
 
     const onChange = (e) => {
         const { value, name } = e.target;
@@ -310,9 +331,12 @@ function UserJoin() {
                                             <input type="text" id="tel" name="tel" placeholder="전화 번호"
                                                 className="input-text" value={phoneNumber} onChange={telChange} maxLength={13} />
                                             {/* 이메일 */}
-                                            <input type='text' id='email' name='email' placeholder='이메일'
-                                                className='input-text' onChange={onChange} />
-
+                                            <div className="duplication-check">
+                                                <input type='text' id='email' name='email' placeholder='이메일'
+                                                    className='input-text' onChange={onChange} />
+                                                    <button className="duplication-btn small-btn"
+                                                        onClick={checkEmail} >이메일 인증하기</button>
+                                            </div>
                                             {/** 로그인 비번/아이디찾기 */}
                                             <div className="login-tools">
                                                 <div></div>

@@ -31,22 +31,23 @@ function UserHeader() {
                 dispatch(logoutStore());
                 dispatch(setToken("")); // 토큰 값이 남아 있어서 서버에 이전 로그인 사용자의 토큰값이 서버에 넘어감
                 Swal.fire({
-                        html: '<img src="/img/logo/modal_success_logo.png"/></span>',
-                        title: '<span class="sweet-modal-title">로그아웃 되었습니다</span>',
-                        confirmButtonColor: '#F9950F',
-                        confirmButtonText: '확인',
-                    })
+                    html: '<img src="/img/logo/modal_success_logo.png"/></span>',
+                    title: '<span class="sweet-modal-title">로그아웃 되었습니다</span>',
+                    confirmButtonColor: '#F9950F',
+                    confirmButtonText: '확인',
+                })
                 navigate('/');
             }
         })
     }
+    
     useEffect(() => {
-        if(user.roles ==='ROLE_DES'||user.roles ==='ROLE_SHOP'){
-           axios.get(`http://localhost:8090/desinfobyid?desId=${user.id}`)
-              .then((res)=>{
-                console.log("header"+ JSON.stringify(res.data.des.num));
-                dispatch({type:'SET_DES',payload:res.data.des});
-              }) 
+        if (user.roles === 'ROLE_DES' || user.roles === 'ROLE_SHOP') {
+            axios.get(`http://localhost:8090/desinfobyid?desId=${user.id}`)
+                .then((res) => {
+                    console.log("header" + JSON.stringify(res.data.des.num));
+                    dispatch({ type: 'SET_DES', payload: res.data.des });
+                })
         }
     }, [])
 
@@ -61,6 +62,9 @@ function UserHeader() {
     const hideNav = () => {
         setIsNavVisible(false);
     };
+    const goBack = () => {
+        navigate(-1);
+    }
 
     const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
     const dispatch = useDispatch();
@@ -69,13 +73,14 @@ function UserHeader() {
         <header className="cd-header" onMouseLeave={hideNav}>
             <div className="logo-icon-container">
                 <div className="header-logo">
+                <span onClick={goBack} ><i class="fa-solid fa-sharp fa-chevron-left fa-beat fa-lg"></i></span>
                     <Link to="/main"><img src="/img/logo/logo_color.png" alt="로고 이미지" className="header-logo" /></Link>
                 </div>
                 <div className="icon-container">
 
-                   {user.roles === 'ROLE_DES' || user.roles === 'ROLE_SHOP' &&
-                   <Link to={`/des/${des.num}`} className="header-btn header-btn-text">디자이너</Link>
-                   }
+                    {user.roles === 'ROLE_DES' || user.roles === 'ROLE_SHOP' &&
+                        <Link to={`/des/${des.num}`} className="header-btn header-btn-text">디자이너</Link>
+                    }
 
                     {isLoggedIn ?
                         <button className="header-btn header-btn-text" onClick={onLogout}>로그아웃</button>

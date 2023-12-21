@@ -12,7 +12,6 @@ const StarRating = ({ rating }) => {
           className={` ${i <= rating ? 'fa-solid fa-star review-star' : 'fa-regular fa-star review-star '}`}></i>
       );
     }
-
     return starArray;
   };
 
