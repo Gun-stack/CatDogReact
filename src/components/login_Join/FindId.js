@@ -53,7 +53,7 @@ function FindId() {
 
                                 <div className="duplication-check">
                                     <input type='text' id='email' name='email' placeholder='이메일'className='input-text' onChange={onChange} />
-                                    <button className="duplication-btn small-btn" onClick={checkEmail} >이메일 인증하기</button>
+                                    <button className="duplication-btn small-btn" onClick={checkEmail} >아이디 조회</button>
                                 </div>
 
                                     <div className="login-tools">
@@ -66,7 +66,7 @@ function FindId() {
                                 </div>
 
                                 <div className="button-container">
-                                    <button type="submit" className="main-btn magin-t-1"><Link to="cl-idresult.html" className="btn-text">아이디 찾기</Link></button>
+                                    <button type="submit" className="main-btn magin-t-1"><Link to="/userlogin" className="btn-text">로그인</Link></button>
                                 </div>
 
                             </div>

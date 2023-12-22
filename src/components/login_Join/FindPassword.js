@@ -17,13 +17,12 @@ function FindPassword() {
     }
 
     const sendPassword = () => {
-        axios.get(`${url}/findpassword?email=${email}&id=${id}`)
+        axios.post(`${url}/temppasswordemail?id=${id}&email=${email}`)
         .then(res => {
             console.log(res.data);
             alert('임시 비밀번호가 발송되었습니다.');
-            window.location.href = '/login';
-        }
-        )
+            window.location.href = '/catdog';
+        })
         .catch(err => {
             console.log(err);
         })
