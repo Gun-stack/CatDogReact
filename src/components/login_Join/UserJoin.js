@@ -46,6 +46,7 @@ function UserJoin() {
         // console.log("Provider_Id : " + userinfo.providerId);
     }, [password, passwordCheck, userinfo.id]);
 
+
     function changePassCheck(e) {
         setPasswordCheck(e.target.value);
     }
@@ -125,7 +126,7 @@ function UserJoin() {
         } else {
             //아이디 정규식
             const idRegExp = /^[a-zA-Z0-9]{4,12}$/;
-            if (!idRegExp.test(id)) {
+            if (!idRegExp.test(userinfo ? userinfo.id : id)) {
                 SwalCustomAlert(
                     'notice',
                     '아이디는 영문 대소문자와 숫자 4~12자리로 입력해주세요',
@@ -167,7 +168,7 @@ function UserJoin() {
 
             //닉네임 정규식
             const nicknameRegExp = /^[가-힣a-zA-Z0-9]{2,10}$/;
-            if (!nicknameRegExp.test(nickname)) {
+            if (!nicknameRegExp.test(userinfo ? userinfo.nickname : nickname)) {
                 SwalCustomAlert(
                     'notice',
                     '닉네임은 한글 영문 대소문자와 숫자 4~12자리로 입력해주세요.',
@@ -175,7 +176,7 @@ function UserJoin() {
                 return false;
             }
 
-            axios.get(`${url}/checkusernickname?nickname=${nickname}`)
+            axios.get(`${url}/checkusernickname?nickname=${userinfo ? userinfo.nickname : nickname}`)
                 .then(res => {
                     if (res.data === "success") {
                         SwalCustomAlert(
@@ -197,6 +198,7 @@ function UserJoin() {
 
         }
     }
+
 
     // const checkEmail = (e) => {
     //     e.preventDefault();
@@ -241,7 +243,7 @@ function UserJoin() {
             <Server500Err_Alert />;
         } finally {
             setLoading(false);
-        }
+        }    
     }
 
     const onChangeCode = (e) => {
@@ -257,14 +259,16 @@ function UserJoin() {
                 'success',
                 '인증되었습니다',
             )
+
             setEmailCode();
+
         } else {
-            SwalCustomAlert(
+                SwalCustomAlert(
                 'fail',
                 '인증번호가 일치하지 않습니다',
-            )
+                )
         }
-    }
+            }
 
     const onChange = (e) => {
         e.preventDefault();
@@ -287,6 +291,7 @@ function UserJoin() {
 
         } else if (name === 'tel') {
             setTel(value);
+
         }
         else if (name === 'email') {
             setEmail(value);
@@ -319,6 +324,7 @@ function UserJoin() {
         <>
             {loading ? <Loding /> :
                 <div className="web-container">
+
                     <div className="cd-container bg-white bg-dogs">
                         <main className="cd-main">
                             <Link to="/">
@@ -327,6 +333,7 @@ function UserJoin() {
                                     <span className="main-logo-text">보호자 회원가입</span>
                                 </section>
                             </Link>
+
                             {/**회원가입 폼 */}
                             <section className="form-section">
                                 <form action="#" method="post" className="form-css">
@@ -430,6 +437,7 @@ function UserJoin() {
                                             </div>
 
                                         </div>
+
                                         <div className="button-container">
                                             {/** submit */}
                                             <button onClick={handleSubBtnClick} id="submit-btn" type="submit" className="main-btn btn-text magin-t-1">회원 가입</button>
@@ -443,7 +451,9 @@ function UserJoin() {
                                     </div>
                                 </form>
                             </section>
+
                         </main>
+
                         <Footer />
                     </div>
                 </div>
