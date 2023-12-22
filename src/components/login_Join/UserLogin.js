@@ -7,13 +7,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setToken, setUserStore, loginStore, setAutoLogin } from "../../actions"; // 액션 생성자 가져오기
 import Loding from "../tools/Loding";
-import {url} from'../../config';
+import { url } from '../../config';
+import SwalCustomAlert from "../Alerts/SwalCustomAlert";
+import { useLocation } from 'react-router';
 
 
 
 function UserLogin() {
     const token = useSelector(state => state.token);
-    // console.log("로그인 전 토큰 값 : " + token);
     const [user, setUser] = useState({ id: "", password: "" });
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -22,6 +23,8 @@ function UserLogin() {
     const changeUser = (e) => {
         setUser({ ...user, [e.target.name]: e.target.value });
     }
+    const { state } = useLocation();
+    const [exit, setExit] = useState(state === "exit" ? state : "");
 
     //Enter key 누르면 로그인
     const handleOnKeyPress = (e) => {
@@ -38,19 +41,28 @@ function UserLogin() {
             const token = res.headers.authorization;
             const user1 = res.data;
             // console.log("res : " + JSON.stringify(res.data));
-            console.log(token);
-            dispatch(setToken(token));
-            dispatch(setUserStore(user1));
-            dispatch(loginStore());
-            navigate('/main');
+            if (user1.state === "1") {
+                dispatch(setToken(token));
+                dispatch(setUserStore(user1));
+                dispatch(loginStore());
+                navigate('/main');
+            } else {
+                SwalCustomAlert(
+                    'notice',
+                    '탈퇴한 회원입니다.',
+                )
+                dispatch(setToken(""));
+                navigate('/userlogin');
+            }
+
         } catch (error) {
-            console.error(error);
             Swal.fire({
                 html: '<img src="/img/logo/modal_success_logo.png"/>',
                 title: '<span class="sweet-modal-title">아이디 또는 비밀번호를 확인해주세요.</span>',
                 footer: '<a href="findid" class="sweet-modal-title tx-gray f-size-14px">아이디 또는 비밀번호를 잊으셨나요?</a>',
                 confirmButtonColor: '#F9950F',
             })
+
         } finally {
             setLoading(false);
         }
@@ -63,8 +75,16 @@ function UserLogin() {
     };
 
     useEffect(() => {
+        if (exit === "exit") {
+            SwalCustomAlert(
+                'fail',
+                '탈퇴한 회원입니다.',
+            );
+            window.history.replaceState({}, document.title, window.location.pathname);
+            setExit("");
+            return;
+        }
 
-        
         // 컴포넌트가 마운트될 때 로컬 스토리지에서 자동 로그인 상태를 확인하여 Redux에 업데이트
         const storedIsAutoLogin = localStorage.getItem("isAutoLogin");
         if (storedIsAutoLogin === "true") {
