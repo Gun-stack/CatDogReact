@@ -19,23 +19,6 @@
     justify-content: center;
 }
 
-.overlay {
-    position: absolute;
-    padding: 2rem 1rem;
-    width: 90%;
-    height: 10rem;
-    background: linear-gradient(105deg,
-            transparent 40%,
-            rgba(255, 219, 112, 0.8) 45%,
-            rgba(132, 50, 255, 0.6) 50%,
-            transparent 54%);
-    filter: brightness(1.1) opacity(0.8);
-    mix-blend-mode: color-dodge;
-    background-size: 150% 150%;
-    background-position: 100%;
-    transition: all 0.1s;
-}
-
 .id-logo {
     width: 300px;
 }
@@ -55,11 +38,6 @@
     backface-visibility: hidden;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
     cursor: pointer;
 }
 
@@ -69,6 +47,11 @@
     background: linear-gradient(to right, #ffcc33, #ffb347);
     transform: rotateX(180deg);
 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
 }
 
 .id-des-card-back {
@@ -76,6 +59,11 @@
     background: -webkit-linear-gradient(to right, #7AA1D2, #DBD4B4, #CC95C0);
     background: linear-gradient(to right, #7AA1D2, #DBD4B4, #CC95C0);
     transform: rotateX(180deg);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .id-shop-card-back {
@@ -83,6 +71,11 @@
     background: -webkit-linear-gradient(to right, #004e92, #000428);
     background: linear-gradient(to right, #004e92, #000428);
     transform: rotateX(180deg);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .id-card-front {
@@ -131,6 +124,7 @@
 .user-modi-container {
     display: flex;
     flex-direction: column;
+    align-items:center ;
 }
 
 .btn-display {

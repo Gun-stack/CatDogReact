@@ -66,7 +66,7 @@ function DesReview(props) {
 
 
     return (
-        <div>
+        <>
             <div className="shop-title-text sm-text ma-top2rem">리뷰</div>
             <section className="review-section magin-t-1">
                 {/* <!-- 리뷰 컨테이너 --> */}
@@ -101,7 +101,7 @@ function DesReview(props) {
                 <hr className="divide-line" />
 
             </section>
-        </div>
+        </>
     );
 }
 

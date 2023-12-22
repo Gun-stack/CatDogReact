@@ -33,3 +33,14 @@
     background-image: url('../../img/background/bg_mypage.png');
     background-position: 50% 85%;
 }
+
+.reservation-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.reservation-container>input{
+    cursor: default;
+}

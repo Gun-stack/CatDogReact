@@ -104,11 +104,10 @@ function ShopReservationForm(props) {
         console.log("PetName1 : " + resvInfo.petName);
         if (!(resvInfo.petName.trim() === "" || resvInfo.petName === null)) {
             try {
-                // axios.post
                 await axios.post(`${url}/makereservation`, resvInfo);
                 SwalCustomAlert(
-                    '<img src="/img/logo/modal_success_logo.png"/>',
-                    '<span class="sweet-modal-title">예약이 완료 되었습니다</span>',
+                    'success',
+                    '예약이 완료 되었습니다',
                 );
                 goBack();
             } catch (err) {

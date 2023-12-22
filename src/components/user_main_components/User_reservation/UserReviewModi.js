@@ -147,7 +147,7 @@ function UserReviewModi() {
                             />
                         ))}
                     </div>
-                   
+
                     <div className="review-filebox">
                         <img src={image ? image : "/img/logo/pet_defult_img.png"} accept="image/*" alt='펫 기본이미지'
                             className="input-box-style input-img-size" placeholder='사진을 올려주세요'  ref={imgBoxRef}/>

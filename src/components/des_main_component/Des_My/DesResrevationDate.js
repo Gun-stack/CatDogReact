@@ -1,6 +1,6 @@
 import { DateCalendar, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { render } from '@testing-library/react';
+
 import axios from 'axios';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
@@ -47,9 +47,6 @@ function DesResrevationDate(props) {
     };
 
 
-
-
-
     const token = useSelector(state => state.token);
     useEffect(() => {
 
@@ -63,7 +60,7 @@ function DesResrevationDate(props) {
                 console.log("Res : " + res.data);
             })
             .catch(err => {
-                // console.log("Err : " + err);
+                console.error("Err : " + err);
                 SwalCustomAlert(
                     'warning',
                     "로그인 이후 사용 가능합니다."
@@ -78,7 +75,7 @@ function DesResrevationDate(props) {
             }
             )
             .catch((err) => {
-                console.log(err);
+                console.error(err);
             })
     }, [sqlDate, desInfo.num])
 

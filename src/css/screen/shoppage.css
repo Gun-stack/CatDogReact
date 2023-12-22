@@ -248,9 +248,12 @@
 .reser-time-section{
     width: 80%;
     margin: 1rem 0;
+    padding: 1rem 0;
 
     display: flex;
     flex-direction: column;
+    align-items: center;
+    background-color: white;
 }
 
 .reser-time-container{
@@ -263,6 +266,14 @@
 
     border-radius: 8px;
     background-color: var(--btn-submit);
+}
+
+.reser-time-done-container{
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .resv-link{

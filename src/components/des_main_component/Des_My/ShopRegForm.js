@@ -342,9 +342,7 @@ function ShopRegForm() {
                                             <label htmlFor="name" className="label-text magin-t-05">샵 이름</label>
                                             <input type="text" id="name" name="name" placeholder="샵 이름을 입력해주세요"
                                                 className="input-text" onChange={change} required />
-                                         </div>
-
-
+                                        </div>
 
 
                                         {/* 사업자 등록번호 */}
