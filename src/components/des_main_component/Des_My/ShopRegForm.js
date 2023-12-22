@@ -337,7 +337,7 @@ function ShopRegForm() {
                                         <input type="file" id="shopImgFile" accept="image/*" onChange={fileChange} />
                                     </div>
 
-                                    <div className="address-container">
+                                    
 
 
                                         {/* 샵 이름 */}

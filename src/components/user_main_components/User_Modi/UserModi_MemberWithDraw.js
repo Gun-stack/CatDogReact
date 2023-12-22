@@ -1,15 +1,17 @@
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from 'react-redux';
-import {url} from'../../../config';
-
+import { useSelector, useDispatch } from 'react-redux';
+import { url } from '../../../config';
+import SwalCustomAlert from "../../Alerts/SwalCustomAlert";
+import { setToken } from "/Users/baghaengbog/Desktop/Study/CatDogReact/src/actions.js";
 
 function UserModi_MemberWithDraw() {
     const [user, setUser] = useState({ id: "", password: "" });
     const changeUser = (e) => {
         setUser({ ...user, [e.target.name]: e.target.value });
     }
+    const dispatch = useDispatch();
     let navigate = useNavigate();
     function goBack(e) {
         e.preventDefault();
@@ -18,25 +20,34 @@ function UserModi_MemberWithDraw() {
     }
     const token = useSelector(state => state.token);
 
-    const onSubmit = async (e) => {
+    const onSubmit = (e) => {
         e.preventDefault();
-        console.log("user.id : " + user.id);
-        console.log("user.password : " + user.password);
-
-        const res = await axios.post(`${url}/exit`, user);
-
-    }
-
-    const kakaoexit = async (e) => {
-        e.preventDefault();
-        console.log("Token : " + token);
-        const ACCESS_TOKEN = token.substring(7);
-        console.log("Token without Bearer: " + ACCESS_TOKEN);
-        await axios.post("https://kapi.kakao.com/v1/user/unlink", {
+        axios.post(`${url}/exit`, user, {
             headers: {
                 Authorization: token,
             }
-        });
+        }).then((result) => {
+            SwalCustomAlert(
+                '<img src="/img/logo/modal_success_logo.png"/>',
+                '탈퇴하였습니다.'
+            )
+            dispatch(setToken("")); // 토큰 값이 남아 있어서 서버에 이전 로그인 사용자의 토큰값이 서버에 넘어감
+            navigate("/userlogin");
+        })
+            .catch((err) => {
+                if (err == 'AxiosError: Request failed with status code 403') {
+                    SwalCustomAlert(
+                        'fail',
+                        'ID가 일치하지 않습니다.',
+                    )
+                } else if (err == 'AxiosError: Request failed with status code 400') {
+                    SwalCustomAlert(
+                        'fail',
+                        'PASSWORD가 일치하지 않습니다.',
+                    )
+                }
+            })
+
 
     }
 
