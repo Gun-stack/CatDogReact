@@ -226,6 +226,7 @@ function Home() {
                         </ul>
                     </nav>
                     <hr className="divide-line" />
+                    <div className='dis-center'>
                     <Routes>
                         <Route path="/" element={<DesHome desInfo={des} />} />
                         <Route path="/home" element={<DesHome desInfo={des} />} />
@@ -234,9 +235,10 @@ function Home() {
                         <Route path='/:desgalnum' element={<DesGalleryView />} />
                         <Route path='reservation' element={<DesReservationDate desInfo={des} shopInfo={shop} />} />
                         <Route path='myreservation' element={<DesResvList desInfo={des} shopInfo={shop}/>} />
-                        <Route path='/detail/:resvnum' element={<DesResvDetail desInfo={des} shopInfo={shop}  />} />
+                        <Route path='/detail/:resvnum' element={<DesResvDetail desInfo={des} shopInfo={shop} />} />
                         <Route path='/*' element={<Error404 />} />
                     </Routes>
+                    </div>
 
                 </main>
                 <Footer />

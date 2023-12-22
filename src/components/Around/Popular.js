@@ -23,8 +23,6 @@ function Popular() {
                 
                 const sortedByStar = res.data.sort((a, b) => b.star - a.star);
                 dispatch({ type: 'SET_SHOP_LIST', payload: sortedByStar });
-
-
             })
     }, []);
 

@@ -10,6 +10,8 @@ import axios from 'axios';
 function UserHeader() {
     const user = useSelector((state) => state.user);
     const des = useSelector((state) => state.des);
+    const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+    const dispatch = useDispatch();
 
     const navigate = useNavigate();
 
@@ -20,7 +22,8 @@ function UserHeader() {
             confirmButtonColor: '#F9950F',
             confirmButtonText: '네',
             showCancelButton: true,
-            cancelButtonText: '아니오'
+            cancelButtonText: '아니오',
+            reverseButtons: true,
         }).then((result) => {
             if (result.isConfirmed) {
                 persistor.purge();
@@ -31,6 +34,7 @@ function UserHeader() {
                     title: '<span class="sweet-modal-title">로그아웃 되었습니다</span>',
                     confirmButtonColor: '#F9950F',
                     confirmButtonText: '확인',
+                
                 })
                 navigate('/');
             }
@@ -62,8 +66,7 @@ function UserHeader() {
         navigate(-1);
     }
 
-    const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-    const dispatch = useDispatch();
+
 
     return (
         <header className="cd-header" onMouseLeave={hideNav}>

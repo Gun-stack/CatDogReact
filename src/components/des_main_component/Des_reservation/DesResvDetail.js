@@ -142,13 +142,13 @@ function DesResvDetail() {
                 <div className='input-for-label magin-t-05'>
                     <label htmlFor="refText" className="label-text">스타일</label>
                         <input name='refText' type='text' className="input-text" value={resv.refText} readOnly/>
-                    {/* <button id="submit-btn" className="bg-orange style-btn" onClick={CompleteImg} ><span className="tx-lightorg" >참조 사진 보기<i className="fas fa-cut tx-lightorg"></i></span></button> */}
+                    <button id="submit-btn" className="bg-orange style-btn" onClick={CompleteImg} ><span className="tx-lightorg" >참조 사진 보기<i className="fas fa-cut tx-lightorg"></i></span></button>
                 </div>
 
                 <div className='input-for-label magin-t-05'>
                     <label htmlFor="status" className="label-text">시술상태</label>
                         <input name='status' type='text' className="input-text" value={resv.status}  readOnly/>
-                        {/* <button id="submit-btn" className="bg-orange style-btn" onClick={CompleteImg} ><span className="tx-lightorg" >예약완료 사진 올리기<i className="fas fa-cut tx-lightorg"></i></span></button> */}
+                        <button id="submit-btn" className="bg-orange style-btn" onClick={CompleteImg} ><span className="tx-lightorg" >예약완료 사진 올리기<i className="fas fa-cut tx-lightorg"></i></span></button>
                 </div>
 
                 <hr className="divide-line" />

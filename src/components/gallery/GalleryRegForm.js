@@ -6,6 +6,7 @@ import axios from "axios";
 import { useSelector } from 'react-redux';
 import { url } from '../../config';
 import SwalCustomAlert from "../Alerts/SwalCustomAlert";
+import Server500Err_Alert from "../Alerts/Server500Err_Alert";
 
 
 function GalleryRegForm() {
@@ -92,19 +93,20 @@ function GalleryRegForm() {
             formData.append('content', content); // 리뷰 내용 추가
             formData.append('desId', userInfo.id); // 미용사 아이디 추가
             try {
+                setLoading(true);
                 const res = axios.post(`${url}/desgalleryreg`, formData)
                 if (res.data == true) {
                     Swal.fire({
                         title: '갤러리에 등록되었습니다.',
                         confirmButtonText: `확인`,
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            navigate(-1);
-                        }
                     })
                 }
             } catch (err) {
-                console.log(err);
+                console.error(err);
+                <Server500Err_Alert/>
+            } finally{
+                setLoading(false);
+                navigate(-1);
             }
         }
         )

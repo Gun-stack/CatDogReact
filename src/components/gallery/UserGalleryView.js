@@ -6,8 +6,6 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import {url} from '../../config'
 
-
-
 function UserGalleryView() {
     const navigate = useNavigate();
     const params = useParams();
@@ -153,14 +151,12 @@ function UserGalleryView() {
                             <span onClick={likeClick} >{like === true ? <i className="fa-solid fa-heart hover-icon"></i> : <i className="fa-regular fa-heart hover-icon"></i>} {gallery.likeCnt} </span>
                             <span><i className="fa-regular fa-comment"></i> {gallery.commentCnt} </span>
 
-                            <div >
-                            
-                            {tags && tags.map((tag, index) => (
-                                <span key={index} className="view-comment-more" onClick={() => tagClickHandler(tag)}>
-                                    {`     `}<button  className="view-comment-more">{`    `}# {tag} {`    `}</button>{`    `}
-                                </span>
-                            ))}
-
+                            <div className="tag-container">
+                                {tags && tags.map((tag, index) => (
+                                    <span key={index} onClick={() => tagClickHandler(tag)}>
+                                        <span className="h-tag">#{tag} {' '}</span>
+                                    </span>
+                                ))}
                             </div>
 
 
