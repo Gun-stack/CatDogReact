@@ -61,7 +61,7 @@ function ShopMainHome() {
             .catch((err) => {
                 console.log(err);
             })
-    }, []);
+    }, [shopInfo.num]);
 
     const handleBtnClick = async (e) => {
         e.preventDefault();

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Route, Routes, useParams , Link } from 'react-router-dom';
 import ShopResrevationDate from './ShopResrevationDate';
 import ShopReservationForm from './ShopReservationForm';
+import ShopResvDetailCheck from './ShopResvDetailCheck';
 import Error404 from '../error/Error404';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
@@ -76,6 +77,7 @@ function ShopReservation(props) {
             <Routes>
                 <Route path='/' element={<ShopResrevationDate desInfo={desInfo} shopInfo={shopInfo} />}  /> 
                 <Route path='form' element={<ShopReservationForm desInfo={desInfo} shopInfo={shopInfo} />} />
+                <Route path='form/check' element={<ShopResvDetailCheck desInfo={desInfo} shopInfo={shopInfo} />} />
                 <Route path='/*' element={<Error404/>}/>
             </Routes>
 

@@ -94,7 +94,7 @@ function DesResvList() {
     const availableTimes = ["10:00", "12:00", "14:00", "16:00"];
 
 
-    
+
     return (<>
 
         <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -104,19 +104,18 @@ function DesResvList() {
         </LocalizationProvider>
 
         <span className="form-text" style={{ cursor: 'pointer' }} >{selectDate}</span>
-        <div>
+
         {availableTimes.map(time => (
             <section key={time} className='reser-time-section'>
                 {isReserved(sqlDate, time) && isReserved(sqlDate, time).status == "예약" ?
                     (
                         <>
-                            <Link to={`/usermy/deservedetail/${isReserved(sqlDate, time).num}`} state={{ data1: time, data2: sqlDate }}>
-                                <div className="reser-time-container reser-time-sm">
-                                    <div className="reser-time">
+                            <Link to={`/usermy/deservedetail/${isReserved(sqlDate, time).num}`} state={{ data1: time, data2: sqlDate }} className='reser-time-done-container' >
+                                <div className="reser-time-container ">
+                                    <div className="reser-time reser-time-sm">
                                         <span className="reser-time-text">{time} 예약됨</span>
                                     </div>
                                 </div>
-                            </Link>
                             <p>
                                 <br />
                                 <span className='f-w-600'>반려동물 이름 : {isReserved(sqlDate, time).petName}</span>
@@ -124,7 +123,9 @@ function DesResvList() {
                                 <span className='magin-t-1 f-size-14px'>주의사항  : {isReserved(sqlDate, time).notice} </span>
                                 <br />
                             </p>
+                            </Link>
                         </>
+
                     )
                     : isReserved(sqlDate, time) === undefined ?
 
@@ -147,7 +148,7 @@ function DesResvList() {
                 <hr className="divide-line magin-t-1" key={`hr-${time}`} />
             </section>
         ))}
-    </div>
+
 
 
     </>);

@@ -6,8 +6,6 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import {url} from '../../config'
 
-
-
 function UserGalleryView() {
     const navigate = useNavigate();
     const params = useParams();
@@ -149,18 +147,22 @@ function UserGalleryView() {
                         <div className="view-img-container">
                             <img src={`${url}/usergalview/${params.usergalnum}`}  onDoubleClick={likeClick} alt="유저갤러리 사진" className="view-img" />
                         </div>
+
+
                         <div className="view-img-icons magin-l-1">
                             <span onClick={likeClick} >{like === true ? <i className="fa-solid fa-heart hover-icon"></i> : <i className="fa-regular fa-heart hover-icon"></i>} {gallery.likeCnt} </span>
                             <span><i className="fa-regular fa-comment"></i> {gallery.commentCnt} </span>
-
-                            <div >
                             
-                            {tags && tags.map((tag, index) => (
-                                <span key={index} className="view-comment-more" onClick={() => tagClickHandler(tag)}>
-                                    {`     `}<button  className="view-comment-more">{`    `}# {tag} {`    `}</button>{`    `}
-                                </span>
-                            ))}
+                            <div className="view-comment">
+                                {gallery.content}
+                            </div>
 
+                            <div className="tag-container">
+                                {tags && tags.map((tag, index) => (
+                                    <span key={index} onClick={() => tagClickHandler(tag)}>
+                                        <span className="h-tag">#{tag} {' '}</span>
+                                    </span>
+                                ))}
                             </div>
 
 
@@ -173,7 +175,7 @@ function UserGalleryView() {
                                         </div>
                                         <div>
                                             <span className="view-comment-text tx-gray"> ({comments.date}) </span>
-                                            {comments.userId === user.id && <button value={comments.num} onClick={deleteComment} className='view-comment-more'><i class="fas fa-times"></i></button>}
+                                            {comments.userId === user.id && <button value={comments.num} onClick={deleteComment} className='view-comment-more'><i className="fas fa-times"></i></button>}
 
                                         </div>
                                     </div>

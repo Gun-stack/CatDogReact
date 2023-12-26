@@ -10,8 +10,8 @@ import { url } from "../../config";
 
 
 function Popular() {
+    const user = useSelector((state) => state.user);
     const coord = useSelector((state) => state.position);
-
     const dispatch = useDispatch();
     const shops = useSelector((state) => state.shopList);
 
@@ -23,8 +23,6 @@ function Popular() {
                 
                 const sortedByStar = res.data.sort((a, b) => b.star - a.star);
                 dispatch({ type: 'SET_SHOP_LIST', payload: sortedByStar });
-
-
             })
     }, []);
 
@@ -58,6 +56,9 @@ function Popular() {
 
                     </div>
                     <div className="st-button-container">
+                    {user.id === shop.id &&
+                    <Link to={`/usermy/shopmodiform/${shop.num}`}> <button className="st-button tx-end">편집</button></Link>
+                    }
                     <Link to={`/shop/${shop.num}`}> <button className="tx-end st-button ">바로가기</button></Link>
                     </div>
                 </li>

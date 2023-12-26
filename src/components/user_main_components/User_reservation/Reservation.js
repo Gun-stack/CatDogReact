@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { useSelector  } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { useState } from 'react';
 import SwalCustomAlert from '../../Alerts/SwalCustomAlert';
@@ -52,14 +52,7 @@ function Reservation() {
             .catch((err) => {
                 console.log(err);
             })
-    }
-        , [user.id]);
-
-
-
-
-
-
+    }, [user.id]);
 
 
     return (
@@ -86,14 +79,22 @@ function Reservation() {
                     (
                         <div>
                             {resvList.map((resv, index) => (
-                                <div key={index} className="reservation-container">
+                                <div key={index} className="reservation-list-container">
                                     <hr className="divide-line" />
                                     <div className="re-shop-info">
-                                        <span className="re-text">샵 이름 :</span>
-                                        <span className="re-shop-name">{resv.shopName}</span>
-                                        <span className="re-pet-name">{resv.petName}</span>
+                                        <div>
+                                            <span className="re-text">샵 이름 :</span>
+                                            <span className="re-shop-name">{resv.shopName}</span>
+                                        </div>
+
+                                        <div>
+                                            <span className="re-text">예약한 반려동물 이름 :</span>
+                                            <span className="re-pet-name">{resv.petName}</span>
+                                        </div>
                                     </div>
                                     <div className="re-date">
+                                        <span className="re-text">예약한 반려동물 이름 :</span>
+
                                         {resv.date} {(resv.time).slice(0, -3)}
                                     </div>
                                     <div className="re-btns">

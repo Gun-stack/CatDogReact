@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import SwalCustomAlert from '../../Alerts/SwalCustomAlert';
@@ -12,15 +12,12 @@ function PetReg() {
 
     //store에 있는 user.id로 서버에 요청해서 반려동물 정보 가져오기
     const user = useSelector(state => state.user);
-    const petList = useSelector(state => state.petList);
+    const [petList, setPetList] = useState([]);
     const dispatch = useDispatch();
     const token = useSelector(state => state.token);
     const navigate = useNavigate();
 
     useEffect(() => {
-
-
-        // console.log("로그인 후 토큰 값 : " + token);
         axios.get(`${url}/user`, {
             headers: {
                 Authorization: token,
@@ -38,18 +35,35 @@ function PetReg() {
                 navigate('/userlogin');
             })
 
-
         axios.get(`${url}/petinfo?userId=${user.id}`)
             .then((res) => {
-                dispatch({ type: 'SET_PET_LIST', payload: res.data });
+                setPetList(res.data);
                 console.log(res.data);
-            }
-            )
+            })
             .catch((err) => {
                 console.log(err);
             })
     }
-        , [user.id]);
+        , []);
+
+        const deletePet = (pet) => {
+            console.log(pet.num);
+            axios.post(`${url}/petdelete?num=${pet.num}`, {
+                headers: {
+                    Authorization: token,
+                }
+            })
+                .then((res) => {
+                    console.log(res.data);
+                }
+                )
+                .catch((err) => {
+                    console.log(err);
+                }
+                )
+        }
+
+
 
     return (
         <>
@@ -96,7 +110,9 @@ function PetReg() {
 
                             </div>
 
+                            
                             <div className="st-button-container">
+                                <button className="st-button" onClick={() => {deletePet(pet);}} >삭제<i className="fas fa-pen btn-icon"></i></button>
                                 <Link to={`/usermy/petmodi/${pet.num}`}>
                                     <button className="st-button">편집<i className="fas fa-pen btn-icon"></i></button></Link>
                             </div>

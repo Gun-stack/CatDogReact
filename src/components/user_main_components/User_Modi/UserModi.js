@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from "react";
 import axios from 'axios';
 import SwalCustomAlert from '../../Alerts/SwalCustomAlert';
-import {url} from'../../../config';
+import { url } from '../../../config';
 function UserModi() {
     const user = useSelector((state) => state.user);
 
@@ -19,15 +19,16 @@ function UserModi() {
 
     const [ismodal, setismodal] = useState(false);
 
-    // useEffect(() => {
-    //     if (user.roles === 'ROLE_DES' || user.roles === 'ROLE_SHOP') {
-    //         axios.get(`http://localhost:8090/desinfobyid?desId=${user.id}`)
-    //             .then((res) => {
-    //                 console.log("header" + JSON.stringify(res.data.des.num));
-    //                 dispatch({ type: 'SET_DES', payload: res.data.des });
-    //             })
-    //     }
-    // }, [])
+    const dispatch = useDispatch();
+    useEffect(() => {
+        if (user.roles === 'ROLE_DES' || user.roles === 'ROLE_SHOP') {
+            axios.get(`http://localhost:8090/desinfobyid?desId=${user.id}`)
+                .then((res) => {
+                    console.log("header" + JSON.stringify(res.data.des.num));
+                    dispatch({ type: 'SET_DES', payload: res.data.des });
+                })
+        }
+    }, [])
 
 
     const customModalStyles = ReactModal.Styles = {
@@ -56,7 +57,7 @@ function UserModi() {
 
     const token = useSelector(state => state.token);
     const navigate = useNavigate();
-    
+
     useEffect(() => {
 
         // console.log("로그인 후 토큰 값 : " + token);
@@ -90,9 +91,6 @@ function UserModi() {
             >  <UserModi_MemberWithDraw />
             </ReactModal>
 
-
-
-            {/* <section className="form-section"> */}
             <section className="form-section magin-b-5">
 
                 <div className="usermy-id-card" onClick={handleFlip}>
@@ -111,7 +109,7 @@ function UserModi() {
                                             <span className="tx-orange f-w-600">소셜 로그인</span>  : <span className="f-w-600">카카오</span> <br />
                                             <span className="tx-orange f-w-600">이 메일</span> : <span className="f-w-600">{user.email}</span> <br />
                                         </p>
-                                        <img src="/img/logo/pet_defult_img.png" alt="기본이미지" className="id-card-img" />
+
                                     </div>
                                     :
                                     <div className="id-card-content">
@@ -122,7 +120,6 @@ function UserModi() {
                                             <span className="tx-orange f-w-600">이 메일</span>  : <span className="f-w-600">{user.email}</span> <br />
                                             <span className="tx-orange f-w-600">전 화 번 호</span>  : <span className="f-w-600">{user.tel}</span> <br />
                                         </p>
-                                        <img src="/img/logo/pet_defult_img.png" alt="기본이미지" className="id-card-img" />
 
                                     </div>
                                 }
@@ -138,25 +135,23 @@ function UserModi() {
                                 <ShopOwnerPage />
                             )}
                         </div> */}
-
-                        {/* 일반유저면 */}
-                        <div className="id-card-back">
-                            <div className="overlay"></div>
-                            <img src="/img/logo/logo_color.png" alt="로고 이미지" className="id-logo" />
-                            <span className="id-card-title tx-white">유저 정보 카드</span>
-                        </div>
-
-                        {/* 디자이너면 */}
-                        {/* <div className="id-des-card-back">
-                            <img src="/img/logo/logo_color.png" alt="로고 이미지" className="id-logo" />
-                            <span className="id-card-title tx-white">디자이너 정보 카드</span>
-                        </div> */}
-
-                        {/* 샵주라면 */}
-                        {/* <div className="id-shop-card-back">
-                            <img src="/img/logo/logo_color.png" alt="로고 이미지" className="id-logo" />
-                            <span className="id-card-title tx-white">샵 오너 정보 카드</span>
-                        </div> */}
+                        {user.roles === 'ROLE_USER' ?
+                            <div className="id-card-back">
+                                <div className="overlay"></div>
+                                <img src="/img/logo/logo_color.png" alt="로고 이미지" className="id-logo" />
+                                <span className="id-card-title tx-white">유저 정보 카드</span>
+                            </div>
+                            : user.roles === 'ROLE_DES' ?
+                                <div className="id-des-card-back">
+                                    <img src="/img/logo/logo_color.png" alt="로고 이미지" className="id-logo" />
+                                    <span className="id-card-title tx-white">디자이너 정보 카드</span>
+                                </div>
+                                :
+                                <div className="id-shop-card-back">
+                                    <img src="/img/logo/logo_color.png" alt="로고 이미지" className="id-logo" />
+                                    <span className="id-card-title tx-white">샵 오너 정보 카드</span>
+                                </div>
+                        }
 
                     </div>
                 </div>
@@ -186,12 +181,15 @@ function UserModi() {
                                 </button>
                             </Link>
 
-                            <Link to="/usermy/desmodi">
-                                <button className="main-btn magin-t-1 btn-text wi-30 btn-display">
-                                    <span className="btn-inner-text">디자이너 정보 변경</span>
-                                    <i className="fas fa-unlock-alt tx-white"></i>
-                                </button>
-                            </Link>
+                            {user.roles === 'ROLE_DES' && user.roles === 'ROLE_SHOP' &&
+                                <Link to="/usermy/desmodi">
+                                    <button className="main-btn magin-t-1 btn-text wi-30 btn-display">
+                                        <span className="btn-inner-text">디자이너 정보 변경</span>
+                                        <i className="fas fa-unlock-alt tx-white"></i>
+                                    </button>
+                                </Link>
+                            }
+
 
 
                             <button className="main-btn magin-t-1 btn-red btn-text wi-30 btn-display" onClick={() => setismodal(true)}>

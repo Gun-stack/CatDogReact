@@ -61,8 +61,6 @@ function ShopReservationForm(props) {
         navigate(-1);
     }
 
-
-
     const token = useSelector(state => state.token);
 
     useEffect(() => {
@@ -90,7 +88,6 @@ function ShopReservationForm(props) {
             .then((res) => {
                 console.log(res);
                 dispatch({ type: 'SET_PET_LIST', payload: res.data });
-
             })
             .catch((err) => {
                 console.log(err);
@@ -99,32 +96,22 @@ function ShopReservationForm(props) {
     }
         , []);
 
-    const onSubmit = async (e) => {
-        e.preventDefault();
-        console.log("PetName1 : " + resvInfo.petName);
-        if (!(resvInfo.petName.trim() === "" || resvInfo.petName === null)) {
-            try {
-                // axios.post
-                await axios.post(`${url}/makereservation`, resvInfo);
+
+        const onSubmit = async (e) => {
+            e.preventDefault();
+
+            if (selected === false) {
                 SwalCustomAlert(
-                    '<img src="/img/logo/modal_success_logo.png"/>',
-                    '<span class="sweet-modal-title">예약이 완료 되었습니다</span>',
+                    'fail',
+                    '반려동물을 선택해 주세요.',
                 );
-                goBack();
-            } catch (err) {
-                console.log(err);
-                Server500Err_Alert();
+                return false;
             }
-        } else {
-            SwalCustomAlert(
-                'fail',
-                '펫을 선택해 주세요.',
-            );
-            return false;
+
+            dispatch({ type: 'SET_RESV_CHECK', payload: resvInfo });
+            navigate(`/shop/${shopInfo.num}/reservation/${desInfo.num}/form/check`);
         }
 
-
-    };
 
 
 
@@ -184,8 +171,13 @@ function ShopReservationForm(props) {
                     <button className="shop-btn small-btn btn-gray btn-text">
                         취소
                     </button></Link>
+
+               
                 <button className="shop-btn small-btn btn-text" onClick={onSubmit} >예약하기</button>
+             
+
             </div>
+
 
         </div>
     );

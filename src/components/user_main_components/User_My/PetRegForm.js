@@ -134,7 +134,8 @@ function PetRegForm() {
                     'success',
                     '반려동물을 등록 완료!',
                 )
-                navigate('/usermy');
+                {<Link to="/usermy/petreg" />}
+
             } else if (result.isDenied) {
                 SwalCustomAlert(
                     'fail',

@@ -33,8 +33,7 @@
 
 .re-shop-info{
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
 }
 
 .re-btns{
@@ -60,3 +59,4 @@
     font-weight: 600;
     color: var(--btn-submit);
 }
+

@@ -172,6 +172,18 @@ const resvListReducer = (state = initialResvListState, action) => {
   }
 }
 
+const initialResevCheckState = JSON.parse(localStorage.getItem('resvCheck')) || [];
+const reservationCheckReducer = (state =initialResevCheckState , action) => {
+  switch (action.type) {
+    case 'SET_RESV_CHECK':
+      return action.payload;
+    default:
+      return state;
+  }
+}
+
+
+
 const initialReviewState = JSON.parse(localStorage.getItem('review')) || [];
 const reviewReducer = (state = initialReviewState, action) => {
   switch (action.type) {
@@ -201,12 +213,14 @@ const positionReducer = (state = initialPositionState, action) => {
 
 
 
+
 const rootReducer = combineReducers({
     token: tokenReducer,
     user: userReducer,
     isAutoLogin: isAutoLoginReducer,
     auth: authReducer,
 
+    resvCheck : reservationCheckReducer,
     resv: reservationReducer,
     resvList : resvListReducer,
 

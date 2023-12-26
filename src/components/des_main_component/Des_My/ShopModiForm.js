@@ -207,6 +207,41 @@ function ShopModiForm() {
 
     };
 
+    const onDelete = (e) => {
+        e.preventDefault();
+        Swal.fire({
+            title: '<span class="sweet-modal-title">샵 삭제</span>',
+            html: '<img src="/img/logo/modal_delete_logo.png"/><br/> <span class="sweet-modal-text">샵을 삭제하시겠습니까 ?</span>',
+            showCancelButton: true,
+            confirmButtonText: '삭제',
+            cancelButtonText: '취소',
+            confirmButtonColor: '#F9950F',
+        }).then((result) => {
+            if (result.isConfirmed === true) {
+                axios.get(`${url}/shopdelete?num=${params.shopnum}`)
+                    .then((res) => {
+                        console.log(res);
+                        console.log("res data : " + res.data);
+                    });
+                //    if (result.isConfirmed) {
+                Swal.fire({
+                    html: '<img src="/img/logo/modal_success_logo.png"/></span>',
+                    title: '<span class="sweet-modal-title">샵 삭제가 완료되었습니다</span>',
+                    confirmButtonColor: '#F9950F',
+                    confirmButtonText: '확인'
+                });
+                window.location.href = '/catdog/usermy';
+            }
+            else if (result.isDenied === false) {
+                Swal.fire('취소하였습니다.', '', 'info');
+            }
+        });
+    }
+
+
+
+
+
     useEffect(() => {
 
         axios.get(`${url}/shopinfobynum?num=${params.shopnum}`)
@@ -326,9 +361,12 @@ function ShopModiForm() {
                                 {/* submit 버튼 */}
                                 <div className="magin-t-5">
 
+
                                     <button id="submit-btn" type="submit" className="main-btn btn-text magin-t-1" onClick={onSubmit}>수정하기</button>
 
                                     <div className="main-btn magin-t-1 btn-gray btn-text" onClick={goBack}>취소</div>
+
+                                    <button id="submit-btn" type="submit" className="main-btn btn-text magin-t-1" onClick={onDelete}> 샵 삭제</button>
                                 </div>
 
                             </div>

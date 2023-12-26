@@ -1,4 +1,4 @@
-import { Link, Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import { Link, Route, Routes, useNavigate } from "react-router-dom";
 import Footer from "../screens/Footer";
 import Header from "../screens/Header";
 
@@ -12,13 +12,9 @@ import Swal from "sweetalert2";
 import Error404 from "../error/Error404";
 import { useDispatch, useSelector } from "react-redux";
 
-
-
 import axios from 'axios';
 import SwalCustomAlert from '../Alerts/SwalCustomAlert';
 import { url } from "../../config";
-
-
 
 
 function Around() {
@@ -84,8 +80,6 @@ function Around() {
 
 
     function mapClickModal(shop) {
-        
-        console.log(shopPositions);
 
         Swal.fire({
             html: `

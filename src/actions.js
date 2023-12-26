@@ -75,4 +75,8 @@ export const setLatitude =  (latitude) => ({
     type: 'SET_LONGITUDE',
     payload: longitude,
   });
-  
+
+  export const reservCheck = (reservCheck) => ({
+    type: 'SET_RESV_CHECK',
+    payload: reservCheck,
+  });

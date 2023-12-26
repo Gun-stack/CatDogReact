@@ -14,7 +14,7 @@ import { url } from "../../config";
 
 
 function Distance() {
-
+    const user = useSelector((state) => state.user);
     const coord = useSelector((state) => state.position);
     const [sortedShops, setSortedShops] = useState([]);
     const dispatch = useDispatch();
@@ -105,6 +105,10 @@ function Distance() {
                         </div>
                     </div>
                     <div className="st-button-container">
+                    {user.id === shoplist.id &&
+                    <Link to={`/usermy/shopmodiform/${shoplist.num}`}> <button className="st-button tx-end">편집</button></Link>
+                    }
+
                     <Link to={`/shop/${shoplist.num}`}> <button className="st-button tx-end">바로가기</button></Link>
                     </div>
                 </li>
