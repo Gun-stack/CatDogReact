@@ -157,6 +157,8 @@ function UserGalleryView() {
                                 {gallery.content}
                             </div>
 
+
+
                             <div className="tag-container">
                                 {tags && tags.map((tag, index) => (
                                     <span key={index} onClick={() => tagClickHandler(tag)}>
@@ -164,7 +166,6 @@ function UserGalleryView() {
                                     </span>
                                 ))}
                             </div>
-
 
                             <div>
                                 {commentList.map((comments,num) => (

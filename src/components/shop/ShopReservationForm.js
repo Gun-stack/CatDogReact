@@ -97,20 +97,32 @@ function ShopReservationForm(props) {
         , []);
 
 
-        const onSubmit = async (e) => {
-            e.preventDefault();
+    const onSubmit = async (e) => {
+        e.preventDefault();
+        if (selected === false) {
+            SwalCustomAlert(
+                'fail',
+                '반려동물을 선택해 주세요.',
+            );
+            return false;
+        }
 
-            if (selected === false) {
+        console.log("PetName1 : " + resvInfo.petName);
+        if (!(resvInfo.petName.trim() === "" || resvInfo.petName === null)) {
+                await axios.post(`${url}/makereservation`, resvInfo);
                 SwalCustomAlert(
-                    'fail',
-                    '반려동물을 선택해 주세요.',
+                    'success',
+                    '예약이 완료 되었습니다',
                 );
+                dispatch({ type: 'SET_RESV_CHECK', payload: resvInfo });
+                navigate(`/shop/${shopInfo.num}/reservation/${desInfo.num}/form/check`);
                 return false;
             }
-
-            dispatch({ type: 'SET_RESV_CHECK', payload: resvInfo });
-            navigate(`/shop/${shopInfo.num}/reservation/${desInfo.num}/form/check`);
         }
+
+
+    
+
 
 
 

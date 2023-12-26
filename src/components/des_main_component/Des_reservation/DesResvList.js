@@ -110,12 +110,12 @@ function DesResvList() {
                 {isReserved(sqlDate, time) && isReserved(sqlDate, time).status == "예약" ?
                     (
                         <>
-                            <Link to={`/usermy/deservedetail/${isReserved(sqlDate, time).num}`} state={{ data1: time, data2: sqlDate }} className='reser-time-done-container' >
                                 <div className="reser-time-container ">
                                     <div className="reser-time reser-time-sm">
                                         <span className="reser-time-text">{time} 예약됨</span>
                                     </div>
                                 </div>
+                            <Link to={`/usermy/deservedetail/${isReserved(sqlDate, time).num}`} state={{ data1: time, data2: sqlDate }} className='reser-time-done-container' >
                             <p>
                                 <br />
                                 <span className='f-w-600'>반려동물 이름 : {isReserved(sqlDate, time).petName}</span>

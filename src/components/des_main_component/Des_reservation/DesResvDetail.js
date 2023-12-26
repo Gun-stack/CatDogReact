@@ -67,7 +67,6 @@ function DesResvDetail() {
     }
 
     const viewImg = () => {
-       
         Swal.fire({
             title: '스타일을 확인하세요',
             imageUrl: `${url}/resimg/${resv.refImg}`,
